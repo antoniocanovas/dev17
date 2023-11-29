@@ -1,11 +1,11 @@
 {
     'name': 'Sale Order Multisection Discount',
-    'version': '16.0.1.0.0',
+    'version': '16.0.1',
     'category': '',
     'license': 'AGPL-3',
     'description': u"""
-Wizard discounts for multisections sales orders
-""",
+        Wizard discounts for multisections sales orders
+        """,
     'author': 'Serincloud',
     'depends': [
         'sale_order_multisection',

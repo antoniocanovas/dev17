@@ -19,16 +19,16 @@ class SaleOrderLine(models.Model):
     new_section_id = fields.Many2one('sale.order.line', store=True, readonly=False)
 
     # Reports hidden price line fields:
-    print_mode_section  = fields.Selection([('hide_price','Hide line prices'),
+    print_mode_section = fields.Selection([('hide_price','Hide line prices'),
                                             ('executive','Executive'),
                                             ('hide_subtotal', 'Hide section subtotals'),
                                             ('hide_subtotal_and_price', 'Hide subtotal and prices'),],
                                            string='Print format')
 
-    print_mode_line     = fields.Selection(related='section_id.print_mode_section')
+    print_mode_line = fields.Selection(related='section_id.print_mode_section')
 
-    hide_subtotal_section   = fields.Boolean('Hide subtotal', store=True, readonly=False)
-    hide_subtotal_line      = fields.Boolean('Hide price', store=False, related='section_id.hide_subtotal_section')
+    hide_subtotal_section = fields.Boolean('Hide subtotal', store=True, readonly=False)
+    hide_subtotal_line = fields.Boolean('Hide price', store=False, related='section_id.hide_subtotal_section')
     ms_sequence = fields.Char('Field to order', store=True)
 
     level = fields.Integer(
