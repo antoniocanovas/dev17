@@ -33,7 +33,6 @@
                         <field name="parent_ids" widget="many2many_tags"/>
                         <field name="print_mode_section"/>
                         <field name="child_ids" widget="many2many_tags"/>
-                        <!--                        <field name="hide_subtotal_section"/> -->
                     </group>
                     <field name="section_line_ids" widget="section_and_note_one2many" mode="tree" readonly="state in ['done','cancel']"
                            nolabel="1" context="{'default_ms_review':True}">
@@ -45,8 +44,9 @@
                             </control>
 
                             <field name="sequence" widget="handle"/>
-                            <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+
                             <field name="display_type" invisible="1"/>
+
                             <field name="product_uom_category_id" invisible="1"/>
                             <field name="product_type" invisible="1"/>
                             <field name="product_updatable" invisible="1"/>
