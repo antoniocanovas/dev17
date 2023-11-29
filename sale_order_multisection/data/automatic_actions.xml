@@ -4,7 +4,7 @@
     <record id="multisection_sol_sequence_review" model="base.automation">
         <field name="name">=> Multisection SOL Sequence Update</field>
         <field name="model_id" ref="sale.model_sale_order_line"/>
-        <field name="state">code</field>
+        <field name="evaluation_type">value</field>
         <field name="code">
             record.resequence_in_o2m_new_sol()
         </field>
