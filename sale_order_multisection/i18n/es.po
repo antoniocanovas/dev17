@@ -1,0 +1,190 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* iniesta_invoice_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-24 08:58+0000\n"
+"PO-Revision-Date: 2021-03-24 10:00+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.2.3\n"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "&amp;nbsp;<span>on</span>"
+msgstr "&amp;nbsp;<span>en</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_external_layout_standard
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid ""
+"<br/>\n"
+"                            CIF:"
+msgstr ""
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Importe</span>\n"
+"                                    <span groups=\"account.group_show_line_subtotals_tax_included\">Precio Total</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<span>Description</span>"
+msgstr "<span>Descripción</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<span>Disc.(%)</span>"
+msgstr "<span>Desc.(%)</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<span>Quantity</span>"
+msgstr "<span>Cantidad</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<span>Source Document</span>"
+msgstr "<span>Documento de Origen</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<span>Unit Price</span>"
+msgstr "<span>Precio Unitario</span>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr ""
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong class=\"text-center\">Scan me with your banking app.</strong><br/><br/>"
+msgstr "<strong class=\"text-center\">Para ser escaneado con la aplicación bancaria.</strong><br/><br/>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong class=\"text-center\">The SEPA QR Code informations are not set correctly.</strong><br/>"
+msgstr "<strong class=\"text-center\">Las informaciones del código QR SEPA no están configuradas correctamente..</strong><br/>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document_with_payments
+msgid "<strong>Amount Due</strong>"
+msgstr "<strong>Importe vencido</strong>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong>Customer Code:</strong>"
+msgstr "<strong>Código del cliente:</strong>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong>Description:</strong>"
+msgstr "<strong>Descripción:</strong>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong>Invoice Date:</strong>"
+msgstr "<strong>Fecha de factura:</strong>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong>Source:</strong>"
+msgstr "<strong>Origen:</strong>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong>Subtotal</strong>"
+msgstr ""
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "<strong>Total</strong>"
+msgstr ""
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Cancelled Invoice"
+msgstr "Factura cancelada"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Cliente:"
+msgstr ""
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Credit Note"
+msgstr "Rectificativa"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Draft Invoice"
+msgstr "Factura borrador"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_external_layout_standard
+msgid "Email:"
+msgstr "Correo electrónico:"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: iniesta_invoice_report
+#: model:ir.actions.report,name:iniesta_invoice_report.account_invoices_iniesta
+msgid "Invoices iniesta"
+msgstr "Factura Iniesta"
+
+#. module: iniesta_invoice_report
+#: model:ir.actions.report,name:iniesta_invoice_report.account_invoices_without_payment_iniesta
+msgid "Invoices without Payment iniesta"
+msgstr "Factura Iniesta sin pagos"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_external_layout_standard
+msgid "Logo"
+msgstr ""
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_external_layout_standard
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr "Página: <span class=\"page\"/>/<span class=\"topage\"/>"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document_with_payments
+msgid "Paid on"
+msgstr "Pagado en"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_external_layout_standard
+msgid "Phone:"
+msgstr "Teléfono:"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Vendor Bill"
+msgstr "Factura de proveedor"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_report_invoice_document
+msgid "Vendor Credit Note"
+msgstr "Factura rectificativa de proveedor"
+
+#. module: iniesta_invoice_report
+#: model_terms:ir.ui.view,arch_db:iniesta_invoice_report.iniesta_external_layout_standard
+msgid "Web:"
+msgstr ""

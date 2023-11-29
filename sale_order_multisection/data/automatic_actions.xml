@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="multisection_sol_sequence_review" model="base.automation">
+        <field name="name">=> Multisection SOL Sequence Update</field>
+        <field name="model_id" ref="sale.model_sale_order_line"/>
+        <field name="state">code</field>
+        <field name="code">
+            record.resequence_in_o2m_new_sol()
+        </field>
+        <field name="trigger">on_create</field>
+        <field name="filter_pre_domain">[('ms_review','=',True)]</field>
+        <field name="filter_domain">[('ms_review','=',True)]</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

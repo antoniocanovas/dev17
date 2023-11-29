@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="multisection_discount_wizard_action" model="ir.actions.server">
+            <field name="name">=>Multisection Discount</field>
+            <field name="model_id" ref="model_saleorder_multisection_discount_wizard"/>
+            <field name="state">code</field>
+            <field name="code">
+# Actualizar descuentos en un paso, para pptos que hemos de bajar:
+# Definir líneas:
+# 1. Si x_incluir_todo => Todas las del resupuesto del tipo 'line'
+# 2. Si x_incluir_todo == False y x_incluir_hijo == True => Las líneas en las que x_nombre_interno esté ilike en las que buscamos.
+# 3. Si los dos anteriores a False => x_lineaudo_ids del x_udo
+# Después otro bucle para ver si la línea es "line" y "service" o bien "line" y "not service"; en otro caso nada.
+#
+incluir_producto = False
+incluir_servicio = False
+descuento = record.discount
+if (record.services == True) or (record.type == "services"): incluir_servicio = True
+if (record.products == True): incluir_producto = True
+
+if record.all_quotation:
+  lineas = record.sale_id.order_line
+elif (record.all_quotation == False) and (record.childs == True):
+  secciones = env['sale.order.line'].search([('id','in',record.sale_id.order_line.ids),('section','like',record.name)]).ids
+  lineas = env['sale.order.line'].search([('id','in',record.sale_id.order_line.ids),('section_id','in',secciones)])
+elif (record.all_quotation == False) and (record.childs == False):
+  lineas = env['sale.order.line'].search([('section_id','=',record.section_id.id)])
+
+# CASO DE DESCUENTO EN SERVICIOS CON PRECIO FINAL FIJADO A MANO:
+importe_productos = 0
+importe_servicios = 0
+if record.type == 'services':
+  for li in lineas:
+    if (li.display_type == False) and (li.product_id.type != 'service'):
+      importe_productos += li.price_subtotal
+    elif  (li.display_type == False) and (li.product_id.type == 'service'):
+      importe_servicios += li.price_unit * li.product_uom_qty
+
+  # Cálculo del descuento (pendiente de desarrollo si distinto si es positivo o negativo, que sería 0 y cambiar precio):
+  if importe_servicios > 0:
+    descuento = 100 - (100* (record.price - importe_productos)/importe_servicios)
+  else:
+    raise UserError('No hay servicios en el presupuesto donde operar !!')
+
+# ASIGNACIÓN DE DESCUENTO EN LÍNEAS, TANTO PARA DESCUENTO DIRECTO COMO PARA PRECIO FINAL DESEADO POR AJUSTE DE SERVICIOS:
+for li in lineas:
+  if (li.display_type == False) and (incluir_producto == True) and (li.product_id.type != 'service'):
+    li['discount'] = descuento
+  elif  (li.display_type == False) and (incluir_servicio == True) and (li.product_id.type == 'service'):
+    li['discount'] = descuento
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

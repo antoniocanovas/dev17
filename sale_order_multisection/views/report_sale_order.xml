@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_saleorder_document_multisection" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//t[@t-if='not line.display_type']" position="attributes">
+                <attribute name="t-if">not line.display_type and line.print_mode_line not in ['executive']</attribute>
+            </xpath>
+            <xpath expr="//td[@name='td_priceunit']" position="attributes">
+                <attribute name="t-if">line.print_mode_line not in ['hide_price','hide_subtotal_and_price']</attribute>
+            </xpath>
+            <xpath expr="//td[@name='td_priceunit']" position="after">
+                <t  t-if="line.print_mode_line in ['hide_price','hide_subtotal_and_price']" class="text-end">
+                    <td>
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//td[@t-if='display_discount']" position="after">
+                <t  t-if="display_discount and line.print_mode_line in ['hide_price','hide_subtotal_and_price']" class="text-end">
+                    <td>
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//td[@t-if='display_discount']" position="attributes">
+                <attribute name="t-if">display_discount and line.print_mode_line not in ['hide_price','hide_subtotal_and_price']</attribute>
+            </xpath>
+
+
+            <xpath expr="//td[@name='td_taxes']" position="attributes">
+                <attribute name="t-if">line.print_mode_line not in ['hide_price','hide_subtotal_and_price']</attribute>
+            </xpath>
+             <xpath expr="//td[@name='td_taxes']" position="after">
+                <t  t-if="line.print_mode_line in ['hide_price','hide_subtotal_and_price']" class="text-end">
+                    <td>
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//td[@name='td_subtotal']" position="attributes">
+                <attribute name="t-if">line.print_mode_line not in ['hide_price','hide_subtotal_and_price']</attribute>
+            </xpath>
+            <xpath expr="//td[@name='td_subtotal']" position="after">
+                <t  t-if="line.print_mode_line in ['hide_price','hide_subtotal_and_price']" class="text-end">
+                    <td>
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//td[@name='td_note_line']" position="replace">
+                <t t-if="line.print_mode_line not in ['executive']">
+                    <td name="td_note_line" colspan="99">
+                        <span t-field="line.name"/>
+                    </td>
+                </t>
+            </xpath>
+             <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+                <attribute name="t-if">line.print_mode_line not in ['hide_subtotal','hide_subtotal_and_price']</attribute>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
