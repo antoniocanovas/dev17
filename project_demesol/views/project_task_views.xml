@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Mostrar sólo las tareas de projectos en estado no plegado y no bloqueadas al abrir un proyecto: -->
+    <record id="project.action_view_all_task" model="ir.actions.act_window">
+        <field name="binding_type">action</field>
+        <field name="domain">[('project_fold','=',False),('state', 'not in', ['1_done','1_canceled'])]</field>
+    </record>
+
+    <!-- Mostrar tareas no bloqueadas en filtro del proyecto, por defecto: -->
+    <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_not_blocked': 1, 'default_project_id': active_id,'show_project_update': True}</field>
+    </record>
+
+    <!-- Archivar la vista kanban que obliga a ver por defecto en modo GTD, donde no se ven las etapas: -->
+    <record id="project.view_task_kanban_inherit_my_task" model="ir.ui.view">
+        <field name="active">False</field>
+    </record>
+
+</odoo>
