@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 class ProjectTask(models.Model):
     _inherit = 'project.task'
 
+    # Nº de tareas no terminadas de las que depende, para usar en filtro:
     @api.depends('state','depend_on_ids.state', 'active', 'depend_on_ids.active')
     def _get_depend_count(self):
         for record in self:

@@ -1,6 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
+
+    <record id="project_task_available_inh_search" model="ir.ui.view">
+        <field name="name">project.task.available.inh.search</field>
+        <field name="model">project.search</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="project.view_task_search_form_base"/>
+        <field name="arch" type="xml">
+            <filter name="open_tasks" position="before">
+                <filter name="available" string="Available"
+                        domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0)]"/>
+            </filter>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+
     <!-- Mostrar sólo las tareas de projectos en estado no plegado y no bloqueadas al abrir un proyecto: -->
     <!-- REVISAR: Mejor poner un nuevo filtro que se pueda deshabilitar con 'open_task' + pnt_depends_count=0:
     <record id="project.action_view_all_task" model="ir.actions.act_window">
@@ -9,14 +25,10 @@
     </record>
     -->
     <!-- Mostrar tareas no bloqueadas en filtro del proyecto, por defecto: -->
+    <!--
     <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
         <field name="binding_type">action</field>
         <field name="context">{'search_default_not_blocked': 1, 'default_project_id': active_id,'show_project_update': True}</field>
     </record>
-
+    -->
 </odoo>
-<!--
-El campo de las tareas de las que depende es: depend_on_ids.
-Hay uno no almacenado que cuenta las pendientes, pero no es real: dependent_tasks_count
-El filtro sería este último campo = 0
--->
