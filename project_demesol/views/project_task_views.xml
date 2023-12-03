@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-
+    <!-- NOTA: Observo que el filtro por defecto de v16 para no_locked no existe en v17, pero se usa en acc de ventana -->
     <record id="project_task_available_inh_search" model="ir.ui.view">
         <field name="name">project.task.available.inh.search</field>
         <field name="model">project.task</field>
@@ -22,20 +22,16 @@
         <field name="context">{'search_default_unlocked': 1, 'all_task': 0, 'default_user_ids': [(4, uid)]}</field>
     </record>
 
-
-
-    <!-- Mostrar sólo las tareas de projectos en estado no plegado y no bloqueadas al abrir un proyecto: -->
-    <!-- REVISAR: Mejor poner un nuevo filtro que se pueda deshabilitar con 'open_task' + pnt_depends_count=0:
+    <!-- Mostrar sólo las tareas no bloqueadas en TODAS LAS TAREASS: -->
     <record id="project.action_view_all_task" model="ir.actions.act_window">
         <field name="binding_type">action</field>
-        <field name="domain">[('state', 'not in', ['1_done','1_canceled'])]</field>
+        <field name="context">{'search_default_unlocked': 1, 'default_user_ids': [(4, uid)]}</field>
     </record>
-    -->
-    <!-- Mostrar tareas no bloqueadas en filtro del proyecto, por defecto: -->
-    <!--
+
+    <!-- Mostrar tareas no bloqueadas AL ABRIR UN PROYECTO: -->
     <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
         <field name="binding_type">action</field>
-        <field name="context">{'search_default_not_blocked': 1, 'default_project_id': active_id,'show_project_update': True}</field>
+        <field name="context">{'default_project_id': active_id, 'show_project_update': True, 'search_default_unlocked': 1,}</field>
     </record>
-    -->
+
 </odoo>
