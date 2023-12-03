@@ -8,13 +8,20 @@
         <field name="type">search</field>
         <field name="inherit_id" ref="project.view_task_search_form_base"/>
         <field name="arch" type="xml">
-            <filter name="open_tasks" position="before">
-                <filter name="available" string="Available"
-                        domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0)]"/>
+            <filter name="bloked" position="before">
+                <filter name="unlocked" string="Unlocked"
+                        domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0),('parent_id','=',False)]"/>
             </filter>
         </field>
         <field name="priority">99</field>
     </record>
+
+    <!-- Mostrar sólo las tareas no bloqueadas en MIS TAREAS: -->
+    <record id="project.action_view_my_task" model="ir.actions.act_window">
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_unbloqued': 1, 'all_task': 0, 'default_user_ids': [(4, uid)]}</field>
+    </record>
+
 
 
     <!-- Mostrar sólo las tareas de projectos en estado no plegado y no bloqueadas al abrir un proyecto: -->
