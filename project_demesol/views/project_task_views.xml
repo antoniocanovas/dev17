@@ -3,6 +3,7 @@
 
     <!-- NOTA: Observo que el filtro por defecto de v16 para no_locked no existe en v17, pero se usa en acc de ventana -->
     <!-- Que al pulsar intro busque en los nombres de las tareas Y TAMBIÉN DE SUS SUBTAREAS: -->
+    <!-- Filtro de tareas por NO BLOQUEADAS (unlocked): -->
     <record id="project_task_available_inh_search" model="ir.ui.view">
         <field name="name">project.task.available.inh.search</field>
         <field name="model">project.task</field>
@@ -36,6 +37,11 @@
     <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
         <field name="binding_type">action</field>
         <field name="context">{'default_project_id': active_id, 'show_project_update': True, 'search_default_unlocked': 1,}</field>
+    </record>
+
+    <!-- Archivar la vista kanban que obliga a ver por defecto en modo GTD, donde no se ven las etapas: -->
+    <record id="project.view_task_kanban_inherit_my_task" model="ir.ui.view">
+        <field name="active">False</field>
     </record>
 
 </odoo>
