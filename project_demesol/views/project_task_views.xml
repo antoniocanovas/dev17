@@ -10,7 +10,8 @@
         <field name="arch" type="xml">
             <filter name="blocked" position="before">
                 <filter name="unlocked" string="Unlocked"
-                        domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0),('parent_id','=',False)]"/>
+                        domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0),('parent_id','=',False)]"
+                <filter/>
             </filter>
         </field>
         <field name="priority">99</field>
