@@ -8,8 +8,8 @@ class ProjectTask(models.Model):
     _inherit = 'project.task'
 
 
-    state = fields.Selection(selection_add = [('1_waiting_customer', "Waiting customer"), ('03_approved',)],
-                             ondelete={'05_waiting_customer': 'set default'}
+    state = fields.Selection(selection_add = [('1_waiting_customer', "Waiting customer"), ('03_approved',)],}
+#                             ondelete={'05_waiting_customer': 'set default'}
     )
 
 
