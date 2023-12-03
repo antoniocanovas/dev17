@@ -15,4 +15,4 @@ class ProjectTask(models.Model):
                 ('state', 'not in', ['1_done', '1_canceled']),
                 ('active', '=', True)
             ])
-    pnt_depend_count = fields.Integer('Dependencies count', store=True, compute='_get_depend_count')
+    pnt_depend_count = fields.Integer('Dependencies count', store=True, compute='_get_depend_count', default=0)
