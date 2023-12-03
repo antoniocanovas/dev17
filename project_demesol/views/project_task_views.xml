@@ -19,3 +19,8 @@
     </record>
 
 </odoo>
+<!--
+El campo de las tareas de las que depende es: depend_on_ids.
+Hay uno no almacenado que cuenta las pendientes, pero no es real: dependent_tasks_count
+El filtro sería este último campo = 0
+-->
