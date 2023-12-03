@@ -19,7 +19,7 @@
     <!-- Mostrar sólo las tareas no bloqueadas en MIS TAREAS: -->
     <record id="project.action_view_my_task" model="ir.actions.act_window">
         <field name="binding_type">action</field>
-        <field name="context">{'search_default_unbloqued': 1, 'all_task': 0, 'default_user_ids': [(4, uid)]}</field>
+        <field name="context">{'search_default_unlocked': 1, 'all_task': 0, 'default_user_ids': [(4, uid)]}</field>
     </record>
 
 
