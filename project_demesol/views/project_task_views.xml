@@ -12,7 +12,6 @@
             <field name="name" string="Tasks" postion="attributes">
                 <attribute name="filter_domain">['|','|',('child_ids','ilike',self), ('name', 'ilike', self), ('id', 'ilike', self)]</attribute>
             </field>
-            <!-- Filtro para disponibles (unlocked): -->
             <filter name="blocked" position="before">
                 <filter name="unlocked" string="Unlocked"
                         domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0),('parent_id','=',False)]"/>
