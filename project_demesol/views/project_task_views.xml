@@ -9,7 +9,7 @@
         <field name="type">search</field>
         <field name="inherit_id" ref="project.view_task_search_form_base"/>
         <field name="arch" type="xml">
-            <field name="name" postion="attributes">
+            <field name="name" position="attributes">
                 <attribute name="filter_domain">['|','|',('child_ids','ilike',self), ('name', 'ilike', self), ('id', 'ilike', self)]</attribute>
             </field>
             <filter name="blocked" position="before">
