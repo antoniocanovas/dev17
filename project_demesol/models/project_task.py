@@ -11,7 +11,7 @@ class ProjectTask(models.Model):
     @api.depends('state','depend_on_ids.state', 'active', 'depend_on_ids.active')
     def _get_depend_count(self):
          self.pnt_depend_count =  self.env['project.task'].search_count([
-                ('id', 'in', record.depend_on_ids.ids),
+                ('id', 'in', self.depend_on_ids.ids),
                 ('state', 'not in', ['1_done', '1_canceled']),
                 ('active', '=', True)
             ])
