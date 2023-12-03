@@ -2,17 +2,17 @@
 <odoo>
 
     <!-- NOTA: Observo que el filtro por defecto de v16 para no_locked no existe en v17, pero se usa en acc de ventana -->
+    <!-- Que al pulsar intro busque en los nombres de las tareas Y TAMBIÉN DE SUS SUBTAREAS: -->
+    <!-- Filtro para disponibles (unlocked): -->
     <record id="project_task_available_inh_search" model="ir.ui.view">
         <field name="name">project.task.available.inh.search</field>
         <field name="model">project.task</field>
         <field name="type">search</field>
         <field name="inherit_id" ref="project.view_task_search_form_base"/>
         <field name="arch" type="xml">
-            <!-- Que al pulsar intro busque en los nombres de las tareas Y TAMBIÉN DE SUS SUBTAREAS: -->
             <field name="name" string="Tasks" postion="attributes">
                 <attribute name="filter_domain">['|','|',('child_ids','ilike',self), ('name', 'ilike', self), ('id', 'ilike', self)]"</attribute>
             </field>
-            <!-- Filtro para disponibles (unlocked): -->
             <filter name="blocked" position="before">
                 <filter name="unlocked" string="Unlocked"
                         domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0),('parent_id','=',False)]"/>
