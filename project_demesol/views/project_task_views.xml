@@ -8,7 +8,7 @@
         <field name="type">search</field>
         <field name="inherit_id" ref="project.view_task_search_form_base"/>
         <field name="arch" type="xml">
-            <filter name="bloked" position="before">
+            <filter name="blocked" position="before">
                 <filter name="unlocked" string="Unlocked"
                         domain="[('state', 'not in', ['1_done','1_canceled']),('pnt_depend_count','=',0),('parent_id','=',False)]"/>
             </filter>
