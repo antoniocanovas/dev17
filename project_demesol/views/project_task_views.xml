@@ -39,7 +39,8 @@
         <field name="context">{'default_project_id': active_id, 'show_project_update': True, 'search_default_unlocked': 1,}</field>
     </record>
 
-    <!-- Archivar la vista kanban que obliga a ver por defecto en modo GTD, donde no se ven las etapas: -->
+    <!-- Archivar la vista kanban que obliga a ver por defecto en modo GTD, donde no se ven las etapas
+    (funciona pero dejo estándar de momento): -->
 <!--
     <record id="project.view_task_kanban_inherit_my_task" model="ir.ui.view">
         <field name="active">False</field>
