@@ -17,10 +17,16 @@ class IrActionsReport(models.Model):
         for order in orders:
             initial_stream = result[order.id]['stream']
             if initial_stream:
-                order_template = order.sale_order_template_id
-                header_record = order_template if order.pnt_sale_header elif order_template.sale_header else order.company_id
-# backup:                footer_record = order_template if order_template.sale_footer else order.company_id
-                footer_record = order_template if order.pnt_sale_footer elif order_template.sale_footer else order.company_id
+
+                # backup:                header_record = order_template if order_template.sale_header else order.company_id
+                # backup:                footer_record = order_template if order_template.sale_footer else order.company_id
+                header_record = order.company_id
+                if order.sale_order_template_id: header_record = order.sale_order_template_id.sale_header
+                if order.sale_header: header_record = order.pnt_sale_header
+                footer_record = order.company_id
+                if order.sale_order_template_id: footer_record = order.sale_order_template_id.sale_footer
+                if order.sale_header: footer_record = order.pnt_sale_footer
+
                 has_header = bool(header_record.sale_header)
                 has_footer = bool(footer_record.sale_footer)
                 included_product_docs = self.env['product.document']
