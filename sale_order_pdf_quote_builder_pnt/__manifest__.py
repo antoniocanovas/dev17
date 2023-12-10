@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Sale PDF Builder',
+    'name': 'Sale Order Quote PDF Builder',
     'version': '17.0.1.0.0',
     'category': 'Sales',
     'summary': "PDF Template from Sale Order",
