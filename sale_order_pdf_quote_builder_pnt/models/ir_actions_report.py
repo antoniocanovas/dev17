@@ -18,8 +18,8 @@ class IrActionsReport(models.Model):
             initial_stream = result[order.id]['stream']
             if initial_stream:
 
-                # backup:                header_record = order_template if order_template.sale_header else order.company_id
-                # backup:                footer_record = order_template if order_template.sale_footer else order.company_id
+                # original:   header_record = order_template if order_template.sale_header else order.company_id
+                # original:   footer_record = order_template if order_template.sale_footer else order.company_id
                 header_record = order.company_id
                 if order.sale_order_template_id.sale_header:    header_record = order.sale_order_template_id
                 if order.sale_header:                           header_record = order
