@@ -25,7 +25,7 @@ class IrActionsReport(models.Model):
                 if order.sale_header:                           header_record = order
                 footer_record = order.company_id
                 if order.sale_order_template_id.sale_footer:    footer_record = order.sale_order_template_id
-                if order.sale_footer.sale_footer:               footer_record = order
+                if order.sale_footer:               footer_record = order
 
                 has_header = bool(header_record.sale_header)
                 has_footer = bool(footer_record.sale_footer)
