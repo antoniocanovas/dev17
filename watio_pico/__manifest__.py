@@ -11,7 +11,7 @@
     "license": "AGPL-3",
     "depends": [
         "sale_management",
-        "base.automation",
+        "base_automation",
     ],
     "data": [
         "security/ir.model.access.csv",
