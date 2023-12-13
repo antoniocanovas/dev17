@@ -24,13 +24,13 @@ class SsaleOrder(models.Model):
                     'wp_margin': self.wp_template_id.wp_margin,
                     'wp_charger_margin': self.wp_template_id.wp_charger_margin,
                     })
-        for li in self.wp_template_id.line_ids:
-            newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
-                                                       'name':li.name,
-                                                       'quantity':li.quantity,
-                                                       'factor':li.factor,
-                                                       'subtotal':0,
-                                                       'sale_id':self.id})
+#        for li in self.wp_template_id.line_ids:
+#            newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
+        #                                                       'name':li.name,
+        #                                               'quantity':li.quantity,
+        #                                               'factor':li.factor,
+        #                                               'subtotal':0,
+    #                                               'sale_id':self.id})
 
     @api.onchange('wp_pico','wp_hour','wp_margin','wp_charger_margin','wp_line_ids','wp_power')
     def _update_wp_prices(self):
