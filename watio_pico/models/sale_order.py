@@ -16,31 +16,23 @@ class SsaleOrder(models.Model):
     wp_margin = fields.Float('WP Margin', store=True, readonly=False)
     wp_charger_margin =  fields.Float('Charger Margin', store=True, readonly=False)
 
-#    @api.onchange('wp_template_id')
+    @api.onchange('wp_template_id')
     def get_wp_template_lines(self):
         for record in self:
-            record.wp_line_ids.unlink()
-            record.write({'wp_pico': record.wp_template_id.wp_pico,
-                        'wp_hour': record.wp_template_id.wp_hour,
-                        'wp_margin': record.wp_template_id.wp_margin,
-                        'wp_charger_margin': record.wp_template_id.wp_charger_margin,
+            self.wp_line_ids.unlink()
+            self.write({'wp_pico': self.wp_template_id.wp_pico,
+                        'wp_hour': self.wp_template_id.wp_hour,
+                        'wp_margin': self.wp_template_id.wp_margin,
+                        'wp_charger_margin': self.wp_template_id.wp_charger_margin,
                         })
-            lines = record.wp_template_id.line_ids
+            lines = self.wp_template_id.line_ids
             for li in lines:
-                record.create({'wp_line_ids': [(0, 0, {'product_id': li.product_id.id,
-                                                      'name': li.name,
-                                                      'quantity':li.quantity,
-                                                      'factor':li.factor,
-                                                      'subtotal':0,})]})
-
-
-#                newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
-#                                                           'name':'nombre',
-    #                                                               'name':li.name,
-            #                                               'quantity':li.quantity,
-            #                                               'factor':li.factor,
-            #                                               'subtotal':0,
-      #                                                 'sale_id': record.id})
+                newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
+                                                           'name':li.name,
+                                                           'quantity':li.quantity,
+                                                           'factor':li.factor,
+                                                           'subtotal':0,
+                                                           }).with_context({'default_sale_id':self.id})
 
     @api.onchange('wp_pico','wp_hour','wp_margin','wp_charger_margin','wp_line_ids','wp_power')
     def _update_wp_prices(self):
