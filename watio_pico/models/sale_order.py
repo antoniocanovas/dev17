@@ -30,7 +30,7 @@ class SsaleOrder(models.Model):
                                                        'quantity':li.quantity,
                                                        'factor':li.factor,
                                                        'subtotal':0,
-                                                       'sale_id':self})
+                                                       'sale_id':self.id})
 
     @api.onchange('wp_pico','wp_hora','wp_margin','wp_charger_margin','wp_line_ids','wp_power')
     def _update_wp_prices(self):
