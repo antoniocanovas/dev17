@@ -22,7 +22,7 @@
                     <group name="wp_info">
                         <group>
                             <field name="wp_power"/>
-                            <field name="wp_template_id" force_save="1"/>
+                            <field name="wp_template_id"/>
                             <field name="wp_pico"/>
                         </group>
                         <group>
@@ -32,7 +32,7 @@
                         </group>
                     </group>
                     <field name="wp_line_ids">
-                        <tree editable="bottom">
+                        <tree>
                             <field name="product_id" domain="[('wp_type','!=',False)]"/>
                             <field name="name" force_save="1"/>
                             <field name="quantity"/>
