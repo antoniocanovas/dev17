@@ -26,8 +26,15 @@ class SsaleOrder(models.Model):
                         'wp_charger_margin': record.wp_template_id.wp_charger_margin,
                         })
             for li in record.wp_template_id.line_ids:
-                newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
-                                                           'name':'nombre',
+                record.write({'wp_line_ids': [(0, 0, {'product_id': li.product_id.id,
+                                                      'name': li.name,
+                                                      'quantity':li.quantity,
+                                                      'factor':li.factor,
+                                                      'subtotal':0,})]})
+
+
+#                newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
+#                                                           'name':'nombre',
     #                                                               'name':li.name,
             #                                               'quantity':li.quantity,
             #                                               'factor':li.factor,
