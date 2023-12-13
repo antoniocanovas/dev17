@@ -22,7 +22,7 @@
                     <group name="wp_info">
                         <group>
                             <field name="wp_power"/>
-                            <field name="wp_template_id"/>
+                            <field name="wp_template_id" force_save="1"/>
                             <field name="wp_pico"/>
                         </group>
                         <group>
