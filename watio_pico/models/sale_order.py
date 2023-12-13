@@ -16,7 +16,7 @@ class SsaleOrder(models.Model):
     wp_margin = fields.Float('WP Margin', store=True, readonly=False)
     wp_charger_margin =  fields.Float('Charger Margin', store=True, readonly=False)
 
-    @api.onchange('wp_template_id')
+    @api.depends('wp_template_id')
     def get_wp_template_lines(self):
         for record in self:
             record.wp_line_ids.unlink()
