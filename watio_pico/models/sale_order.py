@@ -16,17 +16,17 @@ class SsaleOrder(models.Model):
     wp_margin = fields.Float('WP Margin', store=True, readonly=False)
     wp_charger_margin =  fields.Float('Charger Margin', store=True, readonly=False)
 
-    @api.depends('wp_template_id')
+    @api.onchange('wp_template_id')
     def get_wp_template_lines(self):
         for record in self:
+            raise UserError('hola')
             record.wp_line_ids.unlink()
             record.write({'wp_pico': record.wp_template_id.wp_pico,
                           'wp_hour': record.wp_template_id.wp_hour,
                           'wp_margin': record.wp_template_id.wp_margin,
                           'wp_charger_margin': record.wp_template_id.wp_charger_margin,
                           })
-            lines = record.wp_template_id.line_ids
-            for li in lines:
+            for li in record.wp_template_id.line_ids:
                 newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
                                                            'name':li.name,
                                                            'quantity':li.quantity,
