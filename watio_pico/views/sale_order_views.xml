@@ -34,7 +34,7 @@
                     <field name="wp_line_ids">
                         <tree>
                             <field name="product_id" domain="[('wp_type','!=',False)]"/>
-                            <field name="name" force_save="1"/>
+                            <field name="name"/>
                             <field name="quantity"/>
                             <field name="subtotal"/>
                             <field name="factor" invisible="1"/>
@@ -43,7 +43,7 @@
                         <form>
                             <group>
                                 <field name="product_id" domain="[('wp_type','!=',False)]"/>
-                                <field name="name" force_save="1"/>
+                                <field name="name"/>
                                 <field name="quantity"/>
                                 <field name="subtotal"/>
                                 <field name="factor" invisible="1"/>
