@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "depends": [
         "sale_management",
+        "base.automation",
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -18,6 +19,7 @@
         "views/sale_order_views.xml",
         "views/product_views.xml",
         "views/menu_views.xml",
+        "data/automatic_actions.xml",
     ],
     "installable": True,
 }
