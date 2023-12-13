@@ -16,5 +16,6 @@ class WpSaleLine(models.Model):
 
     @api.onchange('product_id')
     def get_wp_template_name(self):
-        self.name = self.product_id.name
+        for record in self:
+            record.name = record.product_id.name
     name = fields.Char('name', store=True, required=True, compute='get_wp_template_name')
