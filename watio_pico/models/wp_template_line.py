@@ -8,7 +8,7 @@ class WpTemplateLine(models.Model):
     _description = 'WP Template line'
 
     product_id = fields.Many2one('product.product', store=True, copy=True)
-    name = fields.Char('name', store=True, readonly=False, default=lambda self: self.product_id.name)
+    name = fields.Char('name', store=True, readonly=False, default=lambda s: s.product_id.name)
     wp_type = fields.Selection(string='Type', related='product_id.wp_type', store=False)
     quantity = fields.Float('Quantity', store=True, copy=True)
     factor = fields.Float('Factor', store=True, copy=True)
