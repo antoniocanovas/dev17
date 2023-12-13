@@ -58,7 +58,7 @@ class SsaleOrder(models.Model):
                                                           'price_unit': li.subtotal / li.quantity,
                                                           'order_id': self.id})
 
-    @api.onchange('wp_line_ids.subtotal')
+    @api.onchange('write_date')
     def _get_wp_subtotal(self):
         subtotal = 0
         for li in self.wp_line_ids:
