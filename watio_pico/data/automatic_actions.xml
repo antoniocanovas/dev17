@@ -15,6 +15,7 @@
         <field name="name">=> AS => Update from Watio Pico template lines</field>
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="evaluation_type">value</field>
+        <field name="state">code</field>
         <field name="code">
             record.get_wp_template_lines()
         </field>
