@@ -18,21 +18,21 @@ class SsaleOrder(models.Model):
 
     @api.onchange('wp_template_id')
     def get_wp_template_lines(self):
-        for record in self:
-            self.wp_line_ids.unlink()
-            self.write({'wp_pico': self.wp_template_id.wp_pico,
-                        'wp_hour': self.wp_template_id.wp_hour,
-                        'wp_margin': self.wp_template_id.wp_margin,
-                        'wp_charger_margin': self.wp_template_id.wp_charger_margin,
-                        })
-            lines = self.wp_template_id.line_ids
-            for li in lines:
-                newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
-                                                           'name':li.name,
-                                                           'quantity':li.quantity,
-                                                           'factor':li.factor,
-                                                           'subtotal':0,
-                                                           'sale_id':self.id})
+        sale = self.id
+        self.wp_line_ids.unlink()
+        self.write({'wp_pico': self.wp_template_id.wp_pico,
+                    'wp_hour': self.wp_template_id.wp_hour,
+                    'wp_margin': self.wp_template_id.wp_margin,
+                    'wp_charger_margin': self.wp_template_id.wp_charger_margin,
+                    })
+        lines = self.wp_template_id.line_ids
+        for li in lines:
+            newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
+                                                       'name':li.name,
+                                                       'quantity':li.quantity,
+                                                       'factor':li.factor,
+                                                       'subtotal':0,
+                                                       'sale_id':sale})
 
     @api.onchange('wp_pico','wp_hour','wp_margin','wp_charger_margin','wp_line_ids','wp_power')
     def _update_wp_prices(self):
