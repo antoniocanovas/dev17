@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="wp_sale_order_view_inh_form" model="ir.ui.view">
+        <field name="name">WP Sale Order Inh Form</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Update Order from WP lines -->
+            <xpath expr="//header" position="inside">
+                    <button class="oe_highlight"
+                            type="object" name="update_wp_sale_order" string="Update order from WP"
+                            invisible="(wp_template_id == False)"/>
+            </xpath>
+            <!-- WPico lines: -->
+            <field name="partner_shipping_id" position="after">
+                <field name="is_wp"/>
+            </field>
+            <xpath expr="//page[@name='order_lines']" position="before">
+                <page name="Watio Pico" invisible="(is_wp == False)">
+                    <group name="wp_info">
+                        <group>
+                            <field name="wp_power"/>
+                            <field name="wp_template_id"/>
+                            <field name="wp_pico"/>
+                        </group>
+                        <group>
+                            <field name="wp_margin"/>
+                            <field name="wp_charger_margin"/>
+                            <field name="wp_hour"/>
+                        </group>
+                    </group>
+                    <field name="wp_line_ids">
+                        <tree editable="bottom">
+                            <field name="product_id" domain="[('wp_type','!=',False)]"/>
+                            <field name="name"/>
+                            <field name="quantity"/>
+                            <field name="subtotal"/>
+                            <field name="factor" invisible="1"/>
+                            <field name="sale_id" invisible="1"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <field name="wp_subtotal" widget="monetary"/>
+                    </group>
+                </page>
+            </xpath>
+            <!-- END -->
+        </field>
+    </record>
+
+</odoo>

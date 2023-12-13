@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wp_template_user, WP template user,model_wp_template,base.group_user,1,0,0,0
+access_wp_template_admin, WP template admin,model_wp_template,sales_team.group_sale_manager,1,1,1,1
+access_wp_template_line_user, WP template line user,model_wp_template_line,base.group_user,1,0,0,0
+access_set_template_line_admin, WP template line admin,model_wp_template_line,sales_team.group_sale_manager,1,1,1,1
+access_wp_sale_line_user, WP sale line user,model_wp_sale_line,base.group_user,1,1,1,1
