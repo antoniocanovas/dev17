@@ -25,7 +25,8 @@ class SsaleOrder(models.Model):
                         'wp_margin': record.wp_template_id.wp_margin,
                         'wp_charger_margin': record.wp_template_id.wp_charger_margin,
                         })
-            for li in record.wp_template_id.line_ids:
+            lines = record.wp_template_id.line_ids
+            for li in lines:
                 record.create({'wp_line_ids': [(0, 0, {'product_id': li.product_id.id,
                                                       'name': li.name,
                                                       'quantity':li.quantity,
