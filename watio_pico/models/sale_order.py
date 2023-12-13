@@ -19,7 +19,6 @@ class SsaleOrder(models.Model):
     @api.onchange('wp_template_id')
     def get_wp_template_lines(self):
         for record in self:
-            raise UserError('hola')
             record.wp_line_ids.unlink()
             record.write({'wp_pico': record.wp_template_id.wp_pico,
                           'wp_hour': record.wp_template_id.wp_hour,
