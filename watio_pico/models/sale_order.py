@@ -26,7 +26,7 @@ class SsaleOrder(models.Model):
                     })
         for li in self.wp_template_id.line_ids:
             newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
-        #                                                       'name':li.name,
+                                                               'name':li.name,
         #                                               'quantity':li.quantity,
         #                                               'factor':li.factor,
         #                                               'subtotal':0,
