@@ -18,6 +18,7 @@
         "views/sale_order_views.xml",
         "views/product_views.xml",
         "views/menu_views.xml",
+        "wizard/wp_sale_order_wizard_views.xml",
         "security/ir.model.access.csv",
     ],
     "installable": True,
