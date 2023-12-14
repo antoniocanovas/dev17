@@ -74,17 +74,3 @@ class SsaleOrder(models.Model):
             subtotal += li.subtotal
         self.wp_subtotal = subtotal
     wp_subtotal = fields.Monetary('Subtotal', store=False, compute='_get_wp_subtotal')
-
-#    def action_open_wp_sale_wizard(self):
-#        return {
-#            'name': _("WP Wizard"),
-#            'view_mode': 'form',
-#            'view_id': self.env.ref('pnt_wp_sale_order_wizard').id,
-#            'view_type': 'form',
-#            'res_model': 'wp.sale.order.wizard',
-#            'type': 'ir.actions.act_window',
-#            'target': 'new',
-            # 'domain': '[if you need]',
-#            'context': {'pnt_sale_id': self.id}
-#        }
-
