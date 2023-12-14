@@ -17,7 +17,7 @@
                         </group>
                     </group>
                     <footer>
-                        <button name="process" string="print" type="object" class="oe_highlight oe_right"/>
+                        <button name="process" string="Run" type="object" class="oe_highlight oe_right"/>
                         <button special="cancel" string="Cancel" type="object" class="oe_right"/>
                     </footer>
                 </sheet>
