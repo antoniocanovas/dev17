@@ -1,1 +1,1 @@
-from . import pnt_wp_product_wizard
+from . import wp_product_wizard

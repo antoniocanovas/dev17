@@ -1,7 +1,5 @@
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
-
 
 class WpProductWizard(models.TransientModel):
     _name = 'wp.product.wizard'
