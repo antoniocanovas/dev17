@@ -20,6 +20,7 @@ class WpSaleOrderWizard(models.TransientModel):
                         'wp_hour': record.wp_template_id.wp_hour,
                         'wp_margin': record.wp_template_id.wp_margin,
                         'wp_charger_margin': record.wp_template_id.wp_charger_margin,
+                        'wp_template_id': record.wp_template_id.id,
                         })
             for li in record.wp_template_id.line_ids:
                 newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,

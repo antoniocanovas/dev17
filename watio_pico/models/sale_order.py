@@ -8,6 +8,7 @@ class SsaleOrder(models.Model):
 
     is_wp = fields.Boolean('Watio Pico')
     wp_power = fields.Float('Power Kw', store=True)
+    wp_template_id = fields.Many2one('wp.template', string='WP Template', store=True)
 
     wp_pico = fields.Float('Watio pico', store=True, readonly=False)
     wp_hour = fields.Float('Watio hora', store=True, readonly=False)
