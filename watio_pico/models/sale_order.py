@@ -85,6 +85,6 @@ class SsaleOrder(models.Model):
             'type': 'ir.actions.act_window',
             'target': 'new',
             # 'domain': '[if you need]',
-            'context': {'pnt_product_tmpl_id': self.id, }
+            'context': {'pnt_sale_id': self.id, }
         }
 
