@@ -21,7 +21,9 @@
                 <button class="oe_highlight"
                         type="object" name="update_wp_sale_order" string="Update order from WP"
                         invisible="(wp_template_id == False)"/>
-                <button name="action_open_wp_sale_wizard" type="action" string="WP Template"/>
+                <button name="watio_pico.action_open_wp_sale_wizard"
+                        context="{'default_pnt_sale_id':active_id}"
+                        string="WP Template" type="action" class="btn-primary"/>
             </xpath>
             <!-- WPico lines: -->
             <field name="partner_shipping_id" position="after">
