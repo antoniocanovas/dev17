@@ -1,1 +1,1 @@
-from . import wp_product_wizard
+from . import wp_sale_order_wizard

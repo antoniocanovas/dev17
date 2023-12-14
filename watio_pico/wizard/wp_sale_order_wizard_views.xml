@@ -3,7 +3,7 @@
 
     <record id="pnt_wp_sale_order_wizard_default_form" model="ir.ui.view">
         <field name="name">WP Product Wizard Default Form</field>
-        <field name="model">wp.product.wizard</field>
+        <field name="model">wp.sale.order.wizard</field>
         <field name="arch" type="xml">
             <form>
                 <sheet string="Wp Template">

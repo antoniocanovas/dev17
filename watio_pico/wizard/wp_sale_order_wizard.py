@@ -1,8 +1,8 @@
 
 from odoo import _, api, fields, models
 
-class WpProductWizard(models.TransientModel):
-    _name = 'wp.product.wizard'
+class WpSaleOrderWizard(models.TransientModel):
+    _name = 'wp.sale.order.wizard'
     _description = 'WP Wizard'
 
     pnt_sale_id = fields.Many2one(
