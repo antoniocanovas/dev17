@@ -12,8 +12,8 @@
                     </h2>
                     <group name="wp_template">
                         <group>
-                            <field name="pnt_sale_id" invisible="1" />
-                            <field name="pnt_wp_template_id" />
+                            <field name="sale_id" invisible="1" />
+                            <field name="wp_template_id" />
                         </group>
                     </group>
                     <footer>

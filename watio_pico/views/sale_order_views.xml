@@ -8,7 +8,7 @@
      <!--   <field name="view_id" ref="watio_pico.pnt_wp_sale_order_wizard_default_form" /> -->
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="context">{'default_pnt_sale_id':active_id}</field>
+        <field name="context">{'default_sale_id':active_id}</field>
     </record>
 
     <record id="wp_sale_order_view_inh_form" model="ir.ui.view">
@@ -23,7 +23,7 @@
                         type="object" name="update_wp_sale_order" string="Update order from WP"
                         invisible="(wp_template_id == False)"/>
                 <button name="watio_pico.action_open_wp_sale_wizard"
-                        context="{'default_pnt_sale_id':active_id}"
+                        context="{'default_sale_id':active_id}"
                         string="WP Template" type="action" class="btn-primary"/>
             </xpath>
             <!-- WPico lines: -->

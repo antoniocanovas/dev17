@@ -5,16 +5,16 @@ class WpSaleOrderWizard(models.TransientModel):
     _name = 'wp.sale.order.wizard'
     _description = 'WP Wizard'
 
-    pnt_sale_id = fields.Many2one(
+    sale_id = fields.Many2one(
         'sale.order',
         string="Sale order",
     )
-    pnt_wp_template_id = fields.Many2one('wp.template', string="WP Template")
+    wp_template_id = fields.Many2one('wp.template', string="WP Template")
 
     def process(self):
         self.ensure_one()
         for record in self:
-            sale = record.pnt_sale_id
+            sale = record.sale_id
             sale.wp_line_ids.unlink()
             sale.write({'wp_pico': record.wp_template_id.wp_pico,
                         'wp_hour': record.wp_template_id.wp_hour,
@@ -27,4 +27,4 @@ class WpSaleOrderWizard(models.TransientModel):
                                                            'quantity':li.quantity,
                                                            'factor':li.factor,
                                                            'subtotal':0,
-                                                           'sale_id':record.pnt_sale_id.id})
+                                                           'sale_id':record.sale_id.id})
