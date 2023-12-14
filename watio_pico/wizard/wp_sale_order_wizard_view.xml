@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="pnt_wp_sale_wizard" model="ir.ui.view">
+    <record id="pnt_wp_sale_order_wizard" model="ir.ui.view">
         <field name="name">WP Product Wizard</field>
         <field name="model">wp.product.wizard</field>
         <field name="arch" type="xml">

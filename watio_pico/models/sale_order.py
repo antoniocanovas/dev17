@@ -79,7 +79,7 @@ class SsaleOrder(models.Model):
         return {
             'name': _("WP Wizard"),
             'view_mode': 'form',
-            'view_id': self.env.ref('watio_pico.pnt_wp_product_wizard').id,
+            'view_id': self.env.ref('watio_pico.pnt_wp_sale_order_wizard').id,
             'view_type': 'form',
             'res_model': 'wp.product.wizard',
             'type': 'ir.actions.act_window',
