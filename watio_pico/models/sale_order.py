@@ -8,39 +8,13 @@ class SsaleOrder(models.Model):
 
     is_wp = fields.Boolean('Watio Pico')
     wp_power = fields.Float('Power Kw', store=True)
-    wp_template_id = fields.Many2one('wp.template', string='WP Template', store=True)
 
     wp_pico = fields.Float('Watio pico', store=True, readonly=False)
     wp_hour = fields.Float('Watio hora', store=True, readonly=False)
     wp_margin = fields.Float('WP Margin', store=True, readonly=False)
     wp_charger_margin =  fields.Float('Charger Margin', store=True, readonly=False)
 
-    @api.onchange('wp_template_id')
-    def get_wp_template_lines(self):
-        self.ensure_one()
-        for record in self:
-            record.wp_line_ids.unlink()
-            record.write({'wp_pico': record.wp_template_id.wp_pico,
-                          'wp_hour': record.wp_template_id.wp_hour,
-                          'wp_margin': record.wp_template_id.wp_margin,
-                          'wp_charger_margin': record.wp_template_id.wp_charger_margin,
-                          })
-
-    @api.onchange('wp_template_id')
-    def get_wp_template_lines(self):
-        self.ensure_one()
-        for record in self:
-            wplines = []
-            for li in record.wp_template_id.line_ids:
-                newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
-                                                           'name':li.name,
-                                                           'quantity':li.quantity,
-                                                           'factor':li.factor,
-                                                           'subtotal':0})
-                wplines.append(newline.id)
-            record['wp_line_ids'] = [(6,0,wplines)]
-    wp_line_ids = fields.One2many('wp.sale.line', 'sale_id', string='WP Lines',
-                                  readonly=False, compute='get_wp_template_lines')
+    wp_line_ids = fields.One2many('wp.sale.line', 'sale_id', string='WP Lines')
 
     @api.onchange('wp_pico','wp_hour','wp_margin','wp_charger_margin','wp_line_ids','wp_power')
     def _update_wp_prices(self):
