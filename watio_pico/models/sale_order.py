@@ -26,6 +26,10 @@ class SsaleOrder(models.Model):
                           'wp_margin': record.wp_template_id.wp_margin,
                           'wp_charger_margin': record.wp_template_id.wp_charger_margin,
                           })
+
+    @api.onchange('wp_template_id')
+    def get_wp_template_lines(self):
+        for record in self:
             wplines = []
             for li in record.wp_template_id.line_ids:
                 newline = self.env['wp.sale.line'].create({'product_id':li.product_id.id,
