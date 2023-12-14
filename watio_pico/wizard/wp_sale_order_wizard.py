@@ -27,4 +27,4 @@ class WpSaleOrderWizard(models.TransientModel):
                                                            'quantity':li.quantity,
                                                            'factor':li.factor,
                                                            'subtotal':0,
-                                                           'sale_id':record.sale_id.id})
+                                                           'sale_id':sale.id})
