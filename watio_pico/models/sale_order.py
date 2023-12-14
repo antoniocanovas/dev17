@@ -10,8 +10,6 @@ class SsaleOrder(models.Model):
     wp_power = fields.Float('Power Kw', store=True)
     wp_template_id = fields.Many2one('wp.template', string='WP Template', store=True)
 
-
-
     wp_pico = fields.Float('Watio pico', store=True, readonly=False)
     wp_hour = fields.Float('Watio hora', store=True, readonly=False)
     wp_margin = fields.Float('WP Margin', store=True, readonly=False)
@@ -41,7 +39,8 @@ class SsaleOrder(models.Model):
                                                            'subtotal':0})
                 wplines.append(newline.id)
             record['wp_line_ids'] = [(6,0,wplines)]
-    wp_line_ids = fields.One2many('wp.sale.line', 'sale_id', string='WP Lines', compute='get_wp_template_lines')
+    wp_line_ids = fields.One2many('wp.sale.line', 'sale_id', string='WP Lines',
+                                  readonly=False, compute='get_wp_template_lines')
 
     @api.onchange('wp_pico','wp_hour','wp_margin','wp_charger_margin','wp_line_ids','wp_power')
     def _update_wp_prices(self):
