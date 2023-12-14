@@ -7,3 +7,4 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     wp_type = fields.Selection([('wp','Watio pico'),('wh','Watio hora'),('charger','Charger')], store=True)
+
