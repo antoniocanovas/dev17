@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="pnt_wp_sale_order_wizard" model="ir.ui.view">
-        <field name="name">WP Product Wizard</field>
+    <record id="pnt_wp_sale_order_wizard_default_form" model="ir.ui.view">
+        <field name="name">WP Product Wizard Default Form</field>
         <field name="model">wp.product.wizard</field>
         <field name="arch" type="xml">
             <form>
@@ -23,6 +23,12 @@
                 </sheet>
             </form>
         </field>
+        <field name="field_parent" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">form</field>
     </record>
 
 
