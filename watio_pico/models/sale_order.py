@@ -81,7 +81,7 @@ class SsaleOrder(models.Model):
 #            'view_mode': 'form',
 #            'view_id': self.env.ref('pnt_wp_sale_order_wizard').id,
 #            'view_type': 'form',
-#            'res_model': 'wp.product.wizard',
+#            'res_model': 'wp.sale.order.wizard',
 #            'type': 'ir.actions.act_window',
 #            'target': 'new',
             # 'domain': '[if you need]',
