@@ -75,7 +75,7 @@ class SsaleOrder(models.Model):
         self.wp_subtotal = subtotal
     wp_subtotal = fields.Monetary('Subtotal', store=False, compute='_get_wp_subtotal')
 
-    def action_open_wp_product_wizard_layout(self):
+    def action_open_wp_sale_wizard(self):
         return {
             'name': _("WP Wizard"),
             'view_mode': 'form',
