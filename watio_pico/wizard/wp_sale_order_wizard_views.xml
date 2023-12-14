@@ -8,7 +8,7 @@
             <form>
                 <sheet string="Wp Template">
                     <h2>
-                        <p>WP Template</p>
+                        <p>Choose an Watio Pico Template (it will erase actual lines)</p>
                     </h2>
                     <group name="wp_template">
                         <group>

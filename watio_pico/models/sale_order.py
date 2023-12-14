@@ -19,6 +19,7 @@ class SsaleOrder(models.Model):
 
     @api.onchange('wp_template_id')
     def get_wp_template_lines(self):
+        self.ensure_one()
         for record in self:
             record.wp_line_ids.unlink()
             record.write({'wp_pico': record.wp_template_id.wp_pico,
@@ -29,6 +30,7 @@ class SsaleOrder(models.Model):
 
     @api.onchange('wp_template_id')
     def get_wp_template_lines(self):
+        self.ensure_one()
         for record in self:
             wplines = []
             for li in record.wp_template_id.line_ids:
