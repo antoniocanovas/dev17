@@ -1,6 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
+    <record id="action_open_wp_sale_wizard" model="ir.actions.act_window">
+        <field name="name">WPico</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wp.product.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_pnt_sale_id':active_id}</field>
+    </record>
+
     <record id="wp_sale_order_view_inh_form" model="ir.ui.view">
         <field name="name">WP Sale Order Inh Form</field>
         <field name="model">sale.order</field>
