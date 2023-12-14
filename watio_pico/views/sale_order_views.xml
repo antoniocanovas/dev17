@@ -6,6 +6,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">wp.product.wizard</field>
         <field name="view_mode">form</field>
+        <field name="view_id" ref"pnt_wp_sale_order_wizard"/>
         <field name="target">new</field>
         <field name="context">{'default_pnt_sale_id':active_id}</field>
     </record>
