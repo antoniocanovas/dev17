@@ -12,7 +12,7 @@
     'website': 'https://www.ingenieriacloud.com',
     'depends': [
         'sale_management',
-        #'sale_pdf_quote_builder',
+        'sale_pdf_quote_builder',
     ],
     'data': [
         'views/sale_order_views.xml',

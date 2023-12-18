@@ -1,14 +1,14 @@
 import io
 
-from odoo import models
+from odoo import models, api, fields
 from odoo.tools import format_amount, format_date, format_datetime, pdf
-
+from odoo.addons.sale_pdf_quote_builder.models.ir_actions_report import IrActionsReport as OdooIrActionsReport
 
 class IrActionsReport(models.Model):
     _inherit = 'ir.actions.report'
 
     def _render_qweb_pdf_prepare_streams(self, report_ref, data, res_ids=None):
-        result = super()._render_qweb_pdf_prepare_streams(report_ref, data, res_ids=res_ids)
+        result = super(OdooIrActionsReport, self)._render_qweb_pdf_prepare_streams(report_ref, data, res_ids=res_ids)
         if self._get_report(report_ref).report_name != 'sale.report_saleorder':
             return result
 
