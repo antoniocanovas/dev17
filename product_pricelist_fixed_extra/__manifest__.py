@@ -11,7 +11,7 @@ Product pricelist price extra option as selection
         'sale_management',
     ],
     'data': [
-#        'views/product_pricelist_views.xml',
+        'views/product_pricelist_item_views.xml',
     ],
     'installable': True,
 }
