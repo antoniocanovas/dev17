@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    # Permitir asignar tarifas a direcciones de entrega:
+    <record id="inplast_res_partner_form" model="ir.ui.view">
+        <field name="name">inplast.res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                    <attribute name="invisible">type not in ['contact','delivery']</attribute>
+                </xpath>
+                <xpath expr="//div[@name='parent_pricelists']" position="attributes">
+                    <attribute name="invisible">(is_company == True) or (type in ['contact','delivery'])</attribute>
+                </xpath>
+                <xpath expr="//field[@name='property_product_pricelist']" position="after">
+                    <field name="pnt_pricelist_mode" invisible="(parent_id != False)"/>
+                    <field name="pnt_pricelist_update" invisible="(parent_id != False)"/>
+                </xpath>
+            </data>
+        </field>
+        <field name="priority">99</field>
+        <field name="type">form</field>
+    </record>
+
+</odoo>
