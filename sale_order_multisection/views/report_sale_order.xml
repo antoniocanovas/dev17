@@ -51,7 +51,7 @@
                 </t>
             </xpath>
              <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
-                <attribute name="t-if">line.print_mode_line not in ['hide_subtotal','hide_subtotal_and_price'] and not current_section</attribute>
+                <attribute name="t-if">line.print_mode_line not in ['hide_subtotal','hide_subtotal_and_price']</attribute>
             </xpath>
         </template>
 
