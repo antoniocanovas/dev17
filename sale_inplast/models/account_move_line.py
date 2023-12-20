@@ -18,4 +18,4 @@ class AccountMoveLine(models.Model):
             if record.product_id and record.quantity:
                 total = record.product_id.pnt_plastic_unit_tax * record.quantity
             record['pnt_plastic_tax'] = total
-    pnt_plastic_tax = fields.Float('Unit tax', store=False, compute='_get_plastic_unit_tax')
+    pnt_plastic_tax = fields.Float('Plastic tax', store=False, compute='_get_plastic_unit_tax')
