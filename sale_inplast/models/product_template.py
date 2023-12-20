@@ -11,4 +11,4 @@ class ProductTemplate(models.Model):
 
     def _get_plastic_unit_tax(self):
         self.pnt_plastic_unit_tax = self.env.company.pnt_plastic_tax * self.pnt_plastic_tax_weight
-    pnt_plastic_unit_tax = fields.Monetary('Unit tax', store=False, compute='_get_plastic_unit_tax', digits=(3,4))
+    pnt_plastic_unit_tax = fields.Monetary('Plastic tax', store=False, compute='_get_plastic_unit_tax', digits=(3,4))
