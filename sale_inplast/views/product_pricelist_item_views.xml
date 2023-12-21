@@ -22,6 +22,7 @@
                 </xpath>
                 <field name="price_surcharge" position="attributes">
                     <attribute name="readonly">1</attribute>
+                    <attribute name="string">Plastic tax</attribute>
                 </field>
             </data>
         </field>
