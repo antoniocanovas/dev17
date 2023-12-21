@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
 
             <data>
-                <xpath expr="//field[@name='item_ids']/tree[1]/field[@name='fixed_price']" position="after">
+                <xpath expr="//field[@name='item_ids']/tree[1]/field[@name='date_start']" position="before">
                     <field name="price_surcharge"/>
                 </xpath>
             </data>
