@@ -8,9 +8,11 @@
         <field name="inherit_id" ref="product.product_pricelist_view"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='item_ids']/tree[1]/field[@name='fixed_price']" position="before">
-                <field name="price_surcharge"/>
-            </xpath>
+            <data>
+                <xpath expr="//field[@name='item_ids']/tree[1]/field[@name='fixed_price']" position="after">
+                    <field name="price_surcharge"/>
+                </xpath>
+            </data>
 
         </field>
         <field name="priority">99</field>
