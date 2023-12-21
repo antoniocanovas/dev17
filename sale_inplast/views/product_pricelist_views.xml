@@ -22,11 +22,6 @@
                     </header>
                 </xpath>
 
-                <!-- No modificar el campo establecido para el impuesto al plástico:
-                <field name="price_surcharge" position="attributes">
-                    <attribute name="readonly">1</attribute>
-                </field>
- -->
                 <xpath expr="//field[@name='active']" position="after">
                     <field name="pnt_tracking_date" readonly="1"/>
                     <field name="pnt_pending_update" invisible="1"/>
@@ -85,19 +80,36 @@
                         </field>
                     </page>
                 </xpath>
-            </data>
 
-            <xpath expr="//page/field/tree[1]/field[@name='date_start']" position="before">
-                <field name="pnt_new_price"/>
-                <field name="pnt_tracking_date"/>
-            </xpath>
-            <xpath expr="//page/field/tree[2]/field[@name='date_start']" position="before">
-                <field name="pnt_new_price"/>
-                <field name="pnt_tracking_date"/>
-            </xpath>
+                <xpath expr="//page/field/tree[1]/field[@name='date_start']" position="before">
+                    <field name="pnt_new_price"/>
+                    <field name="pnt_tracking_date"/>
+                </xpath>
+                <xpath expr="//page/field/tree[2]/field[@name='date_start']" position="before">
+                    <field name="pnt_new_price"/>
+                    <field name="pnt_tracking_date"/>
+                </xpath>
+            </data>
 
         </field>
         <field name="priority">99</field>
     </record>
+
+    # No modificar el campo extra reservado para el impuesto al plástico:
+    <record id="inplast_extra_ro_pricelist_inh_view" model="ir.ui.view">
+        <field name="name">inplast.extra_ro_pricelist.inh.view</field>
+        <field name="model">product.pricelist</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product_pricelist_fixed_extra.inplast_pricelist_inh_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="price_surcharge" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+            </data>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
 
 </odoo>
