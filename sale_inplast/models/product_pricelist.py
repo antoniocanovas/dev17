@@ -56,7 +56,7 @@ class ProductPricelist(models.Model):
                                  "</p>"
 
                 li.write({'pnt_tracking_date':now,
-                          'price_surcharge': li.product_id.plastic_unit_tax,
+                          'price_surcharge': li.product_id.pnt_plastic_unit_tax,
                           'fixed_price':li.pnt_new_price})
 
         if item_tracking != "":
