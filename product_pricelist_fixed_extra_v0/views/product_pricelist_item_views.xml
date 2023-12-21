@@ -9,8 +9,11 @@
         <field name="arch" type="xml">
 
             <data>
+                <field name="fixed_price" position="attributes">
+                    <attribute name="invisible">compute_price not in ['fixed', 'fixed_extra']</attribute>
+                </field>
                 <field name="price_surcharge" position="attributes">
-                    <attribute name="invisible">compute_price not in ['formula', 'fixed']</attribute>
+                    <attribute name="invisible">compute_price not in ['formula', 'fixed_extra']</attribute>
                 </field>
             </data>
 
