@@ -15,13 +15,25 @@
                 <field name="price_surcharge" position="attributes">
                     <attribute name="invisible">compute_price not in ['formula', 'fixed_extra']</attribute>
                 </field>
-                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='pricelist_rules']/field[@name='item_ids']/tree[2]/field[@name='currency_id']" position="before">
-                    <field name="price_surcharge" optional="show"/>
-                </xpath>
+
             </data>
 
         </field>
         <field name="priority">99</field>
     </record>
 
+    <record id="fixed_extra_pricelist_inh_view" model="ir.ui.view">
+        <field name="name">fixed.extra.pricelist.inh.view</field>
+        <field name="model">product.pricelist</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='pricelist_rules']/field[@name='item_ids']/tree[2]/field[@name='currency_id']" position="before">
+                <field name="price_surcharge" optional="show"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
 </odoo>
