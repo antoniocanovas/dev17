@@ -12,15 +12,18 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="product.product_pricelist_view"/>
         <field name="arch" type="xml">
-
-            <xpath expr="//sheet" position="before">
-                <header>
-                   <button name="pricelist_update_tracking" type="object" data-hotkey="shift+r"
-                           string="Update prices" class="oe_highlight"
-                           invisible="(pnt_pending_update == False)"/>
-                </header>
-            </xpath>
-
+            <data>
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="pricelist_update_tracking" type="object" data-hotkey="shift+r"
+                                string="Update prices" class="oe_highlight"
+                                invisible="(pnt_pending_update == False)"/>
+                    </header>
+                </xpath>
+                <field name="price_surcharge" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+            </data>
         </field>
         <field name="priority">99</field>
     </record>
