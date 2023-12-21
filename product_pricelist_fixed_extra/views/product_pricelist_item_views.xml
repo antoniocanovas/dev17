@@ -30,9 +30,9 @@
         <field name="arch" type="xml">
 
             <xpath expr="//page[@name='pricelist_rules']/field[@name='item_ids']/tree[2]/field[@name='date_start']" position="before">
-                <field name="price_surcharge" optional="show" column_invisible="compute_price != 'fixed_extra'"/>
+                <field name="price_surcharge" optional="show"/>
             </xpath>
-
+#  column_invisible="compute_price != 'fixed_extra'"
         </field>
         <field name="priority">99</field>
     </record>
