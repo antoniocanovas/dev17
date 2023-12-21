@@ -7,4 +7,4 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    crm_default_project_id = fields.Many2one("project.project")
+    crm_default_project_id = fields.Many2one("project.project", string="Presales project")

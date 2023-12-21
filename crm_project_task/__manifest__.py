@@ -23,5 +23,6 @@
         "wizards/crm_create_task.xml",
         "views/crm_lead.xml",
         "views/project_task.xml",
+        "views/res_company.xml",
     ],
 }
