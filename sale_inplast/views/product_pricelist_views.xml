@@ -24,6 +24,7 @@
             <xpath expr="//field[@name='active']" position="after">
                 <field name="pnt_tracking_date" readonly="1"/>
                 <field name="pnt_pending_update" invisible="1"/>
+                <field name="pnt_plastic_tax"/>
             </xpath>
 
             <xpath expr="//field[@name='item_ids']/tree" position="inside">

@@ -11,6 +11,7 @@ class ProductPricelist(models.Model):
 
     pnt_tracking_date = fields.Date('Tracking date', store=True, copy=False)
     pnt_pending_update = fields.Boolean('Pending update', store=True, copy=False, default=False)
+    pnt_plastic_tax = fields.Boolean('Apply plastic tax', store=True, copy=False, default=True)
 
     # Productos en la lista de precios, para ser usados como exclusivamente disponibles en ventas y facturas:
     @api.depends('item_ids.product_tmpl_id')
@@ -55,8 +56,13 @@ class ProductPricelist(models.Model):
                                  str(categ.pnt_i1) + ", " + str(categ.pnt_i2) + ", " + str(categ.pnt_i3) + \
                                  "</p>"
 
+                # El impuesto al plástico aplica a ciertos régimenes fiscales, definimos en la tarifa (única por cliente):
+                plastic_tax = 0
+                if self.pnt_plastic_tax:
+                    plastic_tax = li.product_tmpl_id.pnt_plastic_unit_tax
+
                 li.write({'pnt_tracking_date':now,
-                          'price_surcharge': li.product_tmpl_id.pnt_plastic_unit_tax,
+                          'price_surcharge': plastic_tax,
                           'fixed_price':li.pnt_new_price})
 
         if item_tracking != "":
