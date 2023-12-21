@@ -14,5 +14,6 @@ Product pricelist price extra option as selection
         'views/product_pricelist_item_views.xml',
         'views/product_pricelist_views.xml',
     ],
-    'installable': True,
+     'installable': True,
+    'application': True,
 }
