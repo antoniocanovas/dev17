@@ -22,11 +22,11 @@
                     </header>
                 </xpath>
 
-                <!-- No modificar el campo establecido para el impuesto al plástico: -->
+                <!-- No modificar el campo establecido para el impuesto al plástico:
                 <field name="price_surcharge" position="attributes">
                     <attribute name="readonly">1</attribute>
                 </field>
-
+ -->
                 <xpath expr="//field[@name='active']" position="after">
                     <field name="pnt_tracking_date" readonly="1"/>
                     <field name="pnt_pending_update" invisible="1"/>
