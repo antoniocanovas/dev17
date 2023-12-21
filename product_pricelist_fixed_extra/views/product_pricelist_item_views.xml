@@ -15,7 +15,6 @@
                 <field name="price_surcharge" position="attributes">
                     <attribute name="invisible">compute_price not in ['formula', 'fixed_extra']</attribute>
                 </field>
-
             </data>
 
         </field>
