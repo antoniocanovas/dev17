@@ -19,3 +19,12 @@ class AccountMoveLine(models.Model):
                 total = record.product_id.pnt_plastic_unit_tax * record.quantity
             record['pnt_plastic_tax'] = total
     pnt_plastic_tax = fields.Float('Plastic tax', store=False, compute='_get_plastic_unit_tax')
+
+    @api.depends('product_id', 'quantity')
+    def _get_plastic_kg(self):
+        for record in self:
+            total = 0
+            if record.product_id and record.quantity:
+                total = record.product_id.pnt_plastic_tax_weight * record.quantity / 1000
+            record['pnt_plastic_kg'] = total
+    pnt_plastic_kg = fields.Float('Plastic kg', store=False, compute='_get_plastic_kg')
