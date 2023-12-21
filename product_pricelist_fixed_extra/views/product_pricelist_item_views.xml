@@ -15,6 +15,9 @@
                 <field name="price_surcharge" position="attributes">
                     <attribute name="invisible">compute_price not in ['formula', 'fixed_extra']</attribute>
                 </field>
+                <xpath expr="//field[@name='item_ids']/tree[2]/field[@name='currency_id']" position="before">
+                    <field name="price_surcharge" optional="show"/>
+                </xpath>
             </data>
 
         </field>
