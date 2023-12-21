@@ -22,18 +22,4 @@
         <field name="priority">99</field>
     </record>
 
-    <record id="fixed_extra_pricelist_inh_view" model="ir.ui.view">
-        <field name="name">fixed.extra.pricelist.inh.view</field>
-        <field name="model">product.pricelist</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="product.product_pricelist_view"/>
-        <field name="arch" type="xml">
-
-            <xpath expr="//page[@name='pricelist_rules']/field[@name='item_ids']/tree[2]/field[@name='date_start']" position="before">
-                <field name="price_surcharge" optional="show"/>
-            </xpath>
-
-        </field>
-        <field name="priority">99</field>
-    </record>
 </odoo>
