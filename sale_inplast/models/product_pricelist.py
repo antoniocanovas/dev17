@@ -54,7 +54,10 @@ class ProductPricelist(models.Model):
                                  ", Comercial i1, i2, i3: " + \
                                  str(categ.pnt_i1) + ", " + str(categ.pnt_i2) + ", " + str(categ.pnt_i3) + \
                                  "</p>"
-                li.write({'pnt_tracking_date':now, 'fixed_price':li.pnt_new_price})
+
+                li.write({'pnt_tracking_date':now,
+                          'price_surcharge': li.product_id.plastic_unit_tax,
+                          'fixed_price':li.pnt_new_price})
 
         if item_tracking != "":
             new_note = self.env['mail.message'].create({'body': item_tracking,
