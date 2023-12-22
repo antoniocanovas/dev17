@@ -11,7 +11,6 @@
                 <field name="pnt_pricelist_day_lock"/>
                 <field name="pnt_update_month_day"/>
                 <field name="pnt_plastic_tax"/>
-                <field name="pnt_plastic_purchase_tax"/>
             </xpath>
         </field>
     </record>
