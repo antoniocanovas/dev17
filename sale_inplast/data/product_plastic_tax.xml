@@ -11,7 +11,7 @@
         <field name="purchase_ok" eval="True" />
         <field name="default_debit_account_id" ref="account.1_account_common_4750"/>
         <field name="default_credit_account_id" ref="account.1_account_common_4750"/>
-        <field name="taxes_id">False</field>
-        <field name="supplier_taxes_id">False</field>
+        <field name="taxes_id" eval="False" />
+        <field name="supplier_taxes_id" eval="False" />
     </record>
 </odoo>
