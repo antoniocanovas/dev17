@@ -9,8 +9,6 @@
         <field name="type">service</field>
         <field name="sale_ok" eval="False" />
         <field name="purchase_ok" eval="True" />
-        <field name="property_account_debit_id" ref="account.1_account_common_4750"/>
-        <field name="property_account_credit_id" ref="account.1_account_common_4750"/>
         <field name="taxes_id">[]</field>
         <field name="supplier_taxes_id">[]</field>
     </record>
