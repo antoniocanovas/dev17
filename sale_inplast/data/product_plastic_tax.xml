@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo noupdate="1">
-    <record id="producto_impuesto_plastico" model="product.product">
+    <record id="producto_impuesto_plastico" model="product.template">
         <field name="uom_id" ref="uom.product_uom_kgm" />
         <field name="uom_po_id" ref="uom.product_uom_kgm" />
         <field name="name">Kg plástico no reciclable (Impuesto AEAT)</field>
