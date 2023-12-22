@@ -11,6 +11,7 @@
                 <group name="account_property" position="inside">
                     <group name="pricelist" string="Pricelist data">
                         <field name="pnt_raw_material"/>
+                        <field name="pnt_is_manufactured"/>
                         <field name="pnt_pricelist_weight"/>
                         <field name="pnt_mrp_fault_percent"/>
                         <field name="pnt_i0"/>
