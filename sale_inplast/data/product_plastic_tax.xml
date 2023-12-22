@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo noupdate="1">
+    <record id="producto_impuesto_plastico" model="product.product">
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field name="name">Impuesto AEAT al plástico</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="type">service</field>
+        <field name="sale_ok" eval="False" />
+        <field name="purchase_ok" eval="True" />
+        <field name="default_debit_account_id" ref="l10n_es_account.475000"/>
+        <field name="default_credit_account_id" ref="l10n_es_account.475000"/>
+    </record>
+</odoo>
