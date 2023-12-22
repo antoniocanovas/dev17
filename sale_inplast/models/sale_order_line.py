@@ -16,7 +16,7 @@ class SaleOrderLine(models.Model):
         for record in self:
             total = 0
             if record.product_id and record.product_uom_qty:
-                total = record.product_id.pnt_plastic_unit_tax * record.product_uom_qty
+                total = record.product_id.pnt_plastic_1000unit_tax * record.product_uom_qty / 1000
             record['pnt_plastic_tax'] = total
     pnt_plastic_tax = fields.Float('Plastic tax', store=False, compute='_get_plastic_unit_tax')
 

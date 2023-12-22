@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <field name="detailed_type" position="after">
                 <field name="pnt_plastic_weight" invisible="detailed_type == 'service'"/>
-                <field name="pnt_plastic_unit_tax" invisible="detailed_type == 'service'"/>
+                <field name="pnt_plastic_1000unit_tax" invisible="detailed_type == 'service'"/>
             </field>
         </field>
     </record>

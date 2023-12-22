@@ -59,7 +59,7 @@ class ProductPricelist(models.Model):
                 # El impuesto al plástico aplica a ciertos régimenes fiscales, definimos en la tarifa (única por cliente):
                 plastic_tax = 0
                 if self.pnt_plastic_tax:
-                    plastic_tax = li.product_tmpl_id.pnt_plastic_unit_tax
+                    plastic_tax = li.product_tmpl_id.pnt_plastic_1000unit_tax / 1000
 
                 li.write({'pnt_tracking_date':now,
                           'price_surcharge': plastic_tax,

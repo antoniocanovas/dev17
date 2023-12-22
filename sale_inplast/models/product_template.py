@@ -11,5 +11,7 @@ class ProductTemplate(models.Model):
     pnt_is_manufactured = fields.Boolean('Manufactured', store=True, related='categ_id.pnt_is_manufactured')
 
     def _get_plastic_unit_tax(self):
-        self.pnt_plastic_unit_tax = self.env.company.pnt_plastic_tax * self.pnt_plastic_weight
-    pnt_plastic_unit_tax = fields.Monetary('Plastic tax', store=False, compute='_get_plastic_unit_tax', digits=(3,4))
+        self.pnt_plastic_1000unit_tax = self.env.company.pnt_plastic_tax * self.pnt_plastic_weight * 1000
+    pnt_plastic_1000unit_tax = fields.Monetary('Plastic tax', store=False,
+                                           digits='Product Price',
+                                           compute='_get_plastic_unit_tax')
