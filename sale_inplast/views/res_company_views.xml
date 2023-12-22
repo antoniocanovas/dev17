@@ -10,7 +10,7 @@
             <xpath expr="//field[@name='website']" position="after">
                 <field name="pnt_pricelist_day_lock"/>
                 <field name="pnt_update_month_day"/>
-                <field name="pnt_plastic_tax"/>
+                <field name="pnt_plastic_tax" widget="monetary"/>
             </xpath>
         </field>
     </record>
