@@ -10,8 +10,8 @@ class ProductCategory(models.Model):
     pnt_raw_material = fields.Many2one('product.template', store=True, copy=True, string='Raw material',
                                        domain="[('detailed_type','=','product')]",
                                        help='Main component to manufacture these category products.')
-    pnt_pricelist_weight = fields.Float('Pricelist weight', store=True, copy=True,
-                                        help='Unit weight used to pricelist recalculation and plastic taxes.')
+    pnt_plastic_weight = fields.Float('Plastic weight', store=True, copy=True, digits='Stock Weight',
+                                      help='Unit weight used to pricelist recalculation and plastic taxes.')
     pnt_mrp_fault_percent = fields.Float('Fault (%)', store=True, copy=True,
                                          help='Production percent deficiency')
 

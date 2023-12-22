@@ -19,7 +19,7 @@ class AccountMove(models.Model):
                 elif (record.partner_id.country_id.code != 'ES') and not (record.pnt_move_plastic_tax_id.id):
                     plastic_tax_required = False
                     for li in record.invoice_line_ids:
-                        if li.product_id.pnt_plastic_tax_weight != 0:
+                        if li.product_id.pnt_plastic_weight != 0:
                             message = "El producto: " + li.product_id.name + " requiere impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
 
@@ -29,6 +29,6 @@ class AccountMove(models.Model):
                 elif (record.partner_id.country_id.code != 'ES') and not (record.pnt_move_plastic_tax_id.id):
                     plastic_tax_required = False
                     for li in record.invoice_line_ids:
-                        if li.product_id.pnt_plastic_tax_weight != 0:
+                        if li.product_id.pnt_plastic_weight != 0:
                             message = "El producto: " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
