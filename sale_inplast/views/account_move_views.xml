@@ -12,7 +12,7 @@
 
             <!-- Apunte de compras/ventas para el impuesto al plástico: -->
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="pnt_move_plastic_tax"/>
+                <field name="pnt_move_plastic_tax_id"/>
             </xpath>
 
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega: -->
