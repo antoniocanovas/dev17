@@ -10,7 +10,7 @@ class AccountMove(models.Model):
 
     pnt_move_plastic_tax_id = fields.Many2one('account.move', store=True, string='Plastic tax entry')
 
-    @api.constraint('state')
+    @api.constrains('state')
     def _check_plastic_tax_required(self):
         for record in self:
             if (record.move_type in ['in_invoice', 'in_refund']) and (record.state in ['posted']):
