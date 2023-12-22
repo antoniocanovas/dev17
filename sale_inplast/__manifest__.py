@@ -26,7 +26,6 @@ Recálculo de tarifas en base a datos de familia, productos y materia prima.
         'views/sale_order_views.xml',
         'views/res_company_views.xml',
         'views/product_template_views.xml',
-        'data/product_plastic_tax.xml',
     ],
     'installable': True,
 }
