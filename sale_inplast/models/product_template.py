@@ -8,7 +8,7 @@ class ProductTemplate(models.Model):
 
     # Campos para el impuesto al plástico:
     pnt_plastic_tax_weight = fields.Float('Plastic tax weight', store=True, related='categ_id.pnt_pricelist_weight')
-    pnt_is_manufactured = fields.Float('Manufactured', store=True, related='categ_id.pnt_is_manufactured')
+    pnt_is_manufactured = fields.Boolean('Manufactured', store=True, related='categ_id.pnt_is_manufactured')
 
     def _get_plastic_unit_tax(self):
         self.pnt_plastic_unit_tax = self.env.company.pnt_plastic_tax * self.pnt_plastic_tax_weight
