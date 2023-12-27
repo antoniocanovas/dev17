@@ -12,7 +12,7 @@
                 <page name="power_cups_page" string="CUPS">
                     <group>
                         <field name="pnt_power_cups_id"
-                               context="{'default_pnt_partner_id':id}"
+                               context="{'default_pnt_partner_id': partner_id}"
                                domain="['|',('pnt_partner_id','=',partner_id),('pnt_customer_id','=',partner_id)]"
                         />
                     </group>
