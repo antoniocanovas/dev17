@@ -19,7 +19,7 @@ class PowerCUPS(models.Model):
     )
 
     pnt_partner_id = fields.Many2one('res.partner', string='Delivery address', store=True, copy=True, tracking=True)
-    pnt_cadastrasl_ref = fields.Char('Cadastral ref', store=True, tracking=True, readonly=False, related='pnt_partner_id.pnt_cadastral_ref')
+    pnt_cadastral_ref = fields.Char('Cadastral ref', store=True, tracking=True, readonly=False, related='pnt_partner_id.pnt_cadastral_ref')
     pnt_dealer_id = fields.Many2one('res.partner', string='Dealer', store=True, copy=True, tracking=True)
     pnt_marketeer_id = fields.Many2one('res.partner', string='Marketeer', store=True, copy=True, tracking=True)
 
