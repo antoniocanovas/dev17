@@ -9,7 +9,7 @@ class CrmLead(models.Model):
 
     pnt_power_cups_id = fields.Many2one('power.cups', string='CUPS', store=True, copy=False)
     pnt_partner_id = fields.Many2one('res.partner', string='Delivery address', store=False, related='pnt_power_cups_id.pnt_partner_id')
-    pnt_cadastrasl_ref = fields.Char('Cadastral ref', store=True, tracking=True, readonly=False, related='pnt_partner_id.pnt_cadastral_ref')
+    pnt_cadastrasl_ref = fields.Char('Cadastral ref', store=True, tracking=True, readonly=False, related='pnt_power_cups_id.pnt_cadastral_ref')
     pnt_dealer_id = fields.Many2one('res.partner', string='Dealer', store=False, related='pnt_power_cups_id.pnt_dealer_id')
     pnt_marketeer_id = fields.Many2one('res.partner', string='Marketeer', store=False, related='pnt_power_cups_id.pnt_marketeer_id')
     pnt_state = fields.Selection(
