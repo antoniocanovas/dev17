@@ -10,8 +10,10 @@ class ResPartner(models.Model):
     pnt_power_cups_id = fields.Many2one('power.cups', string='CUPS', store=True, copy=False)
     pnt_cadastral_ref = fields.Char('Cadastral ref', store=True, copy=False, tracking=True)
     pnt_partner_id = fields.Many2one('res.partner', string='Delivery address', store=False, related='pnt_power_cups_id.pnt_partner_id')
-    pnt_dealer_id = fields.Many2one('res.partner', string='Dealer', store=False, related='pnt_power_cups_id.pnt_dealer_id')
-    pnt_marketeer_id = fields.Many2one('res.partner', string='Marketeer', store=False, related='pnt_power_cups_id.pnt_marketeer_id')
+    pnt_dealer_id = fields.Many2one(
+        'res.partner', string='Dealer', store=False, readonly=False, related='pnt_power_cups_id.pnt_dealer_id')
+    pnt_marketeer_id = fields.Many2one(
+        'res.partner', string='Marketeer', store=False, readonly=False,related='pnt_power_cups_id.pnt_marketeer_id')
     pnt_state = fields.Selection(string='CUPS State', related='pnt_power_cups_id.pnt_state', store=False)
 
     pnt_kw_fw       = fields.Float('Panels (kWp)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_fw')
