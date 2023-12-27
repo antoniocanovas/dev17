@@ -68,7 +68,7 @@
                     <field name="pnt_dealer_id" optional="show"/>
                     <field name="pnt_marketeer_id" optional="hide"/>
                     <field name="pnt_customer_type" optional="show"/>
-                    <field name="pnt_surface_type" optional="show"/>
+                    <field name="pnt_rustic" optional="show"/>
                     <field name="pnt_isolated"/>
                     <field name="pnt_kw_contract" optional="hide"/>
                     <field name="pnt_kw_access" optional="hide"/>
@@ -93,12 +93,12 @@
                     <field name="name" filter_domain="['|','|',('name','ilike',self),
                                                       ('pnt_partner_id','ilike',self),
                                                       ('pnt_customer_id','ilike',self)]"/>
-                    <field name="pnt_surface_type"/>
                     <field name="pnt_dealer_id"/>
                     <field name="pnt_marketeer_id"/>
                     <field name="pnt_target_type"/>
                     <field name="pnt_isolated"/>
                     <separator/>
+                    <filter string="Rustic" name="rustic" domain="[('pnt_rustic', '=', True)]"/>
                     <filter string="Isolated" name="isolated" domain="[('pnt_isolated', '=', True)]"/>
                     <separator/>
                     <group expand="0" name="group_by" string="Group By">

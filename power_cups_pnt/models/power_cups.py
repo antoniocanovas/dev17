@@ -39,6 +39,7 @@ class PowerCUPS(models.Model):
     pnt_kw_access   = fields.Float('Access power (kw)', store=True, copy=True, tracking=True)
     pnt_kw_prve     = fields.Float('PRVE (kw)', store=True, copy=True, tracking=True)
     pnt_isolated    = fields.Boolean('Isolated', store=True, copy=True, tracking=True)
+    pnt_rustic = fields.Boolean('Rustic floor', store=True, copy=True, tracking=True, default=False)
 
     pnt_electric_type = fields.Selection(
         selection=[('mono','Monofásica'),
@@ -74,6 +75,3 @@ class PowerCUPS(models.Model):
         store=True, copy=True,
         tracking=True,
     )
-
-
-    pnt_rustic = fields.Boolean('Rustic floor', store=True, copy=True, tracking=True)
