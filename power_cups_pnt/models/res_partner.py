@@ -39,7 +39,7 @@ class ResPartner(models.Model):
     )
 
     pnt_rustic = fields.Boolean(
-        'Rustic floor', store=True, copy=True, tracking=True,
+        'Rustic floor', store=True, copy=True, readonly=False, tracking=True,
         related='pnt_power_cups_id.pnt_rustic',
     )
 
