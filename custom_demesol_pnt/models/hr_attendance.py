@@ -7,6 +7,6 @@ from datetime import timedelta
 class HrAttendance(models.Model):
     _inherit = "hr.attendance"
 
-    @api.onchange('check_in')
+    @api.depends('check_in')
     def _auto_update_checkout(self):
         self.check_out = self.check_in + timedelta(hours=8)
