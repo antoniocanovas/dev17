@@ -12,9 +12,7 @@ class CrmLead(models.Model):
     pnt_cadastral_ref = fields.Char('Cadastral ref', store=True, tracking=True, readonly=False, related='pnt_partner_id.pnt_cadastral_ref')
     pnt_dealer_id = fields.Many2one('res.partner', string='Dealer', store=False, related='pnt_power_cups_id.pnt_dealer_id')
     pnt_marketeer_id = fields.Many2one('res.partner', string='Marketeer', store=False, related='pnt_power_cups_id.pnt_marketeer_id')
-    pnt_state = fields.Selection(
-        selection=[('draft','Draft'),('done','Done')],
-        string='State', related='pnt_power_cups_id.pnt_state', store=False)
+    pnt_state = fields.Selection(string='CUPS State', related='pnt_power_cups_id.pnt_state', store=False)
 
     pnt_kw_fw       = fields.Float('Panels (kWp)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_fw')
     pnt_kw_inverter = fields.Float('Inverter (kWn)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_inverter')
@@ -23,8 +21,6 @@ class CrmLead(models.Model):
     pnt_isolated    = fields.Boolean('Isolated', store=True, readonly=False, related='pnt_power_cups_id.pnt_isolated')
 
     pnt_electric_type = fields.Selection(
-        selection=[('mono','Monofásica'),
-                   ('tri','Trifásica')],
         string="Electricity",
         store=True, readonly=False,
         related='pnt_power_cups_id.pnt_electric_type',

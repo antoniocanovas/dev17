@@ -12,9 +12,7 @@ class ResPartner(models.Model):
     pnt_partner_id = fields.Many2one('res.partner', string='Delivery address', store=False, related='pnt_power_cups_id.pnt_partner_id')
     pnt_dealer_id = fields.Many2one('res.partner', string='Dealer', store=False, related='pnt_power_cups_id.pnt_dealer_id')
     pnt_marketeer_id = fields.Many2one('res.partner', string='Marketeer', store=False, related='pnt_power_cups_id.pnt_marketeer_id')
-    pnt_state = fields.Selection(
-        selection=[('draft','Draft'),('done','Done')],
-        string='State', related='pnt_power_cups_id.pnt_state', store=False)
+    pnt_state = fields.Selection(string='CUPS State', related='pnt_power_cups_id.pnt_state', store=False)
 
     pnt_kw_fw       = fields.Float('Panels (kWp)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_fw')
     pnt_kw_inverter = fields.Float('Inverter (kWn)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_inverter')
@@ -23,8 +21,6 @@ class ResPartner(models.Model):
     pnt_isolated    = fields.Boolean('Isolated', store=True, readonly=False, related='pnt_power_cups_id.pnt_isolated')
 
     pnt_electric_type = fields.Selection(
-        selection=[('mono','Monofásica'),
-                   ('tri','Trifásica')],
         string="Electricity",
         store=True, readonly=False,
         related='pnt_power_cups_id.pnt_electric_type',
@@ -51,4 +47,4 @@ class ResPartner(models.Model):
         for record in self:
             record['pnt_child_cups_count'] = self.env['power.cups'].\
                 search_count(['|',('pnt_customer_id', '=', record.id),('pnt_partner_id', '=', record.id)])
-    pnt_child_cups_count = fields.Integer('CUPS', store=False, compute='_get_child_cups_count')
+    pnt_child_cups_count = fields.Integer('All CUPS', store=False, compute='_get_child_cups_count')
