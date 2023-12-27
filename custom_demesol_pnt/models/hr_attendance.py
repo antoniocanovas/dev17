@@ -8,5 +8,5 @@ class HrAttendance(models.Model):
     _inherit = "hr.attendance"
 
     @api.depends('check_in')
-    def _auto_update_checkout(self):
+    def auto_update_checkout(self):
         self.check_out = self.check_in + timedelta(hours=8)
