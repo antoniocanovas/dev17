@@ -71,7 +71,7 @@ class PowerCUPS(models.Model):
                    ('cee', 'CEE'),
                    ],
         string="Installation type",
-        default='person',
+        default='residential',
         store=True, copy=True,
         tracking=True,
     )
