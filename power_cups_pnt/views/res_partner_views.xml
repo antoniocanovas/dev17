@@ -56,7 +56,7 @@
                             <field name="pnt_dealer_id"/>
                             <field name="pnt_marketeer_id"/>
                             <field name="pnt_target_type"/>
-                            <field name="cadastral_ref"/>
+                            <field name="pnt_cadastral_ref"/>
                         </group>
                     </group>
                 </page>
