@@ -15,7 +15,6 @@
     ],
     "data": [
         "views/res_partner_views.xml",
-#        "data/automatic_actions.xml",
     ],
     "installable": True,
 }
