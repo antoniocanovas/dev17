@@ -10,4 +10,4 @@ class HrAttendance(models.Model):
     @api.depends('create_date')
     def auto_update_checkout(self):
         self.check_out = self.check_in + timedelta(hours=8)
-    check_out = fields.Datetime(readonly=False, compute='auto_update_checkout')
+#    check_out = fields.Datetime(readonly=False, compute='auto_update_checkout')
