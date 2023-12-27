@@ -9,5 +9,5 @@ class HrAttendance(models.Model):
 
     @api.depends('create_date', 'check_in')
     def auto_update_checkout(self):
-        if self.employee_id.auto_checkout == True:
-            self.check_out = self.check_in + timedelta(hours=8)
+#        if self.employee_id.auto_checkout == True:
+        self.check_out = self.check_in + timedelta(hours=8)
