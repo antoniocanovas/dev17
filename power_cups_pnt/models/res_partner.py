@@ -40,8 +40,8 @@ class ResPartner(models.Model):
     )
 
     pnt_customer_type = fields.Selection(
-        selection=[('person','Person'),('company','Company'),('community','Community'),
-                   ('shared','Shared'),('residential','Residential')],
+#        selection=[('person','Person'),('company','Company'),('community','Community'),
+#                   ('shared','Shared'),('residential','Residential')],
         string="Installation type",
         store=True, readonly=False,
         related='pnt_power_cups_id.pnt_customer_type',

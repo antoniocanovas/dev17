@@ -60,7 +60,7 @@ class PowerCUPS(models.Model):
     )
 
     pnt_customer_type = fields.Selection(
-        selection=[('residential','Residential')
+        selection=[('residential','Residential'),
                    ('company','Company'),
                    ('community','Shared residential'),
                    ('shared','Shared industry'),
