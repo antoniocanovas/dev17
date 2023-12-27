@@ -15,6 +15,7 @@
     ],
     "data": [
         "views/res_partner_views.xml",
+        "views/hr_employee_views.xml",
     ],
     "installable": True,
 }
