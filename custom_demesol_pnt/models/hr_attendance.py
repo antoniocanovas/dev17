@@ -1,6 +1,6 @@
 # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from datetime import timedelta
 
 
