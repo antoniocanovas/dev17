@@ -16,8 +16,8 @@ class ResPartner(models.Model):
         selection=[('draft','Draft'),('done','Done')],
         string='State', related='pnt_power_cups_id.pnt_state', store=False)
 
-    pnt_kw_fw       = fields.Float('Panels power (kWp)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_fw')
-    pnt_kw_inverter = fields.Float('Inverter power (kWn)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_inverter')
+    pnt_kw_fw       = fields.Float('Panels (kWp)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_fw')
+    pnt_kw_inverter = fields.Float('Inverter (kWn)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_inverter')
     pnt_kw_battery  = fields.Float('Battery (kWh)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_battery')
     pnt_kw_prve     = fields.Float('PRVE (kW)', store=True, readonly=False, related='pnt_power_cups_id.pnt_kw_prve')
     pnt_isolated    = fields.Boolean('Isolated', store=True, readonly=False, related='pnt_power_cups_id.pnt_isolated')
@@ -31,17 +31,12 @@ class ResPartner(models.Model):
     )
 
     pnt_target_type = fields.Selection(
-        selection=[('acc','Autoconsumo con compensación'),
-                   ('asc','Autoconsumo sin compensación'),
-                   ('venta','Venta a red')],
         string="Customer type",
         store=True, readonly=False,
         related='pnt_power_cups_id.pnt_target_type',
     )
 
     pnt_customer_type = fields.Selection(
-#        selection=[('person','Person'),('company','Company'),('community','Community'),
-#                   ('shared','Shared'),('residential','Residential')],
         string="Installation type",
         store=True, readonly=False,
         related='pnt_power_cups_id.pnt_customer_type',

@@ -32,12 +32,12 @@ class PowerCUPS(models.Model):
             record['pnt_customer_id'] = customer.id
     pnt_customer_id = fields.Many2one('res.partner', string='Customer', store=True, compute='_get_cups_customer')
 
-    pnt_kw_fw       = fields.Float('Panels power (kWp)', store=True, copy=True, tracking=True)
-    pnt_kw_inverter = fields.Float('Inverter power (kWn)', store=True, copy=True, tracking=True)
+    pnt_kw_fw       = fields.Float('Panels (kWp)', store=True, copy=True, tracking=True)
+    pnt_kw_inverter = fields.Float('Inverter (kWn)', store=True, copy=True, tracking=True)
     pnt_kw_battery  = fields.Float('Battery (kWh)', store=True, copy=True, tracking=True)
     pnt_kw_contract = fields.Float('Contract Power (W)', store=True, copy=True, tracking=True)
-    pnt_kw_access   = fields.Float('Access power (kw)', store=True, copy=True, tracking=True)
-    pnt_kw_prve     = fields.Float('PRVE (kw)', store=True, copy=True, tracking=True)
+    pnt_kw_access   = fields.Float('Access power (W)', store=True, copy=True, tracking=True)
+    pnt_kw_prve     = fields.Float('PRVE (kW)', store=True, copy=True, tracking=True)
     pnt_isolated    = fields.Boolean('Isolated', store=True, copy=True, tracking=True)
     pnt_rustic = fields.Boolean('Rustic floor', store=True, copy=True, tracking=True, default=False)
 
