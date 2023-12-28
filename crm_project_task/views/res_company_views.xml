@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
 
     <record id="crm_presale_project_res_company_inh_form" model="ir.ui.view">
