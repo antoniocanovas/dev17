@@ -13,6 +13,6 @@ class HrAttendance(models.Model):
             self.check_out = self.check_in + timedelta(hours=8)
 
     @api.depends('check_in')
-    def auto_update_checkout(self):
+    def auto_update_checkout_from_kiosk(self):
         if self.employee_id.auto_checkout == True:
             self.check_out = self.check_in + timedelta(hours=8)
