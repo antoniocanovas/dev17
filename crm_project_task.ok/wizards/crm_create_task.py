@@ -29,7 +29,7 @@ class CrmCreateTAsk(models.TransientModel):
         task.message_post(
             body=_(
                 "Task created from lead/opportunity "
-                "<a href=# data-oe-model=crm.lead data-oe-id=%(lead)d>%(name)s</a>.",
+                "%(name)s.",
                 lead=self.lead_id,
                 name=self.lead_id.name,
             )
@@ -37,7 +37,7 @@ class CrmCreateTAsk(models.TransientModel):
         self.lead_id.message_post(
             body=_(
                 "Task <a href=# data-oe-model=project.task "
-                "data-oe-id=%(task)d>%(name)s</a> created.",
+                "%(name)s created.",
                 task=task,
                 name=task.display_name,
             )
