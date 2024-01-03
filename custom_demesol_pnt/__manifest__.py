@@ -15,6 +15,7 @@
         "crm",
         "sale_management",
         "project",
+        "sale_project",
     ],
     "data": [
         "views/res_partner_views.xml",
