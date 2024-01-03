@@ -6,4 +6,4 @@ from odoo.exceptions import UserError
 class ProjectProject(models.Model):
     _inherit = "project.project"
 
-    pnt_sale_subtotal = fields.Monetary('Amount', store=True, related='sale_order_id.amount_untaxed')
+    pnt_sale_subtotal = fields.Monetary('Sale amount', store=True, related='sale_order_id.amount_untaxed')

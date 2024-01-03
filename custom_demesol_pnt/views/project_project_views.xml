@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-    <!-- Project customization : -->
+    <!-- Project FORM customization : -->
     <record id="demesol_project_inh_form" model="ir.ui.view">
         <field name="name">demesol.project.inh.form</field>
         <field name="model">project.project</field>
@@ -9,11 +9,24 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="pnt_sale_subtotal"/>
+                <field name="pnt_sale_subtotal" groups="project.group_project_manager"/>
             </xpath>
         </field>
         <field name="priority">99</field>
     </record>
 
+    <!-- Project TREE customization : -->
+    <record id="demesol_project_inh_tree" model="ir.ui.view">
+        <field name="name">demesol.project.inh.tree</field>
+        <field name="model">project.project</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before" optional="show">
+                <field name="pnt_sale_subtotal" groups="project.group_project_manager"/>
+            </xpath>
+        </field>
+        <field name="priority">99</field>
+    </record>
 </odoo>
 
