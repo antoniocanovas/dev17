@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Partner customization & migration fields : -->
+    <record id="hr_employee_demesol_inh_form" model="ir.ui.view">
+        <field name="name">hr.employee.demesol.inh.form</field>
+        <field name="model">hr.employee</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="work_email" position="after">
+                <field name="auto_checkout"/>
+            </field>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>
