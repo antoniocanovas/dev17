@@ -14,10 +14,12 @@
         "hr_attendance",
         "crm",
         "sale_management",
+        "project",
     ],
     "data": [
         "views/res_partner_views.xml",
         "views/hr_employee_views.xml",
+        "views/project_project_views.xml",
     ],
     "installable": True,
 }
