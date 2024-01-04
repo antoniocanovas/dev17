@@ -16,7 +16,8 @@ class CrmLead(models.Model):
         document_count_dict = {partner.id: count for partner, count in read_group_var}
         for record in self:
             record.document_count = document_count_dict.get(record.id, 0)
-    document_count = fields.Integer('Document Count', compute='_compute_document_count')
+#    document_count = fields.Integer('Document Count', compute='_compute_document_count')
+    document_count = fields.Integer('Document Count', related='partner_id.document_count')
 
     def action_see_documents(self):
         self.ensure_one()
