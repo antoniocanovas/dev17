@@ -18,3 +18,18 @@ class CrmLead(models.Model):
                     requirements = False
             if requirements == False:
                 raise UserError('Es obligatorio documentar un teléfono, dirección y NIF antes de confirmar la oportunidad.')
+
+    def action_see_documents(self):
+        self.ensure_one()
+        return {
+            'name': _('Documents'),
+            'domain': [('partner_id', '=', self.partner_id.id)],
+            'res_model': 'documents.document',
+            'type': 'ir.actions.act_window',
+            'views': [(False, 'kanban')],
+            'view_mode': 'kanban',
+            'context': {
+                "default_partner_id": self.partner_id.id,
+                "searchpanel_default_folder_id": False
+            },
+        }
