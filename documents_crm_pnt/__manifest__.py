@@ -2,8 +2,8 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 {
-    "name": "Custom Demesol",
-    "summary": "Customs Demesol",
+    "name": "Documents CRM",
+    "summary": "Partner documents in CRM",
     "version": "17.0.1.0.0",
     'category': 'Sales',
     "author": "Punt Sistemes SL",
@@ -11,16 +11,11 @@
     "license": "AGPL-3",
     "depends": [
         "contacts",
-        "hr_attendance",
         "crm",
-        "sale_management",
-        "project",
-        "sale_project",
+        "documents",
     ],
     "data": [
-        "views/res_partner_views.xml",
         "views/crm_lead_views.xml",
-        "views/project_project_views.xml",
     ],
     "installable": True,
 }
