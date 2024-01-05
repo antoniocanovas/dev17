@@ -15,8 +15,8 @@ class ProjectProject(models.Model):
                 folders = record.pnt_documents_folders.split(",")
                 for fo in folders:
                     name = fo.lstrip()
-                    exist = env['documents.folder'].search(
+                    exist = self.env['documents.folder'].search(
                         [('name', '=', name), ('parent_folder_id', '=', record.documents_folder_id.id)])
                     if not exist.ids:
-                        newfold = env['documents.folder'].create(
+                        newfold = self.env['documents.folder'].create(
                             {'name': name, 'parent_folder_id': record.documents_folder_id.id})
