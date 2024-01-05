@@ -8,9 +8,9 @@ class ProjectProject(models.Model):
                                   help='Folder link to other systems like Google Drive or Onedrive')
     # Texto para indicar nuevas carpetas a crear en Odoo documents, separadas por coma.
     pnt_documents_folders = fields.Char('New folders', store=True, copy=True, tracking=True,
-                                        help='Any word or phrase written will be created as folder in project documents. "\n"'
-                                             'You can write several folders separated by comma. "\n".'
-                                             'This system does not delete the existing folder, you can remove the text. "\n"'
+                                        help='Any word or phrase written will be created as folder in project documents. \n'
+                                             'You can write several folders separated by comma. \n.'
+                                             'This system does not delete the existing folder, you can remove the text. \n'
                                              'Permissions will be the same as the main project folder.')
 
     @api.onchange('pnt_documents_folders','documents_folder_id')
