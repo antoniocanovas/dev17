@@ -18,5 +18,10 @@ class ProjectProject(models.Model):
                     exist = self.env['documents.folder'].search(
                         [('name', '=', name), ('parent_folder_id', '=', record.documents_folder_id.id)])
                     if not exist.ids:
-                        newfold = self.env['documents.folder'].create(
-                            {'name': name, 'parent_folder_id': record.documents_folder_id.id})
+                        newfold = self.env['documents.folder'].create({
+                            'name': name,
+                            'parent_folder_id': record.documents_folder_id.id,
+                            'grous_ids': record.documents_folder_id.groups_ids,
+                            'read_groups_ids': record.documents_folder_id.read_groups_ids,
+                            'company_id': record.company_id.id,
+                             })
