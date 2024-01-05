@@ -9,7 +9,9 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="pnt_cloudfolder" widget="url"/>
-                <field name="pnt_documents_folders" invisible="not documents_folder_id.id"/>
+                <field name="pnt_documents_folders"
+                       invisible="not documents_folder_id.id"
+                       placeholder='New folder names separated by commas ...'/>
             </xpath>
         </field>
     </record>

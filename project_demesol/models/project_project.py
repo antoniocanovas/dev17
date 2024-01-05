@@ -5,8 +5,7 @@ class ProjectProject(models.Model):
 
     # Carpeta para Onedrive / Drive / Synology:
     pnt_cloudfolder = fields.Char('Cloud folder', store=True, copy=False)
-    pnt_documents_folders = fields.Char('New folders', store=True, copy=True,
-                                        placeholder='New folder names separated by commas ...')
+    pnt_documents_folders = fields.Char('New folders', store=True, copy=True)
 
     @api.onchange('pnt_documents_folders','documents_folder_id')
     def create_new_documents_folders(self):
@@ -21,7 +20,7 @@ class ProjectProject(models.Model):
                         newfold = self.env['documents.folder'].create({
                             'name': name,
                             'parent_folder_id': record.documents_folder_id.id,
-                            'grous_ids': record.documents_folder_id.groups_ids,
-                            'read_groups_ids': record.documents_folder_id.read_groups_ids,
+                            'group_ids': record.documents_folder_id.group_ids,
+                            'read_group_ids': record.documents_folder_id.read_group_ids,
                             'company_id': record.company_id.id,
                              })
