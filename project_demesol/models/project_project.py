@@ -8,7 +8,7 @@ class ProjectProject(models.Model):
     pnt_documents_folders = fields.Char('New folders', store=True, copy=True,
                                         placeholder='New folder names separated by commas ...')
 
-    @api.onchange('pnt_documents_folders')
+    @api.onchange('pnt_documents_folders','documents_folder_id')
     def create_new_documents_folders(self):
         for record in self:
             if (record.pnt_documents_folders) and (record.documents_folder_id.id):
