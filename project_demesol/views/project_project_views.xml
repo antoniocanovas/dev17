@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="project_cloudfolder_inh_form" model="ir.ui.view">
+        <field name="name">project.cloudfolder.in.form</field>
+        <field name="model">project.project</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="pnt_cloudfolder" widget="url"/>
+                <field name="pnt_documents_folders" invisible="not documents_folder_id.id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
