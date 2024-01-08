@@ -7,6 +7,15 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
+            <xpath expr="header" position="inside">
+                <button
+                    string="Create folders"
+                    name="create_new_documents_folders"
+                    type="object"
+                    class="oe_highlight"
+                    invisible="active == False or not pnt_documents_folders or not documents_folder_id.id"
+                />
+            </xpath>
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="pnt_cloudfolder" widget="url"/>
                 <field name="pnt_documents_folders"
