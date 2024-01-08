@@ -13,7 +13,7 @@ class ProjectProject(models.Model):
                                              'This system does not delete the existing folder, you can remove the text. \n'
                                              'Permissions will be the same as the main project folder.')
 
-    @api.onchange('pnt_documents_folders','documents_folder_id','create_date')
+    @api.onchange('pnt_documents_folders','documents_folder_id')
     def create_new_documents_folders(self):
         for record in self:
             temp_folders = []
