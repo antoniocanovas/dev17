@@ -16,6 +16,7 @@
         <field name="name">=> Create project document folders</field>
         <field name="model_id" ref="project.model_project_project"/>
         <field name="evaluation_type">value</field>
+        <field name="state">code</field>
         <field name="code">
             record.create_new_documents_folders()
         </field>
