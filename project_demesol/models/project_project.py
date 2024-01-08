@@ -4,7 +4,7 @@ class ProjectProject(models.Model):
     _inherit = 'project.project'
 
     # Carpeta para Onedrive / Drive / Synology:
-    pnt_cloudfolder = fields.Char('Cloud folder', store=True, copy=False, trackig=100,
+    pnt_cloudfolder = fields.Char('Cloud folder', store=True, copy=False, tracking=100,
                                   help='Folder link to other systems like Google Drive or Onedrive')
     # Texto para indicar nuevas carpetas a crear en Odoo documents, separadas por coma.
     pnt_documents_folders = fields.Char('New folders', store=True, copy=True, tracking=100,
