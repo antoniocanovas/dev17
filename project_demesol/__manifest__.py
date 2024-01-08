@@ -13,6 +13,7 @@
     'depends': [
         'project',
         'documents_project',
+        'base_automation',
     ],
     'data': [
         'views/project_project_views.xml',
