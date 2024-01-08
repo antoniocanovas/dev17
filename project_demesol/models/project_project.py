@@ -20,16 +20,14 @@ class ProjectProject(models.Model):
                 folders = record.pnt_documents_folders.split(",")
                 for fo in folders:
                     parent = record.documents_folder_id
-                    name = fo.lstrip()
-
                     subfolders = fo.split("/")
                     for subfo in subfolders:
-                        namesub = subfo.lstrip()
+                        name = subfo.lstrip()
                         exist = self.env['documents.folder'].search(
-                            [('name', '=', namesub), ('parent_folder_id', '=', parent.id)])
+                            [('name', '=', name), ('parent_folder_id', '=', parent.id)])
                         if not exist.ids:
                             newfold = self.env['documents.folder'].create({
-                                'name': namesub,
+                                'name': name,
                                 'parent_folder_id': parent.id,
                                 'group_ids': parent.group_ids,
                                 'read_group_ids': parent.read_group_ids,
