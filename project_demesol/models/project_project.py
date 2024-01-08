@@ -23,7 +23,7 @@ class ProjectProject(models.Model):
                 # Quitar espacios iniciales y ordenar alfabéticamente para evitar errores en asignación "parent":
                 for folder in folders:
                     temp_folders.append(folder.lstrip())
-                folders = temp_folders.sorted()
+                folders = sorted(temp_folders)
 
                 # Recorrer carpetas y subcarpetas, ya ordenadas:
                 for fo in folders:
