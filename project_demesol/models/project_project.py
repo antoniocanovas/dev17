@@ -16,8 +16,16 @@ class ProjectProject(models.Model):
     @api.onchange('pnt_documents_folders','documents_folder_id')
     def create_new_documents_folders(self):
         for record in self:
+            temp_folders = []
             if (record.pnt_documents_folders) and (record.documents_folder_id.id):
                 folders = record.pnt_documents_folders.split(",")
+
+                # Quitar espacios iniciales y ordenar alfabéticamente para evitar errores en asignación "parent":
+                for folder in folders:
+                    temp_folders.append(folder.lstrip())
+                folders = temp_folders.sorted()
+
+                # Recorrer carpetas y subcarpetas, ya ordenadas:
                 for fo in folders:
                     parent = record.documents_folder_id
                     subfolders = fo.split("/")
@@ -26,6 +34,7 @@ class ProjectProject(models.Model):
                         exist = self.env['documents.folder'].search(
                             [('name', '=', name), ('parent_folder_id', '=', parent.id)])
 
+                        # Podemos hacer esto, gracias al orden alfabético previo:
                         if exist.ids:
                             parent = exist[0]
                         else:
