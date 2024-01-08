@@ -25,7 +25,10 @@ class ProjectProject(models.Model):
                         name = subfo.lstrip()
                         exist = self.env['documents.folder'].search(
                             [('name', '=', name), ('parent_folder_id', '=', parent.id)])
-                        if not exist.ids:
+
+                        if exist.ids:
+                            parent = exist[0]
+                        else:
                             newfold = self.env['documents.folder'].create({
                                 'name': name,
                                 'parent_folder_id': parent.id,
