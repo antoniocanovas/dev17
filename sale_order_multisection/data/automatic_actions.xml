@@ -16,6 +16,7 @@
         <field name="name">=> AS Multisection SOL Sequence Update</field>
         <field name="model_id" ref="sale.model_sale_order_line"/>
         <field name="evaluation_type">value</field>
+        <field name="state">code</field>
         <field name="code">
             record.resequence_in_o2m_new_sol()
         </field>
