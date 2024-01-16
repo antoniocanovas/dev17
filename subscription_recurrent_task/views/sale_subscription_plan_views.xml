@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="subscription_recurrent_task_sale_template_inh_form" model="ir.ui.view">
+        <field name="name">subscription.recurrent.task.sale.template.inh.form</field>
+        <field name="model">sale.subscription.plan</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_plan_view_form"/>
+        <field name="arch" type="xml">
+            <field name="user_extend" position="after">
+                <field name="create_task"/>
+            </field>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>

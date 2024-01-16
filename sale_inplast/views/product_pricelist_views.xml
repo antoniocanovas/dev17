@@ -19,13 +19,21 @@
                         <button name="pricelist_update_tracking" type="object" data-hotkey="shift+r"
                                 string="Update prices" class="oe_highlight"
                                 invisible="(pnt_pending_update == False)"/>
+                        <field name="pnt_state" widget="statusbar"/>
                     </header>
                 </xpath>
 
                 <xpath expr="//field[@name='active']" position="after">
-                    <field name="pnt_tracking_date" readonly="1"/>
+                    <field name="pnt_pricelist_type"/>
+                    <field name="pnt_pricelist_frec"/>
                     <field name="pnt_pending_update" invisible="1"/>
-                    <field name="pnt_plastic_tax"/>
+                </xpath>
+                <xpath expr="//sheet/group" position="inside">
+                    <group>
+                        <field name="pnt_last_update" readonly="1"/>
+                        <field name="pnt_next_update"/>
+                        <field name="pnt_lock_date" readonly="1"/>
+                    </group>
                 </xpath>
 
                 <xpath expr="//field[@name='item_ids']/tree" position="inside">
@@ -41,7 +49,7 @@
                             <tree>
                                 <field name="name"/>
                                 <field name="pnt_raw_material"/>
-                                <field name="pnt_pricelist_weight"/>
+                                <field name="pnt_plastic_weight"/>
                                 <field name="pnt_mrp_fault_percent"/>
                                 <field name="pnt_i0"/>
                                 <field name="pnt_i1"/>
@@ -95,22 +103,24 @@
         <field name="priority">99</field>
     </record>
 
-    # No modificar el campo extra reservado para el impuesto al plástico:
-    <record id="inplast_extra_ro_pricelist_inh_view" model="ir.ui.view">
-        <field name="name">inplast.extra_ro_pricelist.inh.view</field>
+    # State en pricelist tree:
+    <record id="inplast_pricelist_inh_tree_view" model="ir.ui.view">
+        <field name="name">inplast.pricelist.inh.tree.view</field>
         <field name="model">product.pricelist</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="product_pricelist_fixed_extra.inplast_pricelist_inh_view"/>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product.product_pricelist_view_tree"/>
         <field name="arch" type="xml">
             <data>
-                <field name="price_surcharge" position="attributes">
-                    <attribute name="readonly">1</attribute>
-                    <attribute name="string">Plastic tax</attribute>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-info">pnt_state == 'update'</attribute>
+                    <attribute name="decoration-danger">pnt_state == 'locked'</attribute>
+                </xpath>
+                <field name="discount_policy" position="after">
+                    <field name="pnt_state"/>
                 </field>
             </data>
         </field>
         <field name="priority">99</field>
     </record>
-
 
 </odoo>

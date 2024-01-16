@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pnt_action_ean_sequence_open" model="ir.actions.server">
+        <field name="name">Open EAN Sequence</field>
+        <field name="model_id" ref="base.model_ir_sequence"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_ean_sequence()
+        </field>
+    </record>
+    <record id="pnt_action_internal_ean_sequence_open" model="ir.actions.server">
+        <field name="name">Open Internal EAN Sequence</field>
+        <field name="model_id" ref="base.model_ir_sequence"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_internal_ean_sequence()
+        </field>
+    </record>
+
+    <menuitem id="pnt_menu_ean_sequence"
+              name="EAN sequence"
+              action="pnt_action_ean_sequence_open"
+              parent="stock.menu_stock_config_settings"
+              sequence="100"/>
+    <menuitem id="pnt_menu_internal_ean_sequence"
+              name="Internal EAN sequence"
+              action="pnt_action_internal_ean_sequence_open"
+              parent="stock.menu_stock_config_settings"
+              sequence="101"/>
+
+</odoo>

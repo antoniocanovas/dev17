@@ -15,6 +15,4 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     pnt_pricelist_day_lock = fields.Integer('Pricelist days lock', store=True, default=15)
-    pnt_update_month_day = fields.Integer('Month day to update', store=True, default=1)
-    pnt_plastic_tax = fields.Float('Plastic tax (€/kg)', default=0.45)
-    pnt_product_plastic_tax_id = fields.Many2one('product.template', string='Plastic tax product', store=True)
+    pnt_update_month_day = fields.Integer('Pricelist update day', store=True, default=1)

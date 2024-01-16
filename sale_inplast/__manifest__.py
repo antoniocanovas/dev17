@@ -1,9 +1,9 @@
 {
-    'name': 'Custom Inplast Sales',
+    'name': 'Sales Inplast',
     'version': '17.0.1.0.0',
     'category': '',
     'description': u"""
-Custom Inplast Sales.
+Sales Inplast.
 Cada cliente sólo tiene posibilidad de ser ofertado en sus productos (ventas, facturas, tarifas, etc).
 Recálculo de tarifas en base a datos de familia, productos y materia prima.
 """,
@@ -12,11 +12,14 @@ Recálculo de tarifas en base a datos de familia, productos y materia prima.
         'mail',
         'contacts',
         'product',
+        'stock',
         'sale_management',
         'account',
         'account_invoice_pricelist',
         'account_invoice_pricelist_sale',
         'product_pricelist_fixed_extra',
+        'product_category_chatter',
+        'l10n_es_aeat_mod592_pnt',
     ],
     'data': [
         'views/account_move_views.xml',
@@ -25,8 +28,6 @@ Recálculo de tarifas en base a datos de familia, productos y materia prima.
         'views/res_partner_views.xml',
         'views/sale_order_views.xml',
         'views/res_company_views.xml',
-        'views/product_template_views.xml',
-        'data/product_plastic_tax.xml',
     ],
     'installable': True,
 }

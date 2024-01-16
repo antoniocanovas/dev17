@@ -10,11 +10,6 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
 
-            <!-- Apunte de compras/ventas para el impuesto al plástico: -->
-            <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="pnt_move_plastic_tax_id"/>
-            </xpath>
-
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega: -->
             <xpath expr="//field[@name='pricelist_id'][2]" position="attributes">
                 <attribute name="readonly">1</attribute>

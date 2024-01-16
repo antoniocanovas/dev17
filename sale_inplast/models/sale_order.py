@@ -9,12 +9,21 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-#    @api.onchange('partner_id', 'state')
-#    def _avoid_outdated_pricelists(self):
-#        today = date.today()
-#        locking_days = self.env.user.company_id.pnt_pricelist_day_lock
-#        lock_date = today - timedelta(days = locking_days)
-#        pricelist_date = self.partner_id.property_product_pricelist.pnt_tracking_date
-#        if not (pricelist_date) or (pricelist_date < lock_date):
-#            raise UserError('Outdate pricelist !!')
-#        return True
+    @api.depends('state', 'order_line', 'pricelist_id.pnt_state')
+    def _get_pricelist_state(self):
+        for record in self:
+            state = record.pnt_pricelist_state
+            if record.state not in ['sale','cancel']:
+                state = record.pricelist_id.pnt_state
+            record['pnt_pricelist_state'] = state
+    pnt_pricelist_state = fields.Selection([('active','Active'),('update','Update'),('locked','Locked')],
+                                           string='Pricelist state', store=True, copy=False,
+                                           compute='_get_pricelist_state')
+
+    # Restricción para que no se puedan cambiar de estado los pedidos con tarifas bloqueadas:
+    @api.constrains('state')
+    def __avoid_sales_with_locked_pricelist(self):
+        for record in self:
+            if record.pnt_pricelist_state == 'locked':
+                raise UserError('Pedido bloqueado, revisa y actualiza la tarifa del cliente: ' + record.partner_id.name)
+            return True

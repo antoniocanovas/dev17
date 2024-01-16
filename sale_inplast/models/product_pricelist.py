@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from datetime import date
+from datetime import date, datetime, timedelta
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -9,9 +9,35 @@ class ProductPricelist(models.Model):
     _name = 'product.pricelist'
     _inherit = ['product.pricelist', 'mail.thread', 'mail.activity.mixin']
 
-    pnt_tracking_date = fields.Date('Tracking date', store=True, copy=False)
+    # Campos para tipos y actualización de tarifa:
     pnt_pending_update = fields.Boolean('Pending update', store=True, copy=False, default=False)
-    pnt_plastic_tax = fields.Boolean('Apply plastic tax', store=True, copy=False, default=True)
+    pnt_last_update = fields.Date('Last update')
+    pnt_next_update = fields.Date('Next update')
+    pnt_pricelist_frec = fields.Integer('Months frequency', store=True, copy=True)
+    pnt_pricelist_type   = fields.Selection([('standard','Estándar'),
+                                             ('bom', 'Escandallo general'),
+                                             ('custom', 'Escandallo personalizado')],
+                                            store=True, copy=True, string='Pricelist mode')
+
+    @api.depends('pnt_next_update')
+    def _get_pnt_lock_date(self):
+        datelock = False
+        days2lock = self.env.company.pnt_pricelist_day_lock
+        if (self.pnt_next_update):
+            datelock = self.pnt_next_update + timedelta(days=days2lock)
+        self.pnt_lock_date = datelock
+    pnt_lock_date   = fields.Date('Locking date', compute='_get_pnt_lock_date')
+
+    @api.depends('pnt_last_update','pnt_next_update')
+    def _get_pricelist_state(self):
+        for record in self:
+            today, state = date.today(), 'active'
+            if (record.pnt_next_update) and (record.pnt_next_update < today): state = 'update'
+            if (record.pnt_lock_date) and (record.pnt_lock_date < today): state = 'locked'
+            record['pnt_state'] = state
+    pnt_state = fields.Selection([('active','Active'),('update','Update'),('locked','Locked')],
+                                 string='State', store=True, compute='_get_pricelist_state')
+
 
     # Productos en la lista de precios, para ser usados como exclusivamente disponibles en ventas y facturas:
     @api.depends('item_ids.product_tmpl_id')
@@ -35,16 +61,19 @@ class ProductPricelist(models.Model):
                 categs.append(li.product_tmpl_id.categ_id.id)
         self.pnt_product_categ_ids = [(6,0,categs)]
     pnt_product_categ_ids = fields.Many2many('product.category', string='Raw products', store=False,
-                                           compute='_get_product_categs')
+                                             compute='_get_product_categs')
 
 
     # Crear una nota con los precios que han cambiado en la tarifa, desde botón o acción planificada:
     def pricelist_update_tracking(self):
         item_tracking = ""
         now = date.today()
+        years = (now.month + self.pnt_pricelist_frec) // 12
+        month = (now.month + self.pnt_pricelist_frec) - years * 12
+        nextupdate = date(now.year + years, month, self.env.company.pnt_update_month_day)
 
         for li in self.item_ids:
-            if (li.pnt_new_price != li.fixed_price) and (li.pnt_product_state == True):
+            if (li.pnt_new_price != li.fixed_price) and (li.pnt_product_state == True) or (li.pnt_plastic_tax == 0):
                 categ = li.product_tmpl_id.categ_id
                 name = li.product_tmpl_id.name
                 if li.product_id.id: name = li.product_id.name
@@ -56,10 +85,11 @@ class ProductPricelist(models.Model):
                                  str(categ.pnt_i1) + ", " + str(categ.pnt_i2) + ", " + str(categ.pnt_i3) + \
                                  "</p>"
 
-                # El impuesto al plástico aplica a ciertos régimenes fiscales, definimos en la tarifa (única por cliente):
+                # El impuesto al plástico aplica a ciertos régimenes fiscales, definimos en la tarifa (única por cliente)
+                # Aunque al crear la línea ya se asignó por onchange, aquí se actualiza por si cambia el impuesto:
                 plastic_tax = 0
                 if self.pnt_plastic_tax:
-                    plastic_tax = li.product_tmpl_id.pnt_plastic_unit_tax
+                    plastic_tax = li.product_tmpl_id.pnt_plastic_1000unit_tax / 1000
 
                 li.write({'pnt_tracking_date':now,
                           'price_surcharge': plastic_tax,
@@ -71,7 +101,7 @@ class ProductPricelist(models.Model):
                                                         'model': 'product.pricelist',
                                                         'res_id': self.id,
                                                         })
-        self.write({'pnt_tracking_date':now, 'pnt_pending_update':False})
+        self.write({'pnt_last_update':now, 'pnt_next_update':nextupdate, 'pnt_pending_update':False})
 
 
     # Recalcular precios de tarifa en base a parámetros establecidos:
@@ -84,7 +114,7 @@ class ProductPricelist(models.Model):
             raw_increment = categ.pnt_i0
 
             # Tarifa/peso en familia:
-            pricelist_weight = product.categ_id.pnt_pricelist_weight
+            pricelist_weight = product.categ_id.pnt_plastic_weight
 
             # Incremento de precio debido al coste de materia prima (se consideran defectuosos):
             net_price = pricelist_weight * (raw_increment / 1000) * (1 + fault_percent/100) + (last_price * 1000)

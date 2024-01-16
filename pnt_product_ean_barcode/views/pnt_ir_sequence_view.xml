@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pnt_sequence_view" model="ir.ui.view">
+        <field name="model">ir.sequence</field>
+        <field name="arch" type="xml">
+            <form string="Sequences">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="pnt_ean14_prefix"/>
+                            <field name="prefix"/>
+                        </group>
+                        <group>
+                            <field name="padding"/>
+                            <field name="number_increment"/>
+                            <field name="number_next_actual" string="Next Number"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

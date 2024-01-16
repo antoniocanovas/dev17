@@ -8,10 +8,8 @@
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='website']" position="after">
-                <field name="pnt_pricelist_day_lock"/>
-                <field name="pnt_update_month_day"/>
-                <field name="pnt_plastic_tax"/>
-                <field name="pnt_product_plastic_tax_id"/>
+                <field name="pnt_pricelist_day_lock" required="1"/>
+                <field name="pnt_update_month_day" required="1"/>
             </xpath>
         </field>
     </record>

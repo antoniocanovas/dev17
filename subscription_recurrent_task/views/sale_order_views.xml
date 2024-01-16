@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="subscription_recurrent_task_inh_form" model="ir.ui.view">
+        <field name="name">Subscription.recurrent.task.inh.form</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_order_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Proyecto sobre el que se crearán las tareas, si es FSM se podrá planificar: -->
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                <field name="create_task" invisible="1"/>
+                <field name="subscription_project_id" domain="[('company_id','=',company_id)]"
+                       invisible = "is_subscription == False"
+                       required = "create_task != False"/>
+            </xpath>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>
