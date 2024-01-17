@@ -8,9 +8,17 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
 
-    pnt_product_type = fields.Selection(string='Product type', related='categ_id.pnt_product_type')
+    # Tipo de productos en subfamilia:
+    pnt_product_type = fields.Selection([('final','End-product'),
+                                         ('semi', 'Semi-finished'),
+                                         ('packing','Packing'),
+                                         ('raw', 'Raw'),
+                                         ('dye', 'Dye'),
+                                         ('packaging', 'Packaging'),
+                                         ('other', 'Other')],
+                                        store=True, copy=True, string='Product type')
+    pnt_parent_id = fields.Many2one('product.template', string='Main product')
     pnt_product_dye_id = fields.Many2one('product.template', string='Product dye', store=True, copy=True)
-
     pnt_product_coa = fields.Many2one(
         "pnt.coa",
         string="COA",

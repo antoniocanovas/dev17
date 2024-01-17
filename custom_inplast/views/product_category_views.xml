@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
-
+    # Para borrar desde 01/24, se ha llevado a elegir en producto !!
     # Datos para recálculo de tarifas:
     <record id="inplast_product_category_inh_form" model="ir.ui.view">
         <field name="name">inplast.product.category.inh.form</field>
