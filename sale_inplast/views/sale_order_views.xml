@@ -10,6 +10,11 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
+            <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
+            <field name="pricelist_id" position="after">
+                <field name="pnt_pricelist_state"/>
+            </field>
+
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
             <xpath expr="//header" position="after">
                 <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update'">
@@ -27,10 +32,6 @@
                 <attribute name="readonly">pnt_pricelist_state == "locked" or state == "cancel" or state == "locked"</attribute>
             </xpath>
 -->
-            <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
-            <field name="pricelist_id" position="after">
-                <field name="pnt_pricelist_state"/>
-            </field>
 
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega y permitir acceso m2o: -->
             <xpath expr="//field[@name='pricelist_id']" position="attributes">
