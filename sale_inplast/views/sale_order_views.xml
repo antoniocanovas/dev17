@@ -11,7 +11,6 @@
         <field name="arch" type="xml">
 
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
-            <!-- ERROR AL INSTALAR:
             <xpath expr="//header" position="after">
                 <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update'">
                     Revisa la tarifa de este cliente, ha pasado la fecha de revisión.
@@ -21,7 +20,6 @@
                     La edición o confirmación del pedido están bloqueados.
                 </div>
             </xpath>
-            -->
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
             <!--
