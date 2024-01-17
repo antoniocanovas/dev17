@@ -12,7 +12,7 @@ class ProductCategory(models.Model):
     # Tipo de productos en subfamilia:
     pnt_product_type = fields.Selection([('final','End-product'),
                                          ('semi', 'Semi-finished'),
-                                         ('packing','Packing')
+                                         ('packing','Packing'),
                                          ('raw', 'Raw'),
                                          ('dye', 'Dye'),
                                          ('packaging', 'Packaging'),
