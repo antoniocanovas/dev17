@@ -13,7 +13,7 @@ class SaleOrder(models.Model):
     def _get_sale_pricelist_state(self):
         for record in self:
             state = record.pnt_pricelist_state
-            if record.state not in ['sale','cancel']:
+            if record.state in ['draft','sent']:
                 state = record.pricelist_id.pnt_state
             record['pnt_pricelist_state'] = state
     pnt_pricelist_state = fields.Selection([('active','Active'),('update','Update'),('locked','Locked')],
