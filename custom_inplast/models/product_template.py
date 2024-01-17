@@ -18,6 +18,7 @@ class ProductTemplate(models.Model):
                                          ('other', 'Other')],
                                         store=True, copy=True, string='Product type')
     pnt_parent_id = fields.Many2one('product.template', string='Main product')
+    pnt_parent_qty = fields.Integer('Parent qty')
     pnt_product_dye_id = fields.Many2one('product.template', string='Product dye', store=True, copy=True)
     pnt_product_coa = fields.Many2one(
         "pnt.coa",

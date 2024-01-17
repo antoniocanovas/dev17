@@ -13,6 +13,10 @@
                        invisible="pnt_product_type not in ['packing']"
                        required="pnt_product_type in ['packing']"
                 />
+                <field name="pnt_parent_qty"
+                       invisible="pnt_product_type not in ['packing']"
+                       required="pnt_product_type in ['packing']"
+                />
                 <field name="pnt_product_dye_id" domain="[('pnt_product_type','=','dye')]"
                        invisible="pnt_product_type not in ['final','semi']"
                 />
