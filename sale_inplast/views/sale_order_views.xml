@@ -29,8 +29,8 @@
             <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
             <field name="pricelist_id" position="after">
                 <field name="pnt_pricelist_state"/>
-                <field name="pnt_pricelist_is_update" invisible="1"/>
-                <field name="pnt_pricelist_is_locked" invisible="1"/>
+                <field name="pnt_pricelist_is_update" invisible="1" groups="!product.group_product_pricelist"/>
+                <field name="pnt_pricelist_is_locked" invisible="1" groups="!product.group_product_pricelist"/>
             </field>
 
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega y permitir acceso m2o: -->
