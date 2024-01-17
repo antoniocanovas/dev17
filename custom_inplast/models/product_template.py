@@ -20,6 +20,17 @@ class ProductTemplate(models.Model):
     pnt_parent_id = fields.Many2one('product.template', string='Main product')
     pnt_parent_qty = fields.Integer('Parent qty')
     pnt_product_dye_id = fields.Many2one('product.template', string='Product dye', store=True, copy=True)
+
+    @api.depends('categ_id','pnt_product_type')
+    def _get_pnt_plastic_weight(self):
+        weight = self.categ_id.pnt_plastick_weight
+        if self.pnt_product_type == 'packing':
+            weight = self.categ_id.pnt_plastick_weight * self.pnt_parent_qty
+        self.pnt_plastic_weight = weight
+    pnt_plastic_weight = fields.Float(compute='_get_pnt_plastic_weight')
+
+
+
     pnt_product_coa = fields.Many2one(
         "pnt.coa",
         string="COA",
