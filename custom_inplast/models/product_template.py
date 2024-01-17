@@ -21,7 +21,7 @@ class ProductTemplate(models.Model):
     pnt_parent_qty = fields.Integer('Parent qty')
     pnt_product_dye_id = fields.Many2one('product.template', string='Product dye', store=True, copy=True)
 
-    @api.onchange('categ_id','pnt_product_type')
+    @api.onchange('categ_id', 'pnt_parent_id', 'pnt_parent_qty', 'pnt_product_type')
     def _get_pnt_plastic_weight(self):
         for record in self:
             weight = record.categ_id.pnt_plastic_weight
