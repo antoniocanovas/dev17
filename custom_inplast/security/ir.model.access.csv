@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pnt_coa_template,user.coa.access,model_pnt_coa,base.group_user,1,1,1,1
