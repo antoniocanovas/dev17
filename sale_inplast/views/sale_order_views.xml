@@ -12,10 +12,10 @@
 
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
             <xpath expr="//header" position="after">
-                <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_is_update == False">
+                <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update'">
                     Revisa la tarifa de este cliente, ha pasado la fecha de revisión.
                 </div>
-                <div class="alert alert-danger mb-0" role="alert" invisible="pnt_pricelist_is_locked == False">
+                <div class="alert alert-danger mb-0" role="alert" invisible="pnt_pricelist_state != 'locked'">
                     El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.
                     La edición o confirmación del pedido están bloqueados.
                 </div>
@@ -23,12 +23,15 @@
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
             <xpath expr="//field[@name='order_line']" position="attributes">
-                <attribute name="readonly">pnt_pricelist_is_locked or state == "cancel" or state == "locked"</attribute>
+                <attribute name="readonly">pnt_pricelist_state == "locked" or state == "cancel" or state == "locked"</attribute>
             </xpath>
+
 
             <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
             <field name="pricelist_id" position="after">
-                <field name="pnt_pricelist_state"/>
+                <field name="pnt_pricelist_state" groups="product.group_product_pricelist"/>
+                <field name="pnt_pricelist_state" invisible="1" groups="!product.group_product_pricelist"/>
+
                 <field name="pnt_pricelist_is_update" invisible="1" groups="!product.group_product_pricelist"/>
                 <field name="pnt_pricelist_is_update" groups="product.group_product_pricelist"/>
                 <field name="pnt_pricelist_is_locked" invisible="1" groups="!product.group_product_pricelist"/>
