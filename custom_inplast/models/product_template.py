@@ -26,7 +26,7 @@ class ProductTemplate(models.Model):
         for record in self:
             weight = record.categ_id.pnt_plastic_weight
             if self.pnt_product_type == 'packing':
-                weight = self.categ_id.pnt_plastic_weight * self.pnt_parent_qty
+                weight = self.pnt_parent_id.categ_id.pnt_plastic_weight * self.pnt_parent_qty
             self.pnt_plastic_weight = weight
 
 
