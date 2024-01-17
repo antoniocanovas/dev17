@@ -23,9 +23,9 @@ class ProductTemplate(models.Model):
 
     @api.depends('categ_id','pnt_product_type')
     def _get_pnt_plastic_weight(self):
-        weight = self.categ_id.pnt_plastick_weight
+        weight = self.categ_id.pnt_pricelist_weight
         if self.pnt_product_type == 'packing':
-            weight = self.categ_id.pnt_plastick_weight * self.pnt_parent_qty
+            weight = self.categ_id.pnt_pricelist_weight * self.pnt_parent_qty
         self.pnt_plastic_weight = weight
     pnt_plastic_weight = fields.Float('PP',compute='_get_pnt_plastic_weight', related=False)
 
