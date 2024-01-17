@@ -11,12 +11,11 @@
         <field name="arch" type="xml">
 
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
-            <!-- ERROR AL INSTALAR:
             <xpath expr="//header" position="after">
-                <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update'">
+                <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_is_update == False">
                     Revisa la tarifa de este cliente, ha pasado la fecha de revisión.
                 </div>
-                <div class="alert alert-danger mb-0" role="alert" invisible="pnt_pricelist_state != 'locked'">
+                <div class="alert alert-danger mb-0" role="alert" invisible="pnt_pricelist_is_locked == False">
                     El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.
                     La edición o confirmación del pedido están bloqueados.
                 </div>
@@ -24,14 +23,15 @@
             -->
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
-            <!--
             <xpath expr="//field[@name='order_line']" position="attributes">
-                <attribute name="readonly">pnt_pricelist_state == "locked" or state == "cancel" or state == "locked"</attribute>
+                <attribute name="readonly">pnt_pricelist_is_locked or state == "cancel" or state == "locked"</attribute>
             </xpath>
 -->
             <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
             <field name="pricelist_id" position="after">
                 <field name="pnt_pricelist_state"/>
+                <field name="pnt_pricelist_is_update" invisible="1"/>
+                <field name="pnt_pricelist_is_locked" invisible="1"/>
             </field>
 
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega y permitir acceso m2o: -->
