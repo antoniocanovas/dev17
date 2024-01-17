@@ -24,10 +24,11 @@
             -->
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
+            <!--
             <xpath expr="//field[@name='order_line']" position="attributes">
                 <attribute name="readonly">pnt_pricelist_state == "locked" or state == "cancel" or state == "locked"</attribute>
             </xpath>
-
+-->
             <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
             <field name="pricelist_id" position="after">
                 <field name="pnt_pricelist_state" invisible="1"/>
