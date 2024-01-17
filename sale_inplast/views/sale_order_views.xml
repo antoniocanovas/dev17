@@ -27,9 +27,12 @@
             </xpath>
 
             <!-- Estado de la tarifa en el momento de guardar líneas o cambiar estado: -->
+            <!-- error pendiente de ver:
             <field name="pricelist_id" position="after">
                 <field name="pnt_pricelist_state" groups="product.group_product_pricelist"/>
             </field>
+            -->
+
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega y permitir acceso m2o: -->
             <xpath expr="//field[@name='pricelist_id']" position="attributes">
                 <attribute name="readonly">True</attribute>
