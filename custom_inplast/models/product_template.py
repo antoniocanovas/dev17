@@ -27,7 +27,7 @@ class ProductTemplate(models.Model):
         if self.pnt_product_type == 'packing':
             weight = self.categ_id.pnt_plastick_weight * self.pnt_parent_qty
         self.pnt_plastic_weight = weight
-    pnt_plastic_weight = fields.Float(compute='_get_pnt_plastic_weight')
+    pnt_plastic_weight = fields.Float('Weight (kg)', compute='_get_pnt_plastic_weight')
 
 
 
