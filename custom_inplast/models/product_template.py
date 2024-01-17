@@ -23,11 +23,11 @@ class ProductTemplate(models.Model):
 
     @api.onchange('categ_id','pnt_product_type')
     def _get_pnt_plastic_weight(self):
-        weight = self.categ_id.pnt_pricelist_weight
-        if self.pnt_product_type == 'packing':
-            weight = self.categ_id.pnt_pricelist_weight * self.pnt_parent_qty
-        self.pnt_plastic_weight = weight
-    pnt_plastic_weight = fields.Float('PP',compute='_get_pnt_plastic_weight', related=False)
+        for record in self:
+            weight = record.categ_id.pnt_plastic_weight
+            if self.pnt_product_type == 'packing':
+                weight = self.categ_id.pnt_pricelist_weight * self.pnt_parent_qty
+            self.pnt_plastic_weight = weight
 
 
 

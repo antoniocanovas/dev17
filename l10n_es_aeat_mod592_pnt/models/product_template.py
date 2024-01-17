@@ -10,7 +10,8 @@ class ProductTemplate(models.Model):
     @api.onchange('categ_id')
     def _get_plastic_default_weight(self):
         self.pnt_plastic_weight = self.categ_id.pnt_plastic_weight
-    pnt_plastic_weight = fields.Float('Plastic tax weight', compute='_get_plastic_default_weight')
+    pnt_plastic_weight = fields.Float('Plastic tax weight',
+                                      compute='_get_plastic_default_weight')
 
     pnt_is_manufactured = fields.Boolean('Manufacture', store=True, related='categ_id.pnt_is_manufactured')
 

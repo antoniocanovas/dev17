@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 class ProductCategory(models.Model):
     _inherit = 'product.category'
 
-    pnt_pricelist_weight = fields.Float('Pricelist weight', store=True, copy=True)
+#    pnt_pricelist_weight = fields.Float('Pricelist weight', store=True, copy=True)
 
     # Tipo de productos en subfamilia:
     pnt_product_type = fields.Selection([('final','End-product'),
