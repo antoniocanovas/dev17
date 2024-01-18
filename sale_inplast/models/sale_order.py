@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
         for record in self:
             required = False
             for li in record.order_line:
-                if ((li.display_type == False)
+                if (li.display_type == False)
                         and (li.product_uom_qty > li.qty_invoiced)
                         and (li.pricelist_id.pnt_last_update > record.date_order):
                     required = True
