@@ -31,7 +31,7 @@
             <field name="pricelist_id" position="after">
                 <field name="pnt_pricelist_state" groups="product.group_product_pricelist"/>
                 <field name="pnt_pricelist_state" invisible="1" groups="!product.group_product_pricelist"/>
-                <field name="pnt_lock_date" invisible="1""/>
+                <field name="pnt_lock_date" invisible="1"/>
             </field>
 
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega y permitir acceso m2o: -->
