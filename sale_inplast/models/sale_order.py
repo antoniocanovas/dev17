@@ -21,6 +21,7 @@ class SaleOrder(models.Model):
                                            string='Pricelist state', store=True, copy=False,
                                            compute='_get_sale_pricelist_state')
 
+    pnt_lock_date = fields.Date(related=pricelist_id.pnt_lock_date)
 
     # Restricción para que no se puedan cambiar de estado los pedidos con tarifas bloqueadas:
     @api.constrains('state')
