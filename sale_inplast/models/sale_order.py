@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
         for record in self:
             required = False
             last_update = record.pricelist_id.pnt_last_update
-            if (record.invoice_status in ['no','to_invoice']) and (record.date_order) and (last_update) and (record.date_order < last_update)
+            if (record.invoice_status in ['no','to_invoice']) and (record.date_order) and (last_update) and (record.date_order < last_update):
                 record['pnt_update_prices'] = required
     pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_update_prices_required')
 
