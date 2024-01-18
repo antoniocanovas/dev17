@@ -21,11 +21,12 @@ class ProductPricelist(models.Model):
 
     @api.depends('pnt_next_update')
     def _get_pnt_lock_date(self):
-        datelock = False
-        days2lock = self.env.company.pnt_pricelist_day_lock
-        if (self.pnt_next_update):
-            datelock = self.pnt_next_update + timedelta(days=days2lock)
-        self.pnt_lock_date = datelock
+        for record in self:
+            datelock = False
+            days2lock = record.env.company.pnt_pricelist_day_lock
+            if (record.pnt_next_update):
+                datelock = record.pnt_next_update + timedelta(days=days2lock)
+            record['pnt_lock_date'] = datelock
     pnt_lock_date   = fields.Date('Locking date', compute='_get_pnt_lock_date')
 
     @api.depends('pnt_last_update','pnt_next_update')

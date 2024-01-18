@@ -29,8 +29,6 @@ class ProductTemplate(models.Model):
                 weight = record.pnt_parent_id.categ_id.pnt_plastic_weight * record.pnt_parent_qty
             record['pnt_plastic_weight'] = weight
 
-
-
     pnt_product_coa = fields.Many2one(
         "pnt.coa",
         string="COA",
