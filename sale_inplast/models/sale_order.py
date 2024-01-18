@@ -29,7 +29,7 @@ class SaleOrder(models.Model):
                 if (li.display_type == False) and (li.product_uom_qty > li.qty_invoiced) and (li.pricelist_id.pnt_last_update > record.date_order):
                     required = True
             record['pnt_update_prices'] = required
-    pnt_update_prices = fiels.Boolean('Update prices', store=False, compute='_get_update_prices_required')
+    pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_update_prices_required')
 
     # Restricción para que no se puedan cambiar de estado los pedidos con tarifas bloqueadas:
     @api.constrains('state')
