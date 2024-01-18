@@ -27,7 +27,8 @@ class SaleOrder(models.Model):
             required = False
             last_update = record.pricelist_id.pnt_last_update
             if (record.invoice_status in ['no','to_invoice']) and (record.date_order) and (last_update) and (record.date_order < last_update):
-                record['pnt_update_prices'] = required
+                required = True
+            record['pnt_update_prices'] = required
     pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_update_prices_required')
 
     # Restricción para que no se puedan cambiar de estado los pedidos con tarifas bloqueadas:
