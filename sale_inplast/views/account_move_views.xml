@@ -59,7 +59,7 @@
                 <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update' or move_type != 'out_invoice'">
                     Revisa la tarifa de este cliente, ha pasado la fecha de actualización.
                 </div>
-                <div class="alert alert-danger mb-0" role="alert" invisible="pnt_pricelist_state != 'locked' our move_type != 'out_invoice'">
+                <div class="alert alert-danger mb-0" role="alert" invisible="pnt_pricelist_state != 'locked' or move_type != 'out_invoice'">
                     El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.
                     La edición o confirmación están bloqueados.
                 </div>
