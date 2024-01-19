@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = 'account.move'
 
     @api.depends('state', 'invoice_line_ids', 'pricelist_id.pnt_state')
     def _get_invoice_pricelist_state(self):
