@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from datetime import datetime, timedelta, date
+from datetime import datetime
 from odoo.exceptions import UserError
 
 import logging
@@ -9,18 +9,17 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    # Campos de estado de la tarifa, necesito los boolean para los filtros:
+    # Campos de estado de la tarifa:
     @api.depends('state', 'order_line', 'pricelist_id.pnt_state')
     def _get_sale_pricelist_state(self):
         for record in self:
             state = record.pnt_pricelist_state
-            if record.state in ['draft','sent']:
+            if (record.state in ['draft','sent']) and (record.invoice_status in ['no','to_invoice']):
                 state = record.pricelist_id.pnt_state
             record['pnt_pricelist_state'] = state
     pnt_pricelist_state = fields.Selection([('active','Active'),('update','Update'),('locked','Locked')],
                                            string='Pricelist state', store=True, copy=False,
                                            compute='_get_sale_pricelist_state')
-
 
     pnt_last_price_update = fields.Datetime('Last price update', default=lambda self: datetime.now())
 
