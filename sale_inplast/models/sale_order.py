@@ -22,12 +22,12 @@ class SaleOrder(models.Model):
                                            compute='_get_sale_pricelist_state')
 
 
-    pnt_last_price_update = fields.Date('Last price update', default=lambda self: date.today())
+    pnt_last_price_update = fields.Datetime('Last price update', default=lambda self: datetime.now())
 
     def pnt_action_update_prices(self):
         for record in self:
             record.action_update_prices()
-            record.pnt_last_price_update = date.today()
+            record.pnt_last_price_update = datetime.now()
 
 
     @api.depends('order_line','state')
@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
         for record in self:
             required = False
             last_update = record.pricelist_id.pnt_last_update
-            if (record.invoice_status in ['no','to_invoice']) and (record.date_order) and (last_update) and (record.date_order.date() < last_update):
+            if (record.invoice_status in ['no','to_invoice']) and (last_update) and (record.pnt_last_price_update < last_update):
                 required = True
             record['pnt_update_prices'] = required
     pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_update_prices_required')

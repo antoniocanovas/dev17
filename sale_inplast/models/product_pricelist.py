@@ -11,7 +11,7 @@ class ProductPricelist(models.Model):
 
     # Campos para tipos y actualización de tarifa:
     pnt_pending_update = fields.Boolean('Pending update', store=True, copy=False, default=False)
-    pnt_last_update = fields.Date('Last update')
+    pnt_last_update = fields.Datetime('Last update')
     pnt_next_update = fields.Date('Next update')
     pnt_pricelist_frec = fields.Integer('Months frequency', store=True, copy=True)
     pnt_pricelist_type   = fields.Selection([('standard','Estándar'),
