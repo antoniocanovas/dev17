@@ -27,7 +27,7 @@
 
             <!-- Actualizar precios en base a tarifa si hay algo pendiente de facturar: -->
             <xpath expr="//header" position="after">
-                <button name="pnt_action_update_prices" type="object" data-hotkey="shift+u" string="Update prices" class="oe_highlight"/>
+                <button name="pnt_action_update_prices" type="object" data-hotkey="shift+u" string="Update prices" class="oe_highlight" invisible="not pnt_update_prices"/>
             </xpath>
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
@@ -41,7 +41,7 @@
                 <field name="pnt_pricelist_state" invisible="1" groups="!product.group_product_pricelist"/>
                 <field name="pnt_update_prices" invisible="1" groups="!product.group_product_pricelist"/>
                 <field name="pnt_update_prices" invisible="1" groups="product.group_product_pricelist"/>
-                <field name="pnt_last_price_update"/>
+                <field name="pnt_last_price_update" invisible="1"/>
             </field>
 
             <!-- No permitir cambiar la tarifa por cliente o dirección de entrega y permitir acceso m2o: -->
