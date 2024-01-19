@@ -28,7 +28,6 @@ class AccountMove(models.Model):
     def button_update_prices_from_pricelist(self):
         result = super(AccountMove, self).button_update_prices_from_pricelist()
         self.pnt_last_price_update = datetime.now()
-        raise UserError(self.pnt_last_price_update)
 
     @api.depends('invoice_line_ids','state')
     def _get_invoice_update_prices_required(self):
