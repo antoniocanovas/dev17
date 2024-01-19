@@ -16,7 +16,7 @@
 
                 <xpath expr="//sheet" position="before">
                     <header>
-                        <button name="pricelist_update_tracking" type="object" data-hotkey="shift+r"
+                        <button name="pricelist_update_confirm" type="object" data-hotkey="shift+r"
                                 string="Update prices" class="oe_highlight"
                                 invisible="(pnt_pending_update == False)"/>
                         <field name="pnt_state" widget="statusbar"/>

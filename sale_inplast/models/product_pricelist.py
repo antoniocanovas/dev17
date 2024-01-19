@@ -66,9 +66,9 @@ class ProductPricelist(models.Model):
 
 
     # Crear una nota con los precios que han cambiado en la tarifa, desde botón o acción planificada:
-    def pricelist_update_tracking(self):
+    def pricelist_update_confirm(self):
         item_tracking = ""
-        now = date.today()
+        now = datetime.now()
         years = (now.month + self.pnt_pricelist_frec) // 12
         month = (now.month + self.pnt_pricelist_frec) - years * 12
         nextupdate = date(now.year + years, month, self.env.company.pnt_update_month_day)
