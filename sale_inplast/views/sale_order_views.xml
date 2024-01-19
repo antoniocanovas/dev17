@@ -29,7 +29,6 @@
                 <div class="alert alert-danger mb-0" role="alert" invisible="not pnt_update_prices or pnt_pricelist_state == 'locked'">
                     La oferta requiere actualización de precios. Se ejecutará automáticamente al realizar la próxima factura.
                 </div>
-
             </xpath>
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
