@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
     def pnt_action_update_prices(self):
         for record in self:
             record.action_update_prices()
-            record.pnt_last_price_update = datetime.now()
+            record['pnt_last_price_update'] = datetime.now()
 
 
     @api.depends('order_line','state')
