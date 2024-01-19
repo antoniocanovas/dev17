@@ -32,4 +32,4 @@ class AccountMove(models.Model):
             if (record.state in ['draft']) and (last_update) and (record.pnt_last_price_update < last_update):
                 required = True
             record['pnt_update_prices'] = required
-    pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_update_prices_required')
+    pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_invoice_update_prices_required')
