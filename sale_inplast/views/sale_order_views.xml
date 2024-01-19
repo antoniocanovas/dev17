@@ -20,7 +20,7 @@
                     La edición o confirmación del pedido están bloqueados.
                 </div>
                 <div class="alert alert-danger mb-0" role="alert" invisible="not pnt_update_prices">
-                    La oferta requiere actualización de precios. \n Se ejecutará automáticamente al realizar la próxima factura.
+                    La oferta requiere actualización de precios. Se ejecutará automáticamente al realizar la próxima factura.
                 </div>
                 -->
             </xpath>
