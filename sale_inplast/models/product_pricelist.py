@@ -74,7 +74,7 @@ class ProductPricelist(models.Model):
         nextupdate = date(now.year + years, month, self.env.company.pnt_update_month_day)
 
         for li in self.item_ids:
-            if (li.pnt_new_price != li.fixed_price) and (li.pnt_product_state == True) or (li.pnt_plastic_tax == 0):
+            if (li.pnt_new_price != li.fixed_price) and (li.pnt_product_state == True):
                 categ = li.product_tmpl_id.categ_id
                 name = li.product_tmpl_id.name
                 if li.product_id.id: name = li.product_id.name
