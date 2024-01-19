@@ -26,7 +26,7 @@
                     El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.
                     La edición o confirmación del pedido están bloqueados.
                 </div>
-                <div class="alert alert-danger mb-0" role="alert" invisible="not pnt_update_prices or pnt_pricelist_state == 'locked'"/>
+                <div class="alert alert-danger mb-0" role="alert" invisible="not pnt_update_prices or pnt_pricelist_state == 'locked'">
                     La oferta requiere actualización de precios. Se ejecutará automáticamente al realizar la próxima factura.
                 </div>
 
