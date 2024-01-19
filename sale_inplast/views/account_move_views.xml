@@ -54,13 +54,6 @@
                 <field name="pnt_last_price_update" invisible="1"/>
             </field>
 
-            <!-- Actualizar precios en base a tarifa si hay algo pendiente de facturar: -->
-            <xpath expr="//header" position="after">
-                <button name="pnt_action_update_prices" type="object" data-hotkey="shift+u"
-                        string="Update prices" class="oe_highlight"
-                        invisible="not pnt_update_prices or pnt_pricelist_state == 'locked'"/>
-            </xpath>
-
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
             <xpath expr="//header" position="after">
                 <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update'">
