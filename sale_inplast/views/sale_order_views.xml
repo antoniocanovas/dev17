@@ -10,6 +10,13 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
+            <!-- Actualizar precios en base a tarifa si hay algo pendiente de facturar: -->
+            <xpath expr="//header" position="after">
+                <button name="pnt_action_update_prices" type="object" data-hotkey="shift+u"
+                        string="Update prices" class="oe_highlight"
+                        invisible="not pnt_update_prices or pnt_pricelist_state == 'locked'"/>
+            </xpath>
+
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
             <xpath expr="//header" position="after">
                 <div class="alert alert-info mb-0" role="alert" invisible="pnt_pricelist_state != 'update'">
@@ -19,15 +26,10 @@
                     El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.
                     La edición o confirmación del pedido están bloqueados.
                 </div>
-                <div class="alert alert-danger mb-0" role="alert" invisible="not pnt_update_prices">
+                <div class="alert alert-danger mb-0" role="alert" invisible="not pnt_update_prices or pnt_pricelist_state == 'locked'"/>
                     La oferta requiere actualización de precios. Se ejecutará automáticamente al realizar la próxima factura.
                 </div>
 
-            </xpath>
-
-            <!-- Actualizar precios en base a tarifa si hay algo pendiente de facturar: -->
-            <xpath expr="//header" position="after">
-                <button name="pnt_action_update_prices" type="object" data-hotkey="shift+u" string="Update prices" class="oe_highlight" invisible="not pnt_update_prices"/>
             </xpath>
 
             <!-- Bloquear order_line si tarifa bloqueado: -->
