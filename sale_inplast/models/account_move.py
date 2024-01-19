@@ -13,7 +13,7 @@ class AccountMove(models.Model):
     def _get_invoice_pricelist_state(self):
         for record in self:
             state = False
-            if (record.move_type in ['out_invoice','out_refund']) and (record.state == 'draft'):
+            if (record.move_type in ['out_invoice']) and (record.state == 'draft'):
                 state = record.pricelist_id.pnt_state
                 if record.state in ['draft','sent']:
                     state = record.pricelist_id.pnt_state
