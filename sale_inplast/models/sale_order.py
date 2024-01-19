@@ -25,8 +25,9 @@ class SaleOrder(models.Model):
     pnt_last_price_update = fields.Date('Last price update', default=lambda self: date.today())
 
     def pnt_action_update_prices(self):
-        self.pnt_action_update_prices()
-        self.pnt_last_price_update = date.today()
+        for record in self:
+            record.action_update_prices()
+            record.pnt_last_price_update = date.today()
 
 
     @api.depends('order_line','state')
