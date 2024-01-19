@@ -36,4 +36,26 @@
         <field name="priority">99</field>
     </record>
 
+
+
+    <record id="inplast_pricelist_invoice_inh_form" model="ir.ui.view">
+        <field name="name">INPLAST Invoice pricelist inh form</field>
+        <field name="model">account.move</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account_invoice_pricelist.view_account_move_customer_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Mostrar el estado de la tarifa: -->
+            <field name="pricelist_id" position="after">
+                <field name="pnt_pricelist_state" groups="product.group_product_pricelist"/>
+                <field name="pnt_pricelist_state" invisible="1" groups="!product.group_product_pricelist"/>
+                <field name="pnt_update_prices" invisible="1" groups="!product.group_product_pricelist"/>
+                <field name="pnt_update_prices" invisible="1" groups="product.group_product_pricelist"/>
+                <field name="pnt_last_price_update" invisible="1"/>
+            </field>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
 </odoo>

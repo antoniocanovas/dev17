@@ -30,7 +30,7 @@ class SaleOrder(models.Model):
 
 
     @api.depends('order_line','state')
-    def _get_update_prices_required(self):
+    def _get_sale_update_prices_required(self):
         for record in self:
             required = False
             last_update = record.pricelist_id.pnt_last_update

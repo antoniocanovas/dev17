@@ -23,3 +23,13 @@ class AccountMove(models.Model):
                                            compute='_get_invoice_pricelist_state')
 
     pnt_last_price_update = fields.Datetime('Last price update', default=lambda self: datetime.now())
+
+    @api.depends('invoice_line_ids','state')
+    def _get_invoice_update_prices_required(self):
+        for record in self:
+            required = False
+            last_update = record.pricelist_id.pnt_last_update
+            if (record.state in ['draft']) and (last_update) and (record.pnt_last_price_update < last_update):
+                required = True
+            record['pnt_update_prices'] = required
+    pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_update_prices_required')
