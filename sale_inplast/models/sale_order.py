@@ -21,6 +21,14 @@ class SaleOrder(models.Model):
                                            string='Pricelist state', store=True, copy=False,
                                            compute='_get_sale_pricelist_state')
 
+
+    pnt_last_price_update = fields.Date('Last price update', default=lambda self: date.today())
+
+    def pnt_action_update_prices(self):
+        self.pnt_action_update_prices()
+        self.pnt_last_price_update = date.today()
+
+
     @api.depends('order_line','state')
     def _get_update_prices_required(self):
         for record in self:
