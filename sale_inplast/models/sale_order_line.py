@@ -31,5 +31,4 @@ class SaleOrderLine(models.Model):
             if (li.product_id.pnt_product_type == 'packing'):
                 base_qty = li.product_uom_qty * li.product_id.pnt_parent_qty
             li['pnt_base_sale_unit'] = base_qty
-
-    pnt_base_sale_unit = fields.Float('Base', store=False, compute='_get_packing_units_from_sale_qty')
+    pnt_base_sale_unit = fields.Integer('Base', store=False, compute='_get_packing_units_from_sale_qty')
