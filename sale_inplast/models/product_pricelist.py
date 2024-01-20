@@ -17,7 +17,7 @@ class ProductPricelist(models.Model):
     pnt_pricelist_type   = fields.Selection([('standard','Estándar'),
                                              ('bom', 'Escandallo general'),
                                              ('custom', 'Escandallo personalizado')],
-                                            store=True, copy=True, string='Pricelist mode')
+                                            store=True, copy=True, string='Pricelist mode', default='standard')
 
     @api.depends('pnt_next_update')
     def _get_pnt_lock_date(self):
