@@ -18,7 +18,7 @@ class SaleOrderLine(models.Model):
     def _get_packing_units_from_base_qty(self):
         for li in self:
             qty = 0
-            if (li.product_id.pnt_parent_type == 'packing') and (li.product_id.pnt_parent_qty > 0):
+            if (li.product_id.pnt_product_type == 'packing') and (li.product_id.pnt_parent_qty > 0):
                 qty = li.pnt_base_unit / li.product_id.pnt_parent_qty
             li['pnt_base_uom_unit'] = qty
     pnt_base_uom_unit = fields.Float('Pack', store=False, compute='_get_packing_units_from_base_qty')
