@@ -27,6 +27,7 @@ class AccountMove(models.Model):
 
 
     def action_post(self):
+        result = super(AccountMove, self).button_update_prices_from_pricelist()
         result = super(AccountMove, self).action_post()
         self.pnt_last_price_update = datetime.now()
 
