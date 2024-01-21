@@ -12,6 +12,7 @@
                         name="%(action_wizard_product_packing_wizard)d"
                         string="Packings"
                         context="{'default_name':id}"
+                        invisible="pnt_product_type != 'final'"
                 />
             </xpath>
             <field name="detailed_type" position="after">
