@@ -8,13 +8,23 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
-<!--
+
     <record id="product_packing_wizard_form" model="ir.ui.view">
         <field name="name">Product packing wizard</field>
         <field name="res_model">product.packing.wizard</field>
+        <field name="active" eval="True"/>
+        <field name="field_parent" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">form</field>
         <field name="arch" type="xml">
             <form>
-                <sheet string="Product packing wizard">
+                    <h3>
+                        <field name="name" readonly="1"/>
+                    </h3>
                     <group>
                         <group name="box" string="Box">
                             <field name="pnt_box_type_id"/>
@@ -47,9 +57,8 @@
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
-                </sheet>
             </form>
         </field>
     </record>
--->
+
 </odoo>
