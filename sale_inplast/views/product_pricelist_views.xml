@@ -129,7 +129,7 @@
         <field name="model">product.pricelist</field>
         <field name="inherit_id">product.product_pricelist_view_search</field>
         <field name="arch" type="xml">
-            <filter name="inactive" position="after">
+            <filter name="inactive" position="replace">
                 <!--
                 <separator/>
                 <filter string="Active" name="state_active" domain="[('pnt_state','=', 'active')]"/>
