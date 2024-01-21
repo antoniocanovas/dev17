@@ -26,4 +26,17 @@
         <field name="type">form</field>
     </record>
 
+    <!-- PRICELIST INH SEARCH:   -->
+    <record id="partner_sale_inplast_inh_search" model="ir.ui.view">
+        <field name="name">partner.sale.pricelist.inplast.inh.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <group name="group_by" position="inside">
+                <filter name="state" string="State" context="{'group_by': 'pnt_pricelist_state'}"/>
+            </group>
+        </field>
+    </record>
+
+
 </odoo>
