@@ -129,20 +129,16 @@
         <field name="model">product.pricelist</field>
         <field name="inherit_id">product.product_pricelist_view_search</field>
         <field name="arch" type="xml">
-            <data>
-
-                <filter name="inactive" position="after">
-                    <separator/>
-                    <filter string="Active" name="state_active" domain="[('pnt_state','=', 'active')]"/>
-                    <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'To renew')]"/>
-                    <filter string="Locked" name="locked" domain="[('pnt_state', '=', 'Locked')]"/>
-                    <group name="group_by" string="Group By">
-                        <filter name="state" string="State" context="{'group_by': 'pnt_state'}"/>
-                        <filter name="type" string="Type" context="{'group_by': 'pnt_pricelist_type'}"/>
-                    </group>
-                </filter>
-
-            </data>
+            <filter name="inactive" position="after">
+                <separator/>
+                <filter string="Active" name="state_active" domain="[('pnt_state','=', 'active')]"/>
+                <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'To renew')]"/>
+                <filter string="Locked" name="locked" domain="[('pnt_state', '=', 'Locked')]"/>
+                <group name="group_by" string="Group By">
+                    <filter name="state" string="State" context="{'group_by': 'pnt_state'}"/>
+                    <filter name="type" string="Type" context="{'group_by': 'pnt_pricelist_type'}"/>
+                </group>
+            </filter>
         </field>
     </record>
 
