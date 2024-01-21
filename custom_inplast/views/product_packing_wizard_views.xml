@@ -15,6 +15,7 @@
         <field name="arch" type="xml">
             <form>
                 <sheet string="Product packing wizard">
+                    <!--
                     <group>
                         <group name="box" string="Box">
                             <field name="pnt_box_type_id"/>
@@ -39,7 +40,6 @@
                             <field name="pnt_picking_label_qty"/>
                         </group>
                     </group>
-                    <!--
                     <footer>
                         <button class="oe_highlight"
                                 type="object"
