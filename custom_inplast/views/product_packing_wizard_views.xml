@@ -16,7 +16,7 @@
             <form>
                 <sheet string="Product packing wizard">
                     <group>
-                        <group name="box">
+                        <group name="box" string="Box">
                             <field name="pnt_box_type_id"/>
                             <field name="pnt_box_base_qty"/>
                             <field name="pnt_box_bag_id"/>
@@ -26,7 +26,7 @@
                             <field name="pnt_box_seal_id"/>
                             <field name="pnt_box_seal_qty"/>
                         </group>
-                        <group name="pallet">
+                        <group name="pallet" string="Pallet">
                             <field name="pnt_pallet_type_id"/>
                             <field name="pnt_pallet_box_qty"/>
                             <field name="pnt_pallet_film_id"/>
@@ -39,6 +39,7 @@
                             <field name="pnt_picking_label_qty"/>
                         </group>
                     </group>
+                    <!--
                     <footer>
                         <button class="oe_highlight"
                                 type="object"
@@ -47,6 +48,7 @@
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
+                    -->
                 </sheet>
             </form>
         </field>
