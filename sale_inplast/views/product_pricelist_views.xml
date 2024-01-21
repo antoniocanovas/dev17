@@ -129,7 +129,7 @@
         <field name="model">product.pricelist</field>
         <field name="inherit_id" ref="product.product_pricelist_view_search"/>
         <field name="arch" type="xml">
-            <filter name="inactive" position="replace">
+            <filter name="inactive" position="after">
                 <separator/>
                 <filter string="Updated" name="state_active" domain="[('pnt_state','=', 'active')]"/>
                 <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'to_renew')]"/>
