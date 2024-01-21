@@ -134,13 +134,11 @@
                 <filter string="Active" name="active" domain="[('pnt_state', '=', 'active')]"/>
                 <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'To renew')]"/>
                 <filter string="Locked" name="locked" domain="[('pnt_state', '=', 'Locked')]"/>
-<!--
-                <group expand="0" name="group_by" string="Group By">
+                <group name="group_by" string="Group By">
                     <filter name="state" string="State" context="{'group_by': 'pnt_state'}"/>
                     <filter name="type" string="Type" context="{'group_by': 'pnt_pricelist_type'}"/>
                     <filter name="frec" string="Frec. update" context="{'group_by': 'pnt_pricelist_frec'}"/>
                 </group>
--->
             </filter>
         </field>
     </record>
