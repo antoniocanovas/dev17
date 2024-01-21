@@ -131,7 +131,7 @@
         <field name="arch" type="xml">
             <filter name="inactive" position="replace">
                 <separator/>
-                <filter string="Active" name="state_active" domain="[('pnt_state','=', 'active')]"/>
+                <filter string="Updated" name="state_active" domain="[('pnt_state','=', 'active')]"/>
                 <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'to_renew')]"/>
                 <filter string="Locked" name="locked" domain="[('pnt_state', '=', 'locked')]"/>
                 <group name="group_by" string="Group By">
