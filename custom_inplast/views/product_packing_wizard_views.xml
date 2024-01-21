@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+
+    <record model="ir.actions.act_window" id="action_wizard_product_packing_wizard" >
+        <field name="name">Product packing wizard</field>
+        <field name="res_model">product.packing.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="product_packing_wizard_form" model="ir.ui.view">
+        <field name="name">Product packing wizard</field>
+        <field name="res_model">product.packing.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="Product packing wizard">
+                    <group>
+                        <group name="box">
+                            <field name="pnt_box_type_id"/>
+                            <field name="pnt_box_base_qty"/>
+                            <field name="pnt_box_bag_id"/>
+                            <field name="pnt_box_bag_qty"/>
+                            <field name="pnt_box_label_id"/>
+                            <field name="pnt_box_label_qty"/>
+                            <field name="pnt_box_seal_id"/>
+                            <field name="pnt_box_seal_qty"/>
+                        </group>
+                        <group name="pallet">
+                            <field name="pnt_pallet_type_id"/>
+                            <field name="pnt_pallet_box_qty"/>
+                            <field name="pnt_pallet_film_id"/>
+                            <field name="pnt_pallet_film_qty"/>
+                            <field name="pnt_pallet_seal_id"/>
+                            <field name="pnt_pallet_seal_qty"/>
+                            <field name="pnt_pallet_label_id"/>
+                            <field name="pnt_pallet_label_qty"/>
+                            <field name="pnt_picking_label_id"/>
+                            <field name="pnt_picking_label_qty"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight"
+                                type="object"
+                                name="create_packing_products"
+                                string="Create packing products"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

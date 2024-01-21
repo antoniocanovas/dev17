@@ -6,8 +6,8 @@ class ProductPackingWizard(models.TransientModel):
     _description = 'Product Packing Wizard'
 
     #Campos con duda
-    name = fields.Char('Name')
-    #Campos
+    name = fields.Many2one('product.template', string='Product')
+    #Cajas:
     pnt_box_type_id = fields.Many2one('product.template', string='Box', domain="[('pnt_product_type','=','packaging')]")
     pnt_box_base_qty = fields.Integer('Base qty')
     pnt_box_bag_id = fields.Many2one('product.template', string='Box Bag', domain="[('pnt_product_type','=','packaging')]",
@@ -18,6 +18,7 @@ class ProductPackingWizard(models.TransientModel):
     pnt_box_seal_id = fields.Many2one('product.template', string='Box Seal', domain="[('pnt_product_type','=','packaging')]")
     pnt_box_seal_qty = fields.Integer('Seal qty')
 
+    #Palets:
     pnt_pallet_type_id = fields.Many2one('product.template', string='Pallet', domain="[('pnt_product_type','=','packaging')]")
     pnt_pallet_box_qty = fields.Integer('Box qty', default="24")
     pnt_pallet_film_id = fields.Many2one('product.template', string='Pallet Film', domain="[('pnt_product_type','=','packaging')]")
@@ -29,6 +30,5 @@ class ProductPackingWizard(models.TransientModel):
     pnt_picking_label_id = fields.Many2one('product.template', string='Picking Label', domain="[('pnt_product_type','=','packaging')]")
     pnt_picking_label_qty = fields.Integer('Picking Label qty', default="1")
 
-(poner en parámetros de empresa la bolsa defecto para cajas),
-1xEtiqueta, precinto, metros de precinto.
-
+    def create_packing_products(self):
+        return True

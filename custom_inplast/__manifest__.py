@@ -20,6 +20,7 @@
         "views/res_company_views.xml",
         "views/product_template_views.xml",
         "views/stock_location_views.xml",
+        "views/product_apcking_wizard_views.xml",
         "views/menu_views.xml",
         "report/templates.xml",
         "report/ir_action_report.xml",
