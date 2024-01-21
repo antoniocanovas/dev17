@@ -7,6 +7,13 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button class="oe_highlight" type="action"
+                        name="%(action_wizard_product_packing_wizard)d"
+                        string="Packings"
+                        context="{'default_name':id}"
+                />
+            </xpath>
             <field name="detailed_type" position="after">
                 <field name="pnt_product_type" required="1"/>
                 <field name="pnt_parent_id" domain="[('pnt_product_type','=','final')]"
