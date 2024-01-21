@@ -32,6 +32,11 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_res_partner_filter"/>
         <field name="arch" type="xml">
+            <filter namme="type_company" position="after">
+                <separator/>
+                <filter string="To update pricelist" name="pricelist_update" domain="[('pnt_pricelist_state', '=', 'to_update')]"/>
+                <filter string="Locked pricelist" name="pricelist_locked" domain="[('pnt_pricelist_state', '=', 'locked')]"/>
+            </filter>
             <group name="group_by" position="inside">
                 <separator/>
                 <filter name="pricelist_state" string="Pricelist state" context="{'group_by': 'pnt_pricelist_state'}"/>
