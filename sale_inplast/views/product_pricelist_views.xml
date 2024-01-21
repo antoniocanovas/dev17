@@ -123,4 +123,26 @@
         <field name="priority">99</field>
     </record>
 
+    <!-- PRICELIST INH SEARCH:   -->
+    <record id="product_pricelist_inplast_inh_search" model="ir.ui.view">
+        <field name="name">product.pricelist.inplast.inh.search</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id">product.product_pricelist_view_search</field>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator/>
+                <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'active')]"/>
+                <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'active')]"/>
+                <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'active')]"/>
+
+                <group expand="0" name="group_by" string="Group By">
+                    <filter name="state" string="State" context="{'group_by': 'pnt_state'}"/>
+                    <filter name="type" string="Type" context="{'group_by': 'pnt_pricelist_type'}"/>
+                    <filter name="frec" string="Frec. update" context="{'group_by': 'pnt_pricelist_frec'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
 </odoo>
