@@ -116,7 +116,7 @@ class ProductPricelist(models.Model):
             raw_increment = categ.pnt_i0
 
             # Tarifa/peso en familia:
-            pricelist_weight = product.categ_id.pnt_plastic_weight
+            pricelist_weight = product.pnt_plastic_weight
 
             # Incremento de precio debido al coste de materia prima (se consideran defectuosos):
             net_price = pricelist_weight * (raw_increment / 1000) * (1 + fault_percent/100) + (last_price * 1000)
