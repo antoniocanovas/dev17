@@ -27,7 +27,7 @@
                         <field name="name" readonly="1"/>
                     </h3>
                     <field name="pnt_type" required="1" invisible="pnt_type"/>
-                    <group name="box" string="Box" invisible="pnt_type != 'box'">
+                    <group name="box" string="Box">
                         <field name="pnt_box_type_id"/>
                         <field name="pnt_box_base_qty"/>
                         <field name="pnt_box_bag_id"/>
@@ -37,7 +37,7 @@
                         <field name="pnt_box_seal_id"/>
                         <field name="pnt_box_seal_qty"/>
                     </group>
-                    <group name="pallet" string="Pallet" invisible="pnt_type != 'pallet">
+                    <group name="pallet" string="Pallet">
                         <field name="pnt_pallet_type_id"/>
                         <field name="pnt_pallet_box_qty"/>
                         <field name="pnt_pallet_film_id"/>
