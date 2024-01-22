@@ -44,10 +44,11 @@
                         <field name="pnt_picking_label_id"/>
                         <field name="pnt_picking_label_qty"/>
                     </group>
-                    <footer invisible="not pnt_type">
+                    <footer>
                         <button class="oe_highlight"
                                 type="object"
                                 name="create_packing_products"
+                                invisible="not pnt_type"
                                 string="Create packing products"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
