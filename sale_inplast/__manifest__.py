@@ -15,6 +15,7 @@ Recálculo de tarifas en base a datos de familia, productos y materia prima.
         'stock',
         'sale_management',
         'account',
+        'l10n_es',
         'account_invoice_pricelist',
         'account_invoice_pricelist_sale',
         'product_pricelist_fixed_extra',
