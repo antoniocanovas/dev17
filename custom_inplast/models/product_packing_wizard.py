@@ -40,7 +40,7 @@ class ProductPackingWizard(models.TransientModel):
                 if record.name.pnt_product_dye_id.id: dye= " " + record.name.pnt_product_dye_id.name
                 name = record.name.name + dye + " - Caja " + str(record.pnt_box_base_qty)
                 exist = self.env['product.template'].search([('name','=', name)])
-                routemrp = self.env['stock.route'].browse(mrp.route_warehouse0_manufacture)
+                routemrp = self.env['stock.route'].browse(route_warehouse0_manufacture)
                 if not exist.id:
                     newbox = self.env['product.template'].create({
                         'name': name,
