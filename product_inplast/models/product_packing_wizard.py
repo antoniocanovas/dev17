@@ -126,7 +126,7 @@ class ProductPackingWizard(models.TransientModel):
                         'product_tmpl_id': newpacking.id,
                         'applied_on': '1_product',
                         'compute_price': 'fixed',
-                        'price_surcharge': newpacking.
+                        'price_surcharge': newpacking.pnt_plastic_1000unit_tax / 1000,
                         'fixed_price': newpacking.list_price,
                     })
                     pricelist.append(item.pricelist_id.id)
