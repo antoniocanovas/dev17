@@ -40,7 +40,7 @@ class ProductPackingWizard(models.TransientModel):
                 if record.name.pnt_product_dye_id.id: dye= " " + record.name.pnt_product_dye_id.name
                 name = record.name.name + dye + " - Caja " + str(record.pnt_box_base_qty)
                 exist = self.env['product.template'].search([('name','=', name)])
-                routemrp = self.env['stock.route'].search([()])
+#                routemrp = self.env['stock.route'].search([()])
                 if not exist.id:
                     newbox = self.env['product.template'].create({
                         'name': name,
@@ -52,7 +52,7 @@ class ProductPackingWizard(models.TransientModel):
                         'standard_price': record.name.standard_price * record.pnt_box_base_qty,
                         'sale_ok': True,
                         'purchase_ok': False,
-                        'routes_ids': (6,0, [ref='mrp.route_warehouse0_manufacture'])
+#                        'routes_ids': (6,0, [ref='mrp.route_warehouse0_manufacture'])
                     })
                 else:
                     raise UserError('Este producto ya existe.')
