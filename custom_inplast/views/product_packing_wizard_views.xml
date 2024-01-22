@@ -34,6 +34,10 @@
                     </group>
                     <group name="pallet" string="Pallet" invisible="pnt_type != 'pallet'">
                         <field name="pnt_pallet_type_id" required="pnt_type == 'pallet'"/>
+                        <field name="pnt_pallet_box_id"
+                               required="pnt_type == 'pallet'"
+                               domain="[('pnt_parent_id', '=', name.id)]"
+                        />
                         <field name="pnt_pallet_box_qty"/>
                         <field name="pnt_pallet_film_id" required="pnt_type == 'pallet'"/>
                         <field name="pnt_pallet_film_qty"/>
