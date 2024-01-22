@@ -32,7 +32,7 @@
                         <field name="pnt_box_seal_id"/>
                         <field name="pnt_box_seal_qty"/>
                     </group>
-                    <group name="pallet" string="Pallet" invisible="pnt_type != 'pallet">
+                    <group name="pallet" string="Pallet" invisible="pnt_type != 'pallet'">
                         <field name="pnt_pallet_type_id"/>
                         <field name="pnt_pallet_box_qty"/>
                         <field name="pnt_pallet_film_id"/>
