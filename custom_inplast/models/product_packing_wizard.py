@@ -37,7 +37,7 @@ class ProductPackingWizard(models.TransientModel):
     @api.onchange('pnt_pallet_box_qty')
     def _get_pallet_base_qty(self):
         for record in self:
-            record['pnt_pallet_base_qty'] = record.pnt_pallet_box_qty * record.pnt_pallet_box_id.pnt_box_base_qty
+            record['pnt_pallet_base_qty'] = record.pnt_pallet_box_qty * record.pnt_pallet_box_id.pnt_parent_qty
 
     def create_packing_products(self):
         for record in self:
