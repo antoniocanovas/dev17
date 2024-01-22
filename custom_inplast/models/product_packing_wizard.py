@@ -5,9 +5,11 @@ class ProductPackingWizard(models.TransientModel):
     _name = 'product.packing.wizard'
     _description = 'Product Packing Wizard'
 
-    #Campos con duda
+    #Campos generales
     name = fields.Many2one('product.template', string='Product')
+    pnt_type = fields.Selection([('box','Box'),('palet','Pallet')])
     #Cajas:
+
     pnt_box_type_id = fields.Many2one('product.template', string='Box', domain="[('pnt_product_type','=','packaging')]")
     pnt_box_base_qty = fields.Integer('Base qty')
     pnt_box_bag_id = fields.Many2one('product.template', string='Box Bag', domain="[('pnt_product_type','=','packaging')]",
