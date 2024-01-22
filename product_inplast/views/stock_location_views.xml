@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Stock locations customization & migration fields : -->
+    <record id="inplast_stock_location_inh_form" model="ir.ui.view">
+        <field name="name">inplast.stock.location.inh.form</field>
+        <field name="model">stock.location</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="inside">
+                <group name="migration_fields" string="Migration fields">
+                    <field name="pnt_calle"/>
+                    <field name="pnt_modulo"/>
+                    <field name="pnt_altura"/>
+                    <field name="pnt_posicion"/>
+                    <field name="pnt_tipopaquete"/>
+                    <field name="pnt_modocolocacion"/>
+                    <field name="pnt_huecostotales"/>
+                    <field name="pnt_ubicaciondisponible"/>
+                    <field name="pnt_zona"/>
+                    <field name="pnt_udlog"/>
+                </group>
+            </xpath>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>
+
