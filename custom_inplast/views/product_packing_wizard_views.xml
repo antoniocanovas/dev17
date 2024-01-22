@@ -26,7 +26,6 @@
                     <h3>
                         <field name="name" readonly="1"/>
                     </h3>
-                    <field name="pnt_type" required="1" invisible="pnt_type != False"/>
                     <group>
                         <group name="box" string="Box">
                             <field name="pnt_box_type_id"/>
