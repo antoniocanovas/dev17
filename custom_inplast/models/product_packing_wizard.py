@@ -83,13 +83,15 @@ class ProductPackingWizard(models.TransientModel):
                 pricelist_item = self.env['product.pricelist.item'].search([('product_tmpl_id','=', record.name.id)])
                 for item in pricelist_item:
                     if item.pricelist_id.id not in pricelist:
-                        newpricelistitem = self.env['product.pricelist.item'].create({
+                        pricelistitem = self.env['product.pricelist.item'].create({
                             'pricelist_id': item.pricelist_id.id,
                             'product_tmpl_id': newbox.id,
-
+                            'applied_on': '1_product',
+                            'compute_price': 'fixed',
+                            'fixed_price': newbox.list_price,
                         })
+                        pricelist.append(item.pricelist_id.id)
 
-                return True
             else:
                 # Crear producto paletizado
                 # Crear lista de materiales
