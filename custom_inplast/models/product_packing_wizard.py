@@ -65,13 +65,13 @@ class ProductPackingWizard(models.TransientModel):
                 newbomboxline  = self.env['mrp.bom.line'].create(
                     {'product_id': product.id, 'product_qty': 1, 'bom_id': newboxldm.id })
                 bag = self.env['product.product'].search([('product_tmpl_id','=', record.pnt_box_bag_id.id)])[0]
-                newbomboxbag   = self.env.env['mrp.bom.line'].create(
+                newbomboxbag   = self.env['mrp.bom.line'].create(
                     {'product_id': bag.id, 'product_qty': record.pnt_box_bag_qty, 'bom_id': newboxldm.id})
                 label = self.env['product.product'].search([('product_tmpl_id','=', record.pnt_box_label_id.id)])[0]
-                newbomboxlabel = self.env.env['mrp.bom.line'].create(
+                newbomboxlabel = self.env['mrp.bom.line'].create(
                     {'product_id': label.id, 'product_qty': record.pnt_box_label_qty, 'bom_id': newboxldm.id})
                 seal = self.env['product.product'].search([('product_tmpl_id', '=', record.pnt_box_seal_id.id)])[0]
-                newbomboxseal  = self.env.env['mrp.bom.line'].create(
+                newbomboxseal  = self.env['mrp.bom.line'].create(
                     {'product_id': seal.id, 'product_qty': record.pnt_box_seal_qty, 'bom_id': newboxldm.id})
 
                 # Crear en tarifas
