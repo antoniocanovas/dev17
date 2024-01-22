@@ -46,7 +46,7 @@ class ProductPackingWizard(models.TransientModel):
                         'pnt_product_type': 'packing',
                         'detailed_type': 'product',
                         'list_price': record.name.list_price * record.pnt_box_base_qty,
-                        'pnt_plastic_weight': name.pnt_plastic_weight * record.pnt_box_base_qty,
+                        'pnt_plastic_weight': record.name.pnt_plastic_weight * record.pnt_box_base_qty,
                         'standard_price': record.name.standard_price * record.pnt_box_base_qty,
                     })
                 else:
