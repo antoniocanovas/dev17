@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-
+from odoo.exceptions import UserError
 
 class ProductPackingWizard(models.TransientModel):
     _name = 'product.packing.wizard'
@@ -33,4 +33,30 @@ class ProductPackingWizard(models.TransientModel):
     pnt_picking_label_qty = fields.Integer('Picking Label qty', default="1")
 
     def create_packing_products(self):
+        for record in self:
+            if record.pnt_type == 'box':
+                # Crear caja
+                dye = ""
+                if record.name.pnt_product_dye_id.id: dye= " " + record.name.pnt_product_dye_id.name
+                name = record.name.name + " - Caja " + str(record.pnt_box_base_qty) + dye
+                exist = self.env['product.template'].search([('name','=', name)])
+                if not exist.id:
+                    newbox = self.env['product.template'].create({
+                        'name': name,
+                        'pnt_product_type': 'packing',
+                        'detailed_type': 'product',
+                        'list_price': record.name.list_price * record.pnt_box_base_qty,
+                        'pnt_plastic_weight': name.pnt_plastic_weight * record.pnt_box_base_qty,
+                        'standard_price': record.name.standard_price * record.pnt_box_base_qty,
+                    })
+                else:
+                    raise UserError('Este producto ya existe.')
+                # Crear lista de materiales
+                # Crear en tarifas
+                return True
+            else:
+                # Crear producto paletizado
+                # Crear lista de materiales
+                # Crear en tarifas
+                return True
         return True
