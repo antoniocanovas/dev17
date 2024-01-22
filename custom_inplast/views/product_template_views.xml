@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <button class="oe_highlight" type="action"
-                        name="%(action_wizard_product_packing_wizard)d"
+                        name="%(action_window_product_packing_wizard)d"
                         string="Packings"
                         context="{'default_name':id}"
                         invisible="pnt_product_type != 'final'"
