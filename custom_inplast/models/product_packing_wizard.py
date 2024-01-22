@@ -34,7 +34,7 @@ class ProductPackingWizard(models.TransientModel):
     pnt_picking_label_id = fields.Many2one('product.template', string='Picking Label', domain="[('pnt_product_type','=','packaging')]")
     pnt_picking_label_qty = fields.Integer('Picking Label qty', default="1")
 
-    @api.onchange('pnt_pallet_box_qty')
+    @api.onchange('pnt_pallet_box_qty', 'pnt_pallet_box_id')
     def _get_pallet_base_qty(self):
         for record in self:
             record['pnt_pallet_base_qty'] = record.pnt_pallet_box_qty * record.pnt_pallet_box_id.pnt_parent_qty
