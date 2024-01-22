@@ -52,7 +52,7 @@ class ProductPackingWizard(models.TransientModel):
                         'standard_price': record.name.standard_price * record.pnt_box_base_qty,
                         'sale_ok': True,
                         'purchase_ok': False,
-#                        'route_ids': (6,0, [ref='mrp.route_warehouse0_manufacture'])
+                        'route_ids': [(6,0, [ref='mrp.route_warehouse0_manufacture'])]
                     })
                 else:
                     raise UserError('Este producto ya existe.')
