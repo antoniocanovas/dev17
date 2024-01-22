@@ -24,6 +24,7 @@ class ProductPackingWizard(models.TransientModel):
     pnt_pallet_type_id = fields.Many2one('product.template', string='Pallet', domain="[('pnt_product_type','=','packaging')]")
     pnt_pallet_box_id  = fields.Many2one('product.template', string='Pallet box', domain="[('pnt_product_type','=','packaging')]")
     pnt_pallet_box_qty = fields.Integer('Box qty', default="24")
+    pnt_pallet_base_qty = fields.Integer('Base qty', store=False, compute='_get_pallet_base_qty')
     pnt_pallet_film_id = fields.Many2one('product.template', string='Pallet Film', domain="[('pnt_product_type','=','packaging')]")
     pnt_pallet_film_qty = fields.Integer('Film qty')
     pnt_pallet_seal_id = fields.Many2one('product.template', string='Pallet seal', domain="[('pnt_product_type','=','packaging')]")
@@ -32,6 +33,11 @@ class ProductPackingWizard(models.TransientModel):
     pnt_pallet_label_qty = fields.Integer('Pallet Label qty', default="1")
     pnt_picking_label_id = fields.Many2one('product.template', string='Picking Label', domain="[('pnt_product_type','=','packaging')]")
     pnt_picking_label_qty = fields.Integer('Picking Label qty', default="1")
+
+    @api.onchange('pnt_pallet_box_qty')
+    def _get_pallet_base_qty(self):
+        for record in self:
+            record['pnt_pallet_base_qty'] = record.pnt_pallet_box_qty * record.pnt_pallet_box_id.pnt_box_base_qty
 
     def create_packing_products(self):
         for record in self:
