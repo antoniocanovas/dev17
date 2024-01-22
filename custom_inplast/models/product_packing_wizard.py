@@ -38,8 +38,9 @@ class ProductPackingWizard(models.TransientModel):
                 # Crear caja
                 dye = ""
                 if record.name.pnt_product_dye_id.id: dye= " " + record.name.pnt_product_dye_id.name
-                name = record.name.name + " - Caja " + str(record.pnt_box_base_qty) + dye
+                name = record.name.name + dye + " - Caja " + str(record.pnt_box_base_qty)
                 exist = self.env['product.template'].search([('name','=', name)])
+                routemrp = self.env['stock.route'].search([()])
                 if not exist.id:
                     newbox = self.env['product.template'].create({
                         'name': name,
@@ -49,6 +50,9 @@ class ProductPackingWizard(models.TransientModel):
                         'list_price': record.name.list_price * record.pnt_box_base_qty,
                         'pnt_plastic_weight': record.name.pnt_plastic_weight * record.pnt_box_base_qty,
                         'standard_price': record.name.standard_price * record.pnt_box_base_qty,
+                        'sale_ok': True,
+                        'purchase_ok': False,
+                        'routes_ids': (6,0, [ref='mrp.route_warehouse0_manufacture'])
                     })
                 else:
                     raise UserError('Este producto ya existe.')
@@ -74,7 +78,16 @@ class ProductPackingWizard(models.TransientModel):
                 newbomboxseal  = self.env['mrp.bom.line'].create(
                     {'product_id': seal.id, 'product_qty': record.pnt_box_seal_qty, 'bom_id': newboxldm.id})
 
-                # Crear en tarifas
+                # Crear en tarifas:
+                pricelist = []
+                pricelist_item = self.env['product.pricelist.item'].search([('product_tmpl_id','=', record.name.id)])
+                for item in pricelist_item:
+                    if item.pricelist_id.id not in pricelist:
+                        newpricelistitem = self.env['product.pricelist.item'].create({
+                            'pricelist_id': item.pricelist_id.id,
+                            'product_tmpl_id': newbox.id,
+
+                        })
 
                 return True
             else:
