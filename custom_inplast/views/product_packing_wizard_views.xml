@@ -23,25 +23,25 @@
                         <field name="pnt_type" invisible="pnt_type"/>
                     </group>
                     <group name="box" string="Box" invisible="pnt_type != 'box'">
-                        <field name="pnt_box_type_id"/>
+                        <field name="pnt_box_type_id" required="1"/>
                         <field name="pnt_box_base_qty"/>
-                        <field name="pnt_box_bag_id"/>
+                        <field name="pnt_box_bag_id" required="1"/>
                         <field name="pnt_box_bag_qty"/>
-                        <field name="pnt_box_label_id"/>
+                        <field name="pnt_box_label_id" required="1"/>
                         <field name="pnt_box_label_qty"/>
-                        <field name="pnt_box_seal_id"/>
+                        <field name="pnt_box_seal_id" required="1"/>
                         <field name="pnt_box_seal_qty"/>
                     </group>
                     <group name="pallet" string="Pallet" invisible="pnt_type != 'pallet'">
-                        <field name="pnt_pallet_type_id"/>
+                        <field name="pnt_pallet_type_id" required="1"/>
                         <field name="pnt_pallet_box_qty"/>
-                        <field name="pnt_pallet_film_id"/>
+                        <field name="pnt_pallet_film_id" required="1"/>
                         <field name="pnt_pallet_film_qty"/>
-                        <field name="pnt_pallet_seal_id"/>
+                        <field name="pnt_pallet_seal_id" required="1"/>
                         <field name="pnt_pallet_seal_qty"/>
-                        <field name="pnt_pallet_label_id"/>
+                        <field name="pnt_pallet_label_id" required="1"/>
                         <field name="pnt_pallet_label_qty"/>
-                        <field name="pnt_picking_label_id"/>
+                        <field name="pnt_picking_label_id" required="1"/>
                         <field name="pnt_picking_label_qty"/>
                     </group>
                     <footer>

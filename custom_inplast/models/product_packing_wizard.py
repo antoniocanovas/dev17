@@ -44,6 +44,7 @@ class ProductPackingWizard(models.TransientModel):
                     newbox = self.env['product.template'].create({
                         'name': name,
                         'pnt_product_type': 'packing',
+                        'pnt_parent_id': name.id,
                         'detailed_type': 'product',
                         'list_price': record.name.list_price * record.pnt_box_base_qty,
                         'pnt_plastic_weight': record.name.pnt_plastic_weight * record.pnt_box_base_qty,
@@ -51,8 +52,26 @@ class ProductPackingWizard(models.TransientModel):
                     })
                 else:
                     raise UserError('Este producto ya existe.')
+
                 # Crear lista de materiales
+                newboxldm = self.env['mrp.bom'].create({
+                    'code': name,
+                    'product_tmpl_id': record.name.id,
+                    'type': 'normal',
+                })
+
+                # Crear componentes de la lista de materiales:
+                product = self.env['product.product'].search({'product_tmpl_id','=', record.pnt_box_type_id.id})[0]
+                newbomboxline  = self.env.create({'product_id': product.id, 'product_qty': 1})
+                bag = self.env['product.product'].search({'product_tmpl_id','=', record.pnt_box_bag_id.id})[0]
+                newbomboxbag   = self.env.create({'product_id': bag.id, 'product_qty': record.pnt_box_bag_qty})
+                label = self.env['product.product'].search({'product_tmpl_id','=', record.pnt_box_label_id.id})[0]
+                newbomboxlabel = self.env.create({'product_id': label.id, 'product_qty': record.pnt_box_label_qty})
+                seal = self.env['product.product'].search({'product_tmpl_id', '=', record.pnt_box_seal_id.id})[0]
+                newbomboxseal  = self.env.create({'product_id': label.id, 'product_qty': record.pnt_box_seal_qty})
+
                 # Crear en tarifas
+
                 return True
             else:
                 # Crear producto paletizado
