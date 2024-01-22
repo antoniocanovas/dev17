@@ -56,7 +56,7 @@ class ProductPackingWizard(models.TransientModel):
                 # Crear lista de materiales
                 newboxldm = self.env['mrp.bom'].create({
                     'code': name,
-                    'product_tmpl_id': record.name.id,
+                    'product_tmpl_id': newbox.id,
                     'type': 'normal',
                 })
 
