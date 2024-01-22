@@ -13,6 +13,7 @@
         "product",
         "stock",
         "account",
+        "mrp",
         "report_qweb_pdf_watermark",
     ],
     "data": [
