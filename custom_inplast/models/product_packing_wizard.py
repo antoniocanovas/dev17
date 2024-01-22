@@ -7,7 +7,7 @@ class ProductPackingWizard(models.TransientModel):
 
     #Campos generales
     name = fields.Many2one('product.template', string='Product')
-    pnt_type = fields.Selection([('box','Box'),('palet','Pallet')])
+    pnt_type = fields.Selection([('box','Box'),('pallet','Pallet')], string='Packing type')
     #Cajas:
 
     pnt_box_type_id = fields.Many2one('product.template', string='Box', domain="[('pnt_product_type','=','packaging')]")
