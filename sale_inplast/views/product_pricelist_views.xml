@@ -49,7 +49,7 @@
                             <tree>
                                 <field name="name"/>
                                 <field name="pnt_raw_material"/>
-                                <field name="pnt_plastic_weight"/>
+                                <field name="pnt_plastic_weight" optional="hide"/>
                                 <field name="pnt_mrp_fault_percent"/>
                                 <field name="pnt_i0"/>
                                 <field name="pnt_i1"/>

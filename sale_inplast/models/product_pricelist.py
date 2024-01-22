@@ -61,7 +61,7 @@ class ProductPricelist(models.Model):
             if (li.product_tmpl_id.categ_id.id) not in categs:
                 categs.append(li.product_tmpl_id.categ_id.id)
         self.pnt_product_categ_ids = [(6,0,categs)]
-    pnt_product_categ_ids = fields.Many2many('product.category', string='Raw products', store=False,
+    pnt_product_categ_ids = fields.Many2many('product.category', string='Product categories', store=False,
                                              compute='_get_product_categs')
 
 
