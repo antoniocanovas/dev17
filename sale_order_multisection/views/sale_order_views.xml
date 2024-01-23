@@ -33,9 +33,9 @@
                         <field name="name"/>
                     </h1>
                     <group>
-                        <field name="parent_ids" widget="many2many_tags"/>
+                        <field name="parent_ids" widget="many2many_tags" invisible="not enable_multisection"/>
                         <field name="print_mode_section"/>
-                        <field name="child_ids" widget="many2many_tags"/>
+                        <field name="child_ids" widget="many2many_tags" invisible="not enable_multisection"/>
                     </group>
                     <field name="section_line_ids" widget="section_and_note_one2many" mode="tree" readonly="state in ['done','cancel']"
                            nolabel="1" context="{'default_ms_review':True}">
@@ -89,6 +89,7 @@
                         <field name="order_id" string="Sale Order" readonly="1"/>
                         <field name="section_total"/>
                     </group>
+                    <field name="enable_multisection" invisible="1"/>
                     <field name="state" invisible="1"/>
                     <field name="company_id" invisible="1"/>
                     <field name="partner_id" invisible="1"/>
