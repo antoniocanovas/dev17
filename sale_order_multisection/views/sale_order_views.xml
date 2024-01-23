@@ -148,7 +148,6 @@
                 <field name="new_section_id"
                        optional="hide"
                        domain="[('order_id','=',order_id),('display_type','=','line_section')]"
-                       column_invisible="not enable_multisection"
                 />
                 <field name="section_id" optional="hide"/>
                 <field name="order_id" column_invisible="1"/>
