@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
+
+    <!-- TREE para ver las secciones y añadir el modo de impresión: -->
     <record id="sol_sections_tree" model="ir.ui.view">
         <field name="name">SOL Set Tree</field>
         <field name="arch" type="xml">
@@ -19,6 +21,7 @@
         <field name="type">tree</field>
     </record>
 
+    <!-- FORM DE Multisección (no la vista principal): -->
     <record id="sol_sections_form" model="ir.ui.view">
         <field name="name">Multisection SOL Set Form</field>
         <field name="model">sale.order.line</field>
@@ -130,18 +133,23 @@
             <xpath expr="//header/button[@name='action_draft']" position="after">
                 <button class="oe_stat_button" string="MS Update" type="object" icon="fa-tasks"
                         name="update_multisection"
-                        invisible="state not in ['draft','sent']"/>
+                        invisible="state not in ['draft','sent'] or not enable_multisection"/>
                 <button class="oe_stat_button" string="Alphabetic lines order" type="object" icon="fa-adn"
                         name="sort_ms_alphabetic_product_lines"
-                        invisible="state not in ['draft','sent']"/>
+                        invisible="state not in ['draft','sent'] or not enable_multisection"/>
             </xpath>
             <xpath expr="//field[@name='source_id']" position="after">
-                <field name="multisection_key"/>
+                <field name="multisection_key" invisible="not enable_multisection"/>
+                <field name="enable_multisection" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="after">
                 <field name="ms_sequence" invisible="1"/>
-                <field name="new_section_id" optional="show" domain="[('order_id','=',order_id),('display_type','=','line_section')]"/>
-                <field name="section_id" optional="hide"/>
+                <field name="new_section_id"
+                       optional="hide"
+                       domain="[('order_id','=',order_id),('display_type','=','line_section')]"
+                       colum_invisible="not enable_multisection"
+                />
+                <field name="section_id" optional="hide" colum_invisible="not enable_multisection"/>
                 <field name="order_id" invisible="1"/>
             </xpath>
         </field>

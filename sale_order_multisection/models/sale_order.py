@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 class SaleOrderSets(models.Model):
     _inherit = 'sale.order'
 
+    enable_multisection = fields.Boolean('Enable multisection')
 
     @api.depends('partner_id')
     def get_key(self):
