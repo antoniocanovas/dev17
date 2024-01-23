@@ -40,7 +40,7 @@ class SaleOrder(models.Model):
     pnt_update_prices = fields.Boolean('Update prices', store=False, compute='_get_sale_update_prices_required')
 
     # Restricción para que no se puedan cambiar de estado los pedidos con tarifas bloqueadas:
-    @api.constrains('state')
+    @api.depends('state')
     def _avoid_sales_with_locked_pricelist(self):
         for record in self:
             if record.pnt_pricelist_state == 'locked':
