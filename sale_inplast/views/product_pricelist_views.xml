@@ -16,9 +16,18 @@
 
                 <xpath expr="//sheet" position="before">
                     <header>
-                        <button name="pricelist_update_confirm" type="object" data-hotkey="shift+r"
+                        <button class="oe_highlight"
+                                type="object" data-hotkey="shift+r"
+                                name="products_pricelist_recalculation"
+                                string="Recalculate"
+                                groups="sales_team.group_sale_manager"
+                        />
+                        <button name="pricelist_update_confirm"
+                                type="object" data-hotkey="shift+t"
                                 string="Update prices" class="oe_highlight"
-                                invisible="(pnt_pending_update == False)"/>
+                                invisible="(pnt_pending_update == False)"
+                                groups="sales_team.group_sale_manager"
+                        />
                         <field name="pnt_state" widget="statusbar"/>
                     </header>
                 </xpath>
@@ -57,12 +66,6 @@
                                 <field name="pnt_i3"/>
                             </tree>
                         </field>
-                    </group>
-                    <group>
-                        <button class="oe_highlight"
-                                type="object"
-                                name="products_pricelist_recalculation"
-                                string="Recalculate"/>
                     </group>
                 </xpath>
 
