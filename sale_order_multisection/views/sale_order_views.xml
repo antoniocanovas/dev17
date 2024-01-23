@@ -140,6 +140,7 @@
             </xpath>
             <xpath expr="//field[@name='source_id']" position="after">
                 <field name="multisection_key" invisible="not enable_multisection"/>
+                <field name="enable_multisection" invisible="1" groups="!base.group_no_one"/>
                 <field name="enable_multisection" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="after">
