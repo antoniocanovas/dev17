@@ -45,6 +45,5 @@ class SaleOrder(models.Model):
         for record in self:
             if record.pnt_pricelist_state == 'locked':
                 raise UserError('Pedido bloqueado, revisa y actualiza la tarifa del cliente: ' + record.partner_id.name)
-            if (record.pnt_update_prices) and (self._origin.state not in ['sale']):
+            if (record.pnt_update_prices) and (record.state in ['draft','sent','cancel']):
                 raise UserError('Precios obsoletos, se requiere actualizar precios: ' + record.partner_id.name)
-            return True
