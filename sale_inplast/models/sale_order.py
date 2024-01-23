@@ -41,10 +41,10 @@ class SaleOrder(models.Model):
 
     # Restricción para que no se puedan cambiar de estado los pedidos con tarifas bloqueadas:
     @api.constrains('state')
-    def __avoid_sales_with_locked_pricelist(self):
+    def _avoid_sales_with_locked_pricelist(self):
         for record in self:
             if record.pnt_pricelist_state == 'locked':
                 raise UserError('Pedido bloqueado, revisa y actualiza la tarifa del cliente: ' + record.partner_id.name)
-            if record.pnt_update_prices:
+            if (record.pnt_update_prices) and (record.state not in ['draft','cancel']):
                 raise UserError('Precios obsoletos, se requiere actualizar precios: ' + record.partner_id.name)
             return True
