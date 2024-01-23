@@ -150,9 +150,8 @@
                        domain="[('order_id','=',order_id),('display_type','=','line_section')]"
                        column_invisible="not enable_multisection"
                 />
-                <field name="section_id" optional="hide" column_invisible="not enable_multisection"/>
+                <field name="section_id" optional="hide"/>
                 <field name="order_id" column_invisible="1"/>
-                <field name="enable_multisection" column_invisible="1"/>
             </xpath>
         </field>
     </record>

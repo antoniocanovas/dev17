@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    enable_multisection = fields.Boolean(related='order_id.enable_multisection')
     partner_id = fields.Many2one('res.partner', related='order_id.partner_id', readonly=True)
     tax_country_id = fields.Many2one('res.country', related='order_id.tax_country_id', readonly=True)
     pricelist_id = fields.Many2one('product.pricelist', related='order_id.pricelist_id', readonly=True)
