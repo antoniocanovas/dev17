@@ -144,14 +144,14 @@
                 <field name="enable_multisection" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="after">
-                <field name="ms_sequence" colum_invisible="1"/>
+                <field name="ms_sequence" column_invisible="1"/>
                 <field name="new_section_id"
                        optional="hide"
                        domain="[('order_id','=',order_id),('display_type','=','line_section')]"
-                       colum_invisible="not enable_multisection"
+                       column_invisible="not enable_multisection"
                 />
-                <field name="section_id" optional="hide" colum_invisible="not enable_multisection"/>
-                <field name="order_id" colum_invisible="1"/>
+                <field name="section_id" optional="hide" column_invisible="not enable_multisection"/>
+                <field name="order_id" column_invisible="1"/>
             </xpath>
         </field>
     </record>
