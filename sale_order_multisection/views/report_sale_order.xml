@@ -28,14 +28,14 @@
             <xpath expr="//td[@name='td_taxes']" position="attributes">
                 <attribute name="t-if">line.print_mode_line not in ['hide_price','hide_subtotal_and_price']</attribute>
             </xpath>
-             <xpath expr="//td[@name='td_taxes']" position="after">
+            <xpath expr="//td[@name='td_taxes']" position="after">
                 <t  t-if="line.print_mode_line in ['hide_price','hide_subtotal_and_price']" class="text-end">
                     <td>
                     </td>
                 </t>
             </xpath>
             <xpath expr="//td[@name='td_subtotal']" position="attributes">
-                <attribute name="t-if">line.print_mode_line not in ['hide_price','hide_subtotal_and_price']</attribute>
+                <attribute name="t-if">line.print_mode_line not in ['hide_price', 'hide_subtotal_and_price']</attribute>
             </xpath>
             <xpath expr="//td[@name='td_subtotal']" position="after">
                 <t  t-if="line.print_mode_line in ['hide_price','hide_subtotal_and_price']" class="text-end">
@@ -43,15 +43,8 @@
                     </td>
                 </t>
             </xpath>
-            <xpath expr="//td[@name='td_note_line']" position="replace">
-                <t t-if="line.print_mode_line not in ['executive']">
-                    <td name="td_note_line" colspan="99">
-                        <span t-field="line.name"/>
-                    </td>
-                </t>
-            </xpath>
-             <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
-                <attribute name="t-if">line.print_mode_line not in ['hide_subtotal','hide_subtotal_and_price']</attribute>
+            <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+                <attribute name="t-if">line.print_mode_line not in ['hide_subtotal','hide_subtotal_and_price'] and current_subtotal != 0.0</attribute>
             </xpath>
         </template>
 
