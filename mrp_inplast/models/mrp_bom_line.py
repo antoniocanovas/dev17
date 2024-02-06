@@ -16,7 +16,7 @@ class MrpBomLine(models.Model):
 
     pnt_raw_percent = fields.Float('Percent')
 
-    @api.depends('write_date')
+    @api.onchange('write_date')
     def _get_units_from_total_percent(self):
         for record in self:
             # Falta el if de que sea la misma clase de unidad y asginar la misma que del peso o volumen:
