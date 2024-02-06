@@ -18,9 +18,9 @@ class MrpBomLine(models.Model):
 
     @api.onchange('write_date')
     def _get_units_from_total_percent(self):
-        for record in self:
-            # Falta el if de que sea la misma clase de unidad y asginar la misma que del peso o volumen:
-            if record.pnt_raw_percent != 0:
-                qty = record.bom_id.pnt_raw_qty * record.pnt_raw_percent / 100
-                uom = record.bom_id.product_tmpl_id.uom_id
-                record.write({'product_qty': qty, 'product_uom_id': uom.id})
+        # Falta el if de que sea la misma clase de unidad y asginar la misma que del peso o volumen:
+        if self.pnt_raw_percent != 0:
+            origin_qty = self._origin.product_qty
+            qty = record.bom_id.pnt_raw_qty * record.pnt_raw_percent / 100
+            uom = record.bom_id.product_tmpl_id.uom_id
+            record.write({'product_qty': qty, 'product_uom_id': uom.id})
