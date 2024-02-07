@@ -25,7 +25,7 @@ class MrpBom(models.Model):
 
 
     # Cantidad de producto (peso o volumen) a distribuir entre productos de esta categoría según product.template:
-    @api.depends('product_tmpl_id', 'product_uom_id', 'product_tmpl_id.weight', 'product_tmpl_id.volume', 'product_qty', 'pnt_raw_type')
+    @api.depends('product_tmpl_id', 'product_uom_id', 'product_tmpl_id.weight', 'product_tmpl_id.volume', 'product_qty', 'pnt_raw_type_id')
     def _get_product_raw_qty(self):
         for record in self:
             qty = 0
