@@ -30,9 +30,9 @@ class MrpBom(models.Model):
         for record in self:
             qty = 0
             factor = record.product_uom_id._compute_quantity(record.product_qty, record.product_tmpl_id.uom_id)
-            if record.pnt_raw_type == self.env.ref('uom.product_uom_categ_kgm'):
+            if record.pnt_raw_type_id.id == self.env.ref('uom.product_uom_categ_kgm'):
                 qty = record.product_tmpl_id.weight * factor * record.product_qty
-            if record.pnt_raw_type == self.env.ref('uom.product_uom_categ_vol'):
+            if record.pnt_raw_type_id.id == self.env.ref('uom.product_uom_categ_vol'):
                 qty = record.product_tmpl_id.volume * factor * record.product_qty
             record['pnt_raw_qty'] = qty
     pnt_raw_qty = fields.Float('UOM Qty', store=True, compute='_get_product_raw_qty')
