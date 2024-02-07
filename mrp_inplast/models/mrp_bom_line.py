@@ -19,7 +19,6 @@ class MrpBomLine(models.Model):
 
     @api.onchange('pnt_raw_percent')
     def _get_units_from_total_percent(self):
-        # Falta el if de que sea la misma clase de unidad y asginar la misma que del peso o volumen:
         qty = self._origin.product_qty
         if (self.pnt_raw_percent != 0) and (self.pnt_raw_type_id == self.product_uom_category_id):
             qty = self.bom_id.pnt_raw_qty * self.pnt_raw_percent / 100
@@ -31,6 +30,9 @@ class MrpBomLine(models.Model):
         # Falta el if de que sea la misma clase de unidad y asginar la misma que del peso o volumen:
         uom = self._origin.product_uom_id
         if (self.pnt_raw_percent != 0) and (self.pnt_raw_type_id == self.product_uom_category_id):
-            uom = self.bom_id.product_tmpl_id.uom_id
+            uom = self.env['uom.uom'].search([
+                ('category_id','=',self.product_uom_category_id.id),
+                ('uom_type','=','reference')
+            ])
         self.product_qty = uom.id
     product_uom_id = fields.Many2one(compute='_get_uom_from_percent_type')
