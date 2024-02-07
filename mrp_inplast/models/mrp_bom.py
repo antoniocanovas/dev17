@@ -21,7 +21,7 @@ class MrpBom(models.Model):
         uom = self.env['uom.uom'].search([
             ('category_id', '=', self.pnt_raw_type_id.id),
             ('uom_type', '=', 'reference')])
-        self.pnt_raw_uom = uom.id
+        self.pnt_raw_uom_id = uom.id
     pnt_raw_uom_id = fields.Many2one('uom.uom', string='UOM', store=True)
 
     @api.depends('product_id')
