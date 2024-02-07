@@ -22,7 +22,7 @@ class MrpBom(models.Model):
             ('category_id', '=', self.pnt_raw_type_id.id),
             ('uom_type', '=', 'reference')])
         self.pnt_raw_uom_id = uom.id
-    pnt_raw_uom_id = fields.Many2one('uom.uom', string='UOM', store=True)
+    pnt_raw_uom_id = fields.Many2one('uom.uom', string='UOM', store=True, compute='_get_default_uom')
 
     @api.depends('product_id')
     def _get_uom_available(self):
