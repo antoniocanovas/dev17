@@ -34,5 +34,5 @@ class MrpBomLine(models.Model):
                 ('category_id','=',self.product_uom_category_id.id),
                 ('uom_type','=','reference')
             ])
-        self.product_qty = uom.id
+        self.product_uom_id = uom.id
     product_uom_id = fields.Many2one(compute='_get_uom_from_percent_type')
