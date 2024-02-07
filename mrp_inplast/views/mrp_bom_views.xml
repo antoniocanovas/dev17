@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
 
             <field name="product_tmpl_id" position="after">
-                <field name="pnt_raw_type_id" domain="[('id','in',pnt_raw_available_ids)]"/>
+                <field name="pnt_raw_type_id" widget="selection" domain="[('id','in',pnt_raw_available_ids)]"/>
                 <field name="pnt_raw_qty"/>
                 <field name="pnt_raw_available_ids" invisible="1"/>
             </field>
