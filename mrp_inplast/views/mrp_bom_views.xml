@@ -15,6 +15,7 @@
                        readonly="bom_line_ids"
                 />
                 <field name="pnt_raw_qty"/>
+                <field name="pnt_raw_uom_id"/>
                 <field name="pnt_raw_available_ids" invisible="1"/>
             </field>
 
