@@ -16,7 +16,7 @@ class MrpBom(models.Model):
 
     pnt_raw_type_id = fields.Many2one('uom.category', string='Distribution type')
 
-    @api.depends('product_tmpl_id')
+    @api.depends('product_tmpl_id', 'pnt_raw_type_id')
     def _get_default_uom(self):
         uom = self.env['uom.uom'].search([
             ('category_id', '=', self.pnt_raw_type_id.id),
