@@ -23,7 +23,9 @@
                        optional="show"
                        readonly="product_uom_category_id != pnt_raw_type_id"
                 />
+                <field name="product_uom_category_id" invisible="1"/>
             </xpath>
+
             <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_qty']" position="attributes">
                 <attribute name="readonly">pnt_raw_percent != 0</attribute>
             </xpath>
