@@ -20,7 +20,7 @@ class MrpBom(models.Model):
     def _get_uom_available(self):
         weight = self.env.ref('uom.product_uom_categ_kgm')
         volume = self.env.ref('uom.product_uom_categ_vol')
-        self.pnt_raw_available = [(6,0,[weight.id, volume.id])]
+        self.pnt_raw_available_ids = [(6,0,[weight.id, volume.id])]
     pnt_raw_available_ids = fields.Many2many('uom.category', string='Raw types available', compute='_get_uom_available')
 
 
