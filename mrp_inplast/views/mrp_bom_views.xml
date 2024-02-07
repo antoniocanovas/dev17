@@ -9,13 +9,20 @@
         <field name="arch" type="xml">
 
             <field name="product_tmpl_id" position="after">
-                <field name="pnt_raw_type_id" widget="selection" domain="[('id','in',pnt_raw_available_ids)]"/>
+                <field name="pnt_raw_type_id"
+                       widget="selection"
+                       domain="[('id','in',pnt_raw_available_ids)]"
+                       readonly="bom_line_ids"
+                />
                 <field name="pnt_raw_qty"/>
                 <field name="pnt_raw_available_ids" invisible="1"/>
             </field>
 
             <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="after">
-                <field name="pnt_raw_percent" optional="show"/>
+                <field name="pnt_raw_percent"
+                       optional="show"
+                       readonly="product_uom_category_id != pnt_raw_type_id"
+                />
             </xpath>
             <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_qty']" position="attributes">
                 <attribute name="readonly">pnt_raw_percent != 0</attribute>
