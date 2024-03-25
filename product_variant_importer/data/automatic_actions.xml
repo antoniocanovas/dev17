@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="shoes_dealer_update_standard_price" model="base.automation">
+        <field name="name">=> Update cost prices</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">
+            record.update_standard_price_on_variants()
+        </field>
+        <field name="trigger">on_write</field>
+        <field name="trigger_field_ids" eval="[(6,0, [ref('shoes_dealer.field_product_template__shoes_campaign_id'),
+                                                    ref('shoes_dealer.field_product_template__exwork'),
+                                                    ref('shoes_dealer.field_product_template__exwork_single'),
+                                                    ref('product.field_product_template__product_variant_ids')])]"/>
+        <field name="filter_pre_domain"></field>
+        <field name="filter_domain"></field>
+        <field name="active" eval="True"/>
+    </record>
+
+     <record id="shoes_dealer_update_supplier_info" model="base.automation">
+        <field name="name">=> Update Supplier info</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">
+            record.update_supplier_info()
+        </field>
+        <field name="trigger">on_write</field>
+        <field name="trigger_field_ids" eval="[(6,0, [ref('shoes_dealer.field_product_template__exwork_single'),
+                                                    ref('product.field_product_template__product_variant_ids'),
+                                                    ref('shoes_dealer.field_product_template__manufacturer_id')])]"/>
+        <field name="filter_pre_domain"></field>
+        <field name="filter_domain"></field>
+        <field name="active" eval="True"/>
+    </record>
+
+
+</odoo>

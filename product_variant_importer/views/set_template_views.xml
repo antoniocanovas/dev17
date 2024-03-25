@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- ACCIONES DE VENTANA: -->
+    <record id="action_product_set_template" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="filter" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="limit">80</field>
+        <field name="name">Assortments</field>
+        <field name="res_model">set.template</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- SALE CONFIG MENU: -->
+    <record id="product_set_template_menu" model="ir.ui.menu">
+        <field name="action" ref="action_product_set_template"/>
+        <field name="active" eval="True"/>
+        <field name="name">Assortments</field>
+        <field name="parent_id" ref="sale.menu_sale_config"/>
+        <field name="sequence">100</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <!-- INVENTORY CONFIG MENU: -->
+    <record id="inventory_set_template_menu" model="ir.ui.menu">
+        <field name="action" ref="action_product_set_template"/>
+        <field name="active" eval="True"/>
+        <field name="name">Assortments</field>
+        <field name="parent_id" ref="stock.menu_product_in_config_stock"/>
+        <field name="sequence">90</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+    <!-- FORM VIEW: -->
+    <record id="product_set_template_default_form" model="ir.ui.view">
+        <field name="name">product.set.template.default.form</field>
+        <field name="model">set.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name" placeholder="Women sizes ..."/>
+                    </h1>
+                    <group>
+                        <field name="code" placeholder="PACK1..." help="This code will be used in the reference of new products."/>
+                        <field name="attribute_id" options="{'no_quick_create': True, 'no_create_edit':True}"/>
+                        <field name="line_ids">
+                            <tree editable="bottom">
+                                <field name="value_id" domain="[('attribute_id','=',attribute_id)]"
+                                       options="{'no_quick_create': True, 'no_create_edit':True}"/>
+                                <field name="quantity"/>
+                                <field name="set_id" invisible="1"/>
+                                <field name="attribute_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+        <field name="field_parent" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">form</field>
+    </record>
+
+    <!-- TREE VIEW: -->
+    <record id="product_set_template_default_tree" model="ir.ui.view">
+        <field name="name">product.set.template.default.tree</field>
+        <field name="model">set.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="attribute_id"/>
+                <field name="line_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+        <field name="field_parent" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">tree</field>
+    </record>
+
+</odoo>

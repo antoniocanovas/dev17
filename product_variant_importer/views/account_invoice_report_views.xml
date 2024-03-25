@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="shoes_dealer_view_order_product_search" model="ir.ui.view">
+        <field name="inherit_id" ref="account.view_account_invoice_report_search" />
+        <field name="model">account.invoice.report</field>
+        <field name="arch" type="xml">
+            <filter name="category_product" position="after">
+                <filter
+                    string="Model"
+                    name="model"
+                    context="{'group_by':'product_tmpl_model_id'}"
+                />
+                <filter
+                    string="Color"
+                    name="color"
+                    context="{'group_by':'color_attribute_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>

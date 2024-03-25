@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="purchase_order_dealer_inh_tree" model="ir.ui.view">
+        <field name="name">purchase.order.azarey.inh.tree</field>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="pairs_count" optional="show"/>
+            </field>
+        </field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="model">purchase.order</field>
+        <field name="active" eval="True"/>
+        <field name="priority">99</field>
+        <field name="type">tree</field>
+    </record>
+
+    <record id="purchase_order_dealer_inh_form" model="ir.ui.view">
+        <field name="name">purchase.order.azarey.inh.form</field>
+        <field name="model">purchase.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                <field name="shoes_campaign_id" options="{'no_quick_create':1, 'no_create_edit':1}"/>
+            </field>
+            <field name="partner_id" position="after">
+                <field name="pairs_count"/>
+            </field>
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                <field name="pairs_count"/>
+                <field name="pair_price"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

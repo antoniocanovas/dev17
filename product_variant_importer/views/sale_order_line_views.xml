@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="shoes_dealer_sale_order_line_inh_tree" model="ir.ui.view">
+        <field name="name">shoes.dealer.sale.order.line.inh.tree</field>
+        <field name="arch" type="xml">
+            <field name="order_id" position="after">
+                <field name="order_line_image" widget="image" optional="show"/>
+                <field name="shoes_campaign_id" optional="show"/>
+                <field name="product_brand_id" optional="hide"/>
+                <field name="product_tmpl_model_id" optional="hide"/>
+                <field name="color_attribute_id" optional="hide"/>
+            </field>
+            <field name="product_uom_qty" position="after">
+                <field name="qty_quoted" optional="hide"/>
+            </field>
+            <field name="price_subtotal" position="after">
+                <field name="pair_price" optional="show" avg=""/>
+                <field name="pairs_count" optional="show"/>
+            </field>
+        </field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"/>
+        <field name="model">sale.order.line</field>
+        <field name="active" eval="True"/>
+        <field name="priority">99</field>
+        <field name="type">tree</field>
+    </record>
+
+    <record id="shoes_dealer_sale_order_line_inh_search" model="ir.ui.view">
+        <field name="name">shoes.dealer.sale.order.line.inh.search</field>
+        <field name="arch" type="xml">
+
+            <field name="salesman_id" position="after">
+                <field name="shoes_campaign_id" string="Campaign"/>
+                <field name="product_tmpl_model_id" string="Model"/>
+                <field name="color_attribute_id" string="Color"/>
+                <field name="product_brand_id" string="Color"/>
+            </field>
+            <xpath expr="//group" position="inside">
+                <filter name="groupby_campaign" string="Campaign" context="{'group_by' : 'shoes_campaign_id'}"/>
+                <filter name="groupby_model" string="Model" context="{'group_by' : 'product_tmpl_model_id'}"/>
+                <filter name="groupby_color" string="Color" context="{'group_by' : 'color_attribute_id'}"/>
+                <filter name="groupby_customer" string="Customer" context="{'group_by' : 'order_partner_id'}"/>
+                <filter name="groupby_brand" string="Brand" context="{'group_by' : 'product_brand_id'}"/>
+            </xpath>
+
+        </field>
+        <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+        <field name="model">sale.order.line</field>
+        <field name="active" eval="True"/>
+        <field name="priority">99</field>
+        <field name="type">tree</field>
+    </record>
+
+
+
+
+
+
+</odoo>

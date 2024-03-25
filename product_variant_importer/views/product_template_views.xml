@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <!-- VISTAS FORM COMUNES: -->
+    <record id="product_shoes_dealer_inh_form" model="ir.ui.view">
+        <field name="name">product.shoes.dealer.inh.form</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='group_standard_price']/label" position="before">
+                <field name="campaign_code" readonly="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- VISTAS FORM SÓLO PRODUCT TEMPLATE: -->
+    <record id="product_template_only_shoes_dealer_inh_form" model="ir.ui.view">
+        <field name="name">product.template.only.shoes.dealer.inh.form</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="create_single_products_and_set_boms" string="Create Pairs" type="object"
+                        icon="fa-tasks" class="oe_stat_button"
+                        attrs="{'invisible':['|','|', ('is_product_variant','=',True),
+                                ('product_tmpl_set_id','!=',False),
+                                ('product_tmpl_single_id','!=',False)]}"
+                        groups="sales_team.group_sale_salesman_all_leads">
+                </button>
+                <button name="update_product_template_campaign_code"
+                        icon="fa-spinner" class="oe_stat_button"
+                        type="object" string="Upd Codes"
+                        attrs="{'invisible':[('campaign_code','!=',False)]}">
+                </button>
+            </xpath>
+
+            <xpath expr="//div[@name='options']" position="after">
+                <div name="product_shoes_dealer">
+                    <span class="d-inline-block">
+                        <label for="shoes_campaign_id"/>
+                        <field name="shoes_campaign_id"/>
+                    </span>
+                    <span class="d-inline-block">
+                        <label for="gender"/>
+                        <field name="gender"/>
+                    </span>
+                    <span class="d-inline-block" attrs="{'invisible':[('product_tmpl_set_id','!=',False)]}">
+                        <label for="product_tmpl_single_id"/>
+                        <field name="product_tmpl_single_id"/>
+                    </span>
+                    <span class="d-inline-block" attrs="{'invisible':[('product_tmpl_single_id','!=',False)]}">
+                        <label for="product_tmpl_set_id"/>
+                        <field name="product_tmpl_set_id"/>
+                    </span>
+                </div>
+            </xpath>
+
+            <xpath expr="//group[@name='group_standard_price']/label" position="before">
+                <field name="product_tmpl_single_list_price" attrs="{'invisible':[('product_tmpl_single_id','=',False)]}"/>
+                <field name="exwork" attrs="{'invisible':[('product_tmpl_single_id','!=',False)]}"
+                       options="{'currency_field':'exwork_currency_id'}"/>
+                <field name="exwork_single" attrs="{'invisible':[('product_tmpl_single_id','=',False)]}"
+                       options="{'currency_field':'exwork_currency_id'}"/>
+                <field name="shipping_price" attrs="{'invisible':[('product_tmpl_single_id','!=',False)]}"/>
+                <field name="shipping_single_price" attrs="{'invisible':[('product_tmpl_single_id','=',False)]}"/>
+                <field name="exwork_currency_id" invisible="1"/>
+            </xpath>
+
+            <!-- Ocultar el list_price en product.template si tiene par asignado: -->
+            <xpath expr="//label[@for='list_price']" position="attributes">
+                <attribute name="attrs">{'invisible':[('product_tmpl_single_id','!=',False)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="attrs">{'invisible':[('product_tmpl_single_id','!=',False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="material_id"/>
+                <field name="manufacturer_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- VISTAS FORM SÓLO PRODUCT.PRODUCT: -->
+    <record id="product_product_shoes_dealer_inh_form" model="ir.ui.view">
+        <field name="name">product.product.shoes.dealer.inh.form</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="after">
+                <div name="product_shoes_dealer">
+                    <span class="d-inline-block">
+                        <label for="shoes_campaign_id"/>
+                        <field name="shoes_campaign_id" readonly="1"/>
+                    </span>
+                    <span class="d-inline-block" attrs="{'invisible':[('gender','=',False)]}">
+                        <label for="gender"/>
+                        <field name="gender" readonly="1"/>
+                    </span>
+                    <span class="d-inline-block" attrs="{'invisible':[('product_tmpl_set_id','!=',False)]}">
+                        <label for="product_tmpl_single_id"/>
+                        <field name="product_tmpl_single_id" readonly="1"/>
+                    </span>
+                    <span class="d-inline-block" attrs="{'invisible':[('product_tmpl_single_id','!=',False)]}">
+                        <label for="product_tmpl_set_id"/>
+                        <field name="product_tmpl_set_id" readonly="1"/>
+                    </span>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="material_id" readonly="1"/>
+                <field name="manufacturer_id" readonly="1"/>
+                <field name="color_attribute_id" readonly="1"/>
+                <field name="size_attribute_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- VISTAS DE BÚSQUEDA: -->
+    <record id="product_template_shoes_dealer_inh_search" model="ir.ui.view">
+        <field name="name">product.shoes.dealer.inh.search</field>
+        <field name="model">product.template</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <data>
+                <field name="categ_id" position="after">
+                    <field name="shoes_campaign_id"/>
+                    <field name="product_tmpl_model_id"/>
+                </field>
+                <xpath expr="//group/filter[@name='type']" position="after">
+                    <filter string="Campaign" name="campaign" context="{'group_by':'shoes_campaign_id'}"/>
+                    <filter string="Model" name="Model" context="{'group_by':'product_tmpl_model_id'}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <!-- VISTAS KANBAN: -->
+    <record id="product_template_kanban_view_inh" model="ir.ui.view">
+        <field name="name">product.template.kanban.view.inh</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="product_tmpl_single_id"/>
+                <field name="product_tmpl_single_list_price"/>
+            </xpath>
+            <xpath expr="//div[@name='product_lst_price']" position="replace">
+                <div t-if="!record.product_tmpl_single_id" name="product_pair_lst_price" class="mt-1">
+                    Price: <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </div>
+                <div t-else="" name="product_single_lst_price" class="mt-1">
+                    Price: <field name="product_tmpl_single_list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

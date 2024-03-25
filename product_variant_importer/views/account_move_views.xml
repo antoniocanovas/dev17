@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="invoice_shoes_dealer_inh_tree" model="ir.ui.view">
+        <field name="name">invoice.shoes.dealer.azarey.inh.tree</field>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="pairs_count" optional="show"/>
+            </field>
+        </field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="model">account.move</field>
+        <field name="active" eval="True"/>
+        <field name="priority">99</field>
+        <field name="type">tree</field>
+    </record>
+
+    <record id="invoice_shoes_dealer_inh_form" model="ir.ui.view">
+        <field name="name">invoice.shoes.dealer.azarey.inh.form</field>
+        <field name="model">account.move</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after">
+                <field name="pairs_count" optional="show"/>
+                <field name="pair_price" optional="show"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

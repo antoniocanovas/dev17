@@ -1,0 +1,125 @@
+<odoo>
+    <data>
+
+
+        <record id="power_cups_default_form" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="pnt_state" widget="statusbar" class="o_field_statusbar" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet string="CUPS">
+                        <h2>
+                            <field name="name"/>
+                        </h2>
+                        <group name="general_data">
+                            <group>
+                                <field name="pnt_partner_id" required="1"/>
+                                <field name="pnt_cadastral_ref"/>
+                                <field name="pnt_customer_type"/>
+                                <field name="pnt_electric_type"/>
+                                <field name="pnt_kw_fw"/>
+                                <field name="pnt_kw_inverter"/>
+                                <field name="pnt_kw_battery"/>
+                                <field name="pnt_kw_prve"/>
+                            </group>
+                            <group>
+                                <field name="pnt_customer_id"/>
+                                <field name="pnt_dealer_id"/>
+                                <field name="pnt_marketeer_id"/>
+                                <field name="pnt_kw_contract"/>
+                                <field name="pnt_kw_access"/>
+                                <field name="pnt_target_type"/>
+                                <field name="pnt_rustic"/>
+                                <field name="pnt_isolated"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">power.cups</field>
+            <field name="name">Default form view for Power CUPS</field>
+            <field name="priority">16</field>
+            <field name="type">form</field>
+        </record>
+
+
+        <record id="power_cups_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="Power CUPS">
+                    <field name="name"/>
+                    <field name="pnt_customer_id" optional="hide"/>
+                    <field name="pnt_partner_id" optional="show"/>
+                    <field name="pnt_kw_fw"/>
+                    <field name="pnt_kw_inverter"/>
+                    <field name="pnt_kw_battery"/>
+                    <field name="pnt_kw_prve"/>
+                    <field name="pnt_dealer_id" optional="show"/>
+                    <field name="pnt_marketeer_id" optional="hide"/>
+                    <field name="pnt_customer_type" optional="show"/>
+                    <field name="pnt_rustic" optional="show"/>
+                    <field name="pnt_isolated"/>
+                    <field name="pnt_kw_contract" optional="hide"/>
+                    <field name="pnt_kw_access" optional="hide"/>
+                    <field name="pnt_target_type" optional="hide"/>
+                    <field name="pnt_state" optional="hide"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">power.cups</field>
+            <field name="name">Default tree view for Power CUPS</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+        <record id="power_cups_default_search" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <search string="Search CUPS">
+                    <field name="name" filter_domain="['|','|',('name','ilike',self),
+                                                      ('pnt_partner_id','ilike',self),
+                                                      ('pnt_customer_id','ilike',self)]"/>
+                    <field name="pnt_dealer_id"/>
+                    <field name="pnt_marketeer_id"/>
+                    <field name="pnt_target_type"/>
+                    <field name="pnt_isolated"/>
+                    <separator/>
+                    <filter string="Rustic" name="rustic" domain="[('pnt_rustic', '=', True)]"/>
+                    <filter string="Isolated" name="isolated" domain="[('pnt_isolated', '=', True)]"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="pnt_customer_id" string="Customer" domain="[]" context="{'group_by' : 'pnt_customer_id'}"/>
+                        <filter name="pnt_marketeer_id" string="Marketeer" context="{'group_by': 'pnt_marketeer_id'}"/>
+                        <filter name="pnt_dealer_id" string="Dealer" context="{'group_by': 'pnt_dealer_id'}"/>
+                        <filter name="pnt_target_type" string="Target" context="{'group_by': 'pnt_target_type'}"/>
+                        <filter name="pnt_electric_type" string="Electricity" context="{'group_by': 'pnt_electric_type'}"/>
+                        <filter name="pnt_target_type" string="Target" context="{'group_by': 'pnt_target_type'}"/>
+                    </group>
+                </search>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">power.cups</field>
+            <field name="name">Default search view for Power CUPS</field>
+            <field name="priority">16</field>
+            <field name="type">search</field>
+        </record>
+
+    </data>
+</odoo>

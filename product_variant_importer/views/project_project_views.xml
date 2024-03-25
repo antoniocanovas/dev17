@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Partner customization & migration fields : -->
+    <record id="shoes_dealer_project_inh_form" model="ir.ui.view">
+        <field name="name">shoes.dealer.project.inh.form</field>
+        <field name="model">project.project</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="currency_exchange" required="1"/>
+                <field name="campaign_code" readonly="1"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,812 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shoes_dealer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-18 10:40+0000\n"
+"PO-Revision-Date: 2024-01-18 11:43+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. module: shoes_dealer
+#: model:ir.actions.server,name:shoes_dealer.product_template_saction_update
+msgid "=> Actualizar color, talla, código de campaña y precios de coste"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.actions.server,name:shoes_dealer.shoes_dealer_update_standard_price_ir_actions_server
+msgid "=> Update cost prices"
+msgstr "==> Actualizar precios de coste"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Actividad Decoración de excepción"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__assortment_code
+msgid "Assortment"
+msgstr "Surtido"
+
+#. module: shoes_dealer
+#: model:ir.actions.act_window,name:shoes_dealer.action_product_set_template
+#: model:ir.ui.menu,name:shoes_dealer.inventory_set_template_menu
+#: model:ir.ui.menu,name:shoes_dealer.product_set_template_menu
+msgid "Assortments"
+msgstr "Surtidos"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_attachment_count
+msgid "Attachment Count"
+msgstr "Nº de archivos adjuntos"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_product_attribute_value
+msgid "Attribute Value"
+msgstr "Valor del Atributo"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_avg
+msgid "Average Rating"
+msgstr "Calificación promedio"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__product_brand_id
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_sale_order_line_inh_search
+msgid "Brand"
+msgstr "Marca"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__shoes_campaign_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__shoes_campaign_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_purchase_order__shoes_campaign_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order__shoes_campaign_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__shoes_campaign_id
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_template_shoes_dealer_inh_search
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_sale_order_line_inh_search
+msgid "Campaign"
+msgstr "Campaña"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__campaign_code
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__campaign_code
+msgid "Campaign Code"
+msgstr "Código de la campaña"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__can_publish
+msgid "Can Publish"
+msgstr "Puede publicar"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__product_tmpl_single_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__product_tmpl_single_id
+msgid "Child"
+msgstr "Par"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__code
+msgid "Code"
+msgstr "Código"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_invoice_report__color_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_move_line__color_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__color_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__color_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_report__color_attribute_id
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_sale_order_line_inh_search
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_view_order_product_search
+msgid "Color"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__color_attribute_id
+msgid "Color attribute"
+msgstr "Color del atributo"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__comment
+msgid "Comments"
+msgstr "Comentarios"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_template_only_shoes_dealer_inh_form
+msgid "Create Pairs"
+msgstr "Crear pares"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__create_uid
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__create_uid
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__create_date
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__create_date
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_project_project__currency_exchange
+msgid "Currency exchange"
+msgstr "Cambio de moneda"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_sale_order_line_inh_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__display_name
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__display_name
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__display_name
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_sale_orderinh_form
+msgid "Enable Pairs"
+msgstr "Permitir pares"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__single_purchase
+msgid "Enable pair purchase"
+msgstr "Permitir compra de par"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__single_sale
+msgid "Enable pair sales"
+msgstr "Permitir venta de pares"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__exwork
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__exwork
+msgid "Exwork"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__exwork_currency_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__exwork_currency_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__exwork_currency_id
+msgid "Exwork Currency"
+msgstr "Moneda del Exwork"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__exwork_single
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__exwork_single
+msgid "Exwork single"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Compañeros)"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__has_message
+msgid "Has Message"
+msgstr "Tiene un mensaje"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__id
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__id
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__id
+msgid "ID"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono que muestra una excepción en la actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, los mensajes nuevos requieren su atención."
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__message_has_error
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__image
+msgid "Image"
+msgstr "Imagen"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_account_invoice_report
+msgid "Invoices Statistics"
+msgstr "Estadísticas de facturas"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__is_published
+msgid "Is Published"
+msgstr "Está publicado"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_account_move
+msgid "Journal Entry"
+msgstr "Entrada Diaria"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material____last_update
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template____last_update
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__write_uid
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__write_uid
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por última vez por"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__write_date
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__write_date
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__write_date
+msgid "Last Updated on"
+msgstr "Última vez actualizado en"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__line_ids
+msgid "Lines"
+msgstr "Lineas"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjunto principal"
+
+#. module: shoes_dealer
+#: model:ir.model.fields.selection,name:shoes_dealer.selection__product_template__gender__man
+msgid "Man"
+msgstr "Hombre"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__manufacturer_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__manufacturer_id
+msgid "Manufacturer"
+msgstr "Fabricante"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__material_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__material_id
+msgid "Material"
+msgstr ""
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_material_default_form
+msgid "Material name ..."
+msgstr "Nombre del material ..."
+
+#. module: shoes_dealer
+#: model:ir.actions.act_window,name:shoes_dealer.action_product_material
+msgid "Materials"
+msgstr "Materiales"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_has_error
+msgid "Message Delivery error"
+msgstr "Error al entrega el mensaje"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_invoice_report__product_tmpl_model_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__product_tmpl_model_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__product_tmpl_model_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__product_tmpl_model_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_report__product_tmpl_model_id
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_template_shoes_dealer_inh_search
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_sale_order_line_inh_search
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.shoes_dealer_view_order_product_search
+msgid "Model"
+msgstr "Modelo"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de mi actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__name
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Próximo evento del calendario de actividades"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite para la próxima actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la próxima actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_type_id
+msgid "Next Activity Type"
+msgstr "Siguiente tipo de actividad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_project_project__campaign_code
+msgid "Next code"
+msgstr "Siguiente código"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__name
+msgid "Nombre"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren de acción"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensaje con errores de envio"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_set_template_default_form
+msgid "PACK1..."
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_move_line__pair_price
+#: model:ir.model.fields,field_description:shoes_dealer.field_purchase_order_line__pair_price
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__pair_price
+msgid "Pair price"
+msgstr "Precio del par"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_bank_statement_line__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_invoice_report__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_move__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_move_line__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_payment__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_mrp_bom__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_purchase_order__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_purchase_order_line__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__pairs_count
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_report__pairs_count
+msgid "Pairs"
+msgstr "Pares"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__product_tmpl_set_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__product_tmpl_set_id
+msgid "Parent"
+msgstr "Surtido"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__product_tmpl_single_list_price
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__product_tmpl_single_list_price
+msgid "Precio del par"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_product_product__product_tmpl_single_list_price
+#: model:ir.model.fields,help:shoes_dealer.field_product_template__product_tmpl_single_list_price
+msgid "Price at which the product is sold to customers."
+msgstr "Precio del producto que es vendido al cliente"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_kanban_view_inh
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_template_kanban_view_inh
+msgid "Price:"
+msgstr "Precio:"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__product_saleko_id
+msgid "Product KO"
+msgstr "Producto KO"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_product_product
+msgid "Product Variant"
+msgstr "Variante de producto"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_product_material
+msgid "Product material"
+msgstr "Material del producto"
+
+#. module: shoes_dealer
+#: model:ir.ui.menu,name:shoes_dealer.product_material_menu
+msgid "Product materials"
+msgstr "Materiales del producto"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_project_project
+msgid "Project"
+msgstr "Proyecto"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__pt_colors_ids
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__pt_colors_ids
+msgid "Pt Colors"
+msgstr "Pt Colores"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea de pedido de compra"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__qty_quoted
+msgid "Quoted qty"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_ids
+msgid "Rating"
+msgstr "Calificación"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_avg_text
+msgid "Rating Avg Text"
+msgstr "Texto de calificación promedio"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_last_feedback
+msgid "Rating Last Feedback"
+msgstr "Clasificación del último comentario"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_last_image
+msgid "Rating Last Image"
+msgstr "Clasificación de la última imagen"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_last_value
+msgid "Rating Last Value"
+msgstr "Calificar Último Valor"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_percentage_satisfaction
+msgid "Rating Satisfaction"
+msgstr "Valoración de Satisfacción"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_last_text
+msgid "Rating Text"
+msgstr "Texto de calificación"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__rating_count
+msgid "Rating count"
+msgstr "Cuenta de calificación"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_product_template__website_id
+msgid "Restrict publishing to this website."
+msgstr "Restringir publicar a este sitio web."
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__is_seo_optimized
+msgid "SEO optimized"
+msgstr "Optimizado para SEO"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error al enviar el SMS"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Informe de análisis de ventas"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_sale_order_line__product_brand_id
+msgid "Select a brand for this product"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__seo_name
+msgid "Seo name"
+msgstr "Nombre SEO"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__gender
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__gender
+msgid "Serial"
+msgstr "Serie"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__set_id
+msgid "Set"
+msgstr "Establecer"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_set_template
+msgid "Set Template"
+msgstr "Establecer plantilla"
+
+#. module: shoes_dealer
+#: model:ir.model,name:shoes_dealer.model_set_template_line
+msgid "Set Template Line"
+msgstr "Establecer linea de plantilla"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__bom_attribute_id
+msgid "Set attribute"
+msgstr "Establecer atributo"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_attribute_value__set_hidden
+msgid "Set hidden"
+msgstr "Establecer como oculto"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_attribute_value__set_template_id
+msgid "Set template"
+msgstr "Establecer plantilla"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__shipping_price
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__shipping_price
+msgid "Shipping price"
+msgstr "Portes de compra"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__shipping_single_price
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__shipping_single_price
+msgid "Shipping single price"
+msgstr "Portes por par"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.res_company_product_attribute_auto_bom_inh_form
+msgid "Shoes dealer"
+msgstr "Distribuidor de zapatos"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__single_prefix
+msgid "Single prefix"
+msgstr "Prefijo del par"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_invoice_report__size_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_account_move_line__size_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_product__size_attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_sale_report__size_attribute_id
+msgid "Size"
+msgstr "Talla"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__attribute_id
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__attribute_id
+msgid "Size Attribute"
+msgstr "Talla del atributo"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_res_company__size_attribute_id
+msgid "Size attribute"
+msgstr "Talla del atributo"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_material__is_skin
+msgid "Skin"
+msgstr ""
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado en base actividades\n"
+"Atrasado: La fecha de vencimiento ya pasó\n"
+"Hoy: La fecha de la actividad es hoy\n"
+"Planeado: Futuras actividades."
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_product_template__website_url
+msgid "The full URL to access the document through the website."
+msgstr "La URL completa para acceder al documento a través del sitio web."
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_set_template_default_form
+msgid "This code will be used in the reference of new products."
+msgstr "Este código será usado como referencia en nuevos productos"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de excepción de actividad del registro"
+
+#. module: shoes_dealer
+#: model:ir.model.fields.selection,name:shoes_dealer.selection__product_template__gender__unisex
+msgid "Unisex"
+msgstr ""
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_template_only_shoes_dealer_inh_form
+msgid "Upd Codes"
+msgstr "Códigos upd"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template_line__value_id
+msgid "Value"
+msgstr "Valor"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_published
+msgid "Visible on current website"
+msgstr "Visible en el sitio web actual"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_id
+msgid "Website"
+msgstr "Sitio web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_set_template__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes de la página web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_url
+msgid "Website URL"
+msgstr "URL del sitio web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,help:shoes_dealer.field_set_template__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación de la página web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_meta_description
+msgid "Website meta description"
+msgstr "Meta descripción del sitio web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_meta_keywords
+msgid "Website meta keywords"
+msgstr "Meta palabras clave del sitio web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_meta_title
+msgid "Website meta title"
+msgstr "Meta título del sitio web"
+
+#. module: shoes_dealer
+#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__website_meta_og_img
+msgid "Website opengraph image"
+msgstr "Imagen del Open Graph del sitio"
+
+#. module: shoes_dealer
+#: model:ir.model.fields.selection,name:shoes_dealer.selection__product_template__gender__woman
+msgid "Woman"
+msgstr "Mujer"
+
+#. module: shoes_dealer
+#: model_terms:ir.ui.view,arch_db:shoes_dealer.product_set_template_default_form
+msgid "Women sizes ..."
+msgstr "Talla mujer ..."

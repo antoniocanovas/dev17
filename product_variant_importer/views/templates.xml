@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <template id="pnt_custom_product_price" inherit_id="website_sale.product_price">
+        <xpath expr="//div/h3/span[@class='oe_price']" position="replace">
+            <t t-if="combination_info['is_surtido']">
+                <span class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                (Precio par <span style="white-space: nowrap;" t-esc="combination_info['pair_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>)
+            </t>
+            <t t-if="not combination_info['is_surtido']">
+                <span class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

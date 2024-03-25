@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_bom_shoes_dealer_inh_form" model="ir.ui.view">
+        <field name="name">mrp.bom.shoes.dealer.inh.bom</field>
+        <field name="model">mrp.bom</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="pairs_count" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
