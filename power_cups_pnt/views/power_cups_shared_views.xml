@@ -23,7 +23,7 @@
                                 <field name="pnt_kw_inverter"/>
                             </group>
                             <group>
-                                <field name="pnt_customer_id"/>
+                                <field name="pnt_partner_id"/>
                                 <field name="pnt_dealer_id"/>
                                 <field name="pnt_marketeer_id"/>
                                 <field name="pnt_kw_contract"/>
