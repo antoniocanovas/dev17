@@ -38,4 +38,6 @@ class PowerCUPSSharedLine(models.Model):
     _description = 'Power CUPS Shared Line'
 
     name = fields.Many2one('res.partner', string='Customer', required=True)
+    contract_kw = fields.Float('Contract (kw)')
+    assigned_kw = fields.Float('Assigned (kw)')
     cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')

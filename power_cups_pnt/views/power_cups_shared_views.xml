@@ -32,6 +32,14 @@
                                 <field name="pnt_target_type"/>
                             </group>
                         </group>
+                        <field name="pnt_lines_ids">
+                                <tree>
+                                    <field name="name" required="1"/>
+                                    <field name="contract_kw"/>
+                                    <field name="assgined_kw"/>
+                                    <field name="cups_shared_id" invisible="1"/>
+                                </tree>
+                        </field>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
