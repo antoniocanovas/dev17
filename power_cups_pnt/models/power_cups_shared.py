@@ -19,6 +19,7 @@ class PowerCUPSShared(models.Model):
     )
 
     pnt_power_cups_id = fields.Many2one('power.cups', string='CUPS', store=True, copy=False)
+    pnt_ref = fields.Char('Reference')
     pnt_partner_id = fields.Many2one(related='pnt_power_cups_id.pnt_partner_id')
     pnt_cadastral_ref = fields.Char(related='pnt_partner_id.pnt_cadastral_ref')
     pnt_dealer_id = fields.Many2one(related='pnt_power_cups_id.pnt_dealer_id')
@@ -65,9 +66,9 @@ class PowerCUPSSharedLine(models.Model):
     _description = 'Power CUPS Shared Line'
 
     name = fields.Many2one('res.partner', string='Customer', required=True)
-    contract_kw = fields.Float('Contract (kw)')
-    assigned_kw = fields.Float('Assigned (kw)')
-    date_begin = fields.Date('Date begin')
-    date_end = fields.Date('Date end')
-    subscription_id = fields.Many2one('sale.order', string='Subscription')
-    cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')
+    pnt_contract_kw = fields.Float('Contract (kw)')
+    pnt_assigned_kw = fields.Float('Assigned (kw)')
+    pnt_date_begin = fields.Date('Date begin')
+    pnt_date_end = fields.Date('Date end')
+    pnt_subscription_id = fields.Many2one('sale.order', string='Subscription')
+    pnt_cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')
