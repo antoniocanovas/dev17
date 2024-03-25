@@ -13,36 +13,49 @@
                         <h2>
                             <field name="name"/>
                         </h2>
-                        <group name="general_data">
+                        <group>
                             <group>
                                 <field name="pnt_power_cups_id"/>
-                                <field name="pnt_partner_id" required="1"/>
-                                <field name="pnt_cadastral_ref"/>
-                                <field name="pnt_customer_type"/>
-                                <field name="pnt_electric_type"/>
-                                <field name="pnt_kw_fw"/>
-                                <field name="pnt_kw_inverter"/>
                             </group>
                             <group>
-                                <field name="pnt_partner_id"/>
-                                <field name="pnt_dealer_id"/>
-                                <field name="pnt_marketeer_id"/>
-<!--                                <field name="pnt_kw_contract"/>
-                                <field name="pnt_kw_access"/>-->
-                                <field name="pnt_target_type"/>
+                                <field name="pnt_partner_id" required="1"/>
                             </group>
                         </group>
-                        <field name="pnt_lines_ids">
-                                <tree>
-                                    <field name="name" required="1"/>
-                                    <field name="contract_kw"/>
-                                    <field name="assigned_kw"/>
-                                    <field name="date_begin"/>
-                                    <field name="date_end"/>
-                                    <field name="subscription_id"/>
-                                    <field name="cups_shared_id" column_invisible="1"/>
-                                </tree>
-                        </field>
+                        <notebook>
+                            <page name="shared_lines" string="Contracts">
+                                <field name="pnt_lines_ids">
+                                    <tree>
+                                        <field name="name" required="1"/>
+                                        <field name="contract_kw"/>
+                                        <field name="assigned_kw"/>
+                                        <field name="date_begin"/>
+                                        <field name="date_end"/>
+                                        <field name="subscription_id"/>
+                                        <field name="cups_shared_id" column_invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="cups" string="CUPS">
+                                <group name="general_data">
+                                    <group>
+                                        <field name="pnt_cadastral_ref"/>
+                                        <field name="pnt_customer_type"/>
+                                        <field name="pnt_electric_type"/>
+                                        <field name="pnt_kw_fw"/>
+                                        <field name="pnt_kw_inverter"/>
+                                    </group>
+                                    <group>
+                                        <field name="pnt_partner_id"/>
+                                        <field name="pnt_dealer_id"/>
+                                        <field name="pnt_marketeer_id"/>
+                                        <!--                                <field name="pnt_kw_contract"/>
+                                                                        <field name="pnt_kw_access"/>-->
+                                        <field name="pnt_target_type"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -67,15 +80,15 @@
             <field name="arch" type="xml">
                 <tree string="Power CUPS">
                     <field name="name"/>
-<!--                    <field name="pnt_customer_id" optional="hide"/> -->
+                    <!--                    <field name="pnt_customer_id" optional="hide"/> -->
                     <field name="pnt_partner_id" optional="show"/>
                     <field name="pnt_kw_fw"/>
                     <field name="pnt_kw_inverter"/>
                     <field name="pnt_dealer_id" optional="show"/>
                     <field name="pnt_marketeer_id" optional="hide"/>
                     <field name="pnt_customer_type" optional="show"/>
-<!--                    <field name="pnt_kw_contract" optional="hide"/>
-                    <field name="pnt_kw_access" optional="hide"/> -->
+                    <!--                    <field name="pnt_kw_contract" optional="hide"/>
+                                        <field name="pnt_kw_access" optional="hide"/> -->
                     <field name="pnt_target_type" optional="hide"/>
                     <field name="pnt_state" optional="hide"/>
                 </tree>
