@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 
 class PowerCUPSShared(models.Model):
     _name = 'power.cups.shared'
@@ -55,7 +55,7 @@ class PowerCUPSShared(models.Model):
     @api.constrains('pnt_kw_available','pnt_kw_assigned')
     def _get_constrains_kw_values(self):
         if (self.pnt_kw_available < 0) or (self.pnt_kw_assigned != self.pnt_kw_fw):
-            raise ValidationError("Available Kw must be positive, and all available power distributed, please review.")
+            raise UserError("Available Kw must be positive, and all available power distributed, please review.")
 
 class PowerCUPSSharedLine(models.Model):
     _name = 'power.cups.shared.line'
