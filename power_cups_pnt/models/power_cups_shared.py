@@ -33,6 +33,29 @@ class PowerCUPSShared(models.Model):
 
     pnt_lines_ids = fields.One2many('power.cups.shared.line', 'cups_shared_id', string='Customers')
 
+    @api.depends('pnt_line_ids.contract_kw')
+    def _get_kw_available(self):
+        for record in self:
+            total = 0
+            for li in record.pnt_lines_ids:
+                total += li.contract_kw
+            record['pnt_kw_available'] = total
+    pnt_kw_available = fields.Float('Available (Kw)', compute='_get_kw_available')
+
+    @api.depends('pnt_line_ids.assigned_kw')
+    def _get_kw_assigned(self):
+        for record in self:
+            total = 0
+            for li in record.pnt_lines_ids:
+                total += li.assigned_kw
+            record['pnt_kw_assigned'] = total
+    pnt_kw_assigned = fields.Float('Assigned (Kw)', compute='_get_kw_assigned')
+
+    @api.constrains('pnt_kw_available','pnt_kw_100')
+    def _get_constrains_kw_values(self):
+        if (self.pnt_kw_available < 0) or (self.pnt_kw_100 != 100):
+            raise UserError('Available Kw must be positive and assigned 100, please review.')
+
 class PowerCUPSSharedLine(models.Model):
     _name = 'power.cups.shared.line'
     _description = 'Power CUPS Shared Line'
