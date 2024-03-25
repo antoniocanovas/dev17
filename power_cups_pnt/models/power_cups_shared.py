@@ -52,11 +52,13 @@ class PowerCUPSShared(models.Model):
             record['pnt_kw_assigned'] = total
     pnt_kw_assigned = fields.Float('Assigned (Kw)', store=True, compute='_get_kw_assigned')
 
+    """
     @api.constrains('pnt_kw_available','pnt_kw_assigned')
     def _get_constrains_kw_values(self):
         if (self.pnt_kw_available < 0) or (self.pnt_kw_assigned != self.pnt_kw_fw):
             raise UserError("Available Kw must be positive, and all available power distributed, please review.")
         else: return True
+    """
 
 class PowerCUPSSharedLine(models.Model):
     _name = 'power.cups.shared.line'
