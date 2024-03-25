@@ -31,7 +31,7 @@
                                         <field name="assigned_kw"/>
                                         <field name="date_begin"/>
                                         <field name="date_end"/>
-                                        <field name="subscription_id" domain="[('partner_id','=',name.id)]"/>
+                                        <field name="subscription_id" domain="[('partner_id','=',name)]"/>
                                         <field name="cups_shared_id" column_invisible="1"/>
                                     </tree>
                                 </field>
