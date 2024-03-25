@@ -24,7 +24,7 @@
                         </group>
                         <notebook>
                             <page name="shared_lines" string="Contracts">
-                                <field name="pnt_lines_ids">
+                                <field name="pnt_line_ids">
                                     <tree>
                                         <field name="name" required="1"/>
                                         <field name="contract_kw"/>
