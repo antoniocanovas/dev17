@@ -84,8 +84,8 @@
                     <field name="name"/>
                     <!--                    <field name="pnt_customer_id" optional="hide"/> -->
                     <field name="pnt_partner_id" optional="show"/>
-                    <field name="pnt_kw_fw"/>
-                    <field name="pnt_kw_available"/>
+                    <field name="pnt_kw_fw" sum="Installed FV (kw)"/>
+                    <field name="pnt_kw_available" sum="Available (kw)"/>
                     <field name="pnt_kw_inverter" optional="hide"/>
                     <field name="pnt_dealer_id" optional="show"/>
                     <field name="pnt_marketeer_id" optional="hide"/>
