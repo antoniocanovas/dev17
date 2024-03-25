@@ -41,7 +41,7 @@ class PowerCUPSShared(models.Model):
                 total += li.contract_kw
             total = record.pnt_kw_fw - total
             record['pnt_kw_available'] = total
-    pnt_kw_available = fields.Float('Available (Kw)', compute='_get_kw_available')
+    pnt_kw_available = fields.Float('Available (Kw)', store=True, compute='_get_kw_available')
 
     @api.depends('pnt_line_ids.assigned_kw')
     def _get_kw_assigned(self):
@@ -50,7 +50,7 @@ class PowerCUPSShared(models.Model):
             for li in record.pnt_line_ids:
                 total += li.assigned_kw
             record['pnt_kw_assigned'] = total
-    pnt_kw_assigned = fields.Float('Assigned (Kw)', compute='_get_kw_assigned')
+    pnt_kw_assigned = fields.Float('Assigned (Kw)', store=True, compute='_get_kw_assigned')
 
     @api.constrains('pnt_kw_available','pnt_kw_assigned')
     def _get_constrains_kw_values(self):
