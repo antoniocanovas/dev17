@@ -55,20 +55,13 @@
 
 
     <!-- SHARED MENUS: -->
-    <menuitem
-            action="action_power_shared_cups"
-            id="power_shared_cups_icon_menu"
-            name="Shared CUPS"
-            sequence="30"
-            web_icon="power_cups_pnt,static/description/icon.png"
-    />
 
     <record id="power_shared_cups_main_menu" model="ir.ui.menu">
         <field name="action" ref="action_power_shared_cups"/>
         <field name="active" eval="True"/>
-        <field name="name">CUPS</field>
-        <field name="parent_id" ref="power_shared_cups_icon_menu"/>
-        <field name="sequence">10</field>
+        <field name="name">Shared</field>
+        <field name="parent_id" ref="power_cups_icon_menu"/>
+        <field name="sequence">20</field>
         <field name="web_icon" eval="False"/>
     </record>
 
