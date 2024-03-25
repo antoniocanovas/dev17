@@ -40,4 +40,7 @@ class PowerCUPSSharedLine(models.Model):
     name = fields.Many2one('res.partner', string='Customer', required=True)
     contract_kw = fields.Float('Contract (kw)')
     assigned_kw = fields.Float('Assigned (kw)')
+    date_begin = fields.Date('Date begin')
+    date_end = fields.Date('Date end')
+    subscription_id = fields.Many2one('sale.order', string='Subscription')
     cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')

@@ -37,7 +37,10 @@
                                     <field name="name" required="1"/>
                                     <field name="contract_kw"/>
                                     <field name="assigned_kw"/>
-                                    <field name="cups_shared_id" invisible="1"/>
+                                    <field name="date_begin"/>
+                                    <field name="date_end"/>
+                                    <field name="subscription_id"/>
+                                    <field name="cups_shared_id" column_invisible="1"/>
                                 </tree>
                         </field>
                     </sheet>
