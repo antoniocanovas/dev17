@@ -56,6 +56,7 @@ class PowerCUPSShared(models.Model):
     def _get_constrains_kw_values(self):
         if (self.pnt_kw_available < 0) or (self.pnt_kw_assigned != self.pnt_kw_fw):
             raise UserError("Available Kw must be positive, and all available power distributed, please review.")
+        else: return True
 
 class PowerCUPSSharedLine(models.Model):
     _name = 'power.cups.shared.line'
