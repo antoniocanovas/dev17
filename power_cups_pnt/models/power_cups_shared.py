@@ -31,7 +31,7 @@ class PowerCUPSShared(models.Model):
     pnt_target_type = fields.Selection(related='pnt_power_cups_id.pnt_target_type')
     pnt_customer_type = fields.Selection(related='pnt_power_cups_id.pnt_customer_type')
 
-    pnt_lines_ids = fields.One2many('power.cups.shared.lines', 'cup_shared_id', string='Customers')
+    pnt_lines_ids = fields.One2many('power.cups.shared.lines', 'cups_shared_id', string='Customers')
 
 class PowerCUPSSharedLine(models.Model):
     _name = 'power.cups.shared.line'
