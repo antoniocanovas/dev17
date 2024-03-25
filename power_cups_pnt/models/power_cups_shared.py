@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 
 class PowerCUPSShared(models.Model):
     _name = 'power.cups.shared'
@@ -52,10 +52,10 @@ class PowerCUPSShared(models.Model):
             record['pnt_kw_assigned'] = total
     pnt_kw_assigned = fields.Float('Assigned (Kw)', compute='_get_kw_assigned')
 
-    @api.constrains('pnt_kw_available','pnt_kw_100')
+    @api.constrains('pnt_kw_available','pnt_kw_assigned')
     def _get_constrains_kw_values(self):
         if (self.pnt_kw_available < 0) or (self.pnt_kw_assigned != self.pnt_kw_fw):
-            raise UserError('Available Kw must be positive and assigned 100, please review.')
+            raise ValidationError("Available Kw must be positive and assigned 100%, please review.")
 
 class PowerCUPSSharedLine(models.Model):
     _name = 'power.cups.shared.line'
