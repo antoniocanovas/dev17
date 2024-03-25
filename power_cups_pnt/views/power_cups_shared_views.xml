@@ -36,7 +36,7 @@
                                 <tree>
                                     <field name="name" required="1"/>
                                     <field name="contract_kw"/>
-                                    <field name="assgined_kw"/>
+                                    <field name="assigned_kw"/>
                                     <field name="cups_shared_id" invisible="1"/>
                                 </tree>
                         </field>
