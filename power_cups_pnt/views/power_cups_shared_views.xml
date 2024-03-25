@@ -15,6 +15,7 @@
                         </h2>
                         <group name="general_data">
                             <group>
+                                <field name="pnt_power_cups_id"/>
                                 <field name="pnt_partner_id" required="1"/>
                                 <field name="pnt_cadastral_ref"/>
                                 <field name="pnt_customer_type"/>
