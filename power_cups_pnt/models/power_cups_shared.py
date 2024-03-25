@@ -40,7 +40,7 @@ class PowerCUPSShared(models.Model):
             total = 0
             for li in record.pnt_line_ids:
                 total += li.pnt_contract_kw
-            total = record.pnt_pnt_kw_fw - total
+            total = record.pnt_kw_fw - total
             record['pnt_kw_available'] = total
     pnt_kw_available = fields.Float('Available (Kw)', store=True, compute='_get_kw_available')
 
