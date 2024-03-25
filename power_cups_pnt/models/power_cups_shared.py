@@ -34,22 +34,22 @@ class PowerCUPSShared(models.Model):
 
     pnt_line_ids = fields.One2many('power.cups.shared.line', 'pnt_cups_shared_id', string='Customers')
 
-    @api.depends('pnt_line_ids.contract_kw')
+    @api.depends('pnt_line_ids.pnt_contract_kw')
     def _get_kw_available(self):
         for record in self:
             total = 0
             for li in record.pnt_line_ids:
-                total += li.contract_kw
-            total = record.pnt_kw_fw - total
+                total += li.pnt_contract_kw
+            total = record.pnt_pnt_kw_fw - total
             record['pnt_kw_available'] = total
     pnt_kw_available = fields.Float('Available (Kw)', store=True, compute='_get_kw_available')
 
-    @api.depends('pnt_line_ids.assigned_kw')
+    @api.depends('pnt_line_ids.pnt_assigned_kw')
     def _get_kw_assigned(self):
         for record in self:
             total = 0
             for li in record.pnt_line_ids:
-                total += li.assigned_kw
+                total += li.pnt_assigned_kw
             record['pnt_kw_assigned'] = total
     pnt_kw_assigned = fields.Float('Assigned (Kw)', store=True, compute='_get_kw_assigned')
 
