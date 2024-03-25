@@ -34,6 +34,7 @@
                                         <field name="pnt_date_end"/>
                                         <field name="pnt_subscription_id" domain="[('partner_id','=',name)]"/>
                                         <field name="pnt_cups_shared_id" column_invisible="1"/>
+                                        <field name="pnt_subscription_state" optional="show"/>
                                     </tree>
                                 </field>
                             </page>

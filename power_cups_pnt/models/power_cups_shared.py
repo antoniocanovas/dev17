@@ -70,3 +70,4 @@ class PowerCUPSSharedLine(models.Model):
     pnt_date_end = fields.Date('Date end')
     pnt_subscription_id = fields.Many2one('sale.order', string='Subscription')
     pnt_cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')
+    pnt_subscription_state = fields.Selection(related='pnt_subscription_id.state')
