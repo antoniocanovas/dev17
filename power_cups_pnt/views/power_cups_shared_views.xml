@@ -25,7 +25,7 @@
                         <notebook>
                             <page name="shared_lines" string="Contracts">
                                 <field name="pnt_line_ids">
-                                    <tree>
+                                    <tree editable="top">>
                                         <field name="name" required="1"/>
                                         <field name="contract_kw"/>
                                         <field name="assigned_kw"/>
