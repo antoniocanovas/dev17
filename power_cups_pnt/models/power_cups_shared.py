@@ -54,7 +54,7 @@ class PowerCUPSShared(models.Model):
 
     @api.constrains('pnt_kw_available','pnt_kw_100')
     def _get_constrains_kw_values(self):
-        if (self.pnt_kw_available < 0) or (self.pnt_kw_100 != 100):
+        if (self.pnt_kw_available < 0) or (self.pnt_kw_assigned != self.pnt_kw_fw):
             raise UserError('Available Kw must be positive and assigned 100, please review.')
 
 class PowerCUPSSharedLine(models.Model):
