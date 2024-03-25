@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- WINDOW ACTIONS: -->
+    <!-- CUPS WINDOW ACTIONS: -->
     <record id="action_power_cups" model="ir.actions.act_window">
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
@@ -10,6 +10,23 @@
         <field name="limit">80</field>
         <field name="name">Power Supply</field>
         <field name="res_model">power.cups</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form,activity</field>
+    </record>
+
+    <!-- SHARED CUPS WINDOW ACTIONS: -->
+    <record id="action_power_shared_cups" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">Shared CUPS</field>
+        <field name="res_model">power.cups.shared</field>
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
@@ -32,6 +49,25 @@
         <field name="active" eval="True"/>
         <field name="name">CUPS</field>
         <field name="parent_id" ref="power_cups_icon_menu"/>
+        <field name="sequence">10</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+    <!-- SHARED MENUS: -->
+    <menuitem
+            action="action_power_shared_cups"
+            id="power_shared_cups_icon_menu"
+            name="Shared CUPS"
+            sequence="30"
+            web_icon="power_cups_pnt,static/description/icon.png"
+    />
+
+    <record id="power_shared_cups_main_menu" model="ir.ui.menu">
+        <field name="action" ref="action_power_shared_cups"/>
+        <field name="active" eval="True"/>
+        <field name="name">CUPS</field>
+        <field name="parent_id" ref="power_shared_cups_icon_menu"/>
         <field name="sequence">10</field>
         <field name="web_icon" eval="False"/>
     </record>

@@ -20,6 +20,7 @@
         'security/user_groups.xml',
         'security/ir.model.access.csv',
         'views/power_cups_views.xml',
+        'views/power_cups_shared_views.xml',
         'views/res_partner_views.xml',
         'views/crm_lead_views.xml',
         'views/project_project_views.xml',
