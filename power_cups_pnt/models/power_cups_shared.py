@@ -37,7 +37,7 @@ class PowerCUPSShared(models.Model):
     def _get_kw_available(self):
         for record in self:
             total = 0
-            for li in record.pnt_lines_ids:
+            for li in record.pnt_line_ids:
                 total += li.contract_kw
             record['pnt_kw_available'] = total
     pnt_kw_available = fields.Float('Available (Kw)', compute='_get_kw_available')
@@ -46,7 +46,7 @@ class PowerCUPSShared(models.Model):
     def _get_kw_assigned(self):
         for record in self:
             total = 0
-            for li in record.pnt_lines_ids:
+            for li in record.pnt_line_ids:
                 total += li.assigned_kw
             record['pnt_kw_assigned'] = total
     pnt_kw_assigned = fields.Float('Assigned (Kw)', compute='_get_kw_assigned')
