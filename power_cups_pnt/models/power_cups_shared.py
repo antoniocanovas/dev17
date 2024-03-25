@@ -4,13 +4,6 @@
 from odoo import api, fields, models, _
 
 
-class PowerCUPSSharedLine(models.Model):
-    _name = 'power.cups.shared.line'
-    _description = 'Power CUPS Shared Line'
-
-    name = fields.Many2one('res.partner', string='Customer', required=True)
-    cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')
-
 class PowerCUPSShared(models.Model):
     _name = 'power.cups.shared'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -39,3 +32,10 @@ class PowerCUPSShared(models.Model):
     pnt_customer_type = fields.Selection(related='pnt_power_cups_id.pnt_customer_type')
 
     pnt_lines_ids = fields.One2many('power.cups.shared.lines', 'cups_shared_id', string='Customers')
+
+class PowerCUPSSharedLine(models.Model):
+    _name = 'power.cups.shared.line'
+    _description = 'Power CUPS Shared Line'
+
+    name = fields.Many2one('res.partner', string='Customer', required=True)
+    cups_shared_id = fields.Many2one('power.cups.shared', string='Shared FV')
