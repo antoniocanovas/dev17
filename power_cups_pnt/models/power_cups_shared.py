@@ -32,7 +32,7 @@ class PowerCUPSShared(models.Model):
     pnt_target_type = fields.Selection(related='pnt_power_cups_id.pnt_target_type')
     pnt_customer_type = fields.Selection(related='pnt_power_cups_id.pnt_customer_type')
 
-    pnt_line_ids = fields.One2many('power.cups.shared.line', 'cups_shared_id', string='Customers')
+    pnt_line_ids = fields.One2many('power.cups.shared.line', 'pnt_cups_shared_id', string='Customers')
 
     @api.depends('pnt_line_ids.contract_kw')
     def _get_kw_available(self):
