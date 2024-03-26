@@ -62,7 +62,7 @@ class ProductPackingWizard(models.TransientModel):
             if record.name.pnt_product_dye: dye = " " + record.name.pnt_product_dye
             name = record.name.name + dye + type + str(baseqty)
                 # Asignar un código similar al producto padre:
-            if record.name.default_code: code = record.prefix + record.name.default_code
+            if record.name.default_code: code = record.pnt_prefix + record.name.default_code
 
             exist = self.env['product.template'].search([('name', '=', name)])
             routemrp = self.env.ref('mrp.route_warehouse0_manufacture')
