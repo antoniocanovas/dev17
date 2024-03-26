@@ -7,7 +7,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     # Campos para el impuesto al plástico:
-    pnt_plastic_weight = fields.Float('Plastic tax weight', digits="Stock Weight")
+    pnt_plastic_weight = fields.Float('Plastic tax weight', digits='Stock Weight')
 
     pnt_is_manufactured = fields.Boolean('Manufacture', store=True, related='categ_id.pnt_is_manufactured')
 
