@@ -38,15 +38,15 @@
                 <page string="Relations" name="relations" groups="base.group_no_one">
                     <group name="Relations">
                         <group string="Pricelist items">
-                            <field name="pnt_pricelist_item_ids" nolabel="1" readonly="1"/>
+                            <field name="pnt_pricelist_item_ids" nolabel="1" readonly="1" colspan="2"/>
                         </group>
                         <group name="packing_products" string="Packing products">
-                            <field name="pnt_packing_ids" readonly="1"/>
+                            <field name="pnt_packing_ids" nolabel="1" readonly="1" colspan="2"/>
                         </group>
                     </group>
                     <group>
                         <group string="Bom lines" name="bom_lines">
-                            <field name="pnt_bom_line_ids" nolabel="1" readonly="1">
+                            <field name="pnt_bom_line_ids" nolabel="1" readonly="1" colspan="2">
                                 <tree>
                                     <field name="bom_id"/>
                                 </tree>
