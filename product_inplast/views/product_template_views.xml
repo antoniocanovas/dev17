@@ -37,9 +37,9 @@
                 </page>
                 <page string="Relations" name="relations" groups="base.group_no_one">
                     <group name="Relations">
-                        <field name="pnt_pricelist_item_ids"/>
-                        <field name="pnt_packing_ids"/>
-                        <field name="pnt_bom_line_ids"/>
+                        <field name="pnt_pricelist_item_ids" readonly="1"/>
+                        <field name="pnt_packing_ids" readonly="1"/>
+                        <field name="pnt_bom_line_ids" readonly="1"/>
                     </group>
                 </page>
             </xpath>
