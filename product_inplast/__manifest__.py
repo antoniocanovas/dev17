@@ -22,6 +22,7 @@
         "views/product_packing_wizard_views.xml",
         "views/product_template_views.xml",
         "views/menu_views.xml",
+        "data/stock_package_type.xml",
         "report/templates.xml",
         "report/ir_action_report.xml",
     ],

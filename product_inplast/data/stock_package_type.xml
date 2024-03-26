@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="package_type_pallet_inplast" model="stock.package.type">
+        <field name="name">Pallet</field>
+        <field name="barcode">PAL</field>
+        <field name="max_weight">4000</field>
+        <field name="width">800</field>
+        <field name="height">130</field>
+        <field name="packaging_length">1200</field>
+    </record>
+
+    <record id="package_type_box_inplast" model="stock.package.type">
+        <field name="name">Box</field>
+        <field name="barcode">BOX</field>
+        <field name="max_weight">30</field>
+        <field name="width">362</field>
+        <field name="height">374</field>
+        <field name="packaging_length">562</field>
+    </record>
+
+</odoo>

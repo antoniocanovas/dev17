@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
                                         store=True, copy=True, string='Product type')
     pnt_parent_id = fields.Many2one('product.template', string='Main product')
     pnt_parent_qty = fields.Integer('Parent qty')
-    pnt_product_dye_id = fields.Many2one('product.template', string='Product dye', store=True, copy=True)
+    pnt_product_dye = fields.Char(string='Product dye', store=True, copy=True)
 
     @api.onchange('categ_id', 'pnt_parent_id', 'pnt_parent_qty', 'pnt_product_type')
     def _get_pnt_plastic_weight(self):
@@ -34,9 +34,10 @@ class ProductTemplate(models.Model):
         string="COA",
     )
 
-    @api.depends('name', 'default_code', 'pnt_product_dye_id')
+    @api.depends('name', 'default_code', 'pnt_product_dye')
     def _compute_display_name(self):
         for template in self:
             template.display_name = '{}{}{}'.format(
                 template.default_code and '[%s] ' % template.default_code or '',
-                template.name, template.pnt_product_dye_id.name and ' [%s]' % template.pnt_product_dye_id.name or '')
+                template.name, template.pnt_product_dye and ' [%s]' % template.pnt_product_dye or '')
+

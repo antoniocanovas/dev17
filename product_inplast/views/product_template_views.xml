@@ -25,7 +25,7 @@
                        invisible="pnt_product_type not in ['packing']"
                        required="pnt_product_type in ['packing']"
                 />
-                <field name="pnt_product_dye_id" domain="[('pnt_product_type','=','dye')]"
+                <field name="pnt_product_dye"
                        invisible="pnt_product_type not in ['final','semi']"
                 />
             </field>
@@ -38,5 +38,26 @@
             </xpath>
         </field>
     </record>
-
+    <record id="product_template_inplast_inh_kanban" model="ir.ui.view">
+        <field name="name">product.template.inplast.inh.kanban</field>
+        <field name="model">product.template</field>
+        <field name="type">kanban</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_record_top')]" position="after">
+                <t t-if="record.pnt_product_dye.value">[<field name="pnt_product_dye"/>]</t>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_inplast_inh_tree" model="ir.ui.view">
+        <field name="name">product.template.inplast.inh.tree</field>
+        <field name="model">product.template</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="pnt_product_dye"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
