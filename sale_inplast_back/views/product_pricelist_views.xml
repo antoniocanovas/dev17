@@ -42,7 +42,6 @@
                         <field name="pnt_last_update" readonly="1"/>
                         <field name="pnt_next_update" required="1"/>
                         <field name="pnt_lock_date" readonly="1"/>
-                        <field name="pnt_ethylene_price"/>
                     </group>
                 </xpath>
 

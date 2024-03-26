@@ -18,7 +18,6 @@ class ProductPricelist(models.Model):
                                              ('bom', 'Escandallo general'),
                                              ('custom', 'Escandallo personalizado')],
                                             store=True, copy=True, string='Pricelist mode', default='standard')
-    pnt_ethylene_price = fields.Float('Ethylene price')
 
     @api.depends('pnt_next_update')
     def _get_pnt_lock_date(self):
