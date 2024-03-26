@@ -43,3 +43,4 @@ class ProductTemplate(models.Model):
 
     pnt_pricelist_item_ids = fields.One2many('product.pricelist.item', 'product_tmpl_id', string='Pricelist items', store=False)
     pnt_packing_ids = fields.One2many('product.template', 'pnt_parent_id', string='Packing products', store=False)
+    pnt_bom_line_ids = fields.One2many('mrp.bom.line', 'product_tmpl_id', string='BOM lines', store=False)
