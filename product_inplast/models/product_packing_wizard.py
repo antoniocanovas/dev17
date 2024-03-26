@@ -34,6 +34,13 @@ class ProductPackingWizard(models.TransientModel):
     pnt_picking_label_id = fields.Many2one('product.template', string='Picking Label', domain="[('pnt_product_type','=','packaging')]")
     pnt_picking_label_qty = fields.Integer('Picking Label qty', default="1")
 
+    @api.onchange('pnt_type')
+    def _get_packing_prefix(self):
+        if self.pnt_type == 'box': prefix = 'C.'
+        else: prefix = 'P.'
+        self.pnt_prefix = prefix
+    pnt_prefix = fields.Char('Prefix', compute='_get_packing_prefix')
+
     @api.onchange('pnt_pallet_box_qty', 'pnt_pallet_box_id')
     def _get_pallet_base_qty(self):
         for record in self:
@@ -51,9 +58,11 @@ class ProductPackingWizard(models.TransientModel):
                 packagetype = self.env.ref('product_inplast.package_type_pallet_inplast')
 
             # Crear producto:
-            dye = ""
+            dye, code = "", ""
             if record.name.pnt_product_dye: dye = " " + record.name.pnt_product_dye
             name = record.name.name + dye + type + str(baseqty)
+                # Asignar un código similar al producto padre:
+            if record.name.default_code: code = record.prefix + record.name.default_code
 
             exist = self.env['product.template'].search([('name', '=', name)])
             routemrp = self.env.ref('mrp.route_warehouse0_manufacture')
@@ -64,7 +73,7 @@ class ProductPackingWizard(models.TransientModel):
                     'pnt_parent_id': record.name.id,
                     'pnt_parent_qty': baseqty,
                     'detailed_type': 'product',
-#                    'default_code': code,
+                    'default_code': code,
                     'list_price': record.name.list_price * baseqty,
                     'pnt_plastic_weight': record.name.pnt_plastic_weight * baseqty,
                     'standard_price': record.name.standard_price * baseqty,

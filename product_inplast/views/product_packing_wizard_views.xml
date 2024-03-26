@@ -48,6 +48,7 @@
                         <field name="pnt_pallet_label_qty"/>
                         <field name="pnt_picking_label_id" required="pnt_type == 'pallet'"/>
                         <field name="pnt_picking_label_qty"/>
+                        <field name="pnt_prefix"/>
                     </group>
                     <footer>
                         <button class="oe_highlight"
