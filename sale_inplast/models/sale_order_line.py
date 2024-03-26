@@ -13,7 +13,7 @@ class SaleOrderLine(models.Model):
 
 
     # Campos para pasar de tapones a palets, en caso de vender por palets:
-    pnt_base_qty = fields.Integer('Base qty', related='product_id.pnt_parent_qty')
+    pnt_base_unit = fields.Integer('Base qty')
 
     @api.onchange('pnt_base_unit')
     def _get_packing_units_from_base_qty(self):
