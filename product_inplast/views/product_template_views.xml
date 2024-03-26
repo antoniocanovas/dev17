@@ -37,13 +37,21 @@
                 </page>
                 <page string="Relations" name="relations" groups="base.group_no_one">
                     <group name="Relations">
-                        <field name="pnt_pricelist_item_ids" readonly="1"/>
-                        <field name="pnt_packing_ids" readonly="1"/>
-                        <field name="pnt_bom_line_ids" readonly="1">
+                        <group string="Pricelist items">
+                            <field name="pnt_pricelist_item_ids" nolabel="1" readonly="1"/>
+                        </group>
+                        <group name="packing_products" string="Packing products">
+                            <field name="pnt_packing_ids" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Bom lines" name="bom_lines">
+                            <field name="pnt_bom_line_ids" nolabel="1" readonly="1">
                                 <tree>
                                     <field name="bom_id"/>
                                 </tree>
-                        </field>
+                            </field>
+                        </group>
                     </group>
                 </page>
             </xpath>
