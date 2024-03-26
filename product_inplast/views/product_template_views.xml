@@ -39,7 +39,11 @@
                     <group name="Relations">
                         <field name="pnt_pricelist_item_ids" readonly="1"/>
                         <field name="pnt_packing_ids" readonly="1"/>
-                        <field name="pnt_bom_line_ids" readonly="1"/>
+                        <field name="pnt_bom_line_ids" readonly="1">
+                                <tree>
+                                    <field name="bom_id"/>
+                                </tree>
+                        </field>
                     </group>
                 </page>
             </xpath>
