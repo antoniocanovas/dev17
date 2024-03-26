@@ -50,8 +50,8 @@
                             <field name="pnt_packing_ids" nolabel="1" readonly="1" colspan="2">
                                     <tree>
                                         <field name="name"/>
+                                        <field name="pnt_parent_qty"/>
                                         <field name="pnt_product_type"/>
-                                        <field name="detailed_type"/>
                                     </tree>
                             </field>
                         </group>
