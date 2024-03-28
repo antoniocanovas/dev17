@@ -15,6 +15,7 @@
         'crm',
         'project',
         'sale_management',
+        'sale_subscription',
     ],
     'data': [
         'security/user_groups.xml',

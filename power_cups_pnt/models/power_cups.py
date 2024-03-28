@@ -17,7 +17,12 @@ class PowerCUPS(models.Model):
         default='draft',
         tracking=True,
     )
-
+    pnt_priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'High'),
+    ], default='0', index=True, string="Priority", tracking=True)
+    active = fields.Boolean(default=True)
+    pnt_displayed_image_id = fields.Many2one('ir.attachment', domain="[('res_model', '=', 'power.cups.shared'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]", string='Cover Image')
     pnt_partner_id = fields.Many2one('res.partner', string='Delivery address', store=True, copy=True, tracking=True)
     pnt_cadastral_ref = fields.Char('Cadastral ref', store=True, tracking=True, readonly=False, related='pnt_partner_id.pnt_cadastral_ref')
     pnt_dealer_id = fields.Many2one('res.partner', string='Dealer', store=True, copy=True, tracking=True)
