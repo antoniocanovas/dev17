@@ -162,5 +162,5 @@ class ProductPricelist(models.Model):
                                 'product_tmpl_id': packing.id,
                                 'compute_price': 'fixed',
                                 'applied_on': '1_product',
-                                'price': li.price * packing.pnt_parent_qty,
+                                'price': li.fixed_price * packing.pnt_parent_qty,
                             })
