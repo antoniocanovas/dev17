@@ -163,4 +163,5 @@ class ProductPricelist(models.Model):
                                 'compute_price': 'fixed',
                                 'applied_on': '1_product',
                                 'fixed_price': li.fixed_price * packing.pnt_parent_qty,
+                                'price_surcharge': li.price_surcharge * packing.pnt_parent_qty,
                             })
