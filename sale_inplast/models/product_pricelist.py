@@ -132,7 +132,7 @@ class ProductPricelist(models.Model):
             if product.mrp_type == 'final':
                 for packing in product.pnt_packing_ids:
                     if packing.sale_ok == True:
-                        pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id,'=','packing.id)])
+                        pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id','=',packing.id)])
                         if pricelistitemt.id:
                             pricelistitem.write({'pnt_new_price': product.pnt_new_price * packing.pnt_parent_qty})
                         else:
