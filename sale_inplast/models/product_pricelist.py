@@ -129,7 +129,7 @@ class ProductPricelist(models.Model):
             li.write({'pnt_new_price':unit_price, 'pnt_tracking_date':date.today()})
 
             # Cálculos para actualizar o añadir los productos PACKING de cada producto en la tarifa:
-            if product.pnt_mrp_type == 'final':
+            if product.pnt_product_type == 'final':
                 for packing in product.pnt_packing_ids:
                     if packing.sale_ok == True:
                         pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id','=',packing.id)])
