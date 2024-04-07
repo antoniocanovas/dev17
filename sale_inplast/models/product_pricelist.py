@@ -134,14 +134,14 @@ class ProductPricelist(models.Model):
                     if packing.sale_ok == True:
                         pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id','=',packing.id)])
                         if pricelistitem.id:
-                            pricelistitem.write({'pnt_new_price': product.pnt_new_price * packing.pnt_parent_qty})
+                            pricelistitem.write({'pnt_new_price': li.pnt_new_price * packing.pnt_parent_qty})
                         else:
                             pricelistitem = self.env['product.pricelist.item'].create({
                                 'pricelist_id':self.id,
                                 'product_tmpl_id': packing.id,
                                 'compute_price': 'fixed',
                                 'applied_on': '1_product',
-                                'pnt_new_price': product.pnt_new_price * packing.pnt_parent_qty,
+                                'pnt_new_price': li.pnt_new_price * packing.pnt_parent_qty,
                             })
 
         self.pnt_pending_update = True
