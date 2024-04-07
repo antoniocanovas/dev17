@@ -150,6 +150,7 @@ class ProductPricelist(models.Model):
     # Buscar nuevos PACKINGS con precios actuales:
     def product_packings_search(self):
         for li in self.item_ids:
+            product = li.product_tmpl_id
             # Cálculos para actualizar o añadir los productos PACKING de cada producto en la tarifa:
             if product.pnt_product_type == 'final':
                 for packing in product.pnt_packing_ids:
