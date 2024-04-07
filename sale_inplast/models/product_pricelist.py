@@ -133,7 +133,7 @@ class ProductPricelist(models.Model):
                 for packing in product.pnt_packing_ids:
                     if packing.sale_ok == True:
                         pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id','=',packing.id)])
-                        if pricelistitemt.id:
+                        if pricelistitem.id:
                             pricelistitem.write({'pnt_new_price': product.pnt_new_price * packing.pnt_parent_qty})
                         else:
                             pricelistitem = self.env['product.pricelist.item'].create({
