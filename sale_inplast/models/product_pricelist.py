@@ -137,6 +137,7 @@ class ProductPricelist(models.Model):
                             pricelistitem.write({'pnt_new_price': product.pnt_new_price * packing.pnt_parent_qty})
                         else:
                             pricelistitem = self.env['product.pricelist.item'].create({
+                                'pricelist_id':record.id,
                                 'product_tmpl_id': packing.id,
                                 'compute_price': 'fixed',
                                 'applied_on': '1_product',
