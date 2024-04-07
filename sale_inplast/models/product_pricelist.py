@@ -145,3 +145,21 @@ class ProductPricelist(models.Model):
                             })
 
         self.pnt_pending_update = True
+
+
+    # Buscar nuevos PACKINGS con precios actuales:
+    def product_packings_search(self):
+        for li in self.item_ids:
+            # Cálculos para actualizar o añadir los productos PACKING de cada producto en la tarifa:
+            if product.pnt_product_type == 'final':
+                for packing in product.pnt_packing_ids:
+                    if packing.sale_ok == True:
+                        pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id','=',packing.id)])
+                        if not pricelistitem.id:
+                            pricelistitem = self.env['product.pricelist.item'].create({
+                                'pricelist_id':self.id,
+                                'product_tmpl_id': packing.id,
+                                'compute_price': 'fixed',
+                                'applied_on': '1_product',
+                                'price': li.price * packing.pnt_parent_qty,
+                            })

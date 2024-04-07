@@ -22,6 +22,12 @@
                                 string="Recalculate"
                                 groups="sales_team.group_sale_manager"
                         />
+                        <button class="oe_highlight"
+                                type="object" data-hotkey="shift+p"
+                                name="product_packings_search"
+                                string="Upd. Packings"
+                                groups="sales_team.group_sale_manager"
+                        />
                         <button name="pricelist_update_confirm"
                                 type="object" data-hotkey="shift+t"
                                 string="Update prices" class="oe_highlight"
