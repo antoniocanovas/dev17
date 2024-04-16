@@ -20,11 +20,11 @@ class MrpBom(models.Model):
     def bom_percent_update(self):
         for record in self:
             if record.pnt_raw_type_id.id:
+                uom_ref = self.env['uom.uom'].search([
+                    ('category_id', '=', record.pnt_raw_type_id.id),
+                    ('uom_type', '=', 'reference')])
                 for li in record.bom_line_ids:
                     if (record.pnt_raw_percent != 0) and (li.product_uom_category_id == record.pnt_raw_type_id):
-                        uom_ref = self.env['uom.uom'].search([
-                            ('category_id', '=', record.pnt_raw_type_id.id),
-                            ('uom_type', '=', 'reference')])
                         factor = uom_ref._compute_quantity(record.pnt_raw_qty, li.product_id.uom_id)
             li['product_qty'] = li.bom_product_qty * li.pnt_raw_percent / 100 * factor
 
