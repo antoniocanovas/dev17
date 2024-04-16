@@ -29,7 +29,7 @@ class MrpBomLine(models.Model):
                 uom_ref = self.env['uom.uom'].search([
                     ('category_id', '=', record.pnt_raw_type_id.id),
                     ('uom_type', '=', 'reference')])
-                factor = uom_ref(pnt_raw_qty, record.product_id.uom_id)
+                factor = uom_ref(record.bom_id.pnt_raw_qty, record.product_id.uom_id)
                 qty = record.bom_id.pnt_raw_qty * record.pnt_raw_percent / 100 * factor
 
             record.product_qty = qty
