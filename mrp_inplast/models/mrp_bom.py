@@ -23,10 +23,11 @@ class MrpBom(models.Model):
                 uom_ref = self.env['uom.uom'].search([
                     ('category_id', '=', record.pnt_raw_type_id.id),
                     ('uom_type', '=', 'reference')])
+                bom_qty = record.pnt_raw_qty
                 for li in record.bom_line_ids:
-                    if (record.pnt_raw_percent != 0) and (li.product_uom_category_id == li.pnt_raw_type_id):
-                        factor = uom_ref._compute_quantity(record.pnt_raw_qty, li.product_id.uom_id)
-                    li['product_qty'] = li.bom_product_qty * li.pnt_raw_percent / 100 * factor
+                    if (li.pnt_raw_percent != 0) and (li.product_uom_category_id == li.pnt_raw_type_id):
+                        factor = uom_ref._compute_quantity(bom_qty, li.product_id.uom_id)
+                    li['product_qty'] = bom_qty * li.pnt_raw_percent / 100 * factor
 
     @api.depends('product_tmpl_id', 'pnt_raw_type_id')
     def _get_default_uom(self):
