@@ -23,13 +23,13 @@ class MrpBomLine(models.Model):
     def _get_product_qty(self):
         for record in self:
             # unidad patron = "Reference" de la unidad de medida, es la que se usa en "Weight" del producto.
-            # factor = unidad_origen(cantidad_origen, unidad_destino)
+            # factor = unidad_origen._compute_quantity(cantidad_origen, unidad_destino)
             qty = record.product_qty
             if (record.pnt_raw_percent != 0) and (record.pnt_raw_type_id == record.product_uom_category_id):
                 uom_ref = self.env['uom.uom'].search([
                     ('category_id', '=', record.pnt_raw_type_id.id),
                     ('uom_type', '=', 'reference')])
-                factor = uom_ref(record.bom_product_qty, record.product_id.uom_id)
+                factor = uom_ref._compute_quantity(record.bom_product_qty, record.product_id.uom_id)
                 qty = record.bom_product_qty * record.pnt_raw_percent / 100 * factor
 
             record.product_qty = qty
