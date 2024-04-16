@@ -45,6 +45,7 @@ class MrpBom(models.Model):
     def _get_product_raw_qty(self):
         for record in self:
             qty = 0
+            # factor = unidad_origen(cantidad_origen, unidad_destino)
             factor = record.product_uom_id._compute_quantity(record.product_qty, record.product_tmpl_id.uom_id)
             if record.pnt_raw_type_id == self.env.ref('uom.product_uom_categ_kgm'):
                 qty = record.product_tmpl_id.weight * factor
