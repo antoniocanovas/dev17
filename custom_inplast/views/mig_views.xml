@@ -1,0 +1,140 @@
+<odoo>
+    <data>
+
+        <record id="inplast_pricelist_mig_inh_view" model="ir.ui.view">
+            <field name="name">inplast.pricelist.mig.inh.view</field>
+            <field name="model">product.pricelist</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="mig_codigocliente"/>
+                </xpath>
+            </field>
+            <field name="priority">99</field>
+        </record>
+
+
+        <record id="mig_materialesarticulo_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Components">
+                    <field name="name"/>
+                    <field name="componente"/>
+                    <field name="cantidad"/>
+                    <field name="tipo"/>
+                    <field name="bom_line_id"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.materialesarticulo</field>
+            <field name="name">Default tree view for MIG Materiales artículo</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+        <record id="mig_articuloidioma_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Artículo idioma">
+                    <field name="name"/>
+                    <field name="codarticulo"/>
+                    <field name="descripcion"/>
+                    <field name="idioma"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.articuloidioma</field>
+            <field name="name">Default tree view for MIG Artículo Idioma</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+        <record id="mig_componentes_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Componentes">
+                    <field name="name"/>
+                    <field name="componente"/>
+                    <field name="cantidad"/>
+                    <field name="bom_line_id"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.componentes</field>
+            <field name="name">Default tree view for MIG Componentes</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+
+        <record id="mig_embalaje_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG embalaje">
+                    <field name="name"/>
+                    <field name="producto"/>
+                    <field name="cantidad"/>
+                    <field name="cajapalet"/>
+                    <field name="escaja"/>
+                    <field name="bom_line_id"/>
+                    <field name="cajapaletnull"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.embalaje</field>
+            <field name="name">Default tree view for MIG Embalaje</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+        <record id="mig_lineastarifa_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Líneas tarifa">
+                    <field name="name"/>
+                    <field name="clientecod"/>
+                    <field name="cliente"/>
+                    <field name="articulo"/>
+                    <field name="familia"/>
+                    <field name="subfamilia"/>
+                    <field name="fechavalideztarifa"/>
+                    <field name="fechalimitepedido"/>
+                    <field name="fechaactualizacion"/>
+                    <field name="eneuros"/>
+                    <field name="codigodivisa"/>
+                    <field name="preciooferta"/>
+                    <field name="precioetileno"/>
+                    <field name="comentario"/>
+                    <field name="articulocodcliente"/>
+                    <field name="pricelist_id"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.lineastarifa</field>
+            <field name="name">Default tree view for MIG Líneas Tarifa</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+    </data>
+
+</odoo>

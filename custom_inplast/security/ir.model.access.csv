@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mig_materialesarticulo_admin,MIG Admin,model_mig_materialesarticulo,base.group_user,1,1,1,1
+access_mig_componentes_admin,MIG Admin,model_mig_componentes,base.group_user,1,1,1,1
+access_mig_articuloidioma_admin,MIG Admin,model_mig_articuloidioma,base.group_user,1,1,1,1
+access_mig_embalaje,MIG Admin,model_mig_embalaje,base.group_user,1,1,1,1
+access_mig_lineastarifa,MIG Admin,model_mig_lineastarifa,base.group_user,1,1,1,1

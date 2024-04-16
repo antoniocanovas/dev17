@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    # Datos de migración:
+    <record id="migration_product_category_inh_form" model="ir.ui.view">
+        <field name="name">migration.product.category.inh.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="account.view_category_property_form"/>
+        <field name="arch" type="xml">
+            <group name="first" position="after">
+                <group>
+                    <field name="mig_cod_familia"/>
+                    <field name="mig_cod_subfamilia"/>
+                    <field name="mig_serie"/>
+                    <field name="mig_cod_serie"/>
+                    <field name="mig_serie_descripcion"/>
+                    <field name="mig_cod_arancelario"/>
+                    <field name="mig_grupo_iva"/>
+                    <field name="mig_ud_compra"/>
+                    <field name="mig_ud_venta"/>
+                    <field name="mig_fabricado_comprado"/>
+                    <field name="mig_cc_ventas"/>
+                    <field name="mig_precio_stock"/>
+                    <field name="mig_diametro"/>
+                    <field name="mig_cod_grupo"/>
+                    <field name="mig_cod_grupo3"/>
+                    <field name="mig_des_cds"/>
+                    <field name="mig_cod_grupo4"/>
+                    <field name="mig_grupo_caps"/>
+                    <field name="mig_tipoo"/>
+                    <field name="mig_tipopi"/>
+                    <field name="mig_dd"/>
+                </group>
+            </group>
+        </field>
+        <field name="priority">99</field>
+        <field name="type">form</field>
+    </record>
+
+</odoo>

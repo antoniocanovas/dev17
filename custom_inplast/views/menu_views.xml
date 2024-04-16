@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- WINDOW ACTIONS: -->
+    <record id="action_mig_materialesarticulo" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Materiales Artículo</field>
+        <field name="res_model">mig.materialesarticulo</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_articuloidioma" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Artículo Idioma</field>
+        <field name="res_model">mig.articuloidioma</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_componentes" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Componentes</field>
+        <field name="res_model">mig.componentes</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="action_mig_embalaje" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG embalaje</field>
+        <field name="res_model">mig.embalaje</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_lineastarifa" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Líneas tarifa</field>
+        <field name="res_model">mig.lineastarifa</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- MENUS: -->
+
+    <record id="mig_material_articulo_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_materialesarticulo"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Material Artículos</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">100</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_articulo_idioma_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_articuloidioma"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Artículo idioma</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">110</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+    <record id="mig_componentes_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_componentes"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Componentes</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">120</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+    <record id="mig_embalaje_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_embalaje"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG EMBALAJE</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">130</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_lineastarifa_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_lineastarifa"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Líneas tarifa</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">140</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+
+</odoo>
