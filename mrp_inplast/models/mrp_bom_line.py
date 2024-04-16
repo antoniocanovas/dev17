@@ -19,7 +19,7 @@ class MrpBomLine(models.Model):
     product_qty = fields.Float(digits='Stock Weight', compute="_get_product_qty", store=True)
     bom_product_qty = fields.Float(related='bom_id.product_qty')
 
-    @api.onchange('pnt_raw_percent','bom_product_qty')
+ #   @api.onchange('pnt_raw_percent','bom_product_qty')
     def _get_product_qty(self):
         for record in self:
             # unidad patron = "Reference" de la unidad de medida, es la que se usa en "Weight" del producto.
