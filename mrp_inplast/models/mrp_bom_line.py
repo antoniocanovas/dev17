@@ -33,17 +33,3 @@ class MrpBomLine(models.Model):
                 qty = record.bom_product_qty * record.pnt_raw_percent / 100 * factor
 
             record.product_qty = qty
-
-"""
-    @api.depends('product_tmpl_id', 'product_uom_id', 'product_tmpl_id.weight', 'product_tmpl_id.volume', 'product_qty', 'pnt_raw_type_id')
-    def _get_product_raw_qty(self):
-        for record in self:
-            qty = 0
-            factor = record.product_uom_id._compute_quantity(record.product_qty, record.product_tmpl_id.uom_id)
-            if record.pnt_raw_type_id == self.env.ref('uom.product_uom_categ_kgm'):
-                qty = record.product_tmpl_id.weight * factor
-            if record.pnt_raw_type_id == self.env.ref('uom.product_uom_categ_vol'):
-                qty = record.product_tmpl_id.volume * factor
-            record['pnt_raw_qty'] = qty
-    pnt_raw_qty = fields.Float('UOM Qty', store=True, compute='_get_product_raw_qty', digits='Stock Weight')
-"""
