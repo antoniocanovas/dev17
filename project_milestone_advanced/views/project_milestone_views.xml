@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Project Milestone advanced : -->
+    <record id="project_milestone_advanced_tree" model="ir.ui.view">
+        <field name="name">project.milestone.advanced.tree</field>
+        <field name="model">project.milestone</field>
+        <field name="type">tree</field>
+        <field name="inherit_id">False<field/>
+        <field name="arch" type="xml">
+            <tree decoration-success="can_be_marked_as_done" decoration-danger="is_deadline_exceeded and not can_be_marked_as_done" decoration-muted="is_reached" editable="bottom" sample="1">
+                <field name="project_id"/>
+                <field name="task_resume"/>
+                <field name="name"/>
+                <field name="deadline" optional="show"/>
+                <field name="is_reached" optional="show"/>
+                <field name="is_deadline_exceeded" column_invisible="True"/>
+                <field name="task_count" column_invisible="True"/>
+                <field name="can_be_marked_as_done" column_invisible="True"/>
+                <button name="action_view_tasks" type="object" title="View Tasks" string="View Tasks" class="btn btn-link float-end" invisible="task_count == 0" groups="project.group_project_milestone"/>
+            </tree>
+        </field>
+        <field name="priority">50</field>
+    </record>
+
+</odoo>
+

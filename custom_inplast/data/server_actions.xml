@@ -331,8 +331,12 @@ for r in records:
 
             # Crear componente de la lista de materiales de la CAJA, para el registro que estamos trabajando:
             productocomponente = env['product.product'].search([('default_code','=', r.name)])
+            # Corregir la cantidad, ya que pone el nº total de cajas del palet en los datos a importar:
+            cantidad = r.cantidad
+            if r.escaja == True: cantidad = 1
+            # Crear la línea en la lista de materiales:
             newbomline  = env['mrp.bom.line'].create(
-                    {'product_id': productocomponente.id, 'product_qty': r.cantidad, 'bom_id': bomcaja.id })
+                    {'product_id': productocomponente.id, 'product_qty': cantidad, 'bom_id': bomcaja.id })
             # Marcar la línea como migrada asignado el nuevo registro creado:
             r['bom_line_id'] = newbomline.id
 
