@@ -13,4 +13,4 @@ class ProjectMilestone(models.Model):
                 [('state', 'in', ['1_done', '1_canceled']), ('id', 'in', record.task_ids.ids)])
             name = "(" + str(closed) + " / " + str(record.task_count) + ")"
             record['task_resume'] = name
-    task_resume = fields.Char(store=False, copy=False, string="Status", compute="_get_task_resume")
+    task_resume = fields.Char(string="Status", compute="_get_task_resume", store=False)
