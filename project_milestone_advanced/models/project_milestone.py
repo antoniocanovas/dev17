@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 class ProjectMilestone(models.Model):
     _inherit = 'project.milestone'
 
-    @api.depends('state')
     def _get_task_resume(self):
         for record in self:
             closed = self.env['project.task'].search_count([
