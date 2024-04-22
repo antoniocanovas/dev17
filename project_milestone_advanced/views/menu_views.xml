@@ -15,13 +15,14 @@
         <field name="type">ir.actions.act_window</field>
         <field name="usage" eval="False"/>
         <field name="view_mode">tree</field>
+
     </record>
 
     <!-- MENUS: -->
     <record id="project_milestone_advanced_menu" model="ir.ui.menu">
         <field name="action" ref="action_project_milestone_advanced"/>
         <field name="active" eval="True"/>
-        <field name="name">Project Milestones</field>
+        <field name="name">Milestones</field>
         <field name="parent_id" ref="project.menu_main_pm"/>
         <field name="sequence">3</field>
         <field name="web_icon" eval="False"/>
