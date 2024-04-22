@@ -6,7 +6,7 @@
         <field name="name">project.milestone.advanced.tree</field>
         <field name="model">project.milestone</field>
         <field name="type">tree</field>
-        <field name="inherit_id">False<field/>
+        <field name="inherit_id">False</field>
         <field name="arch" type="xml">
             <tree decoration-success="can_be_marked_as_done" decoration-danger="is_deadline_exceeded and not can_be_marked_as_done" decoration-muted="is_reached" editable="bottom" sample="1">
                 <field name="project_id"/>
