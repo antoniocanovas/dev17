@@ -20,6 +20,7 @@
     <!-- MENUS: -->
     <record id="project_milestone_advanced_menu" model="ir.ui.menu">
         <field name="action" ref="action_project_milestone_advanced"/>
+        <field name="active" eval="True"/>
         <field name="name">Project Milestones</field>
         <field name="parent_id" ref="project.menu_main_pm"/>
         <field name="sequence">3</field>
