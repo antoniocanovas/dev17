@@ -12,7 +12,7 @@
     'maintainer': 'Serincloud',
     'website': 'https://www.ingenieriacloud.com',
     'depends': [
-        'project',
+        'project_enterprise',
     ],
 
     'data': [
