@@ -16,8 +16,8 @@
     ],
 
     'data': [
-    'views/menu_views.xml',
     'views/project_milestone_view.xml',
+    'views/menu_views.xml',
     ],
 
     'assets': {},
