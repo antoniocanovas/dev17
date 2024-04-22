@@ -14,7 +14,12 @@
     'depends': [
         'project',
     ],
-    'data': [],
+
+    'data': [
+    'views/menu_views.xml',
+    'views/project_milestone_view.xml',
+    ],
+
     'assets': {},
 
     'images': ['static/description/icon.png'],
