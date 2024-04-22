@@ -16,7 +16,7 @@
     ],
 
     'data': [
-    'views/project_milestone_view.xml',
+    'views/project_milestone_views.xml',
     'views/menu_views.xml',
     ],
 
