@@ -15,8 +15,10 @@
         <field name="type">ir.actions.act_window</field>
         <field name="usage" eval="False"/>
         <field name="view_mode">tree</field>
+        <!--
         <field name="view_ids" eval="[(5, 0, 0),
         (0, 0, {'view_mode': 'tree', 'view_id': ref('project_milestone_advanced_tree')}),]"/>
+        -->
     </record>
 
     <!-- MENUS: -->
