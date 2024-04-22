@@ -14,5 +14,3 @@ class ProjectMilestone(models.Model):
             name = "(" + str(closed) + " / " + str(record.task_count) + ")"
             record['task_resume'] = name
     task_resume = fields.Char(string="Tasks", compute="_get_task_resume", store=False)
-
-    milestone_name = fields.Char(string="Goal", related="milestone_id.name", store=True)

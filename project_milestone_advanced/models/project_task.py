@@ -13,3 +13,5 @@ class ProjectTask(models.Model):
             if record.state in ['1_done', '1_canceled']: solution = 0
             record['pending'] = solution
     pending = fields.Integer(store=True, copy=False, string="Pending", readonly=True, compute="_get_is_pending")
+
+    milestone_name = fields.Char(string="Goal", related="milestone_id.name", store=True)
