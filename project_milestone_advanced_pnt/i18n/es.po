@@ -40,7 +40,7 @@ msgstr "Tareas pdtes"
 #. module: project_milestone_advanced_pnt
 #: model:ir.model,name:project_milestone_advanced_pnt.model_project_milestone
 msgid "Project Milestone"
-msgstr "Hito de proyecto"
+msgstr "Hitos"
 
 #. module: project_milestone_advanced_pnt
 #: model:ir.actions.act_window,name:project_milestone_advanced_pnt.action_project_milestone_advanced

@@ -22,5 +22,31 @@
         <field name="priority">50</field>
     </record>
 
+    <record id="project_milestone_advanced_search" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <search string="Milestones search">
+                <field name="name" filter_domain="[('name','ilike',self)]"/>
+                <field name="project_id"/>
+                <separator/>
+                <filter string="Reached" name="reached" domain="[('is_reached', '=', False)]"/>
+                <filter string="Pending" name="pending" domain="[('is_reached', '=', True)]"/>
+                <separator/>
+                <group expand="0" name="group_by" string="Group By">
+                    <filter name="by_project" string="Project" context="{'group_by' : 'project_id'}"/>
+                    <filter name="by_milestone" string="Milestone" context="{'group_by': 'name'}"/>
+                </group>
+            </search>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="model">project.milestone</field>
+        <field name="name">project.milestone.advanced.search</field>
+        <field name="priority">16</field>
+        <field name="type">search</field>
+    </record>
+
 </odoo>
 

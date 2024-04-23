@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Project Tasks Milestone advanced : -->
+
+    <record id="project_milestone_advanced_task_search" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <search string="Task milestone search">
+                <filter name="milestone" position="attributes">
+                    <attribute name="context">{'group_by': 'milestone_name'}</attribute>
+                </filter>
+            </search>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" ref="project.view_task_search_form_base"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="model">project.task</field>
+        <field name="name">project.milestone.advanced.task.search</field>
+        <field name="priority">32</field>
+        <field name="type">search</field>
+    </record>
+
+</odoo>
+
