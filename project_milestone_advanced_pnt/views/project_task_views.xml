@@ -4,7 +4,7 @@
     <record id="project_milestone_advanced_task_search" model="ir.ui.view">
         <field name="active" eval="True"/>
         <field name="arch" type="xml">
-            <xpath expr="filter[@name='milestone']" position="before">
+            <xpath expr="//filter[@name='milestone']" position="before">
                 <filter string="Goal" name="goal" context="{'group_by': 'milestone_name'}" groups="project.group_project_milestone"/>
             </xpath>
         </field>
