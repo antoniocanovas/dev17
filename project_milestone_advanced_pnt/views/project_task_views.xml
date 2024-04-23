@@ -9,7 +9,7 @@
             </filter>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
-        <field name="inherit_id" ref="project.view_task_search_form_base"/>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="model">project.task</field>
