@@ -46,5 +46,6 @@ class PurchaseOrder(models.Model):
                     })
 
                 if l.price_update_mode == '2':
-                    l.product_id.standard_price = l.price_unit
+                    price_unit = l.product_uom._compute_price(l.price_unit, l.product_id.uom_id)
+                    l.product_id.standard_price = price_unit
         return res
