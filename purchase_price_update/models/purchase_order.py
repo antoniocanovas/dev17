@@ -19,7 +19,9 @@ class PurchaseOrder(models.Model):
                     psi = psi_mod.search(
                         [('product_tmpl_id', '=', l.product_id.product_tmpl_id.id),
                          ('partner_id', '=', self.partner_id.id),
-                         ('product_uom', '=', l.product_id.uom_po_id.id)],
+                         ('product_uom', '=', l.product_id.uom_po_id.id),
+                         ('date_start', '=', False),
+                         ('date_end', '=', False)],
                         limit=1)
                 else:
                     psi = psi_mod.search(
