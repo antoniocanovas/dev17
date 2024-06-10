@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
+
     <record id="purchase_order_supplierinfoupdate_form_inh" model="ir.ui.view">
         <field name="name">purchase.order.supplierinfoupdate.form.inh</field>
         <field name="model">purchase.order</field>
@@ -11,4 +12,5 @@
             </field>
         </field>
     </record>
+
 </odoo>

@@ -13,8 +13,8 @@ class PurchaseOrder(models.Model):
         res = super(PurchaseOrder, self).button_confirm()
         psi_mod = self.env['product.supplierinfo']
         for l in self.order_line:
-            price_unit = l.product_uom._compute_price(l.price_unit, l.product_id.uom_id)
             if l.price_update_mode in ['1','2']:
+                price_unit = l.product_uom._compute_price(l.price_unit, l.product_id.uom_id)
                 if len(l.product_id.product_tmpl_id.product_variant_ids.ids) == 1:
                     psi = psi_mod.search(
                         [('product_tmpl_id', '=', l.product_id.product_tmpl_id.id),

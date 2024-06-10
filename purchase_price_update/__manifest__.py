@@ -24,7 +24,6 @@
     "version": '1.0',
     "depends": [
         'purchase',
-#        'purchase_discount',
         'account',
     ],
     "author": "Punt Sistemes",
@@ -34,7 +33,8 @@
         Update supplier prices from purchase lines or incoming invoices 
     """,
     "data": [
-        'views/purchase_order_view.xml',
+        'views/purchase_order_views.xml',
+        'views/account_move_views.xml',
     ],
     "demo": [],
     "installable": True,
