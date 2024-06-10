@@ -7,7 +7,7 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="before">
-                <field name="move_type" invisible="1"/>
+                <field name="move_type"/>
                 <field
                     name="price_update_mode"
                     groups="purchase.group_purchase_user"
