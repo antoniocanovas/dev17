@@ -8,7 +8,7 @@ from odoo import models, api, fields
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    price_update_mode = fields.Selection([('0','0'),('1','1'),('2','2')], default='0')
+    price_update_mode = fields.Selection([('0','0'),('1','1'),('2','2')], string='PUM' default='0')
 
     def button_confirm(self):
         res = super(PurchaseOrder, self).button_confirm()

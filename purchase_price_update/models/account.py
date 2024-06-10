@@ -8,7 +8,7 @@ class AccountMove(models.Model):
 
 
 
-    price_update_mode = fields.Selection([('0','0'),('1','1'),('2','2')], default='0')
+    price_update_mode = fields.Selection([('0','0'),('1','1'),('2','2')], string='PUM', default='0')
 
     def action_post(self):
         res = super(AccountMove, self).action_post()
