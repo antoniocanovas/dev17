@@ -6,11 +6,9 @@
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="before">
-                <field name="is_purchase" invisible="1"/>
                 <field
                     name="price_update_mode"
                     groups="purchase.group_purchase_user"
-                    column_invisible="is_purchase == False"
                 />
             </xpath>
         </field>
