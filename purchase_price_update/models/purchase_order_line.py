@@ -13,3 +13,4 @@ class PurchaseOrderLine(models.Model):
                                          help='0: No changes,'
                                               '1: Update pricelist on supplier,'
                                               '2: Update supplier price and product cost.'
+                                         )
