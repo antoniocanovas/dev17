@@ -42,9 +42,9 @@ class PurchaseOrder(models.Model):
                         'discount': l.discount,
                         'price': l.price_unit,
                         'date_start': l.date_price,
+                        'delay': 1,
                     })
-            # Precio de coste actualizado siempre a última compra (sólo para cubells, no considera distintas unidades):
-        #            if l.product_id.uom_po_id == l.product_uom:
-        #                standard_price = l.price_subtotal / l.product_uom_qty
-        #                l.product_id.write({'standard_price':standard_price})
+
+                if l.price_update_mode == '2':
+                    l.product_id.standard_price = l.price_unit
         return res
