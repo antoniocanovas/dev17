@@ -14,11 +14,19 @@ class PurchaseOrder(models.Model):
         psi_mod = self.env['product.supplierinfo']
         for l in self.order_line:
             if l.price_update_mode in ['1','2']:
-                psi = psi_mod.search(
-                    [('product_id', '=', l.product_id.id),
-                     ('partner_id', '=', self.partner_id.id),
-                     ('product_uom', '=', l.product_uom.id)],
-                    limit=1)
+                if len(l.product_id.product_tmpl_id.product_variant_ids.ids) == 1:
+                    psi = psi_mod.search(
+                        [('product_tmpl_id', '=', l.product_id.product_tmpl_id.id),
+                         ('partner_id', '=', self.partner_id.id),
+                         ('product_uom', '=', l.product_uom.id)],
+                        limit=1)
+                else:
+                    psi = psi_mod.search(
+                        [('product_id', '=', l.product_id.id),
+                         ('partner_id', '=', self.partner_id.id),
+                         ('product_uom', '=', l.product_uom.id)],
+                        limit=1)
+
                 if psi:
                     psi.write({
                         'discount': l.discount,
