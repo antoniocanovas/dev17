@@ -23,7 +23,8 @@
     "name": 'Purchase Price Update',
     "version": '1.0',
     "depends": [
-        'purchase_discount',
+        'purchase',
+#        'purchase_discount',
         'account',
     ],
     "author": "Punt Sistemes",
