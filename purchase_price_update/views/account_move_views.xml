@@ -10,7 +10,7 @@
                 <field
                     name="price_update_mode"
                     groups="purchase.group_purchase_user"
-                    column_invisible="not is_purchase"
+                    column_invisible="is_purchase == False"
                 />
             </xpath>
         </field>
