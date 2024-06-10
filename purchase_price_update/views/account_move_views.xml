@@ -4,14 +4,13 @@
     <record id="account_invoice_supplierinfoupdate_inh_form" model="ir.ui.view">
         <field name="model">account.move</field>
         <field name="inherit_id" ref="purchase.view_move_form_inherit_purchase"/>
-        <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="before">
                 <field name="move_type" invisible="1"/>
                 <field
                     name="price_update_mode"
                     groups="purchase.group_purchase_user"
-                    invisible="move_type not in ['in_invoice']"
+                    column_invisible="context.get('default_move_type') not in ('in_invoice', 'in_refund')"
                 />
             </xpath>
         </field>
