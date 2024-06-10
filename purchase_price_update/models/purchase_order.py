@@ -8,7 +8,6 @@ from odoo import models, api, fields
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    price_update_mode = fields.Selection(selection=[('0','0'),('1','1'),('2','2')], string='PUM', default='0')
 
     def button_confirm(self):
         res = super(PurchaseOrder, self).button_confirm()
@@ -35,9 +34,3 @@ class PurchaseOrder(models.Model):
 #                standard_price = l.price_subtotal / l.product_uom_qty
 #                l.product_id.write({'standard_price':standard_price})
         return res
-
-
-class PurchaseOrderLine(models.Model):
-    _inherit = 'purchase.order.line'
-
-    date_price = fields.Date('Date price', default=datetime.now().date())

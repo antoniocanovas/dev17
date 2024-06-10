@@ -7,9 +7,6 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
 
-
-#    price_update_mode = fields.Selection(selection=[('0','0'),('1','1'),('2','2')], string='PUM', default='0')
-
     def action_post(self):
         res = super(AccountMove, self).action_post()
         if self.move_type in ['in_invoice', 'in_refund']:
