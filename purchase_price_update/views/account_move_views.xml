@@ -11,7 +11,7 @@
                 <field
                     name="price_update_mode"
                     groups="purchase.group_purchase_user"
-                    column_invisible="move_type == 'in_invoice'"
+                    invisible="move_type == 'in_invoice'"
                 />
             </xpath>
         </field>
