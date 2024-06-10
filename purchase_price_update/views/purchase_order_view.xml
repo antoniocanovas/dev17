@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="inh_purchase_order_form_date_price" model="ir.ui.view">
+        <field name="name">purchase.order.reports</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="price_unit" position="after">
+                <field name="price_update_mode"/>
+            </field>
+            <field name="product_qty" position="before">
+                <field name="date_price" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>
