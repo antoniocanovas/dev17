@@ -10,7 +10,7 @@
                 <field
                     name="price_update_mode"
                     groups="purchase.group_purchase_user"
-                    invisible="move_type not in ['in_invoice', 'in_refund']"
+                    column_invisible="move_type not in ['in_invoice', 'in_refund']"
                 />
             </xpath>
         </field>
