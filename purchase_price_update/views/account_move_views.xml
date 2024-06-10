@@ -9,8 +9,10 @@
                 <field
                     name="price_update_mode"
                     groups="product.group_product_pricelist"
-                    invisible="move_type not in ['in_invoice', 'in_refund']"
                 />
+                    <!--
+                    invisible="move_type not in ['in_invoice', 'in_refund']"
+                    -->
             </xpath>
         </field>
     </record>
