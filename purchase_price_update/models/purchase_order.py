@@ -17,7 +17,7 @@ class PurchaseOrder(models.Model):
                 psi = psi_mod.search(
                     [('product_id', '=', l.product_id.id),
                      ('partner_id', '=', self.partner_id.id),
-                     ('product_uom', '=', self.product_uom.id)],
+                     ('product_uom', '=', l.product_uom.id)],
                     limit=1)
                 if psi:
                     psi.write({
