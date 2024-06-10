@@ -7,4 +7,4 @@ class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
 
-    is_purchase = fields.Boolean('Is purchase', compute='_get_is_purchase')
+    price_update_mode = fields.Selection([('0','0'),('1','1'),('2','2')], string='PUM', default='0')
