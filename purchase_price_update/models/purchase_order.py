@@ -13,24 +13,25 @@ class PurchaseOrder(models.Model):
         res = super(PurchaseOrder, self).button_confirm()
         psi_mod = self.env['product.supplierinfo']
         for l in self.order_line:
+            price_unit = l.product_uom._compute_price(l.price_unit, l.product_id.uom_id)
             if l.price_update_mode in ['1','2']:
                 if len(l.product_id.product_tmpl_id.product_variant_ids.ids) == 1:
                     psi = psi_mod.search(
                         [('product_tmpl_id', '=', l.product_id.product_tmpl_id.id),
                          ('partner_id', '=', self.partner_id.id),
-                         ('product_uom', '=', l.product_uom.id)],
+                         ('product_uom', '=', l.uom_po_id.id)],
                         limit=1)
                 else:
                     psi = psi_mod.search(
                         [('product_id', '=', l.product_id.id),
                          ('partner_id', '=', self.partner_id.id),
-                         ('product_uom', '=', l.product_uom.id)],
+                         ('product_uom', '=', l.product_id.uom_po_id.id)],
                         limit=1)
 
                 if psi:
                     psi.write({
                         'discount': l.discount,
-                        'price': l.price_unit,
+                        'price': price_unit,
                         'date_start': l.date_price
                     })
                 else:
@@ -38,14 +39,13 @@ class PurchaseOrder(models.Model):
                         'partner_id': self.partner_id.id,
                         'product_tmpl_id': l.product_id.product_tmpl_id.id,
                         'product_id': l.product_id.id,
-                        'product_uom': l.product_uom.id,
+                        'product_uom': l.product_id.uom_po_id.id,
                         'discount': l.discount,
-                        'price': l.price_unit,
+                        'price': price_unit,
                         'date_start': l.date_price,
                         'delay': 1,
                     })
 
                 if l.price_update_mode == '2':
-                    price_unit = l.product_uom._compute_price(l.price_unit, l.product_id.uom_id)
                     l.product_id.standard_price = price_unit
         return res
