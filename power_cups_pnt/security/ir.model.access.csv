@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cups_user,CUPS User,model_power_cups,base.group_user,1,0,0,0
-access_cups_admin,CUPS Admin,model_power_cups,group_cups_admin,1,1,1,1
-access_cups_shared_admin,Shared CUPS Admin,model_power_cups_shared,group_cups_shared_admin,1,1,1,1
-access_cups_shared_lines_admin,Shared CUPS Lines Admin,model_power_cups_shared_line,group_cups_shared_admin,1,1,1,1
