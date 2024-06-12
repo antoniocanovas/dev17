@@ -38,9 +38,11 @@ class ResPartner(models.Model):
             group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
             portaluser = self.env['res.users'].search([('partner_id', '=', partnerid)])
 
-            if (portaluser.id) and (not self.pnt_ecommerce_restriction_type):
+            if (portaluser.id) and (self.pnt_ecommerce_restriction_type not in ['own','parent']):
                 group.write({'users': [(3, portaluser.id)]})
+                raise UserError('quito')
             elif (portaluser.id) and (self.pnt_ecommerce_restriction_type in ['own','parent']):
                 group.write({'users': [(4, portaluser.id)]})
+                raise UserError('añado todos')
             else:
                 raise UserError("Previous configuration required: Portal access to this contact.")
