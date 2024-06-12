@@ -34,7 +34,7 @@ class ResPartner(models.Model):
     def get_ecommerce_product_visibility(self):
         newid = record.id
         if newid:
-            partnerid = int(idtext.split("_")[1])
+            partnerid = int(newid.split("_")[1])
             group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
             portaluser = self.env['res.users'].search([('partner_id', '=', partnerid)])
 
