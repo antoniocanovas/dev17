@@ -33,6 +33,7 @@ class ResPartner(models.Model):
     @api.depends('pnt_ecommerce_restriction_type')
     def get_ecommerce_product_visibility(self):
         newid = self.id
+        raise UserError(newid)
         if newid:
             partnerid = int(newid.split("_")[1])
             group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
