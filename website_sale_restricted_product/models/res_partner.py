@@ -30,7 +30,7 @@ class ResPartner(models.Model):
                                              compute="_get_allowed_products",
                                              )
 
-    @api.onchange('pnt_ecommerce_restriction_type')
+    @api.depends('pnt_ecommerce_restriction_type')
     def get_ecommerce_product_visibility(self):
         newid = self.id
         if newid:
