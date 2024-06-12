@@ -30,10 +30,9 @@ class ResPartner(models.Model):
                                              compute="_get_allowed_products",
                                              )
 
-    @api.depends('pnt_ecommerce_restriction_type')
+#    @api.depends('pnt_ecommerce_restriction_type')
     def get_ecommerce_product_visibility(self):
         newid = self.id
-        raise UserError(newid)
         if newid:
             partnerid = int(newid.split("_")[1])
             group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
@@ -41,9 +40,7 @@ class ResPartner(models.Model):
 
             if (portaluser.id) and (self.pnt_ecommerce_restriction_type not in ['own','parent']):
                 group.write({'users': [(3, portaluser.id)]})
-                raise UserError('quito')
             elif (portaluser.id) and (self.pnt_ecommerce_restriction_type in ['own','parent']):
                 group.write({'users': [(4, portaluser.id)]})
-                raise UserError('añado todos')
             else:
                 raise UserError("Previous configuration required: Portal access to this contact.")
