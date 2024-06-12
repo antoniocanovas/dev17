@@ -13,7 +13,7 @@ class ResPartner(models.Model):
 
 
     pnt_ecommerce_partner_product_ids = fields.Many2many('product.template', string="eCommerce products")
-    #    pnt_ecommerce_restricted = fields.Boolean('Only allowed products')
+    pnt_ecommerce_restricted = fields.Boolean('Only allowed products')
     pnt_ecommerce_restriction_type = fields.Selection(selection=OPTIONS, string='Type')
 
     @api.onchange("pnt_ecommerce_restriction_type","pnt_ecommerce_partner_product_ids", "parent_id")
@@ -32,15 +32,15 @@ class ResPartner(models.Model):
 
 #    @api.depends('pnt_ecommerce_restriction_type')
     def get_ecommerce_product_visibility(self):
-        newid = self.id
-        if newid:
-            partnerid = int(newid.split("_")[1])
+        for record in self:
             group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
-            portaluser = self.env['res.users'].search([('partner_id', '=', partnerid)])
-
-            if (portaluser.id) and (self.pnt_ecommerce_restriction_type not in ['own','parent']):
-                group.write({'users': [(3, portaluser.id)]})
-            elif (portaluser.id) and (self.pnt_ecommerce_restriction_type in ['own','parent']):
-                group.write({'users': [(4, portaluser.id)]})
+            user = self.env['res.users'].search([('partner_id', '=', record.id)])
+            if user.id:
+                if group in user.groups_id:
+                    group.write({'users': [(3, user.id)]})
+                    self.pnt_ecommerce_restricted = True
+                else:
+                    group.write({'users': [(4, user.id)]})
+                    self.pnt_ecommerce_restricted = False
             else:
                 raise UserError("Previous configuration required: Portal access to this contact.")
