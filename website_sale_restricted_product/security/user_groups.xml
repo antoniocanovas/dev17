@@ -3,9 +3,7 @@
 
     <record id="group_portal_user_restricted" model="res.groups">
         <field name="name">User Portal Restricted</field>
-        <!--
         <field name="category_id" ref="base.module_category_user_type"/>
-        -->
     </record>
 
     <record id="website_sale_all_products_group" model="res.groups">
