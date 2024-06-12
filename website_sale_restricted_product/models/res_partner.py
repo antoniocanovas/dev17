@@ -32,12 +32,14 @@ class ResPartner(models.Model):
 
 #    @api.onchange('pnt_ecommerce_restriction_type')
     def get_ecommerce_product_visibility(self):
-        group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
-        portaluser = self.env['res.users'].search([('partner_id', '=', self.id)])
+            if self._origin:
+                if self._origin.id:
+                    group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
+                    portaluser = self.env['res.users'].search([('partner_id', '=', self._origin.id)])
 
-        if (portaluser.id) and (not self.pnt_ecommerce_restriction_type):
-            group.write({'users': [(3, portaluser.id)]})
-        elif (portaluser.id) and (self.pnt_ecommerce_restriction_type in ['own','parent']):
-            group.write({'users': [(4, portaluser.id)]})
-        else:
-            raise UserError("Previous configuration required: Portal access to this contact.")
+                    if (portaluser.id) and (not self.pnt_ecommerce_restriction_type):
+                        group.write({'users': [(3, portaluser.id)]})
+                    elif (portaluser.id) and (self.pnt_ecommerce_restriction_type in ['own','parent']):
+                        group.write({'users': [(4, portaluser.id)]})
+                    else:
+                        raise UserError("Previous configuration required: Portal access to this contact.")
