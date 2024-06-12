@@ -6,7 +6,7 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form" />
 			<field name="arch" type="xml">
-				<xpath expr="notebook" position="inside">
+				<xpath expr="//notebook" position="inside">
 					<page name="ecommerce_restricted_products" string="eCommerce Products">
 						<!--
 						<group string="eCommerce products restriction" name="website" priority="4">
