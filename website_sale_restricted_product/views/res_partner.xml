@@ -7,7 +7,7 @@
 			<field name="inherit_id" ref="base.view_partner_form" />
 			<field name="arch" type="xml">
 				<xpath expr="//notebook" position="inside">
-					<page name="ecommerce_restricted_products" string="eCommerce Products">
+					<page name="ecommerce_restricted_products" string="eCommerce Products" invisible="pnt_ecommerce_restricted == False">
 						<!--
 						<group string="eCommerce products restriction" name="website" priority="4">
 							<div class="o_horizontal_separator d-flex align-items-center mt-2 mb-4 text-uppercase fw-bolder small">Restricted
@@ -21,7 +21,7 @@
 						</group>
 						-->
 						<group>
-							<field name="pnt_ecommerce_restriction_type" invisible="pnt_ecommerce_restricted == False"/>
+							<field name="pnt_ecommerce_restriction_type"/>
 						</group>
 						<field name="pnt_ecommerce_partner_product_ids" nolabel="1" invisible="pnt_ecommerce_restriction_type != 'own'"/>
 						<field name="ecommerce_product_ids" nolabel="1" invisible="pnt_ecommerce_restriction_type != 'parent'"/>
