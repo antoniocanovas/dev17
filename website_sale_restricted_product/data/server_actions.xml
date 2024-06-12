@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="partner_product_ecommerce_restricted" model="ir.actions.server">
+            <field name="name">=> Habilitar / deshabilitar restricción de productos en e-commerce</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">
+# Cambiar estado de productos restringidos en partners seleccionados
+for r in records:
+    r.get_ecommerce_product_visibility()
+            </field>
+        </record>
+
+    </data>
+
+</odoo>
