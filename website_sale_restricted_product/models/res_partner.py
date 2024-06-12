@@ -30,7 +30,7 @@ class ResPartner(models.Model):
                                              compute="_get_allowed_products",
                                              )
 
-    @api.onchange('pnt_ecommerce_restriction_type')
+#    @api.onchange('pnt_ecommerce_restriction_type')
     def get_ecommerce_product_visibility(self):
         group = self.env.ref('website_sale_restricted_product.website_sale_all_products_group')
         portaluser = self.env['res.users'].search([('partner_id', '=', self.id)])
