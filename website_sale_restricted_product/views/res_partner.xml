@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="pnt_res_partner_form" model="ir.ui.view">
+			<field name="name">res.partner.pos.form.fav.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<page name="sales_purchases" position="inside">
+					<group string="eCommerce products restriction" name="website" priority="4">
+						<!--
+						<div class="o_horizontal_separator d-flex align-items-center mt-2 mb-4 text-uppercase fw-bolder small">Restricted
+							<div>
+								<button invisible="pnt_ecommerce_restricted" name="get_ecommerce_product_visibility" type="object" class="fa fa-toggle-off o_auth_2fa_btn disabled pe-auto" aria-label="Enable 2FA"/>
+							</div>
+							<div>
+								<button invisible="not pnt_ecommerce_restricted" name="get_ecommerce_product_visibility" type="object" class="fa fa-toggle-on o_auth_2fa_btn text-primary enabled" aria-label="Disable 2FA"/>
+							</div>
+						</div>
+					</group>
+					<group>
+						<field name="pnt_ecommerce_restriction_type" invisible="pnt_ecommerce_restricted == False"/>
+						-->
+						<field name="pnt_ecommerce_restriction_type"/>
+					</group>
+					<field name="pnt_ecommerce_partner_product_ids" nolabel="1" invisible="pnt_ecommerce_restriction_type != 'own'"/>
+					<field name="ecommerce_product_ids" nolabel="1" invisible="pnt_ecommerce_restriction_type != 'parent'"/>
+					<!--
+					<field name="pnt_ecommerce_restricted" invisible="1"/>
+					-->
+				</page>
+			</field>
+		</record>
+	</data>
+</odoo>
