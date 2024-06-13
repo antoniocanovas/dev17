@@ -10,7 +10,7 @@
     "website": "https://www.ingenieriacloud.com",
     "license": "AGPL-3",
     "depends": [
-      'website_sale',
+        'website_sale',
         'contacts',
     ],
     "data": [
