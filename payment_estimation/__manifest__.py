@@ -34,6 +34,8 @@
     "data": [
         'security/ir.model.access.csv',
         'views/menu_views.xml',
+        'views/payment_estimation_views.xml',
+        'views/payment_estimation_report_views.xml',
     ],
     "demo": [],
     "installable": True,

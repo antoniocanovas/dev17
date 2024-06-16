@@ -34,7 +34,7 @@
     """,
     "data": [
         'views/purchase_order_views.xml',
-        'views/account_move_views.xml',
+        'views/payment_estimation_views.xml',
     ],
     "demo": [],
     "installable": True,

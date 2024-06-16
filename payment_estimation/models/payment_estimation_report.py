@@ -9,9 +9,10 @@ class PaymentEstimationReport(models.Model):
     _description = 'Payment estimations report'
 
     name = fields.Char('Name')
-    date_start = fields.Date('From date')
+    from_date = fields.Date('From date')
+    to_date = fields.Date('To date')
     invoice_amount = fields.Monetary('Invoices amount')
-    estimation_amount = fields.Monetary('Estimations amount')
+    estimate_amount = fields.Monetary('Estimations amount')
     total_amount = fields.Monetary('Total')
     active = fields.Boolean('Active')
     currency_id = fields.Many2one('res.currency', default=1)
