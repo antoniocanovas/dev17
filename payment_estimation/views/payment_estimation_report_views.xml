@@ -9,9 +9,9 @@
                 <field name="name"/>
                 <field name="from_date"/>
                 <field name="to_date"/>
-                <field name="invoice_amount"/>
-                <field name="estimate_amount"/>
                 <field name="amount_residual_signed"/>
+                <field name="estimate_amount"/>
+                <field name="total_amount"/>
                 <field name="active" widget="boolean_toggle"/>
                 <field name="currency_id" column_invisible="1"/>
             </tree>
