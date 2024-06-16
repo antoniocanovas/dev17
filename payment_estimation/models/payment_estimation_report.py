@@ -18,9 +18,9 @@ class PaymentEstimationReport(models.Model):
     def _get_move_line_ids(self):
         for record in self:
             aml = self.env['account.move.line'].search([
-                ('account_id','in',['400000','410000']),
-                ('parent_state','=','posted'),
-                ('amount_residual','!=',0)
+     #           ('account_id','in',['400000','410000']),
+     #           ('parent_state','=','posted'),
+     #           ('amount_residual','!=',0)
             ])
             record['move_ids'] = [(6,0,aml.ids)]
     move_ids = fields.Many2many('account.move.line', string='Invoices', compute='_get_move_line_ids')
