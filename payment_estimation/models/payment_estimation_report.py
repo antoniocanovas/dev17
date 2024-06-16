@@ -22,7 +22,8 @@ class PaymentEstimationReport(models.Model):
         for record in self:
             invoices = self.env['account.move'].search([
                 ('move_type','in',['in_invoice','in_refund']),
-                ('state','=','posted')
+                ('state','=','posted'),
+                ('payment_state','!=','paid')
             ])
             record['move_ids'] = [(6,0,invoices.ids)]
     move_ids = fields.Many2many('account.move', string='Invoices', compute='_get_move_ids')
