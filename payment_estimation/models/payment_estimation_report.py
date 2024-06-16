@@ -18,9 +18,9 @@ class PaymentEstimationReport(models.Model):
     def _get_move_line_ids(self):
         for record in self:
             aml = self.env['account.move.line'].search([
-     #           ('account_id','in',['400000','410000']),
-     #           ('parent_state','=','posted'),
-     #           ('amount_residual','!=',0)
+                ('account_id','in',['400000','410000']),
+                ('parent_state','=','posted'),
+                ('amount_residual','!=',0)
             ])
             record['move_ids'] = [(6,0,aml.ids)]
     move_ids = fields.Many2many('account.move.line', string='Invoices', compute='_get_move_line_ids')
@@ -39,9 +39,9 @@ class PaymentEstimationReport(models.Model):
         for record in self:
             total = 0
             for li in record.move_ids:
-                total += li.amount_residual_signed
+                total += li.amount_residual
             record['amount_residual'] = total
-    amount_residual_signed = fields.Monetary('Invoices amount', compute='_get_amount_residual_signed')
+    amount_residual = fields.Monetary('Invoices amount', compute='_get_amount_residual')
 
     @api.depends('estimation_ids')
     def _get_estimation_total(self):
