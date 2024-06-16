@@ -9,7 +9,7 @@ class PaymentEstimationReport(models.Model):
     _description = 'Payment estimations report'
 
     name = fields.Char('Name')
-    from_date = fields.Date('From date', required=1, default='01012000')
+    from_date = fields.Date('From date', required=1, default='2000-01-01')
     to_date = fields.Date('To date', required=1)
     invoice_amount = fields.Monetary('Invoices amount')
     estimate_amount = fields.Monetary('Estimations amount')
