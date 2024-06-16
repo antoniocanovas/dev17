@@ -12,3 +12,4 @@ class PaymentEstimation(models.Model):
     date = fields.Date('Date')
     amount = fields.Monetary('Amount')
     active = fields.Boolean('Active')
+    currency_id = fields.Many2one('res.currency', default=1)
