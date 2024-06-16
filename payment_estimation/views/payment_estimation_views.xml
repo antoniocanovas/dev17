@@ -8,7 +8,7 @@
                 <field name="name"/>
                 <field name="type"/>
                 <field name="date"/>
-                <field name="amount"/>
+                <field name="amount" sum="Total"/>
                 <field name="active" widget="boolean_toggle"/>
                 <field name="currency_id" column_invisible="1"/>
             </tree>
