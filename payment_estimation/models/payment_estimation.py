@@ -21,5 +21,5 @@ class PaymentEstimation(models.Model):
     type = fields.Selection(selection=TYPE, string="Type", default='supplier')
     date = fields.Date('Date')
     amount = fields.Monetary('Amount')
-    active = fields.Boolean('Active')
+    active = fields.Boolean('Active', default=True)
     currency_id = fields.Many2one('res.currency', default=1)

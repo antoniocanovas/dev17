@@ -14,8 +14,15 @@ class PaymentEstimationReport(models.Model):
     invoice_amount = fields.Monetary('Invoices amount')
     estimate_amount = fields.Monetary('Estimations amount')
     total_amount = fields.Monetary('Total')
-    active = fields.Boolean('Active')
+    active = fields.Boolean('Active', default=True)
     currency_id = fields.Many2one('res.currency', default=1)
 
-    move_ids = fields.Many2many('account.move', string='Invoices')
-    estimation_ids = fields.Many2many('payment.estimation', string='Estimations')
+    @api.depends('to_date','from_date')
+    def _get_move_ids(self):
+        self.move_ids = []
+    move_ids = fields.Many2many('account.move', string='Invoices', compute='_get_move_ids')
+
+    @api.depends('to_date','from_date')
+    def _get_estimation_ids(self):
+        self.estimation_ids = []
+    estimation_ids = fields.Many2many('payment.estimation', string='Estimations', compute='_get_estimation_ids')
