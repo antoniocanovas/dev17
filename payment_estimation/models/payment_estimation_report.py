@@ -35,7 +35,7 @@ class PaymentEstimationReport(models.Model):
     estimation_ids = fields.Many2many('payment.estimation', string='Estimations', compute='_get_estimation_ids')
 
     @api.depends('to_date','from_date')
-    def _get_amount_residual_signed(self):
+    def _get_amount_residual(self):
         for record in self:
             total = 0
             for li in record.move_ids:
@@ -52,8 +52,8 @@ class PaymentEstimationReport(models.Model):
             record['estimate_amount'] = total
     estimate_amount = fields.Monetary('Estimations amount', compute='_get_estimation_total')
 
-    @api.depends('amount_residual_signed','estimate_amount')
+    @api.depends('amount_residual','estimate_amount')
     def _get_total_amount(self):
         for record in self:
-            record['total_amount'] = record.amount_residual_signed + record.estimate_amount
+            record['total_amount'] = record.amount_residual + record.estimate_amount
     total_amount = fields.Monetary('Total', compute='_get_total_amount')
