@@ -40,7 +40,7 @@ class PaymentEstimationReport(models.Model):
             total = 0
             for li in record.move_ids:
                 total += li.amount_residual_signed
-            record['amount_residual_signed'] = total
+            record['amount_residual'] = total
     amount_residual_signed = fields.Monetary('Invoices amount', compute='_get_amount_residual_signed')
 
     @api.depends('estimation_ids')
