@@ -29,7 +29,7 @@ class PaymentEstimationReport(models.Model):
     @api.depends('to_date','from_date')
     def _get_estimation_ids(self):
         for record in self:
-            estiomations = self.env['payment.estimation'].search([
+            estimations = self.env['payment.estimation'].search([
                 ('id','>', 1)
             ])
             record['estimation_ids'] = [(6,0,estimations.ids)]
