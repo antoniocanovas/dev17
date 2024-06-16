@@ -9,8 +9,8 @@ class PaymentEstimationReport(models.Model):
     _description = 'Payment estimations report'
 
     name = fields.Char('Name')
-    from_date = fields.Date('From date')
-    to_date = fields.Date('To date')
+    from_date = fields.Date('From date', required=1, default='01012000')
+    to_date = fields.Date('To date', required=1)
     invoice_amount = fields.Monetary('Invoices amount')
     estimate_amount = fields.Monetary('Estimations amount')
     total_amount = fields.Monetary('Total')
@@ -19,10 +19,18 @@ class PaymentEstimationReport(models.Model):
 
     @api.depends('to_date','from_date')
     def _get_move_ids(self):
-        self.move_ids = []
+        for record in self:
+            invoices = self.env['account.move'].search([
+                ('move_type','in',['in_invoice','in_refund'])
+            ])
+            record['move_ids'] = [(6,0,invoices.ids)]
     move_ids = fields.Many2many('account.move', string='Invoices', compute='_get_move_ids')
 
     @api.depends('to_date','from_date')
     def _get_estimation_ids(self):
-        self.estimation_ids = []
+        for record in self:
+            estiomations = self.env['payment.estimation'].search([
+                ('id','>', 1)
+            ])
+            record['estimation_ids'] = [(6,0,estimations.ids)]
     estimation_ids = fields.Many2many('payment.estimation', string='Estimations', compute='_get_estimation_ids')
