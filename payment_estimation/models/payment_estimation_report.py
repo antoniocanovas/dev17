@@ -17,13 +17,13 @@ class PaymentEstimationReport(models.Model):
     @api.depends('to_date','from_date')
     def _get_move_ids(self):
         for record in self:
-            invoices = self.env['account.move'].search([
-                ('move_type','in',['in_invoice','in_refund']),
-                ('state','=','posted'),
-                ('amount_residual_signed','!=',0)
+            aml = self.env['account.move.line'].search([
+                ('account_id','in',['400000','410000']),
+                ('parent_state','=','posted'),
+                ('amount_residual','!=',0)
             ])
             record['move_ids'] = [(6,0,invoices.ids)]
-    move_ids = fields.Many2many('account.move', string='Invoices', compute='_get_move_ids')
+    move_ids = fields.Many2many('account.move.line', string='Invoices', compute='_get_move_ids')
 
     @api.depends('to_date','from_date')
     def _get_estimation_ids(self):
