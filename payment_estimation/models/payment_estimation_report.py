@@ -80,7 +80,7 @@ class PaymentEstimationReport(models.Model):
             record['estimate_amount'] = total
     estimate_amount = fields.Monetary('Estimations amount', compute='_get_estimation_total')
 
-    @api.depends('amount_residual','estimate_amount')
+    @api.depends('supplier_amount_residual','customer_amount_residual','estimate_amount')
     def _get_total_amount(self):
         for record in self:
             record['total_amount'] = record.supplier_amount_residual + record.customer_amount_residual + record.estimate_amount
