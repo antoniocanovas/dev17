@@ -17,8 +17,6 @@ class PaymentEstimationReport(models.Model):
     @api.depends('to_date','from_date')
     def _get_move_line_ids(self):
         for record in self:
-            account.1_account_group_40
-            account.1_account_group_41
             aml = self.env['account.move.line'].search([
                 ('account_root_id','in',['40','41','47']),
                 ('move_type', 'in', ['in_invoice', 'in_refund']),
