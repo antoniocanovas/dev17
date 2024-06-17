@@ -25,7 +25,7 @@ class PaymentEstimationReport(models.Model):
                 ('date_maturity', '>=', record.from_date),
                 ('date_maturity', '<=', record.to_date),
             ])
-            record['move_ids'] = [(6,0,aml.ids)]
+            record['supplier_move_ids'] = [(6,0,aml.ids)]
     supplier_move_ids = fields.Many2many('account.move.line', string='Supplier Invoices', compute='_get_supplier_move_line_ids')
 
     @api.depends('to_date','from_date')
@@ -39,7 +39,7 @@ class PaymentEstimationReport(models.Model):
                 ('date_maturity', '>=', record.from_date),
                 ('date_maturity', '<=', record.to_date),
             ])
-            record['move_ids'] = [(6,0,aml.ids)]
+            record['customer_move_ids'] = [(6,0,aml.ids)]
     customer_move_ids = fields.Many2many('account.move.line', string='Customer Invoices', compute='_get_customer_move_line_ids')
 
 
