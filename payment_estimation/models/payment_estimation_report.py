@@ -18,7 +18,7 @@ class PaymentEstimationReport(models.Model):
     def _get_move_line_ids(self):
         for record in self:
             aml = self.env['account.move.line'].search([
-                ('account_root_id','in',['40','41','47']),
+                ('account_root_id','in',['40','41']),
                 ('move_type', 'in', ['in_invoice', 'in_refund']),
                 ('parent_state','=','posted'),
                 ('amount_residual','!=',0)
