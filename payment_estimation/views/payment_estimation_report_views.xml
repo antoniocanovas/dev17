@@ -43,8 +43,10 @@
                     </group>
                     <h3>Estimations:</h3>
                     <field name="estimation_ids"/>
-                    <h3>Invoices:</h3>
-                    <field name="move_ids"/>
+                    <h3>Supplier Invoices:</h3>
+                    <field name="supplier_move_ids"/>
+                    <h3>Customer Invoices:</h3>
+                    <field name="customer_move_ids"/>
                 </sheet>
             </form>
         </field>
