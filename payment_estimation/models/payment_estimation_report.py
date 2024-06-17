@@ -60,7 +60,7 @@ class PaymentEstimationReport(models.Model):
             for li in record.supplier_move_ids:
                 total += li.amount_residual
             record['supplier_amount_residual'] = total
-    amount_residual = fields.Monetary('Supplier amount', compute='_get_supplier_amount_residual')
+    supplier_amount_residual = fields.Monetary('Supplier amount', compute='_get_supplier_amount_residual')
 
     @api.depends('to_date','from_date')
     def _get_customer_amount_residual(self):
