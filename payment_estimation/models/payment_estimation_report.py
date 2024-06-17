@@ -15,7 +15,7 @@ class PaymentEstimationReport(models.Model):
     currency_id = fields.Many2one('res.currency', default=1)
 
     @api.depends('to_date','from_date')
-    def _get_move_line_ids(self):
+    def _get_supplier_move_line_ids(self):
         for record in self:
             aml = self.env['account.move.line'].search([
                 ('account_root_id','in',['40','41']),
@@ -26,7 +26,22 @@ class PaymentEstimationReport(models.Model):
                 ('date_maturity', '<=', record.to_date),
             ])
             record['move_ids'] = [(6,0,aml.ids)]
-    move_ids = fields.Many2many('account.move.line', string='Invoices', compute='_get_move_line_ids')
+    supplier_move_ids = fields.Many2many('account.move.line', string='Supplier Invoices', compute='_get_supplier_move_line_ids')
+
+    @api.depends('to_date','from_date')
+    def _get_customer_move_line_ids(self):
+        for record in self:
+            aml = self.env['account.move.line'].search([
+                ('account_root_id','in',['43']),
+                ('move_type', 'in', ['out_invoice', 'out_refund']),
+                ('parent_state','=','posted'),
+                ('amount_residual','!=',0),
+                ('date_maturity', '>=', record.from_date),
+                ('date_maturity', '<=', record.to_date),
+            ])
+            record['move_ids'] = [(6,0,aml.ids)]
+    customer_move_ids = fields.Many2many('account.move.line', string='Customer Invoices', compute='_get_customer_move_line_ids')
+
 
     @api.depends('to_date','from_date')
     def _get_estimation_ids(self):
@@ -39,13 +54,22 @@ class PaymentEstimationReport(models.Model):
     estimation_ids = fields.Many2many('payment.estimation', string='Estimations', compute='_get_estimation_ids')
 
     @api.depends('to_date','from_date')
-    def _get_amount_residual(self):
+    def _get_supplier_amount_residual(self):
         for record in self:
             total = 0
-            for li in record.move_ids:
+            for li in record.supplier_move_ids:
                 total += li.amount_residual
-            record['amount_residual'] = total
-    amount_residual = fields.Monetary('Invoices amount', compute='_get_amount_residual')
+            record['supplier_amount_residual'] = total
+    amount_residual = fields.Monetary('Supplier amount', compute='_get_supplier_amount_residual')
+
+    @api.depends('to_date','from_date')
+    def _get_customer_amount_residual(self):
+        for record in self:
+            total = 0
+            for li in record.customer_move_ids:
+                total += li.amount_residual
+            record['customer_amount_residual'] = total
+    amount_residual = fields.Monetary('Customer amount', compute='_get_customer_amount_residual')
 
     @api.depends('estimation_ids')
     def _get_estimation_total(self):
@@ -59,5 +83,5 @@ class PaymentEstimationReport(models.Model):
     @api.depends('amount_residual','estimate_amount')
     def _get_total_amount(self):
         for record in self:
-            record['total_amount'] = record.amount_residual + record.estimate_amount
+            record['total_amount'] = record.supplier_amount_residual + record.customer_amount_residual + record.estimate_amount
     total_amount = fields.Monetary('Total', compute='_get_total_amount')

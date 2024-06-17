@@ -9,7 +9,8 @@
                 <field name="name"/>
                 <field name="from_date"/>
                 <field name="to_date"/>
-                <field name="amount_residual"/>
+                <field name="supplier_amount_residual"/>
+                <field name="customer_amount_residual"/>
                 <field name="estimate_amount"/>
                 <field name="total_amount"/>
                 <field name="active" widget="boolean_toggle"/>
@@ -32,11 +33,12 @@
                         <group>
                             <field name="to_date" required="1"/>
                             <field name="from_date"/>
+                            <field name="total_amount"/>
                         </group>
                         <group>
-                            <field name="amount_residual"/>
+                            <field name="supplier_amount_residual"/>
+                            <field name="customer_amount_residual"/>
                             <field name="estimate_amount"/>
-                            <field name="total_amount"/>
                         </group>
                     </group>
                     <h3>Estimations:</h3>
