@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="name"/>
-                <field name="type"/>
+                <field name="type" optional="show"/>
                 <field name="date"/>
                 <field name="amount" sum="Total"/>
                 <field name="active" widget="boolean_toggle"/>
