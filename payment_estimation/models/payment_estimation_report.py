@@ -21,7 +21,9 @@ class PaymentEstimationReport(models.Model):
                 ('account_root_id','in',['40','41']),
                 ('move_type', 'in', ['in_invoice', 'in_refund']),
                 ('parent_state','=','posted'),
-                ('amount_residual','!=',0)
+                ('amount_residual','!=',0),
+                ('date_maturity', '>=', record.from_date),
+                ('date_maturity', '<=', record.to_date),
             ])
             record['move_ids'] = [(6,0,aml.ids)]
     move_ids = fields.Many2many('account.move.line', string='Invoices', compute='_get_move_line_ids')
@@ -30,7 +32,8 @@ class PaymentEstimationReport(models.Model):
     def _get_estimation_ids(self):
         for record in self:
             estimations = self.env['payment.estimation'].search([
-                ('id','>', 1)
+                ('date', '>=', record.from_date),
+                ('date', '<=', record.to_date),
             ])
             record['estimation_ids'] = [(6,0,estimations.ids)]
     estimation_ids = fields.Many2many('payment.estimation', string='Estimations', compute='_get_estimation_ids')
