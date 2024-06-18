@@ -33,20 +33,23 @@
                         <group>
                             <field name="to_date" required="1"/>
                             <field name="from_date"/>
-                            <field name="total_amount"/>
+                            <field name="customer_invoice" widget="boolean_toggle"/>
                         </group>
                         <group>
                             <field name="supplier_amount_residual"/>
-                            <field name="customer_amount_residual"/>
+                            <field name="customer_amount_residual" invisible="not customer_invoice"/>
                             <field name="estimate_amount"/>
+                            <field name="total_amount"/>
                         </group>
                     </group>
                     <h3>Estimations:</h3>
                     <field name="estimation_ids"/>
                     <h3>Supplier Invoices:</h3>
                     <field name="supplier_move_ids"/>
-                    <h3>Customer Invoices:</h3>
-                    <field name="customer_move_ids"/>
+                    <div name="customer_invoices_m2m" invisible="not customer_invoice">
+                        <h3>Customer Invoices:</h3>
+                        <field name="customer_move_ids"/>
+                    </div>
                 </sheet>
             </form>
         </field>

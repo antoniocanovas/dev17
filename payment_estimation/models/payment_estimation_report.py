@@ -11,6 +11,7 @@ class PaymentEstimationReport(models.Model):
     name = fields.Char('Name')
     from_date = fields.Date('From date', required=True, default='2000-01-01')
     to_date = fields.Date('To date', required=True)
+    customer_invoice = fields.Boolean('Customer invoices', default=True)
     active = fields.Boolean('Active', default=True)
     currency_id = fields.Many2one('res.currency', default=1)
 
@@ -83,5 +84,8 @@ class PaymentEstimationReport(models.Model):
     @api.depends('supplier_amount_residual','customer_amount_residual','estimate_amount')
     def _get_total_amount(self):
         for record in self:
-            record['total_amount'] = record.supplier_amount_residual + record.customer_amount_residual + record.estimate_amount
+            total = record.supplier_amount_residual + record.estimate_amount
+            if record.customer_invoice:
+                total += record.customer_amount_residual
+            record['total_amount'] = total
     total_amount = fields.Monetary('Total', compute='_get_total_amount')
