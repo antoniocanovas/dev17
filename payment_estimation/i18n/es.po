@@ -1,0 +1,211 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_estimation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-18 11:04+0000\n"
+"PO-Revision-Date: 2024-06-18 13:09+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__active
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__create_uid
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__create_date
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__currency_id
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__customer_move_ids
+msgid "Customer Invoices"
+msgstr "Facturas de cliente"
+
+#. module: payment_estimation
+#: model_terms:ir.ui.view,arch_db:payment_estimation.payment_estimation_report_default_form
+msgid "Customer Invoices:"
+msgstr "Facturas de cliente:"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__customer_amount_residual
+msgid "Customer amount"
+msgstr "Importe clientes:"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__customer_invoice
+msgid "Customer invoices"
+msgstr "Facturas de cliente"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__display_name
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__estimation_ids
+#: model:ir.ui.menu,name:payment_estimation.payment_estimation_menu
+msgid "Estimations"
+msgstr "Estimaciones"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__estimate_amount
+msgid "Estimations amount"
+msgstr "Importe estimado"
+
+#. module: payment_estimation
+#: model_terms:ir.ui.view,arch_db:payment_estimation.payment_estimation_report_default_form
+msgid "Estimations:"
+msgstr "Estimaciones:"
+
+#. module: payment_estimation
+#: model:ir.model.fields.selection,name:payment_estimation.selection__payment_estimation__type__financing
+msgid "Financing"
+msgstr "Financiación"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__from_date
+msgid "From date"
+msgstr "Desde"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__id
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__id
+msgid "ID"
+msgstr "ID"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__write_uid
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__write_date
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__write_date
+msgid "Last Updated on"
+msgstr "Actualizado el"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__name
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: payment_estimation
+#: model:ir.model.fields.selection,name:payment_estimation.selection__payment_estimation__type__other
+msgid "Other"
+msgstr "Otros"
+
+#. module: payment_estimation
+#: model_terms:ir.ui.view,arch_db:payment_estimation.payment_estimation_report_default_form
+msgid "Payment estimation report"
+msgstr "Informe de estimación de pagos"
+
+#. module: payment_estimation
+#: model:ir.actions.act_window,name:payment_estimation.action_payment_estimation_report
+msgid "Payment estimation reports"
+msgstr "Informes de estimación de pagos"
+
+#. module: payment_estimation
+#: model:ir.actions.act_window,name:payment_estimation.action_payment_estimation
+#: model:ir.model,name:payment_estimation.model_payment_estimation
+#: model:ir.ui.menu,name:payment_estimation.payment_estimation_main_menu
+msgid "Payment estimations"
+msgstr "Estimaciones de pagos"
+
+#. module: payment_estimation
+#: model:ir.model,name:payment_estimation.model_payment_estimation_report
+msgid "Payment estimations report"
+msgstr "Informe de estimaciones de pagos"
+
+#. module: payment_estimation
+#: model:ir.model.fields.selection,name:payment_estimation.selection__payment_estimation__type__payroll
+msgid "Payroll"
+msgstr "Nominas"
+
+#. module: payment_estimation
+#: model:ir.model.fields.selection,name:payment_estimation.selection__payment_estimation__type__rent
+msgid "Rent"
+msgstr "Alquileres"
+
+#. module: payment_estimation
+#: model:ir.ui.menu,name:payment_estimation.payment_estimation_report_menu
+msgid "Reports"
+msgstr "Informes"
+
+#. module: payment_estimation
+#: model:ir.model.fields.selection,name:payment_estimation.selection__payment_estimation__type__supplier
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__supplier_move_ids
+msgid "Supplier Invoices"
+msgstr "Facturas de proveedor"
+
+#. module: payment_estimation
+#: model_terms:ir.ui.view,arch_db:payment_estimation.payment_estimation_report_default_form
+msgid "Supplier Invoices:"
+msgstr "Facturas de proveedor:"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__supplier_amount_residual
+msgid "Supplier amount"
+msgstr "Importe proveedores"
+
+#. module: payment_estimation
+#: model:ir.model.fields.selection,name:payment_estimation.selection__payment_estimation__type__tax
+msgid "Tax"
+msgstr "Impuestos"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__to_date
+msgid "To date"
+msgstr "Hasta"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation_report__total_amount
+#: model_terms:ir.ui.view,arch_db:payment_estimation.payment_estimation_default_tree
+msgid "Total"
+msgstr "Total"
+
+#. module: payment_estimation
+#: model:ir.model.fields,field_description:payment_estimation.field_payment_estimation__type
+msgid "Type"
+msgstr "Tipo"
