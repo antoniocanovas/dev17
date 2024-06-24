@@ -20,7 +20,7 @@
                 <xpath expr="//page[@name='hr_settings']/group" position="inside">
                     <group string="Medical and Emergency Information">
                         <field name="medical_control"/>
-                        <field name="emergency_plan"/>
+                        <field name="emergency_plan_id"/>
                     </group>
                 </xpath>
             </field>
