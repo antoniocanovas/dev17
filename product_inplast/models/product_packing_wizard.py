@@ -41,7 +41,7 @@ class ProductPackingWizard(models.TransientModel):
             if record.pnt_type == 'box': prefix = 'C.'
             else: prefix = 'P.'
             record['pnt_prefix'] = prefix
-    pnt_prefix = fields.Char('Prefix', store=True, compute='_get_packing_prefix')
+    pnt_prefix = fields.Char('Prefix', store=True, readonly=False, compute='_get_packing_prefix')
 
     @api.onchange('pnt_pallet_box_qty', 'pnt_pallet_box_id')
     def _get_pallet_base_qty(self):
@@ -73,8 +73,7 @@ class ProductPackingWizard(models.TransientModel):
 
             # Asignar un código similar al producto padre pero no repetido:
             if record.name.default_code:
-                #code = record.pnt_prefix + record.name.default_code
-                code = record.name.default_code
+                code = record.pnt_prefix + record.name.default_code
                 # Desarrollo para que no repita default_code (13/06/24):
                 existcode = self.env['product.template'].search([('default_code','=',code)])
                 if existcode.ids:
