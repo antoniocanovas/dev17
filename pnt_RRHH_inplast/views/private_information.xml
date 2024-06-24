@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <!-- Form View for Employee with Private Information -->
+        <record id="view_private_information_form" model="ir.ui.view">
+            <field name="name">private.information.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <!-- Inherit the notebook page for private information -->
+                <xpath expr="//page[@name='personal_information']" position="inside">
+                    <group string="Additional Private Information">
+                        <group>
+                            <field name="discapacity"/>
+                            <field name="locker"/>
+                        </group>
+
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='hr_settings']/group" position="inside">
+                    <group string="Medical and Emergency Information">
+                        <field name="medical_control"/>
+                        <field name="emergency_plan"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>
