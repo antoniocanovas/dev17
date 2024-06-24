@@ -73,7 +73,8 @@ class ProductPackingWizard(models.TransientModel):
 
             # Asignar un código similar al producto padre pero no repetido:
             if record.name.default_code:
-                code = record.pnt_prefix + record.name.default_code
+                #code = record.pnt_prefix + record.name.default_code
+                code = record.name.default_code
                 # Desarrollo para que no repita default_code (13/06/24):
                 existcode = self.env['product.template'].search([('default_code','=',code)])
                 if existcode.ids:
