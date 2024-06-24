@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+ <record id="action_coa_type" model="ir.actions.act_window">
+        <field name="name">COA</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pnt.coa</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="coa_type"
+              parent="stock.menu_stock_inventory_control"
+              name="COA Type" action="action_coa_type"/>
+    />
+
+
+    <record id="coa_type_form" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="COA">
+                    <h2>
+                        <field name="name"/>
+                    </h2>
+                    <group name="basic_params" col="4">
+                        <field name="pnt_coa_body" widget="html"
+                               class="oe-bordered-editor"
+                               options="{'style-inline': true, 'codeview': true, 'dynamic_placeholder': true}"
+                               />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="model">pnt.coa</field>
+        <field name="name">Default form view for COA Type</field>
+        <field name="priority">16</field>
+        <field name="type">form</field>
+    </record>
+
+    <record id="coa_type_tree" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <tree string="COA">
+                <field name="name"/>
+            </tree>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="model">pnt.coa</field>
+        <field name="name">Default tree view for COA type</field>
+        <field name="priority">16</field>
+        <field name="type">tree</field>
+    </record>
+
+</odoo>
