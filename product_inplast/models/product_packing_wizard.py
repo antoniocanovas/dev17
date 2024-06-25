@@ -57,7 +57,7 @@ class ProductPackingWizard(models.TransientModel):
             # Cantidades base:
             baseqty, type, sale_ok, purchase_ok = record.pnt_box_base_qty, " - Caja ", False, False
             packagetype = self.env.ref('product_inplast.package_type_box_inplast')
-            if record.pnt_type == 'pallet':
+            if record.pnt_type != 'box':
                 baseqty = record.pnt_pallet_base_qty
                 type = " - Palet "
                 packagetype = self.env.ref('product_inplast.package_type_pallet_inplast')
@@ -112,10 +112,12 @@ class ProductPackingWizard(models.TransientModel):
             })
 
             # Crear lista de materiales
+            uom_weight = self.env.ref('uom.product_uom_categ_kgm')
             newldm = self.env['mrp.bom'].create({
                 'code': name,
                 'product_tmpl_id': newpacking.id,
                 'type': 'normal',
+                'pnt_raw_type_id': uom_weight.id
             })
 
             # Crear componentes de la lista de materiales para CAJAS:

@@ -60,8 +60,8 @@
                         <field name="pnt_pallet_film_qty"/>
                         <field name="pnt_pallet_seal_id" required="pnt_type == 'pallet'"/>
                         <field name="pnt_pallet_seal_qty"/>
-                        <field name="pnt_pallet_label_id" required="pnt_type == 'pallet'"/>
-                        <field name="pnt_pallet_label_qty"/>
+                        <field name="pnt_pallet_label_id" required="pnt_type == 'pallet'" string="Labels"/>
+                        <field name="pnt_pallet_label_qty" string="Labels qty"/>
                         <field name="pnt_picking_label_id" required="pnt_type == 'pallet'"/>
                         <field name="pnt_picking_label_qty"/>
                         <field name="pnt_prefix"/>
