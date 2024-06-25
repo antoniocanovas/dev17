@@ -157,6 +157,10 @@ class ProductPackingWizard(models.TransientModel):
                 pickinglabel = self.env['product.product'].search([('product_tmpl_id', '=', record.pnt_picking_label_id.id)])[0]
                 newbompalletlabel = self.env['mrp.bom.line'].create(
                     {'product_id': pickinglabel.id, 'product_qty': record.pnt_picking_label_qty, 'bom_id': newldm.id})
+                if record.pnt_type == 'palletmat':
+                    palletboxbag = self.env['product.product'].search([('product_tmpl_id', '=', record.pnt_box_bag_id.id)])[0]
+                    newbompalletboxbag = self.env['mrp.bom.line'].create(
+                        {'product_id': palletboxbag.id, 'product_qty': record.pnt_box_bag_qty, 'bom_id': newldm.id})
 
             # Crear en tarifas:
             pricelist = []
