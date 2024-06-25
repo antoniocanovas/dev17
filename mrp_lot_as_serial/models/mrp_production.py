@@ -35,7 +35,7 @@ class MrpProduction(models.Model):
     def create_lot_number(self):
         if (self.product_id.tracking == 'lot') and (not self.lot_producing_id.id):
             newlot = self.env['stock.lot'].create({'name': self.name, 'product_id': self.product_id.id})
-            self.log_producing_id = newlot.id
+            self.lot_producing_id = newlot.id
 
 
     def update_lot_as_serial(self):
