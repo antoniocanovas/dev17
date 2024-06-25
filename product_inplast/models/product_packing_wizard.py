@@ -159,10 +159,27 @@ class ProductPackingWizard(models.TransientModel):
                 pickinglabel = self.env['product.product'].search([('product_tmpl_id', '=', record.pnt_picking_label_id.id)])[0]
                 newbompalletlabel = self.env['mrp.bom.line'].create(
                     {'product_id': pickinglabel.id, 'product_qty': record.pnt_picking_label_qty, 'bom_id': newldm.id})
+
+                # En caso de pallets por materiales hay que añadir las bolsas de los tapones y los materiales base:
                 if record.pnt_type == 'palletmat':
                     palletboxbag = self.env['product.product'].search([('product_tmpl_id', '=', record.pnt_box_bag_id.id)])[0]
                     newbompalletboxbag = self.env['mrp.bom.line'].create(
                         {'product_id': palletboxbag.id, 'product_qty': record.pnt_box_bag_qty, 'bom_id': newldm.id})
+
+                    if not record.name.bom_ids.ids:
+                        raise UserError(
+                            'Haz una lista de materiales con componentes o materiales en el producto base '
+                            'antes de usar este tipo de empaquetado.')
+                    else:
+                        bom = record.name.bom_ids[0]
+                        for li in bom.bom_line_ids:
+                            newbomline = self.env['mrp.bom.line'].create(
+                                {'product_id': li.product_id.id,
+                                 'pnt_raw_percent': li.pnt_raw_percent,
+                                 'product_qty': li.product_qty * record.pnt_pallet_base_qty,
+                                 'product_uom_id': li.product_uom_id.id,
+                                 'bom_id': newldm.id,
+                                 })
 
             # Crear en tarifas:
             pricelist = []
