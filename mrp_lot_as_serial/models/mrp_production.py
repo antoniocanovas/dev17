@@ -34,7 +34,8 @@ class MrpProduction(models.Model):
 
     def create_lot_number(self):
         if (self.product_id.tracking == 'lot') and (not self.lot_producing_id.id):
-            newlot = self.env['stock.lot'].create({'name': self.name, 'product_id': self.product_id.id})
+            name = record.name.split("/")[0] + record.name.split("/")[1] + record.name.split("/")[2]
+            newlot = self.env['stock.lot'].create({'name': name, 'product_id': self.product_id.id})
             self.lot_producing_id = newlot.id
 
 
