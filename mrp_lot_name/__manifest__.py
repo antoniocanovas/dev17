@@ -1,8 +1,11 @@
 {
     "name": "MRP Lot as Serial",
-    "summary": "MRP assign serial number based on lot_id",
+    "summary": "Force lot name in MRP Manufacturing Orders",
     "version": "17.0.1.0.0",
     'category': 'MRP',
+    'description': u"""
+    Set name mode on Company configuration and it will be applied on manufacturing confirmation.
+    """,
     "author": "Punt Sistemes",
     "website": "https://www.puntsistemes.es",
     "Maintainers":[
@@ -15,7 +18,7 @@
         "mrp",
     ],
     "data": [
-        "views/product_template_views.xml"
+        "views/res_company_views.xml"
     ],
     "installable": True,
 }

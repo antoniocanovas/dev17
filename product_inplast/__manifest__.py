@@ -15,7 +15,7 @@
         "account",
         "mrp",
         "report_qweb_pdf_watermark",
-        "mrp_lot_as_serial",
+        "mrp_lot_name",
         "custom_inplast",
         "l10n_es_aeat_mod592",
     ],
