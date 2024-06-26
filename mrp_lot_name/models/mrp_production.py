@@ -18,7 +18,7 @@ class MrpProduction(models.Model):
     def action_confirm(self):
         res = super().action_confirm()
         if (self.product_id.tracking == 'lot') and (not self.lot_producing_id.id):
-            if (self.company.pnt_mrp_lot_name == 'mo'):
+            if (self.company_id.pnt_mrp_lot_name == 'mo'):
                 name = self.name.split("/")[0] + self.name.split("/")[1] + self.name.split("/")[2]
                 newlot = self.env['stock.lot'].create({'name': name, 'product_id': self.product_id.id})
                 self.lot_producing_id = newlot.id
