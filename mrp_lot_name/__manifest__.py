@@ -1,5 +1,5 @@
 {
-    "name": "MRP Lot as Serial",
+    "name": "MRP Lot name strategy",
     "summary": "Force lot name in MRP Manufacturing Orders",
     "version": "17.0.1.0.0",
     'category': 'MRP',
