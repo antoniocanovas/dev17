@@ -35,7 +35,7 @@
                         <field name="child_ids" widget="many2many_tags"/>
                     </group>
 
-                    <field name="section_line_ids" widget="section_and_note_one2many" mode="tree" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" nolabel="1" context="{'default_ms_review':True}">
+                    <field name="section_line_ids" widget="section_and_note_one2many" mode="tree" readonly="[('state', 'in', ('done','cancel'))]" nolabel="1" context="{'default_ms_review':True}">
                             <tree string="Sales Order Lines" editable="bottom" limit="200">
                                 <control>
                                     <create name="add_product_control" string="Add a product"/>
