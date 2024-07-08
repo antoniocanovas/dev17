@@ -14,7 +14,7 @@
     'data': [
         'views/sale_order_views.xml',
         'security/ir.model.access.csv',
-        'data/automatic_actions.xml',
+    #    'data/automatic_actions.xml',
         'views/report_sale_order.xml',
         'views/account_report.xml',
     ],
