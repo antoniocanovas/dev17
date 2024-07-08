@@ -69,7 +69,8 @@
                                 <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line" optional="show"/>
                                 <field name="is_downpayment" column_invisible="True"/>
                                 <field name="price_subtotal" string="Tax excl." invisible="is_downpayment"/>
-                                <field name="price_total" string="Tax incl." column_invisible="parent.tax_calculation_rounding_method == 'round_globally'" invisible="is_downpayment" optional="hide"/>
+
+                                <field name="price_total" string="Tax incl." invisible="is_downpayment" optional="hide"/>
                                 <!-- Others fields -->
                                 <field name="tax_calculation_rounding_method" column_invisible="True"/>
                                 <field name="state" column_invisible="True"/>
