@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="sol_sections_tree" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <tree string="Sections">
+                <field name="name"/>
+                <field name="section_total"/>
+                <field name="print_mode_section"/>
+            </tree>
+        </field>
+        <field name="field_parent" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="model">sale.order.line</field>
+        <field name="name">SOL Set Tree</field>
+        <field name="priority">99</field>
+        <field name="type">tree</field>
+    </record>
+
+    <record id="sol_sections_form" model="ir.ui.view">
+        <field name="name">SOL Set Form</field>
+        <field name="model">sale.order.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="Sales Order Section">
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <field name="parent_ids" widget="many2many_tags"/>
+                        <field name="print_mode_section"/>
+                        <field name="child_ids" widget="many2many_tags"/>
+                    </group>
+
+                    <field name="section_line_ids" widget="section_and_note_one2many" mode="tree" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}" nolabel="1" context="{'default_ms_review':True}">
+                        <tree editable="bottom">
+                            <control>
+                                <create name="add_product_control" string="Add a product" context="{'default_display_type': False, 'default_section_id':active_id}"/>
+                                <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note', 'default_section_id':active_id}"/>
+                            </control>
+                            <field name="sequence" widget="handle"/>
+                            <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                            <field name="display_type" invisible="1"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+
+                            <field name="product_updatable" invisible="1"/>
+                            <field name="product_id" attrs="{'readonly': [('product_updatable', '=', False)],'required': [('display_type', '=', False)],}" options="{'no_open': True}" force_save="1" context="{'partner_id': parent.partner_id, 'quantity': product_uom_qty,'pricelist': parent.pricelist_id,                                     'uom':product_uom,'company_id': parent.company_id, 'default_lst_price': price_unit, 'default_description_sale': name}" domain="[('sale_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]" widget="product_configurator"/>
+                            <field name="product_template_id" string="Product" invisible="1" attrs="{'readonly': [('product_updatable', '=', False)],'required': [('display_type', '=', False)],}" options="{'no_open': True}" context="{'partner_id': parent.partner_id, 'quantity': product_uom_qty, 'pricelist': parent.pricelist_id,                                     'uom':product_uom, 'company_id': parent.company_id, 'default_list_price': price_unit, 'default_description_sale': name}" domain="[('sale_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]" widget="product_configurator"/>
+                            <field name="name" widget="section_and_note_text" optional="show"/>
+                            <field name="analytic_tag_ids" optional="hide" groups="analytic.group_analytic_tags" widget="many2many_tags" options="{'color_field': 'color'}" domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                            <field name="product_uom_qty" decoration-info="(not display_type and invoice_status == 'to invoice')" decoration-bf="(not display_type and invoice_status == 'to invoice')" context="{'partner_id': parent.partner_id, 'quantity': product_uom_qty,                                    'pricelist': parent.pricelist_id,'uom': product_uom, 'company_id': parent.company_id}"/>
+                            <field name="qty_delivered" decoration-info="(not display_type and invoice_status == 'to invoice')" decoration-bf="(not display_type and invoice_status == 'to invoice')" string="Delivered" attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])], 'readonly': [('qty_delivered_method', '!=', 'manual')]}" optional="show"/>
+                            <field name="qty_delivered_manual" invisible="1"/>
+                            <field name="qty_delivered_method" invisible="1"/>
+                            <field name="qty_invoiced" decoration-info="(not display_type and invoice_status == 'to invoice')" decoration-bf="(not display_type and invoice_status == 'to invoice')" string="Invoiced" attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])]}" optional="show"/>
+                            <field name="qty_to_invoice" invisible="1"/>
+                            <field name="product_uom_readonly" invisible="1"/>
+                            <field name="product_uom" force_save="1" string="UoM" attrs="{'readonly': [('product_uom_readonly', '=', True)],                                             'required': [('display_type', '=', False)],                                         }" context="{'company_id': parent.company_id}" groups="uom.group_uom" options="{&quot;no_open&quot;: True}" optional="show"/>
+                            <field name="customer_lead" optional="hide" attrs="{'readonly': [('parent.state', 'not in', ['draft', 'sent', 'sale'])]}"/>
+                            <field name="price_unit" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                            <field name="tax_id" widget="many2many_tags" options="{'no_create': True}" domain="[('type_tax_use','=','sale'),('company_id','=',company_id)]" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}" optional="show"/>
+                            <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line" optional="show" widget="product_discount"/>
+                            <field name="price_subtotal" widget="monetary" groups="account.group_show_line_subtotals_tax_excluded" sum="Subtotal"/>
+                            <field name="price_total" widget="monetary" groups="account.group_show_line_subtotals_tax_included"/>
+                            <field name="state" invisible="1"/>
+                            <field name="invoice_status" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="price_tax" invisible="1"/>
+                            <field name="section_id" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="section_id" invisible="1"/>
+                            <field name="ms_review" invisible="1"/>
+                        </tree>
+                    </field>
+
+                    <group>
+                        <field name="order_id" string="Sale Order" readonly="1"/>
+                        <field name="section_total"/>
+                    </group>
+                    <field name="state" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="section" invisible="1"/>
+                    <field name="pricelist_id" invisible="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_sections" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_order_id': active_id,'default_order_id': active_id, 'default_display_type': 'line_section'}</field>
+        <field name="domain">[('order_id', '=', active_id),('display_type','=','line_section')]</field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="help"><![CDATA[<p>Sections</p>]]></field>
+        <field name="limit">80</field>
+        <field name="name">Sections</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <!--<field name="view_id" ref="helpdesk.helpdesk_tickets_view_tree"/>-->
+        <field name="usage" eval="False"/>
+        <!--<field name="view_id" eval="ocr_account_invoice_tree"/>-->
+        <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('sol_sections_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('sol_sections_form')})]"/>
+        <!--<field name="view_mode">tree,form</field>
+        <field name="view_type">tree</field>-->
+    </record>
+
+    <record id="view_saleorder_sections" model="ir.ui.view">
+        <field name="name">Sections</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button oe_read_only" icon="fa-spinner" type="action" name="%(sale_order_multisection.action_view_sections)d">
+                    <field widget="statinfo" name="section_line_count" string="Secciones"/>
+                </button>
+            </xpath>
+            <xpath expr="//header/button[@name='action_draft']" position="after">
+                <button class="oe_stat_butt" string="Reordenar Secciones" type="object" name="order_sections">
+
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+
+
+    <record id="view_saleorder_sections_key" model="ir.ui.view">
+        <field name="name">Multisection Key</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='source_id']" position="after">
+                <field name="multisection_key"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

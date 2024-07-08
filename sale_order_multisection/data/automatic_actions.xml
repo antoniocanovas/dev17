@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="avoid_duplicated_sections" model="base.automation">
+            <field name="name">=>Avoid duplicated sections</field>
+            <field name="model_id" ref="sale.model_sale_order_line"/>
+            <field name="state">code</field>
+            <field name="code">
+if (record.display_type == 'line_section') and (record.name[:1] == record.order_id.multisection_key):
+  seccion = record.name.split()[0]
+  lineas = env['sale.order.line'].search([('order_id','=',record.order_id.id),('display_type','=','line_section'),('section','!=',False),('id','!=',record.id)])
+  for li in lineas:
+    if seccion == li.section: raise Warning('Nombre de sección duplicado !!!')
+            </field>
+            <field name="trigger">on_create_or_write</field>
+            <!--<field name="on_change_fields">state</field>-->
+            <field name="filter_pre_domain">[('display_type','=','line_section')]</field>
+            <field name="filter_domain">[('display_type','=','line_section')]</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="sol_sequence_review" model="base.automation">
+            <field name="name">=>SOL Sequence Review</field>
+            <field name="model_id" ref="sale.model_sale_order_line"/>
+            <field name="state">code</field>
+            <field name="code">
+# Sequence en las que se han creado desde "secciones" (están las últimas) en vez de por section_id
+if record.ms_review:
+  seq = record.section_id.sequence
+  lines = env['sale.order.line'].search([('section_id','=',record.section_id.id),('id','!=',record.id),('create_date','&lt;',record.create_date)])
+  if lines:
+    lines_sorted = lines.sorted(key=lambda r: r.sequence)
+    seq = env['sale.order.line'].search([('id','=',lines_sorted.ids.pop())]).sequence
+  record.write({'sequence':seq, 'ms_review':False})
+
+            </field>
+            <field name="trigger">on_create</field>
+            <!--<field name="on_change_fields">state</field>-->
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="so_multisection_calculate" model="base.automation">
+            <field name="name">=>SO Multisection</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">
+# Ejecutar sólo si hay secciones y estamos en modo DRAFT:
+hay_secciones = env['sale.order.line'].search([('order_id','=',record.id),('display_type','=','line_section')])
+if (hay_secciones) and (record.state == 'draft'):
+  lineas = record.order_line.sorted(key=lambda r: r.sequence)
+  seccion_id = 0
+    # Asingar 'section' en Secciones y 'section_id' en el resto de líneas, en base a la secuencia de orden de líneas:
+  for li in lineas:
+    if (li.display_type == 'line_section') and (li.name):
+      seccion_id = li.id
+      seccion = str(li.sequence)
+      if (li.name[:1] == record.multisection_key):
+        seccion = li.name.split()[0]
+      li.write({'section':seccion})
+    elif (li.display_type != 'line_section') and (seccion_id > 0):
+      li.write({'section_id':seccion_id})
+    else:
+      li.write({'section_id':False})
+
+    # Cálculo de 'parent_ids', 'child_ids' y 'level' por sección, si hay multinivel ($ o multisection_key):
+  secciones = env['sale.order.line'].search([('order_id','=',record.id),('display_type','=','line_section')])
+  for se in secciones:
+    padres, hijos, nivel = [], [], 1
+    lineas = env['sale.order.line'].search([('order_id','=',record.id),('display_type','=','line_section'),('id','!=',se.id)])
+    if  (se.name[:1] == record.multisection_key):
+      for li in lineas:
+        largoli = len(li.section)
+        if (li.section == se.section[:largoli]):
+          padres.append(li.id)
+          nivel = len(padres) +1
+        largosec = len(se.section)
+        if (se.section == li.section[:largosec]):
+          hijos.append(li.id)
+    se.write({'parent_ids':[(6,0,padres)], 'child_ids':[(6,0,hijos)], 'level':nivel})
+            </field>
+            <field name="trigger">on_create_or_write</field>
+            <!--<field name="on_change_fields">state</field>-->
+            <field name="filter_pre_domain">[('state','=','draft')]</field>
+            <field name="filter_domain">[('state','=','draft')]</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+
+</odoo>
