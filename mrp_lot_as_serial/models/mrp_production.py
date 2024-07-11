@@ -53,8 +53,7 @@ class MrpProduction(models.Model):
             for li in self.finished_move_line_ids:
                 new_package = self.env['stock.quant.package'].create({
                     'name':li.lot_id.name,
-                    'package_type_id':type.id,
-                    'quantity':1})
+                    'package_type_id':type.id})
                 li.write({'result_package_id': new_package.id})
 
 
