@@ -55,7 +55,7 @@ class MrpProduction(models.Model):
                     'name':li.lot_id.name,
                     'package_type_id':type.id})
                 li.write({'result_package_id': new_package.id})
-
+                # Falta refrescar location_dest_id en stock.move.line y asignarlo en línea, como lo hacemos por código no se recalcula
 
 
     def update_unreserve_reserve_primary_lot(self):
