@@ -55,7 +55,7 @@ class MrpProduction(models.Model):
                     'name':li.lot_id.name,
                     'package_type_id':type.id})
                 li.write({'result_package_id': new_package.id})
-                li._onchange_putaway_location()
+                li._apply_putaway_strategy()
 
 
     def update_unreserve_reserve_primary_lot(self):
