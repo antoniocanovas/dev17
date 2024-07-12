@@ -53,9 +53,9 @@ class MrpProduction(models.Model):
             for li in self.finished_move_line_ids:
                 new_package = self.env['stock.quant.package'].create({
                     'name':li.lot_id.name,
-                    'package_type_id':type.id})
+                    'package_type_id':type.id,})
                 li.write({'result_package_id': new_package.id})
-                li._apply_putaway_strategy()
+#                li._apply_putaway_strategy()
 
 
     def update_unreserve_reserve_primary_lot(self):
