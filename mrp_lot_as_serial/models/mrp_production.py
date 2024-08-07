@@ -45,7 +45,6 @@ class MrpProduction(models.Model):
         mo_lot.write({'pnt_mrp_serial': seq})
 
 
-
     def update_unreserve_reserve_primary_lot(self):
         # Unreserve / Reserve, to pass original unique lot => New lots:
         pickings, productions = [], []
