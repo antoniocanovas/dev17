@@ -39,10 +39,12 @@ class MrpProduction(models.Model):
             lot = self.env['stock.lot'].search([('product_id', '=', li.product_id.id), ('name', '=', name)])
             if not lot.id:
                 lot = self.env['stock.lot'].create({'product_id': li.product_id.id, 'name': name, 'parent_id': mo_lot.id})
-            li.write({'lot_id': lot.id, 'serial_lot': lot.id})
+            li.write({'lot_id': lot.id, 'serial_lot_id': lot.id})
             seq += 1
         # Chequear que no avance si no hay creación:
         mo_lot.write({'pnt_mrp_serial': seq})
+
+
 
     def update_unreserve_reserve_primary_lot(self):
         # Unreserve / Reserve, to pass original unique lot => New lots:
