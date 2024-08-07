@@ -2,8 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, api
-from odoo.exceptions import ValidationError
-from datetime import datetime, timedelta
 
 
 import logging
@@ -15,7 +13,6 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     def get_split_mrp_as_serial(self):
-
         for li in self.finished_move_line_ids:
             qty = int(li.quantity - 1)
             li.write({'quantity': 1})
@@ -37,26 +34,15 @@ class MrpProduction(models.Model):
         mo_lot = self.lot_producing_id
 
         for li in self.finished_move_line_ids:
+            # Falta condicional si hay movimientos parciales (el lote a asignar es serial_lot, si existe) o no (funciona)
             name = mo_lot.name + "." + str(seq)
             lot = self.env['stock.lot'].search([('product_id', '=', li.product_id.id), ('name', '=', name)])
             if not lot.id:
-                lot = self.env['stock.lot'].create({'product_id': li.product_id.id, 'name': name})
-            li.write({'lot_id': lot.id})
+                lot = self.env['stock.lot'].create({'product_id': li.product_id.id, 'name': name, 'parent_id': mo_lot.id})
+            li.write({'lot_id': lot.id, 'serial_lot': lot.id})
             seq += 1
-
+        # Chequear que no avance si no hay creación:
         mo_lot.write({'pnt_mrp_serial': seq})
-
-    def create_packaging_as_lot(self):
-        packaging = self.env['product.packaging'].search([('product_id', '=', self.product_id.id), ('qty', '=', 1)])
-        if packaging.id:
-            type = packaging.package_type_id
-            for li in self.finished_move_line_ids:
-                new_package = self.env['stock.quant.package'].create({
-                    'name':li.lot_id.name,
-                    'package_type_id':type.id,})
-                li.write({'result_package_id': new_package.id})
-                li._apply_putaway_strategy()
-
 
     def update_unreserve_reserve_primary_lot(self):
         # Unreserve / Reserve, to pass original unique lot => New lots:
@@ -76,6 +62,11 @@ class MrpProduction(models.Model):
         res = super().button_mark_done()
         if self.product_id.pnt_mrp_as_serial:
             self.update_lot_as_serial()
-            self.create_packaging_as_lot()
             self.update_unreserve_reserve_primary_lot()
+            self.update_sub_manufacturing_orders()
         return res
+
+    def update_sub_manufacturing_orders(self):
+        for wo in self.backorder_ids:
+            if wo.state in ['draft','confirmed']:
+                wo.lot_producing_id = self.lot_producing_id.id

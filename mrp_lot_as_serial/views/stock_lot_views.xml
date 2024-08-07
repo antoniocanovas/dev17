@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lot_as_serial_inh_form" model="ir.ui.view">
+        <field name="name">lot.as.serial.inh.form</field>
+        <field name="model">stock.lot</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="parent_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
