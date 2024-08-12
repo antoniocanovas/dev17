@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_inplast_maintenance_equipment_inh_form" model="ir.ui.view">
+        <field name="name">mrp.inplast.maintenance.equipment.inh.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="pnt_mrp_tool_categ_id" invisible="1"/>
+                    <field name="pnt_mrp_accesory_categ_id" invisible="1"/>
+                    <field name="pnt_mrp_blade_categ_id" invisible="1"/>
+                    <!--<field name="pnt_tool_id"
+                           domain="[('id','!=',id),('category_id','=',pnt_mrp_tool_categ_id)]"
+                           required="category_id == pnt_mrp_accesory_categ_id"
+                           invisible="category_id != pnt_mrp_accesory_categ_id"/>-->
+                    <field name="pnt_tool_accesory_ids" context="{'default_category_id': pnt_mrp_accesory_categ_id}" widget="many2many_tags" domain="[('category_id', '=', pnt_mrp_accesory_categ_id )]"
+                           invisible="category_id != pnt_mrp_tool_categ_id"/>
+                    <field name="pnt_accesory_tool_ids" context="{'default_category_id': pnt_mrp_tool_categ_id}" widget="many2many_tags" domain="[('category_id', '=', pnt_mrp_tool_categ_id )]"
+                           invisible="category_id != pnt_mrp_accesory_categ_id"/>
+                    <field name="pnt_tool_blade_ids" context="{'category_id': pnt_mrp_blade_categ_id}" widget="many2many_tags" domain="[('category_id', '=', pnt_mrp_blade_categ_id )]"
+                           invisible="category_id != pnt_mrp_tool_categ_id"/>
+                    <field name="pnt_blade_tool_ids" context="{'default_category_id': pnt_mrp_tool_categ_id}" widget="many2many_tags" domain="[('category_id', '=', pnt_mrp_tool_categ_id )]"
+                           invisible="category_id != pnt_mrp_blade_categ_id"/>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="readonly">category_id == pnt_mrp_accesory_categ_id</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+            </data>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+
+    <record id="mrp_inplast_other_workcenter_inh_form" model="ir.ui.view">
+        <field name="name">mrp.inplast.other.workcenter.inh.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="mrp_maintenance.maintenance_equipment_view_form_inherit_mrp"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='workcenter_id']" position="after">
+                    <field name="pnt_workcenter_ids"
+                           domain="[('id','!=',workcenter_id)]"
+                           context="{'default_company_id':company_id}"
+                           groups="mrp.group_mrp_routings"
+                           widget="many2many_tags"
+                           invisible="not workcenter_id"
+                           options="{'no_create_edit':true,'no_quick_create':true}"
+                    />
+                </xpath>
+            </data>
+        </field>
+
+        <field name="priority">99</field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Heredar y modificar la vista de formulario de stock.lot -->
+        <record id="view_stock_lot_form_inherit_origin_info" model="ir.ui.view">
+            <field name="name">stock.lot.form.inherit.origin.info</field>
+            <field name="model">stock.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <!-- Añadir información de origen después del grupo principal -->
+                <xpath expr="//group[@name='main_group']" position="after">
+                    <group string="Origin Information">
+                        <!-- Add the computed box_product_id for display/debugging if needed -->
+                        <field name="box_product_id" invisible="1"/>
+
+                        <!-- Add the related boxes field -->
+                        <field name="related_boxes_ids" widget="many2many_tags" readonly="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

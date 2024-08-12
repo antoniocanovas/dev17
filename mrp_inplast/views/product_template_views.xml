@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_mrp_tool_inh_form" model="ir.ui.view">
+        <field name="name">product.template.mrp.tool.inh.form</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="detailed_type" position="after">
+                <field name="pnt_mrp_tool_categ_id" invisible="1"/>
+                <field name="pnt_mrp_accesory_categ_id" invisible="1"/>
+                <field name="pnt_mrp_blade_categ_id" invisible="1"/>
+                <field name="pnt_tool_id"
+                       domain="[('category_id', 'in', [pnt_mrp_tool_categ_id])]"
+                       invisible="pnt_product_type not in ['final','semi']"
+                       options="{'no_create_edit':true,'no_quick_create':true}"
+                />
+                <field name="pnt_accesory_ids" invisible="1"/>
+                <field name="pnt_accesory_id"
+                       domain="[('category_id', 'in', [pnt_mrp_accesory_categ_id]),('id', 'in', pnt_accesory_ids)]"
+                       invisible="pnt_product_type not in ['final','semi']"
+                       options="{'no_create_edit':true,'no_quick_create':true}"
+                />
+                <field name="pnt_blade_ids" invisible="1"/>
+                <field name="pnt_blade_id"
+                       domain="[('category_id', 'in', [pnt_mrp_blade_categ_id]),('id', 'in', pnt_blade_ids)]"
+                       invisible="pnt_product_type not in ['final','semi']"
+                       options="{'no_create_edit':true,'no_quick_create':true}"
+                />
+            </field>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>
