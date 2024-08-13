@@ -27,7 +27,6 @@
         "views/stocklot_view.xml",
         "data/server_actions.xml",
         "wizard/pallet_boxes_wizard_views.xml",
-        "wizard/Confirm_Delete_Lot_Wizard_view.xml",
         "security/ir.model.access.csv",
     ],
     'assets': {
