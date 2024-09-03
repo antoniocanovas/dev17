@@ -7,9 +7,15 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
+            <!-- Campo puente desde PT a PTAL para pasar fabricante a partner_id y filtrar valores: -->
+            <xpath expr="//field[@name='value_count']" position="after">
+                <field name="partner_id" invisible="1"/>
+            </xpath>
+            <!-- Filtro de valores de atributo por partner, según el campo anterior: -->
             <xpath expr="//field[@name='value_ids']" position="attributes">
                 <attribute name="domain">[('attribute_id','=',attribute_id),('partner_id','=',partner_id)]</attribute>
             </xpath>
+
         </field>
         <field name="priority">99</field>
     </record>
