@@ -11,6 +11,7 @@
                 <attribute name="domain">[('attribute_id','=',attribute_id),('partner_id','=',manufacturer_id)]</attribute>
             </xpath>
         </field>
+        <field name="priority">99</field>
     </record>
 
 </odoo>
