@@ -11,4 +11,4 @@ class ResPartner(models.Model):
     attribute_value_count = fields.Integer('Values', compute='_get_attribute_value_count')
 
     def _get_attribute_value_count(self):
-        self.attribute_value_count = len(self.attribute_value_count.ids)
+        self.attribute_value_count = len(self.attribute_value_ids.ids)
