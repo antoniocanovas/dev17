@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- PAYMENT ESTIMATION WINDOW ACTION: -->
+    <record id="action_payment_estimation" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">Payment estimations</field>
+        <field name="res_model">payment.estimation</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_mode">tree,pivot</field>
+    </record>
+
+    <!-- PAYMENT ESTIMATION REPORT WINDOW ACTION: -->
+    <record id="action_payment_estimation_report" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">Payment estimation reports</field>
+        <field name="res_model">payment.estimation.report</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- MENUS: -->
+    <record id="payment_estimation_main_menu" model="ir.ui.menu">
+        <field name="active" eval="True"/>
+        <field name="name">Payment estimations</field>
+        <field name="parent_id" ref="account.menu_finance_reports"/>
+        <field name="sequence">100</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="payment_estimation_report_menu" model="ir.ui.menu">
+        <field name="action" ref="action_payment_estimation_report"/>
+        <field name="active" eval="True"/>
+        <field name="name">Reports</field>
+        <field name="parent_id" ref="payment_estimation.payment_estimation_main_menu"/>
+        <field name="sequence">110</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="payment_estimation_menu" model="ir.ui.menu">
+        <field name="action" ref="action_payment_estimation"/>
+        <field name="active" eval="True"/>
+        <field name="name">Estimations</field>
+        <field name="parent_id" ref="payment_estimation.payment_estimation_main_menu"/>
+        <field name="sequence">120</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+</odoo>

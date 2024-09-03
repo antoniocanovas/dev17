@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="partner_product_attribute_value_inh_tree" model="ir.ui.view">
+        <field name="name">partner.attribute.inh.tree</field>
+        <field name="model">product.attribute.value</field>
+        <field name="inherit_id" ref="product.product_attribute_value_list"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="partner_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

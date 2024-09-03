@@ -20,20 +20,23 @@
 ##############################################################################
 
 {
-    "name": 'Purchase Price Update',
+    "name": 'Partner product attribute',
     "version": '1.0',
     "depends": [
-        'purchase',
-        'account',
+        'product',
+        'product_manufacturer',
     ],
     "author": "Punt Sistemes",
-    "category": 'Purchase',
+    "category": 'Stock',
     "website": "https://www.puntsistemes.es",
     "description": """
-        Update supplier prices from purchase lines or incoming invoices 
+        Product attributes values by partner.
+        Only empty values and manufacturer product attributes will be used in variants creation. 
     """,
     "data": [
-        'views/purchase_order_views.xml',
+#        'views/menu_views.xml',
+        'views/product_attribute_value_views.xml',
+        'views/product_template_views.xml',
         'views/res_partner_views.xml',
     ],
     "demo": [],
