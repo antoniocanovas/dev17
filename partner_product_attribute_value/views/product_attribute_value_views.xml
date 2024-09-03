@@ -21,8 +21,8 @@
         <field name="action" ref="action_menu_product_attribute_value"/>
         <field name="active" eval="True"/>
         <field name="name">Values</field>
-        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
-        <field name="sequence">90</field>
+        <field name="parent_id" ref="stock.menu_product_in_config_stock"/>
+        <field name="sequence">50</field>
         <field name="web_icon" eval="False"/>
     </record>
 
