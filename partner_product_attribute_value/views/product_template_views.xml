@@ -13,7 +13,7 @@
             </xpath>
             <!-- Filtro de valores de atributo por partner, según el campo anterior: -->
             <xpath expr="//field[@name='value_ids']" position="attributes">
-                <attribute name="domain">[('attribute_id','=',attribute_id),('partner_id','=',partner_id)]</attribute>
+                <attribute name="domain">[('attribute_id','=',attribute_id),'|',('partner_id','=',False),('partner_id','=',partner_id)]</attribute>
             </xpath>
 
         </field>
