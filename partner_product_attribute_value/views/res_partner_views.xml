@@ -25,7 +25,7 @@
                 <button class="oe_stat_button" icon="fa-cc" type="action"
                         name="%(partner_product_attribute_value.action_partner_attribute_values)d"
                         groups="stock.group_stock_user">
-                    <field name="attribute_value_count" string="Attr. values" widget="statinfo"/>
+                    <field name="attribute_value_count" string="Attribute values" widget="statinfo"/>
                 </button>
 
             </xpath>
