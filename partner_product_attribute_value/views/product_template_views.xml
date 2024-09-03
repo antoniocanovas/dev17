@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <!-- Campo puente desde PT a PTAL para pasar fabricante a partner_id y filtrar valores: -->
             <xpath expr="//field[@name='value_count']" position="after">
-                <field name="partner_id" invisible="1"/>
+                <field name="partner_id" colum_invisible="1"/>
             </xpath>
             <!-- Filtro de valores de atributo por partner, según el campo anterior: -->
             <xpath expr="//field[@name='value_ids']" position="attributes">

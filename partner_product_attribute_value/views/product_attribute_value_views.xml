@@ -1,6 +1,32 @@
 <?xml version="1.0"?>
 <odoo>
 
+    <!-- WINDOW ACTION: -->
+    <record model="ir.actions.act_window" id="action_menu_product_attribute_value" >
+        <field name="name">Product attribute values</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="res_model">product.attribute.value</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+    </record>
+
+    <!-- MENU: -->
+    <record id="product_attribute_value_menu" model="ir.ui.menu">
+        <field name="action" ref="action_menu_product_attribute_value"/>
+        <field name="active" eval="True"/>
+        <field name="name">Values</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">90</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <!-- CUSTOM TREE VIEW (default form not required): -->
     <record id="partner_product_attribute_value_inh_tree" model="ir.ui.view">
         <field name="name">partner.attribute.inh.tree</field>
         <field name="model">product.attribute.value</field>
