@@ -9,7 +9,7 @@ class AnalyticDistribution(models.Model):
     _name = 'analytic.distribution'
     _description = 'Analytic distribution'
 
-    name = fields.Char('Name', store=True)
+    name = fields.Char('Name', required=True)
     compute_method = fields.Selection([('m1','Modo1'),('m2','Modo2')], string="Compute method")
     workcenter_ids = fields.Many2many('mrp.workcenter', string="Workcenters")
     date = fields.Date('Date')
