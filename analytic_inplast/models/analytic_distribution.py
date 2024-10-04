@@ -10,7 +10,7 @@ class AnalyticDistribution(models.Model):
 
     name = fields.Char('Name', store=True)
     income_account_ids = fields.Many2many('account.account', string='Income accounts')
-    expense_account_ids = fields.Many2many('account.account', string='Expense accounts')
+#    expense_account_ids = fields.Many2many('account.account', string='Expense accounts')
     compute_method = fields.Selection([('m1','Modo1'),('m2','Modo2')], string="Compute method")
     workcenter_ids = fields.Many2many('mrp.workcenter', string="Workcenters")
     date = fields.Date('Date')
