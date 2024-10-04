@@ -35,7 +35,7 @@
         'security/ir.model.access.csv',
         'views/menu_views.xml',
         'views/res_partner_views.xml',
-        'views/product_attribute_value_views.xml',
+        'views/analytic_distribution_views.xml',
     ],
     "demo": [],
     "installable": True,

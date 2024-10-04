@@ -34,7 +34,8 @@
         INPLAST Custom analytic distributions. 
     """,
     "data": [
-#        'views/product_attribute_value_views.xml',
+        'views/analytic_distribution_views.xml',
+        'security/ir.model.access.csv',
     ],
     "demo": [],
     "installable": True,
