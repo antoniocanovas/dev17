@@ -3,6 +3,7 @@
 
 
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 class AnalyticDistribution(models.Model):
     _name = 'analytic.distribution'
@@ -28,3 +29,9 @@ class AnalyticDistribution(models.Model):
         column1='distribution_id',
         column2='account_id',
     )
+
+    def compute_distribution(self):
+        if self.compute_method == "m1":
+            raise UserError('modo 1')
+        if self.compute_method == "m2":
+            raise UserError('modo 2')
