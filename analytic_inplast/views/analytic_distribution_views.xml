@@ -37,13 +37,13 @@
                         <field name="name" placeholder="Analytic distribution name ..."/>
                     </h1>
                     <group>
-                            <field name="income_account_ids" widget="many2many_tags"/>
-                            <field name="expense_account_ids" widget="many2many_tags"/>
-                            <field name="compute_method"/>
-                            <field name="workcenter_ids" widget="many2many_tags"/>
-                            <field name="date"/>
-                            <field name="analytic_line_ids"/>
-                            <field name="comment"/>
+                        <field name="income_account_ids" widget="many2many_tags"/>
+                        <field name="expense_account_ids" widget="many2many_tags"/>
+                        <field name="compute_method"/>
+                        <field name="workcenter_ids" widget="many2many_tags"/>
+                        <field name="date"/>
+                        <field name="analytic_line_ids"/>
+                        <field name="comment"/>
                     </group>
                 </sheet>
             </form>
