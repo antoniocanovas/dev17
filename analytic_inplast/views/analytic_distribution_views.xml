@@ -48,7 +48,6 @@
                 </sheet>
             </form>
         </field>
-        <field name="field_parent" eval="False"/>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
@@ -68,7 +67,6 @@
                 <field name="compute_method"/>
             </tree>
         </field>
-        <field name="field_parent" eval="False"/>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
