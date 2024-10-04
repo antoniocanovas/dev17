@@ -16,14 +16,14 @@ class AnalyticDistribution(models.Model):
     comment = fields.Html('Comments', store=True, copy=False)
 
     income_account_ids = fields.Many2many(
-        'account.account', string='Income accounts'
+        'account.account', string='Income accounts',
         relation='income_account_rel',
         column1='distribution_id',
         column2='account_id',
     )
 
     expense_account_ids = fields.Many2many(
-        'account.account', string='Income accounts'
+        'account.account', string='Income accounts',
         relation='expense_account_rel',
         column1='distribution_id',
         column2='account_id',
