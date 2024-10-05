@@ -24,6 +24,7 @@
     "version": '1.0',
     "depends": [
         'product',
+        'account',
         'analytic',
     ],
     "author": "Punt Sistemes",
