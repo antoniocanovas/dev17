@@ -44,19 +44,17 @@ class AnalyticDistribution(models.Model):
     )
 
     def compute_distribution(self):
-        datefrom = record.date_from
-        dateto = record.date_to
+        datefrom = self.date_from
+        dateto = self.date_to
         income_credit, income_debit, expense_credit, expense_debit = 0,0,0,0
         incomelines = self.env['account.move.line'].search(
-            [('account_id', 'in', record.income_account_ids.ids), ('date', '>=', datefrom), ('date', '<=', dateto)])
-        income_debit, income_credit = 0, 0
+            [('account_id', 'in', self.income_account_ids.ids), ('date', '>=', datefrom), ('date', '<=', dateto)])
         for li in incomelines:
             income_debit += li.debit
             income_credit += li.credit
 
         expenselines = self.env['account.move.line'].search(
-            [('account_id', 'in', record.expense_account_ids.ids), ('date', '>=', datefrom), ('date', '<=', dateto)])
-        expense_debit, expense_credit = 0, 0
+            [('account_id', 'in', self.expense_account_ids.ids), ('date', '>=', datefrom), ('date', '<=', dateto)])
         for li in expenselines:
             expense_debit += li.debit
             expense_credit += li.credit
