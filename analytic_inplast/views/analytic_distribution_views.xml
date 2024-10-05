@@ -51,22 +51,47 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" icon="fa-spinner" type="action" name="%(inplast_analytic_distribution_action_window)d">
+                        <button class="oe_stat_button" icon="fa-spinner" type="action"
+                                name="%(inplast_analytic_distribution_action_window)d">
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
+                        <button class="oe_stat_button" icon="fa-spinner" type="object"
+                                name="%(compute_distribution)d" string="Compute"/>
                     </div>
                     <h1>
                         <field name="name" placeholder="Analytic distribution name ..."/>
                     </h1>
                     <group>
-                        <field name="income_account_ids" widget="many2many_tags"/>
-                        <field name="expense_account_ids" widget="many2many_tags"/>
-                        <field name="amount"/>
-                        <field name="compute_method"/>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="compute_method"/>
+                            <field name="amount"/>
+                        </group>
+                    </group>
+                    <group>
                         <field name="workcenter_ids" widget="many2many_tags"/>
-                        <field name="date_from"/>
-                        <field name="date_to"/>
                         <field name="comment"/>
+                    </group>
+                    <group>
+                        <group string="Income accounts">
+                            <field name="income_account_ids" nolabel="1" colspan="2">
+                                    <tree>
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+                        <group string="Expense accounts">
+                            <field name="expense_account_ids" nolabel="1" colspan="2">
+                                    <tree>
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
                     </group>
                 </sheet>
             </form>
