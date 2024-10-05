@@ -10,11 +10,11 @@ class AnalyticDistribution(models.Model):
     _description = 'Analytic distribution'
 
     name = fields.Char('Name', required=True)
-    amount = fields.Float('Amount')
+    amount = fields.Float('Amount', copy=False)
     compute_method = fields.Selection([('m1','Modo1'),('m2','Modo2')], string="Compute method")
     workcenter_ids = fields.Many2many('mrp.workcenter', string="Workcenters")
-    date_from = fields.Date('From date')
-    date_to = fields.Date('To date')
+    date_from = fields.Date('From date', copy=False)
+    date_to = fields.Date('To date', copy=False)
     analytic_line_ids = fields.One2many('account.analytic.line', 'analytic_distribution_id', string='Analytic lines')
     comment = fields.Html('Comments', store=True, copy=False)
 
