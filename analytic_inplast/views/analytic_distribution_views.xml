@@ -72,28 +72,34 @@
                             <field name="amount"/>
                         </group>
                     </group>
-                    <group>
-                        <field name="workcenter_ids" widget="many2many_tags"/>
-                        <field name="comment"/>
-                    </group>
-                    <group>
-                        <group string="Income accounts">
-                            <field name="income_account_ids" nolabel="1" colspan="2">
-                                    <tree>
-                                        <field name="code"/>
-                                        <field name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                        <group string="Expense accounts">
-                            <field name="expense_account_ids" nolabel="1" colspan="2">
-                                    <tree>
-                                        <field name="code"/>
-                                        <field name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                    </group>
+                    <notebook>
+                        <page name="general_analytic_distribution">
+                            <group>
+                                <field name="workcenter_ids" widget="many2many_tags"/>
+                                <field name="comment" placeholder="Notes" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page name="account_accounts">
+                            <group>
+                                <group string="Income accounts">
+                                    <field name="income_account_ids" nolabel="1" colspan="2">
+                                        <tree>
+                                            <field name="code"/>
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Expense accounts">
+                                    <field name="expense_account_ids" nolabel="1" colspan="2">
+                                        <tree>
+                                            <field name="code"/>
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
