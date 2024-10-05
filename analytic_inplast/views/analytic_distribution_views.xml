@@ -56,8 +56,9 @@
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
                         <button class="oe_stat_button" icon="fa-spinner" type="object"
-                                name="%(compute_distribution)d" string="Compute"/>
+                                name="compute_distribution" string="Compute"/>
                     </div>
+
                     <h1>
                         <field name="name" placeholder="Analytic distribution name ..."/>
                     </h1>
