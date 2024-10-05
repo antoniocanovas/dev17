@@ -20,18 +20,17 @@
 ##############################################################################
 
 {
-    "name": 'INPLAST Analytics',
+    "name": 'Analytic distribution base',
     "version": '1.0',
     "depends": [
         'product',
         'analytic',
-        'mrp',
     ],
     "author": "Punt Sistemes",
     "category": 'Account',
     "website": "https://www.puntsistemes.es",
     "description": """
-        INPLAST Custom analytic distributions. 
+        Base modelo for custom analytic distributions developed in customer modules. 
     """,
     "data": [
         'views/analytic_distribution_views.xml',

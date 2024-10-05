@@ -2,8 +2,8 @@
 <odoo>
 
     <!-- WINDOW ACTIONS analytic.distribution Model: -->
-    <record model="ir.actions.act_window" id="inplast_analytic_distribution_action_window" >
-        <field name="name">inplast_analytic.distribution.action.window</field>
+    <record model="ir.actions.act_window" id="analytic_distribution_action_window" >
+        <field name="name">analytic.distribution.action.window</field>
         <field name="type">ir.actions.act_window</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
@@ -34,8 +34,8 @@
 
 
     <!-- MENU: -->
-    <record id="inplast_analytic_distribution_menu" model="ir.ui.menu">
-        <field name="action" ref="inplast_analytic_distribution_action_window"/>
+    <record id="analytic_distribution_menu" model="ir.ui.menu">
+        <field name="action" ref="analytic_distribution_action_window"/>
         <field name="active" eval="True"/>
         <field name="name">Analytic distribution</field>
         <field name="parent_id" ref="account.menu_finance_entries_management"/>
@@ -52,7 +52,7 @@
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" icon="fa-spinner" type="action" invisible="not analytic_line_count"
-                                name="%(inplast_analytic_distribution_action_window)d">
+                                name="%(analytic_distribution_action_window)d">
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
                         <button class="oe_stat_button" icon="fa-puzzle-piece" type="object"
@@ -75,13 +75,14 @@
                     <notebook>
                         <page name="general_analytic_distribution" string="General">
                             <group>
-                                <field name="workcenter_ids" widget="many2many_tags"/>
                                 <field name="comment" placeholder="Notes" nolabel="1" colspan="2"/>
                             </group>
                         </page>
                         <page name="account_accounts" string="Accounts">
                             <group>
                                 <group string="Income accounts">
+                                    <field name="income_debit"/>
+                                    <field name="income_credit"/>
                                     <field name="income_account_ids" nolabel="1" colspan="2">
                                         <tree>
                                             <field name="code"/>
@@ -90,6 +91,8 @@
                                     </field>
                                 </group>
                                 <group string="Expense accounts">
+                                    <field name="expense_debit"/>
+                                    <field name="expense_credit"/>
                                     <field name="expense_account_ids" nolabel="1" colspan="2">
                                         <tree>
                                             <field name="code"/>
