@@ -12,7 +12,7 @@ class AnalyticDistribution(models.Model):
 
     name = fields.Char('Name', required=True)
     amount = fields.Float('Amount', copy=False)
-    compute_method = fields.Selection([('m1','Modo1'),('m2','Modo2')], string="Compute method")
+    compute_method = fields.Selection([('demo','Demo')], string="Compute method")
 #    workcenter_ids = fields.Many2many('mrp.workcenter', string="Workcenters")
     date_from = fields.Date('From date', copy=False)
     date_to = fields.Date('To date', copy=False, default=lambda self: datetime.today())
@@ -27,7 +27,7 @@ class AnalyticDistribution(models.Model):
     income_debit   = fields.Monetary('Income debit')
     expense_credit = fields.Monetary('Expense credit')
     expense_debit  = fields.Monetary('Expense debit')
-    currency_id    = fields.Many2one('res.currency', default=lambda self: self.company.currency_id)
+    currency_id    = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
 
     income_account_ids = fields.Many2many(
         'account.account', string='Income accounts',
