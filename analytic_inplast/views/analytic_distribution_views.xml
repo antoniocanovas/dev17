@@ -51,11 +51,11 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" icon="fa-spinner" type="action"
+                        <button class="oe_stat_button" icon="fa-spinner" type="action" invisible="not analytic_line_count"
                                 name="%(inplast_analytic_distribution_action_window)d">
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
-                        <button class="oe_stat_button" icon="fa-spinner" type="object"
+                        <button class="oe_stat_button" icon="fa-puzzle-piece" type="object"
                                 name="compute_distribution" string="Compute"/>
                     </div>
 
