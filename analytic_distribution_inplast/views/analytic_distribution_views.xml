@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="workcenters" string="Workcenters">
-                    <field name="workcenter_ids" widget="many2many_tags"/>
+                    <field name="workcenter_ids" colspan="2"/>
                 </page>
             </xpath>
         </field>
