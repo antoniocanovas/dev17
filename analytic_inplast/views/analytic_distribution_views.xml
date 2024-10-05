@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <!-- WINDOW ACTION: -->
+    <!-- WINDOW ACTIONS analytic.distribution Model: -->
     <record model="ir.actions.act_window" id="inplast_analytic_distribution_action_window" >
         <field name="name">inplast_analytic.distribution.action.window</field>
         <field name="type">ir.actions.act_window</field>
@@ -15,6 +15,23 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
     </record>
+
+    <!-- WINDOW ACTION o2m buttom to analytic lines: -->
+    <record id="action_view_analytic_lines" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_analytic_distribution_id': active_id,'default_analytic_distribution_id': active_id}</field>
+        <field name="domain">[('analytic_distribution_id', '=', active_id)]</field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="help"><![CDATA[<p>Analytic lines</p>]]></field>
+        <field name="limit">80</field>
+        <field name="name">Analytic lines</field>
+        <field name="res_model">account.analytic.line</field>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+    </record>
+
 
     <!-- MENU: -->
     <record id="inplast_analytic_distribution_menu" model="ir.ui.menu">
@@ -32,6 +49,11 @@
         <field name="model">analytic.distribution</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button class="oe_stat_button" icon="fa-spinner" type="action" name="%(inplast_analytic_distribution_action_window)d">
+                        <field widget="statinfo" name="analytic_line_count" string="Lines"/>
+                    </button>
+                </header>
                 <sheet>
                     <h1>
                         <field name="name" placeholder="Analytic distribution name ..."/>
