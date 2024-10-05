@@ -37,7 +37,7 @@ class AnalyticDistribution(models.Model):
     )
 
     expense_account_ids = fields.Many2many(
-        'account.account', string='Income accounts',
+        'account.account', string='Expense accounts',
         relation='expense_account_rel',
         column1='distribution_id',
         column2='account_id',
