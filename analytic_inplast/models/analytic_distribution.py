@@ -13,7 +13,8 @@ class AnalyticDistribution(models.Model):
     amount = fields.Float('Amount')
     compute_method = fields.Selection([('m1','Modo1'),('m2','Modo2')], string="Compute method")
     workcenter_ids = fields.Many2many('mrp.workcenter', string="Workcenters")
-    date = fields.Date('Date')
+    date_from = fields.Date('From date')
+    date_to = fields.Date('To date')
     analytic_line_ids = fields.One2many('account.analytic.line', 'analytic_distribution_id', string='Analytic lines')
     comment = fields.Html('Comments', store=True, copy=False)
 
