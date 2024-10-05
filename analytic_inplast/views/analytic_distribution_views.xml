@@ -73,13 +73,13 @@
                         </group>
                     </group>
                     <notebook>
-                        <page name="general_analytic_distribution">
+                        <page name="general_analytic_distribution" string="General">
                             <group>
                                 <field name="workcenter_ids" widget="many2many_tags"/>
-                                <field name="comment" placeholder="Notes" nolabel="1"/>
+                                <field name="comment" placeholder="Notes" nolabel="1" colspan="2">
                             </group>
                         </page>
-                        <page name="account_accounts">
+                        <page name="account_accounts" string="Accounts">
                             <group>
                                 <group string="Income accounts">
                                     <field name="income_account_ids" nolabel="1" colspan="2">
