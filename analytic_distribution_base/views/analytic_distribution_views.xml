@@ -3,7 +3,7 @@
 
     <!-- WINDOW ACTIONS analytic.distribution Model: -->
     <record model="ir.actions.act_window" id="analytic_distribution_action_window" >
-        <field name="name">analytic.distribution.action.window</field>
+        <field name="name">Custom Analytic Distributions</field>
         <field name="type">ir.actions.act_window</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
