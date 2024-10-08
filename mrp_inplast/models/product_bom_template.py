@@ -11,8 +11,9 @@ class ProductBomTemplate(models.Model):
     pnt_type = fields.Selection(
         [
             ("box", "Box"),
-            ("pallet", "Pallet from boxes"),
-            ("palletmat", "Pallet from materials"),
+            ("pallet", "Pallet")
+#            ("pallet", "Pallet from boxes"),
+#            ("palletmat", "Pallet from materials"),
         ],
         string="Packing type",
     )
