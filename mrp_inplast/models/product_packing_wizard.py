@@ -12,7 +12,7 @@ class ProductPackingWizard(models.TransientModel):
     bom_template_id = fields.Many2one("product.bom.template", required=1)
     pnt_type = fields.Selection(related="bom_template_id.pnt_type")
     base_qty = fields.Integer('Base qty')
-    box_qty = fields.Integer('Box qty')
+    box_qty = fields.Integer('Box qty', default=1)
 
     # Cajas:
 
@@ -49,16 +49,16 @@ class ProductPackingWizard(models.TransientModel):
     )
 
     @api.onchange("pnt_type")
-    def _get_packing_prefix(self):
+    def _get_packing_sufix(self):
         for record in self:
             if record.pnt_type == "box":
-                prefix = "C."
+                sufix = "C."
             else:
-                prefix = "P."
-            record["pnt_prefix"] = prefix
+                sufix = "P."
+            record["pnt_sufix"] = sufix
 
-    pnt_prefix = fields.Char(
-        "Prefix", store=True, readonly=False, compute="_get_packing_prefix"
+    pnt_sufix = fields.Char(
+        "Sufix", store=True, readonly=False, compute="_get_packing_sufix"
     )
 
     @api.depends("pnt_pallet_box_qty", "pnt_pallet_box_id")
@@ -76,18 +76,11 @@ class ProductPackingWizard(models.TransientModel):
             # Tipo de empaquetado PALET o Caja:
             # Cantidades base:
 
-            baseqty, boxqty, type, sale_ok, purchase_ok = (
-                record.pnt_box_base_qty,
-                1,
-                " - Caja ",
-                False,
-                False,
-            )
-
+            type, sale_ok, purchase_ok =  " - Caja ", False, False
+            baseqty, boxqty = record.base_qty, record.box_qty
             packagetype = self.env.ref("product_inplast.package_type_box_inplast")
+
             if record.pnt_type != "box":
-                boxqty = record.pnt_pallet_box_qty
-                baseqty = record.base_qty
                 type = " - Palet "
                 packagetype = self.env.ref(
                     "product_inplast.package_type_pallet_inplast"
@@ -108,14 +101,14 @@ class ProductPackingWizard(models.TransientModel):
 
             # Asignar un código similar al producto padre pero no repetido:
             if record.name.default_code:
-                code = record.pnt_prefix + record.name.default_code
+                code = record.pnt_sufix + record.name.default_code
                 # Desarrollo para que no repita default_code (13/06/24):
                 existcode = self.env["product.template"].search(
                     [("default_code", "=", code)]
                 )
                 if existcode.ids:
                     raise UserError(
-                        'Código duplicado, cambia el último campo "Prefix".'
+                        'Código duplicado, cambia el último campo "Sufix".'
                     )
 
             # Continuamos, si no existe el producto y default_code es único:
@@ -165,7 +158,6 @@ class ProductPackingWizard(models.TransientModel):
                 }
             )
 
-#### Nueva versión:
             for li in record.bom_template_id.line_ids:
                 newbomboxline = self.env["mrp.bom.line"].create(
                     {
@@ -175,156 +167,6 @@ class ProductPackingWizard(models.TransientModel):
                     }
                 )
 
-
-### Desde aquí lo que hay que revisar:
-
-            """
-
-            # Crear componentes de la lista de materiales para CAJAS:
-            if record.pnt_type == "box":
-                product = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.name.id)]
-                )
-                newbomboxline = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": product.id,
-                        "product_qty": record.pnt_box_base_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                boxproduct = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_box_type_id.id)]
-                )[0]
-                newbomboxline = self.env["mrp.bom.line"].create(
-                    {"product_id": boxproduct.id, "product_qty": 1, "bom_id": newldm.id}
-                )
-                bag = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_box_bag_id.id)]
-                )[0]
-                newbomboxbag = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": bag.id,
-                        "product_qty": record.pnt_box_bag_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                label = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_box_label_id.id)]
-                )[0]
-                newbomboxlabel = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": label.id,
-                        "product_qty": record.pnt_box_label_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                seal = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_box_seal_id.id)]
-                )[0]
-                newbomboxseal = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": seal.id,
-                        "product_qty": record.pnt_box_seal_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-
-            # Crear componentes de la lista de materiales para los PALETS:
-            else:
-                product = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_pallet_type_id.id)]
-                )[0]
-                newbompalletline = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": product.id,
-                        "product_qty": record.pnt_pallet_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                box = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_pallet_box_id.id)]
-                )[0]
-                newbompalletline = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": box.id,
-                        "product_qty": record.pnt_pallet_box_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                film = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_pallet_film_id.id)]
-                )[0]
-                newbompalletfilm = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": film.id,
-                        "product_qty": record.pnt_pallet_film_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                seal = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_pallet_seal_id.id)]
-                )[0]
-                newbompalletseal = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": seal.id,
-                        "product_qty": record.pnt_pallet_seal_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-
-                label = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_pallet_label_id.id)]
-                )[0]
-                newbompalletlabel = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": label.id,
-                        "product_qty": record.pnt_box_label_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-                pickinglabel = self.env["product.product"].search(
-                    [("product_tmpl_id", "=", record.pnt_picking_label_id.id)]
-                )[0]
-                newbompalletlabel = self.env["mrp.bom.line"].create(
-                    {
-                        "product_id": pickinglabel.id,
-                        "product_qty": record.pnt_picking_label_qty,
-                        "bom_id": newldm.id,
-                    }
-                )
-
-                # En caso de pallets por materiales hay que añadir las bolsas de los tapones y los materiales base:
-                if record.pnt_type == "palletmat":
-                    palletboxbag = self.env["product.product"].search(
-                        [("product_tmpl_id", "=", record.pnt_box_bag_id.id)]
-                    )[0]
-                    newbompalletboxbag = self.env["mrp.bom.line"].create(
-                        {
-                            "product_id": palletboxbag.id,
-                            "product_qty": record.pnt_box_bag_qty,
-                            "bom_id": newldm.id,
-                        }
-                    )
-
-                    if not record.name.bom_ids.ids:
-                        raise UserError(
-                            "Haz una lista de materiales con componentes o materiales en el producto base "
-                            "antes de usar este tipo de empaquetado."
-                        )
-                    else:
-                        bom = record.name.bom_ids[0]
-                        for li in bom.bom_line_ids:
-                            newbomline = self.env["mrp.bom.line"].create(
-                                {
-                                    "product_id": li.product_id.id,
-                                    "pnt_raw_percent": li.pnt_raw_percent,
-                                    "product_qty": li.product_qty
-                                    * record.pnt_pallet_base_qty,
-                                    "product_uom_id": li.product_uom_id.id,
-                                    "bom_id": newldm.id,
-                                }
-                            )
-#### Hasta aquí lo que hay que revisar.
             # Crear en tarifas:
             pricelist = []
             pricelist_item = self.env["product.pricelist.item"].search(
@@ -378,4 +220,3 @@ class ProductPackingWizard(models.TransientModel):
                     "qty": qty,
                 }
             )
-"""
