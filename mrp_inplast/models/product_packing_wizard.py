@@ -324,7 +324,6 @@ class ProductPackingWizard(models.TransientModel):
                                     "bom_id": newldm.id,
                                 }
                             )
-"""
 #### Hasta aquí lo que hay que revisar.
             # Crear en tarifas:
             pricelist = []
@@ -379,3 +378,4 @@ class ProductPackingWizard(models.TransientModel):
                     "qty": qty,
                 }
             )
+"""
