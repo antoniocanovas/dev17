@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record model="ir.actions.act_window" id="action_window_product_packing_wizard" >
+        <field name="name">Product packing wizard</field>
+        <field name="res_model">product.packing.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
     <record id="mrp_inplast_product_template_inh_form" model="ir.ui.view">
         <field name="name">product.template.mrp.tool.inh.form</field>
         <field name="model">product.template</field>
