@@ -205,10 +205,7 @@ class ProductPackingWizard(models.TransientModel):
             product = self.env["product.product"].search(
                 [("product_tmpl_id", "=", record.name.id)]
             )[0]
-            if record.pnt_type == "box":
-                qty = record.pnt_box_base_qty
-            else:
-                qty = record.pnt_pallet_base_qty
+
             newpackingtype = self.env["product.packaging"].create(
                 {
                     "name": record.pnt_type + " " + str(baseqty),
@@ -217,6 +214,6 @@ class ProductPackingWizard(models.TransientModel):
                     "product_uom_id": product.uom_id.id,
                     "sales": True,
                     "purchase": True,
-                    "qty": qty,
+                    "qty": baseqty,
                 }
             )
