@@ -22,6 +22,7 @@
         "mrp_lot_as_serial",
         "pnt_sscc_generator_base",
         "pnt_product_ean_barcode",
+        "l10n_es_ipnr_account",
     ],
     "data": [
         "views/res_company_views.xml",

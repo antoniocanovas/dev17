@@ -4,3 +4,8 @@
 "access_pnt_sscc_code","access_pnt_sscc_code","model_pnt_sscc_code","mrp.group_mrp_user",1,1,1,1
 "access_pnt_product_tool_user","access_pnt_product_tool_user","model_mrp_product_tool","base.group_user",1,0,0,0
 "access_pnt_product_tool_admin","access_pnt_product_tool_manager","model_mrp_product_tool","mrp.group_mrp_manager",1,1,1,1
+access_pnt_product_packing_wizard,user.product.packing.wizard,model_product_packing_wizard,base.group_user,1,1,1,1
+access_pnt_product_bom_template,user.product.bom.template,model_product_bom_template,base.group_user,1,0,0,0
+access_pnt_product_bom_template_admin,admin.product.bom.template,model_product_bom_template,mrp.group_mrp_manager,1,1,1,1
+access_pnt_product_bom_template_line,user.product.bom.template.line,model_product_bom_template_line,base.group_user,1,0,0,0
+access_pnt_product_bom_template_line_admin,admin.product.bom.template.line,model_product_bom_template_line,mrp.group_mrp_manager,1,1,1,1
