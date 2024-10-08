@@ -14,6 +14,8 @@
                     <group>
                         <field name="bom_template_id"/>
                         <field name="pnt_type"/>
+                        <field name="base_qty"/>
+                        <field name="box_qty" invisible="'pnt_type' == 'box'"/>
                     </group>
                     <!--
                     <group name="box" string="Box" invisible="pnt_type != 'box'">

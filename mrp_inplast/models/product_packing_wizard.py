@@ -11,6 +11,9 @@ class ProductPackingWizard(models.TransientModel):
     name = fields.Many2one("product.template", string="Product")
     bom_template_id = fields.Many2one("product.bom.template", required=1)
     pnt_type = fields.Selection(related="bom_template_id.pnt_type")
+    base_qty = fields.Integer('Base qty')
+    box_qty = fields.Integer('Box qty')
+
     # Cajas:
 
     pnt_box_type_id = fields.Many2one(related="bom_template_id.pnt_box_type_id")
@@ -84,7 +87,7 @@ class ProductPackingWizard(models.TransientModel):
             packagetype = self.env.ref("product_inplast.package_type_box_inplast")
             if record.pnt_type != "box":
                 boxqty = record.pnt_pallet_box_qty
-                baseqty = record.pnt_pallet_base_qty
+                baseqty = record.base_qty
                 type = " - Palet "
                 packagetype = self.env.ref(
                     "product_inplast.package_type_pallet_inplast"
