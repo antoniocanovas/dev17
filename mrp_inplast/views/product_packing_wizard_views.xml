@@ -13,7 +13,7 @@
                     </h3>
                     <group>
                         <field name="bom_template_id"/>
-                        <field name="pnt_type" readonly="pnt_type" force_save="1"/>
+                        <field name="pnt_type"/>
                     </group>
                     <!--
                     <group name="box" string="Box" invisible="pnt_type != 'box'">
