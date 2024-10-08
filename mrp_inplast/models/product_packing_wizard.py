@@ -7,46 +7,11 @@ class ProductPackingWizard(models.TransientModel):
     _name = "product.packing.wizard"
     _description = "Product Packing Wizard"
 
-    # Campos generales
     name = fields.Many2one("product.template", string="Product")
     bom_template_id = fields.Many2one("product.bom.template", required=1)
     pnt_type = fields.Selection(related="bom_template_id.pnt_type")
     base_qty = fields.Integer('Base qty')
     box_qty = fields.Integer('Box qty', default=1)
-
-    # Cajas:
-
-    pnt_box_type_id = fields.Many2one(related="bom_template_id.pnt_box_type_id")
-    pnt_box_base_qty = fields.Integer("Base qty")
-    pnt_box_bag_id = fields.Many2one(related="bom_template_id.pnt_box_bag_id")
-    pnt_box_bag_qty = fields.Integer(related="bom_template_id.pnt_box_bag_qty")
-    pnt_box_label_id = fields.Many2one(related="bom_template_id.pnt_box_label_id")
-    pnt_box_label_qty = fields.Integer(related="bom_template_id.pnt_box_label_qty")
-    pnt_box_seal_id = fields.Many2one(related="bom_template_id.pnt_box_seal_id")
-    pnt_box_seal_qty = fields.Integer(related="bom_template_id.pnt_box_seal_qty")
-
-    # Palets:
-    pnt_pallet_type_id = fields.Many2one(related="bom_template_id.pnt_pallet_type_id")
-    pnt_pallet_qty = fields.Integer(related="bom_template_id.pnt_pallet_qty")
-    pnt_pallet_box_id = fields.Many2one(related="bom_template_id.pnt_pallet_box_id")
-    pnt_pallet_box_qty = fields.Integer(related="bom_template_id.pnt_pallet_box_qty")
-    pnt_pallet_base_qty = fields.Integer(
-        "Base qty", store=True, readonly=False, compute="_get_pallet_base_qty"
-    )
-    pnt_pallet_film_id = fields.Many2one(related="bom_template_id.pnt_pallet_film_id")
-    pnt_pallet_film_qty = fields.Integer(related="bom_template_id.pnt_pallet_film_qty")
-    pnt_pallet_seal_id = fields.Many2one(related="bom_template_id.pnt_pallet_seal_id")
-    pnt_pallet_seal_qty = fields.Integer(related="bom_template_id.pnt_pallet_seal_qty")
-    pnt_pallet_label_id = fields.Many2one(related="bom_template_id.pnt_pallet_label_id")
-    pnt_pallet_label_qty = fields.Integer(
-        related="bom_template_id.pnt_pallet_label_qty"
-    )
-    pnt_picking_label_id = fields.Many2one(
-        related="bom_template_id.pnt_picking_label_id"
-    )
-    pnt_picking_label_qty = fields.Integer(
-        related="bom_template_id.pnt_picking_label_qty"
-    )
 
     @api.onchange("pnt_type")
     def _get_packing_sufix(self):
@@ -60,16 +25,6 @@ class ProductPackingWizard(models.TransientModel):
     pnt_sufix = fields.Char(
         "Sufix", store=True, readonly=False, compute="_get_packing_sufix"
     )
-
-    @api.depends("pnt_pallet_box_qty", "pnt_pallet_box_id")
-    def _get_pallet_base_qty(self):
-        for record in self:
-            qty = 0
-            if record.pnt_type == "pallet":
-                qty = (
-                    record.pnt_pallet_box_qty * record.pnt_pallet_box_id.pnt_parent_qty
-                )
-            record["pnt_pallet_base_qty"] = qty
 
     def create_packing_products(self):
         for record in self:
