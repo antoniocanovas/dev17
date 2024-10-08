@@ -17,9 +17,9 @@ class ProductPackingWizard(models.TransientModel):
     def _get_packing_sufix(self):
         for record in self:
             if record.pnt_type == "box":
-                sufix = "C."
+                sufix = ".C" + record.bom_template_id.code
             else:
-                sufix = "P."
+                sufix = ".P" + record.bom_template_id.code
             record["pnt_sufix"] = sufix
 
     pnt_sufix = fields.Char(
@@ -56,7 +56,7 @@ class ProductPackingWizard(models.TransientModel):
 
             # Asignar un código similar al producto padre pero no repetido:
             if record.name.default_code:
-                code = record.pnt_sufix + record.name.default_code
+                code = record.name.default_code + record.pnt_sufix
                 # Desarrollo para que no repita default_code (13/06/24):
                 existcode = self.env["product.template"].search(
                     [("default_code", "=", code)]
