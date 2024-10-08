@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="product_template_mrp_tool_inh_form" model="ir.ui.view">
+    <record id="mrp_inplast_product_template_inh_form" model="ir.ui.view">
         <field name="name">product.template.mrp.tool.inh.form</field>
         <field name="model">product.template</field>
         <field name="type">form</field>
         <field name="inherit_id" ref="product_inplast.product_template_inplast_inh_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button class="oe_highlight" type="action"
+                        name="%(action_window_product_packing_wizard)d"
+                        string="Packings"
+                        context="{'default_name':id}"
+                        invisible="pnt_product_type != 'final'"
+                />
+            </xpath>
             <xpath expr="//page[@name='reports']" position="before">
-                 <page string="Tools" name="tools">
+                <page string="Tools" name="tools">
                     <field name="mrp_tool_ids" invisible="pnt_product_type not in ['final','semi']">
                         <tree editable="bottom">
                             <field name="pnt_mrp_tool_categ_id" column_invisible="1"/>

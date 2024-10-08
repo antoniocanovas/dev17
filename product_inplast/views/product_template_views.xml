@@ -8,14 +8,6 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button class="oe_highlight" type="action"
-                        name="%(action_window_product_packing_wizard)d"
-                        string="Packings"
-                        context="{'default_name':id}"
-                        invisible="pnt_product_type != 'final'"
-                />
-            </xpath>
 
             <!-- Pestaña inicial para datos generales de productos y variantes Wisecap: -->
             <xpath expr="//page[@name='general_information']" position="before">
