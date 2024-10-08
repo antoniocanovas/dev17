@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+
+    <record model="ir.actions.act_window" id="action_window_product_bom_template">
+        <field name="name">Product bom template</field>
+        <field name="res_model">product.bom.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+
+    <menuitem id="bom_template"
+              parent="stock.menu_stock_config_settings"
+              name="BOM Template" action="action_window_product_bom_template"/>
+
+
+    <record id="product_bom_template_form" model="ir.ui.view">
+        <field name="name">product.bom.template.form</field>
+        <field name="model">product.bom.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="Products bom template">
+                    <h3>
+                        <field name="name" required="1" placeholder="Name"/>
+                    </h3>
+
+                    <group>
+                        <field name="pnt_type" readonly="pnt_type" force_save="1" required="1"/>
+                    </group>
+
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="mrp_type" required="1"/>
+                            <field name="product_id" required="1" domain="[('pnt_product_type','=',mrp_type)]"/>
+                            <field name="quantity" required="1"/>
+                        </tree>
+                    </field>
+
+
+
+                    <!--
+                    <group>
+                        <field name="pnt_type" invisible="pnt_type"/>
+                    </group>
+                    <group name="box" string="Box" invisible="pnt_type != 'box'">
+                        <field name="pnt_box_type_id" context="{'default_pnt_product_type':'box'}"
+                               required="pnt_type == 'box'"/>
+                        <field name="pnt_box_bag_id" context="{'default_pnt_product_type':'packaging'}"
+                               required="pnt_type == 'box'"/>
+                        <field name="pnt_box_bag_qty"/>
+                        <field name="pnt_box_label_id" context="{'default_pnt_product_type':'packaging'}"
+                               required="pnt_type == 'box'"/>
+                        <field name="pnt_box_label_qty"/>
+                        <field name="pnt_box_seal_id" context="{'default_pnt_product_type':'packaging'}"
+                               required="pnt_type == 'box'"/>
+                        <field name="pnt_box_seal_qty"/>
+
+                    </group>
+                    <group name="pallet" string="Pallet" invisible="not pnt_type or pnt_type == 'box'">
+                        <field name="pnt_pallet_type_id" context="{'default_pnt_product_type':'pallet'}"
+                               required="pnt_type == 'pallet'"/>
+                        <field name="pnt_pallet_qty"/>
+
+                        <field name="pnt_pallet_box_id"
+                               string="Manufactured boxes"
+                               required="pnt_type == 'pallet'"
+                               domain="[('pnt_parent_id', '=', name)]"
+                               invisible="pnt_type != 'pallet'"/>
+
+                        <field name="pnt_pallet_box_id"
+                               string="Empty boxes"
+                               required="pnt_type == 'palletmat'"
+                               domain="[('pnt_parent_id', '=', False),('pnt_product_type','=','box')]"
+                               invisible="pnt_type != 'palletmat'"
+                               context="{'default_pnt_product_type':'box'}"/>
+                        <field name="pnt_pallet_box_qty"/>
+                        <field name="pnt_box_bag_id"
+                               required="pnt_type == 'palletmat'" invisible="pnt_type != 'palletmat'"
+                               context="{'default_pnt_product_type':'packaging'}"/>
+                      <field name="pnt_box_bag_qty"
+                               required="pnt_type == 'palletmat'" invisible="pnt_type != 'palletmat'"/>
+
+
+                        <field name="pnt_pallet_film_id" context="{'default_pnt_product_type':'packaging'}"
+                               required="pnt_type == 'pallet'"/>
+                        <field name="pnt_pallet_film_qty"/>
+                        <field name="pnt_pallet_seal_id" context="{'default_pnt_product_type':'packaging'}"
+                               required="pnt_type == 'pallet'"/>
+                        <field name="pnt_pallet_seal_qty"/>
+                        <field name="pnt_pallet_label_id" context="{'default_pnt_product_type':'packaging'}"
+                               required="pnt_type == 'pallet'" string="Labels"/>
+                        <field name="pnt_pallet_label_qty" string="Labels qty"/>
+                        <field name="pnt_picking_label_id" required="pnt_type == 'pallet'"/>
+                        <field name="pnt_picking_label_qty" context="{'default_pnt_product_type':'packaging'}"/>
+
+                    </group>
+                    -->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_bom_template_tree" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <tree string="BOM Template">
+                <field name="name"/>
+                <field name="pnt_type"/>
+                <field name="write_uid"/>
+                <field name="write_date"/>
+            </tree>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="model">product.bom.template</field>
+        <field name="name">Default tree view for BOM Template</field>
+        <field name="priority">16</field>
+        <field name="type">tree</field>
+    </record>
+
+</odoo>

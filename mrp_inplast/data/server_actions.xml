@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Actualización de percent para BOM LINE por Base automation, debido a que el write heredado no
+    permitía guardar las contidades al depender del formulario del BOM -->
+    <record id="ba_bom_percent_update" model="base.automation">
+        <field name="name">=> BA BOM percent update</field>
+        <field name="model_id" ref="mrp_inplast.model_mrp_bom"/>
+        <field name="trigger">on_write</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="as_bom_percent_update" model="ir.actions.server">
+        <field name="name">=> AS BOM percent update</field>
+        <field name="model_id" ref="mrp_inplast.model_mrp_bom"/>
+        <field name="state">code</field>
+        <field name="code">
+            record.bom_percent_update()
+        </field>
+        <field name="base_automation_id" ref="mrp_inplast.ba_bom_percent_update"/>
+    </record>
+
+</odoo>

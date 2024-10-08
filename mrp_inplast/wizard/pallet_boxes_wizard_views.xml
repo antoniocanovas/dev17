@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_add_pallet_boxes_wizard" model="ir.ui.view">
+        <field name="name">add.pallet.boxes.wizard.form</field>
+        <field name="model">pallet.boxes.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <h2>
+                    <field name="production_id" readonly="1"/>
+                </h2>
+                <group name="basic_params" col="4">
+                    <field name="lot_producing_id"/>
+                    <field name="pallet_id"/>
+                    <field name="pnt_barcode_input"/>
+                    <field name="pnt_processed_barcodes" widget="many2many_tags" readonly="1"/>
+                    <field name="processed_count" readonly="1"/>
+                    <field name="remaining_count" readonly="1"/>
+                    <field name="show_confirmation" invisible="1"/> <!-- Add this line -->
+                </group>
+                <footer>
+                    <button name="add_lots" type="object" string="Add Lots" class="btn btn-primary" data-hotkey="q"
+                            invisible="show_confirmation"/>
+                    <button name="trigger_remove_lot" type="object" string="Remove Selected Lot" class="btn btn-danger"
+                            data-hotkey="r" invisible="show_confirmation"/>
+                    <div invisible="not show_confirmation">
+                        <p>Are you sure you want to remove the selected lots?</p>
+                        <button name="confirm_remove_lot" type="object" string="Yes" class="btn-primary"/>
+                        <button name="cancel_remove_lot" type="object" string="No" class="btn-secondary"/>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

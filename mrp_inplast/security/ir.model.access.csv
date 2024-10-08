@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_pallet_boxes_wizard","access.pallet.boxes.wizard","model_pallet_boxes_wizard","mrp.group_mrp_user",1,1,1,1
+"access_stock_lot_boxes_wizard","access_stock_lot_boxes_wizard","model_stock_lot_boxes_wizard","mrp.group_mrp_user",1,1,1,1
+"access_pnt_sscc_code","access_pnt_sscc_code","model_pnt_sscc_code","mrp.group_mrp_user",1,1,1,1
+"access_pnt_product_tool_user","access_pnt_product_tool_user","model_mrp_product_tool","base.group_user",1,0,0,0
+"access_pnt_product_tool_admin","access_pnt_product_tool_manager","model_mrp_product_tool","mrp.group_mrp_manager",1,1,1,1
