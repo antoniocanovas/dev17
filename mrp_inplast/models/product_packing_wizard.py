@@ -1,6 +1,5 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from pkg_resources import require
 
 
 class ProductPackingWizard(models.TransientModel):
@@ -9,21 +8,21 @@ class ProductPackingWizard(models.TransientModel):
 
     name = fields.Many2one("product.template", string="Product")
     bom_template_id = fields.Many2one("product.bom.template", required=1)
-    pnt_type = fields.Selection(related="bom_template_id.pnt_type")
+    type = fields.Selection(related="bom_template_id.pnt_type")
     base_qty = fields.Integer('Base qty')
     box_qty = fields.Integer('Box qty', default=1)
 
-    @api.onchange("pnt_type")
+    @api.onchange("type")
     def _get_packing_sufix(self):
         for record in self:
             sufix = "."
-            if record.pnt_type == "box":
+            if record.type == "box":
                 sufix = ".C" + record.bom_template_id.code
-            elif record.pnt_type == "pallet":
+            elif record.type == "pallet":
                 sufix = ".P" + record.bom_template_id.code
-            record["pnt_sufix"] = sufix
+            record["sufix"] = sufix
 
-    pnt_sufix = fields.Char(
+    sufix = fields.Char(
         "Sufix", store=True, readonly=False, compute="_get_packing_sufix"
     )
 
@@ -36,7 +35,7 @@ class ProductPackingWizard(models.TransientModel):
             baseqty, boxqty = record.base_qty, record.box_qty
             packagetype = self.env.ref("product_inplast.package_type_box_inplast")
 
-            if record.pnt_type != "box":
+            if record.type != "box":
                 type = " - Palet "
                 packagetype = self.env.ref(
                     "product_inplast.package_type_pallet_inplast"
@@ -57,7 +56,7 @@ class ProductPackingWizard(models.TransientModel):
 
             # Asignar un código similar al producto padre pero no repetido:
             if record.name.default_code:
-                code = record.name.default_code + record.pnt_sufix
+                code = record.name.default_code + record.sufix
                 # Desarrollo para que no repita default_code (13/06/24):
                 existcode = self.env["product.template"].search(
                     [("default_code", "=", code)]
@@ -148,7 +147,7 @@ class ProductPackingWizard(models.TransientModel):
             )[0]
             newpackingtype = self.env["product.packaging"].create(
                 {
-                    "name": record.pnt_type + " " + str(baseqty),
+                    "name": record.type + " " + str(baseqty),
                     "package_type_id": packagetype.id,
                     "product_id": product.id,
                     "product_uom_id": product.uom_id.id,
@@ -164,7 +163,7 @@ class ProductPackingWizard(models.TransientModel):
 
             newpackingtype = self.env["product.packaging"].create(
                 {
-                    "name": record.pnt_type + " " + str(baseqty),
+                    "name": record.type + " " + str(baseqty),
                     "package_type_id": packagetype.id,
                     "product_id": product.id,
                     "product_uom_id": product.uom_id.id,

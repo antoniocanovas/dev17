@@ -14,10 +14,10 @@
 
                     <group>
                         <field name="bom_template_id"/>
-                        <field name="pnt_type"/>
+                        <field name="type"/>
                         <field name="base_qty"/>
                         <field name="box_qty" invisible="'pnt_type' == 'box' or not bom_template_id"/>
-                        <field name="pnt_sufix"/>
+                        <field name="sufix"/>
                     </group>
 
                     <footer>
