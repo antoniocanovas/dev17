@@ -16,9 +16,10 @@ class ProductPackingWizard(models.TransientModel):
     @api.onchange("pnt_type")
     def _get_packing_sufix(self):
         for record in self:
+            sufix = "."
             if record.pnt_type == "box":
                 sufix = ".C" + record.bom_template_id.code
-            else:
+            elif record.pnt_type == "pallet":
                 sufix = ".P" + record.bom_template_id.code
             record["pnt_sufix"] = sufix
 
