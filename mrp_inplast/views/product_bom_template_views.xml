@@ -35,7 +35,7 @@
                         <tree editable="bottom">
                             <field name="mrp_type" required="1"/>
                             <field name="product_id" required="1"
-                                   context="{'default_pnt_product_type':type}"
+                                   context="{'default_pnt_product_type':mrp_type}"
                                    domain="[('pnt_product_type','=',mrp_type)]"/>
                             <field name="quantity" required="1"/>
                         </tree>
