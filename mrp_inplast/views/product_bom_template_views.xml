@@ -31,10 +31,12 @@
                         <field name="code" required="1"/>
                     </group>
 
-                    <field name="line_ids" context="{'default_pnt_product_type':type}">
+                    <field name="line_ids">
                         <tree editable="bottom">
                             <field name="mrp_type" required="1"/>
-                            <field name="product_id" required="1" domain="[('pnt_product_type','=',mrp_type)]"/>
+                            <field name="product_id" required="1"
+                                   context="{'default_pnt_product_type':type}"
+                                   domain="[('pnt_product_type','=',mrp_type)]"/>
                             <field name="quantity" required="1"/>
                         </tree>
                     </field>
