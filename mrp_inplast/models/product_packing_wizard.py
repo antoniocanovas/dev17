@@ -92,8 +92,7 @@ class ProductPackingWizard(models.TransientModel):
             )
             newpacking.write(
                 {
-                    "plastic_weight_non_recyclable": record.name.plastic_weight_non_recyclable
-                    * baseqty,
+                    "plastic_weight_non_recyclable": record.name.plastic_weight_non_recyclable * baseqty,
                     "plastic_tax_weight": record.name.plastic_tax_weight * baseqty,
                     "tax_plastic_type": record.name.tax_plastic_type,
                     "plastic_tax_regime_manufacturer": record.name.plastic_tax_regime_manufacturer,
@@ -122,6 +121,27 @@ class ProductPackingWizard(models.TransientModel):
                     }
                 )
 
+
+            # Incluir materiales desde la ldm de producto base:
+            if not record.name.bom_ids.ids:
+                raise UserError(
+                    "Haz una lista de materiales con componentes o materiales en el producto base "
+                    "antes de crear empaquetados."
+                )
+            else:
+                bom = record.name.bom_ids[0]
+                for li in bom.bom_line_ids:
+                    newbomline = self.env["mrp.bom.line"].create(
+                        {
+                            "product_id": li.product_id.id,
+                            "pnt_raw_percent": li.pnt_raw_percent,
+                            "product_qty": li.product_qty * base_qty,
+                            "product_uom_id": li.product_uom_id.id,
+                            "bom_id": newldm.id,
+                        }
+                    )
+
+
             # Crear en tarifas:
             pricelist = []
             pricelist_item = self.env["product.pricelist.item"].search(
@@ -143,8 +163,7 @@ class ProductPackingWizard(models.TransientModel):
 
             # Asignar packaging_ids (product.packaging) al nuevo producto del tipo CAJA o PALET para huecos disponibles:
             product = self.env["product.product"].search(
-                [("product_tmpl_id", "=", newpacking.id)]
-            )[0]
+                [("product_tmpl_id", "=", newpacking.id)])[0]
             newpackingtype = self.env["product.packaging"].create(
                 {
                     "name": record.type + " " + str(baseqty),
@@ -158,8 +177,7 @@ class ProductPackingWizard(models.TransientModel):
             )
             # Asignar packaging_ids (product.packaging) al producto base para vender por múltiplos:
             product = self.env["product.product"].search(
-                [("product_tmpl_id", "=", record.name.id)]
-            )[0]
+                [("product_tmpl_id", "=", record.name.id)])[0]
 
             newpackingtype = self.env["product.packaging"].create(
                 {
