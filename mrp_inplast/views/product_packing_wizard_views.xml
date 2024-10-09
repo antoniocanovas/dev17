@@ -15,7 +15,7 @@
                     <group>
                         <field name="bom_template_id"/>
                         <field name="type"/>
-                        <field name="base_qty"/>
+                        <field name="base_qty" required="1"/>
                         <field name="box_qty" invisible="'type' == 'box' or not bom_template_id"/>
                         <field name="sufix"/>
                     </group>
