@@ -16,7 +16,7 @@
                         <field name="bom_template_id"/>
                         <field name="type"/>
                         <field name="base_qty"/>
-                        <field name="box_qty" invisible="'pnt_type' == 'box' or not bom_template_id"/>
+                        <field name="box_qty" invisible="'type' == 'box' or not bom_template_id"/>
                         <field name="sufix"/>
                     </group>
 
@@ -24,7 +24,7 @@
                         <button class="oe_highlight"
                                 type="object"
                                 name="create_packing_products"
-                                invisible="not pnt_type"
+                                invisible="not type"
                                 string="Create packing products"/>
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>

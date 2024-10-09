@@ -27,7 +27,7 @@
                     </h3>
 
                     <group>
-                        <field name="pnt_type" readonly="pnt_type" force_save="1" required="1"/>
+                        <field name="type" readonly="type" force_save="1" required="1"/>
                         <field name="code" required="1"/>
                     </group>
 

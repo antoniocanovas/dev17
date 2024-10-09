@@ -8,7 +8,7 @@ class ProductPackingWizard(models.TransientModel):
 
     name = fields.Many2one("product.template", string="Product")
     bom_template_id = fields.Many2one("product.bom.template", required=1)
-    type = fields.Selection(related="bom_template_id.pnt_type")
+    type = fields.Selection(related="bom_template_id.type")
     base_qty = fields.Integer('Base qty')
     box_qty = fields.Integer('Box qty', default=1)
 

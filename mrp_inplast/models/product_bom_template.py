@@ -6,7 +6,7 @@ class ProductBomTemplate(models.Model):
 
     name = fields.Char("Name")
     code = fields.Char("Sufix code")
-    pnt_type = fields.Selection(
+    type = fields.Selection(
         [
             ("box", "Box"),
             ("pallet", "Pallet"),
