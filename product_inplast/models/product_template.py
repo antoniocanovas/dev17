@@ -24,7 +24,7 @@ class ProductTemplate(models.Model):
             ("raw", "Raw"),
             ("dye", "Dye"),
             ("packaging", "Packaging"),
-            ("box", "BOX"),
+            ("box", "Box"),
             ("pallet", "Pallet"),
             ("tool", "Tool"),
             ("other", "Other"),

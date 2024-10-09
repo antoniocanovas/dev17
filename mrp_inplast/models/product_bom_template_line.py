@@ -8,7 +8,7 @@ class ProductBomTemplate(models.Model):
 
     name = fields.Char("Name", related='product_id.name')
     product_id = fields.Many2one('product.product', string='Product')
-    quantity = fields.Float('Quantity')
+    quantity = fields.Float('Quantity', default=1)
     template_id = fields.Many2one('product.bom.template', string='Template')
 
     # Tipo de productos en subfamilia:
@@ -20,7 +20,7 @@ class ProductBomTemplate(models.Model):
             ("raw", "Raw"),
             ("dye", "Dye"),
             ("packaging", "Packaging"),
-            ("box", "BOX"),
+            ("box", "Box"),
             ("pallet", "Pallet"),
         ],
         store=True,
