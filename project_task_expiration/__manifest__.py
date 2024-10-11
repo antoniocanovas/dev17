@@ -25,6 +25,7 @@
     "depends": [
         'contacts',
         'project',
+        'sale_project',
     ],
     "author": "Punt Sistemes",
     "category": 'Project',
