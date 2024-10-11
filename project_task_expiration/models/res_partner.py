@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    expiration_task_ids = fields.One2many('project.task', 'res.partner', string='Expiration tasks')
+    expiration_task_ids = fields.One2many('project.task', 'partner_id', string='Expiration tasks')
 
     def _get_expiration_task_count(self):
         self.expiration_task_count = len(expiration_tasks_ids.ids)
