@@ -14,7 +14,7 @@
         <field name="res_model">project.task</field>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">kanban,tree,form</field>
     </record>
 
     <record id="partner_project_task_expiration_inh_form" model="ir.ui.view">
