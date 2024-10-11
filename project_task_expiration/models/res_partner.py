@@ -9,5 +9,5 @@ class ResPartner(models.Model):
     expiration_task_ids = fields.One2many('project.task', 'partner_id', string='Expiration tasks')
 
     def _get_expiration_task_count(self):
-        self.expiration_task_count = len(expiration_task_ids.ids)
+        self.expiration_task_count = len(self.expiration_task_ids.ids)
     expiration_task_count = fields.Integer('Expiration count', compute='_get_expiration_task_count')
