@@ -12,7 +12,7 @@
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="invisible">not allow_billable and not is_expiration</attribute>
             </xpath>
-            <field name="date_last_stage_update" position="after">
+            <field name="description" position="after">
                 <field name="is_expiration" invisible="1"/>
             </field>
         </field>
