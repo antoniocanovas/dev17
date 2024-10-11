@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Task customization : -->
+    <record id="project_task_sign_request_inh_form" model="ir.ui.view">
+        <field name="name">project.task.sign.request.inh.form</field>
+        <field name="model">project.task</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page name="sign_request" string="Sign requests">
+                    <field name="sign_request_ids" readonly="1"/>
+                </page>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>
