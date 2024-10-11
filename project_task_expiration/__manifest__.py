@@ -23,7 +23,7 @@
     "name": 'Project task expirations',
     "version": '1.0',
     "depends": [
-        'contact',
+        'contacts',
         'project',
     ],
     "author": "Punt Sistemes",
