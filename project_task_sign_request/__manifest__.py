@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    "name": 'Project task expirations',
+    "name": 'Project task Sign Requests',
     "version": '1.0',
     "depends": [
         'contacts',
