@@ -20,22 +20,25 @@
 ##############################################################################
 
 {
-    "name": 'Partner product attribute',
+    "name": 'Project task expirations',
     "version": '1.0',
     "depends": [
-        'product',
-        'product_manufacturer',
+        'contact',
+        'project',
     ],
     "author": "Punt Sistemes",
-    "category": 'Stock',
+    "category": 'Project',
     "website": "https://www.puntsistemes.es",
     "description": """
-        Product attributes values by partner.
-        Only empty values and manufacturer product attributes will be used in variants creation. 
+        It allows control through tasks or activities, the monitoring of certifications 
+        or documents that must be accepted or completed by collaborators. 
+        For example, suppliers who must send food quality certificates, employee certifications, 
+        employment contracts, social security documents, etc. 
+        This information will appear in each collaborator's card. 
+        Operationally, the project must be marked as "Is expiration". 
     """,
     "data": [
-        'views/analytic_distribution_views.xml',
-        'views/res_partner_views.xml',
+        'views/project_project_views.xml',
         'views/res_partner_views.xml',
     ],
     "demo": [],

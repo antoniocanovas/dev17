@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- Normal project view : -->
+    <record id="project_task_expiration_inh_form" model="ir.ui.view">
+        <field name="name">project.task.expiration.inh.form</field>
+        <field name="model">project.project</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="is_expiration"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+    <!-- Simplified creation project view : -->
+    <record id="project_task_expiration_simplified_inh_form" model="ir.ui.view">
+        <field name="name">project.task.expiration.simplified.inh.form</field>
+        <field name="model">project.project</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="is_expiration"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>

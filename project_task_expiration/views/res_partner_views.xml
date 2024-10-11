@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<odoo>
+
+    <record id="action_partner_expiration_tasks" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_partner_id': active_id,'default_partner_id': active_id}</field>
+        <field name="domain">[('partner_id', '=',active_id)]</field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="help"><![CDATA[<p> Create expiration tasks </p>]]></field>
+        <field name="limit">80</field>
+        <field name="name">Expiration tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <record id="partner_project_task_expiration_inh_form" model="ir.ui.view">
+        <field name="name">partner.project.task.expiration.inh.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" icon="fa-tasks" type="action"
+                        name="%(project_task_expiration.action_partner_expiration_tasks)d"
+                        groups="project.group_project_user">
+                    <field name="expiration_task_count" string="Expiration tasks" widget="statinfo"/>
+                </button>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
