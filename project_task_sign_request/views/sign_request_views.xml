@@ -38,7 +38,7 @@
         <field name="name">project.task.sign.request.inh.kanban</field>
         <field name="model">sign.request</field>
         <field name="type">kanban</field>
-        <field name="inherit_id" ref="sign.sign_request_view_form"/>
+        <field name="inherit_id" ref="sign.sign_request_view_kanban"/>
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='reference']" position="after">
