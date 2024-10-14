@@ -17,6 +17,24 @@
         <field name="priority">99</field>
     </record>
 
+
+    <!-- FORM view de modelo correspondiente a la solicitud (sign.send.request): -->
+    <record id="project_task_sign_send_request_inh_form" model="ir.ui.view">
+        <field name="name">project.task.sign.send.request.inh.form</field>
+        <field name="model">sign.send.request</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sign.sign_send_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='validity']" position="after">
+                <field name="task_id"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+
     <!-- TREE view : -->
     <record id="project_task_sign_request_inh_tree" model="ir.ui.view">
         <field name="name">project.task.sign.request.inh.tree</field>
