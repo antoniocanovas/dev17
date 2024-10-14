@@ -3,7 +3,7 @@
 from odoo import fields, models, api
 from odoo.exceptions import UserError
 
-class SignSendRequest(models.Transientmodel):
+class SignSendRequest(models.Abstractmodel):
     _inherit = "sign.send.request"
 
     task_id = fields.Many2one('project.task', string='Task')
