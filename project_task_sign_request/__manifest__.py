@@ -35,7 +35,7 @@
     """,
     "data": [
         'views/sign_request_views.xml',
-#        'views/sign_send_request_views.xml',
+        'views/sign_send_request_views.xml',
         'views/project_task_views.xml',
     ],
     "demo": [],
