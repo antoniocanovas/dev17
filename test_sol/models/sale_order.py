@@ -34,4 +34,4 @@ class SaleOrder(models.Model):
                 days = int((record.logistic3_stop - record.logistic1_start).days)
 
             record['logistic_days'] = days
-    logistic_days = fiels.Integer('Days', store=True, compute='_get_logistic_days')
+    logistic_days = fields.Integer('Days', store=True, compute='_get_logistic_days')
