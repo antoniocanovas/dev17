@@ -1,7 +1,7 @@
 # Copyright 2024 Antonio Cánovas <acanovas@puntsistemes.es>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models
+from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 
 
