@@ -20,12 +20,6 @@ class SaleOrder(models.Model):
     def _get_logistic_days(self):
         for record in self:
             days = 0
-
-    #        if ((record.logistic1_stop < record.logistic1_start) or
-    #                (record.logistic2_stop < record.logistic2_start) or
-    #                (record.logistic3_stop < record.logistic3_start)):
-    #            raise UserError('Las fechas de llegada han de ser posteriores a las de salida !!')
-
             if not record.logistic1_start:
                 continue
             if record.logistic1_stop:
