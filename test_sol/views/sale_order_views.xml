@@ -11,12 +11,12 @@
                 <page name="custom_logistic" string="Logistics">
                     <group>
                         <group>
-                            <field name="logistic1_start" invisible="1"/>
-                            <field name="logistic1_stop" string="First" widget="daterange" options="{'end_date_field': 'logistic1_start'}"/>
-                            <field name="logistic2_start" invisible="1"/>
-                            <field name="logistic2_stop" string="Second" widget="daterange" options="{'end_date_field': 'logistic2_start'}"/>
-                            <field name="logistic1_start" invisible="1"/>
-                            <field name="logistic3_stop" string="Third" widget="daterange" options="{'end_date_field': 'logistic3_start'}"/>
+                            <field name="logistic1_stop" invisible="1"/>
+                            <field name="logistic1_start" string="First" widget="daterange" options="{'end_date_field': 'logistic1_stop'}"/>
+                            <field name="logistic2_stop" invisible="1"/>
+                            <field name="logistic2_start" string="Second" widget="daterange" options="{'end_date_field': 'logistic2_stop'}"/>
+                            <field name="logistic1_stop" invisible="1"/>
+                            <field name="logistic3_start" string="Third" widget="daterange" options="{'end_date_field': 'logistic3_stop'}"/>
                         </group>
                         <group>
                             <field name="logistic_days"/>
