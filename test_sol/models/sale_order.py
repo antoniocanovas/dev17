@@ -19,10 +19,12 @@ class SaleOrder(models.Model):
     @api.depends('logistic1_start', 'logistic1_stop', 'logistic2_stop', 'logistic3_stop')
     def _get_logistic_days(self):
         for record in self:
-            if ((record.logistic1_stop < record.logistic1_start) or
-                    (record.logistic2_stop < record.logistic2_start) or
-                    (record.logistic3_stop < record.logistic3_start)):
-                raise UserError('Las fechas de llegada han de ser posteriores a las de salida !!')
+            days = 0
+
+    #        if ((record.logistic1_stop < record.logistic1_start) or
+    #                (record.logistic2_stop < record.logistic2_start) or
+    #                (record.logistic3_stop < record.logistic3_start)):
+    #            raise UserError('Las fechas de llegada han de ser posteriores a las de salida !!')
 
             if not record.logistic1_start:
                 continue
@@ -32,6 +34,5 @@ class SaleOrder(models.Model):
                 days = int((record.logistic2_stop - record.logistic1_start).days)
             if record.logistic3_stop:
                 days = int((record.logistic3_stop - record.logistic1_start).days)
-
             record['logistic_days'] = days
     logistic_days = fields.Integer('Days', store=True, compute='_get_logistic_days')
