@@ -19,9 +19,9 @@ class SaleOrder(models.Model):
     @api.depends('logistc1_start', 'logistic1_stop', 'logistic2_stop', 'logistic_3_stop')
     def _get_logistic_days(self):
         for record in self:
-            if (record.logistic1_stop < record.logistic1_start) or
-                (record.logistic2_stop < record.logistic2_start) or
-                (record.logistic3_stop < record.logistic3_start):
+            if ((record.logistic1_stop < record.logistic1_start) or
+                    (record.logistic2_stop < record.logistic2_start) or
+                    (record.logistic3_stop < record.logistic3_start)):
                 raise UserError('Las fechas de llegada han de ser posteriores a las de salida !!')
 
             if not record.logistic1_start:
