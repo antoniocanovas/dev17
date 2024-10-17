@@ -33,5 +33,5 @@ class SaleOrder(models.Model):
             if record.logistic3_stop:
                 days = int((record.logistic3_stop - record.logistic1_start).days)
 
-            record['days'] = days
-    days = fiels.Integer('Days', store=True, compute='_get_logistic_days')
+            record['logistic_days'] = days
+    logistic_days = fiels.Integer('Days', store=True, compute='_get_logistic_days')

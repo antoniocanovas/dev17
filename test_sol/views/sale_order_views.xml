@@ -1,52 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
-    <record id="shoes_dealer_sale_order_inh_tree" model="ir.ui.view">
-        <field name="name">sale.order.azarey.inh.tree</field>
-        <field name="arch" type="xml">
-            <field name="state" position="after">
-                <field name="pairs_count" optional="show"/>
-            </field>
-        </field>
-        <field name="inherit_id" ref="sale.view_quotation_tree"/>
-        <field name="model">sale.order</field>
-        <field name="active" eval="True"/>
-        <field name="priority">99</field>
-        <field name="type">tree</field>
-    </record>
 
-    <record id="shoes_dealer_sale_orderinh_form" model="ir.ui.view">
+    <record id="inplast_sale_order_inh_form" model="ir.ui.view">
         <field name="name">sale.order.azarey.inh.form</field>
         <field name="model">sale.order</field>
         <field name="type">form</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button name="enable_sale_pairs"
-                        icon="fa-bars" class="oe_stat_button"
-                        type="object" string="Enable Pairs">
-                </button>
-            </xpath>
-            <field name="partner_id" position="before">
-                <field name="shoes_campaign_id" options="{'no_quick_create':1, 'no_create_edit':1}"/>
-            </field>
-            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_template_id']" position="attributes">
-                    <attribute name="domain">[('sale_ok','=',True),('shoes_campaign_id','=',shoes_campaign_id)]</attribute>
-            </xpath>
-            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
-                <field name="product_saleko_id" force_save="1" widget="sol_product_many2one" optional="hide"
-                       attrs="{'readonly': [('product_updatable', '=', False)]}"
-                       context="{'partner_id': parent.partner_id, 'quantity': product_uom_qty,
-                       'pricelist': parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id,
-                       'default_lst_price': price_unit, 'default_description_sale': name}"
-                       options="{'no_open': True, }"
-                       domain="[('sale_ok', '=', False), '|', ('company_id', '=', False),
-                       ('company_id', '=', parent.company_id)]"
-                />
-            </xpath>
-            <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="after">
-                <field name="pairs_count"/>
-                <field name="pair_price"/>
-                <field name="shoes_campaign_id" invisible="1"/>
+            <xpath expr="//notebook" position="inside">
+                <page name="custom_logistic" string="Logistics">
+                    <group>
+                        <group>
+                            <field name="logistic1_start"/>
+                            <field name="logistic2_start"/>
+                            <field name="logistic3_start"/>
+                        </group>
+                        <group>
+                            <field name="logistic1_stop"/>
+                            <field name="logistic2_stop"/>
+                            <field name="logistic3_stop"/>
+                        </group>
+                        <field name="logistic_days" invisible="1"/>
+                    </group>
+                </page>
             </xpath>
 
         </field>
