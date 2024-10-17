@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
     logistic3_start = fields.Date('Logistic 3 start')
     logistic3_stop = fields.Date('Logistic 3 stop')
 
-    @api.depends('logistic1_start', 'logistic1_stop', 'logistic2_stop', 'logistic_3_stop')
+    @api.depends('logistic1_start', 'logistic1_stop', 'logistic2_stop', 'logistic3_stop')
     def _get_logistic_days(self):
         for record in self:
             if ((record.logistic1_stop < record.logistic1_start) or
