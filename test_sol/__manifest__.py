@@ -32,7 +32,7 @@
         Tests 
     """,
     "data": [
-#        'views/analytic_distribution_views.xml',
+        'views/sale_order_views.xml',
 #        'security/ir.model.access.csv',
     ],
     "demo": [],
