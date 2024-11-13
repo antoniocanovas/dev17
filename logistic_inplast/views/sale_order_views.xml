@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="logistic_inplast_inh_form" model="ir.ui.view">
+        <field name="name">logistic.inplast.inh.form</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="custom_logistic" string="Logistics">
+                    <group>
+                        <group>
+                            <field name="logistic1_stop" invisible="1"/>
+                            <field name="logistic1_start" string="First" widget="daterange" options="{'end_date_field': 'logistic1_stop'}"/>
+                            <field name="logistic2_stop" invisible="1"/>
+                            <field name="logistic2_start" string="Second" widget="daterange" options="{'end_date_field': 'logistic2_stop'}"/>
+                            <field name="logistic1_stop" invisible="1"/>
+                            <field name="logistic3_start" string="Third" widget="daterange" options="{'end_date_field': 'logistic3_stop'}"/>
+                        </group>
+                        <group>
+                            <field name="logistic_days"/>
+                        </group>
+                    </group>
+                    <!-- Tipo de carga en la vista de logística: -->
+                    <group name="logistic_container_type" string="Container type">
+                        <field name="container_id" domain="[('id','in',container_ids)]"/>
+                        <field name="container_ids" invisible="1"/>
+                    </group>
+                </page>
+            </xpath>
+            <!-- Tipo de carga en la vista principal: -->
+            <xpath expr="//group[@name='partner_details']" position="inside">
+                    <field name="container_id" domain="[('id','in',container_ids)]"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

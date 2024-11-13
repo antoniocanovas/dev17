@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_container_type_user","access.container.type.user","model_container_type","base.group_user",1,0,0,0
+"access_container_type_manager","access.container.type.manager","model_container_type","stock.group_stock_manager",1,1,1,1
