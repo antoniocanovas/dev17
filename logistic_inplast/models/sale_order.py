@@ -8,7 +8,7 @@ class SaleOrder(models.Model):
     @api.depends('partner_id')
     def _get_default_container_id(self):
         self.container_id = self.partner_id.container_id.id
-    container_id = fields.Many2one('container.type', string='Container type', readonly=False
+    container_id = fields.Many2one('container.type', string='Container type', readonly=False,
                                    compute='_get_default_container_id')
 
     logistic1_start = fields.Date("Logistic 1 start")
