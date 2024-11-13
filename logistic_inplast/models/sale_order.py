@@ -4,8 +4,12 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     container_ids = fields.Many2many('container.type', related='partner_id.container_ids')
-    container_id = fields.Many2one('container.type', string='Container type',
-                                   default=lambda self:self.partner_id.container_id.id)
+
+    @api.depends('partner_id')
+    def _get_default_container_id(self):
+        self.container_id = self.partner_id.container_id.id
+    container_id = fields.Many2one('container.type', string='Container type', readonly=False
+                                   compute='_get_default_container_id')
 
     logistic1_start = fields.Date("Logistic 1 start")
     logistic1_stop = fields.Date("Logistic 1 stop")
