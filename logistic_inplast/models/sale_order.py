@@ -3,7 +3,13 @@ from odoo import _, api, fields, models
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    container_ids = fields.Many2many('container.type', related='partner_id.container_ids')
+    @api.depends('partner_id')
+    def _get_container_ids(self):
+        containers = []
+        if self.partner_id.container_ids.ids: containers = self.partner_id.container_ids.ids
+        if self.partner_id.container_id.id: containers.append(self.partner_id.container_id.id)
+        self.container_ids = containers
+    container_ids = fields.Many2many('container.type', compute='_get_container_ids')
 
     @api.depends('partner_id')
     def _get_default_container_id(self):
