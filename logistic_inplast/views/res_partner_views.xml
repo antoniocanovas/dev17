@@ -10,8 +10,10 @@
             <data>
                 <xpath expr="//notebook" position="inside">
                     <page string="Containing types">
-                        <field name="container_id"/>
-                        <field name="container_ids" domain="[('id','!=', container_id)]"/>
+                        <group>
+                            <field name="container_id"/>
+                            <field name="container_ids" domain="[('id','!=', container_id)]"/>
+                        </group>
                     </page>
                 </xpath>
 
