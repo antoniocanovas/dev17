@@ -4,7 +4,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
 
-    default_container_id = fields.Manyone('container.type', related='partner_id.container_id')
+    default_container_id = fields.Many2one('container.type', related='partner_id.container_id')
     container_ids = fields.Many2many('container.type', related='partner_id.container_ids')
 
     @api.depends('partner_id')
