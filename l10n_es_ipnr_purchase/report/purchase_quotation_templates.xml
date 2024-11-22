@@ -1,0 +1,21 @@
+<odoo>
+<!-- Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
+ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+    <template
+        id="report_purchasequotation_document"
+        inherit_id="purchase.report_purchasequotation_document"
+    >
+        <xpath expr="//td[@id='product']" position="inside">
+            <t
+                t-if="o.ipnr_has_line and order_line.order_id.company_id.ipnr_enable and order_line.order_id.company_id.ipnr_show_in_reports and order_line.product_id and order_line.product_id.ipnr_has_amount"
+            >
+                <br /><span
+                    style="font-size: 70%; opacity: 0.7;"
+                >Aportación IPNR (RD 1055/2022): <span
+                        t-field="order_line.ipnr_amount"
+                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                    /></span>
+            </t>
+        </xpath>
+    </template>
+</odoo>

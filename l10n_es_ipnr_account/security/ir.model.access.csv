@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+l10n_es_ipnr_amount_manager,l10n.es.ipnr.amount.manager,model_l10n_es_ipnr_amount,account.group_account_manager,1,1,1,1
+l10n_es_ipnr_amount_user_invoicing,l10n.es.ipnr.amount.user.invoicing,model_l10n_es_ipnr_amount,account.group_account_invoice,1,0,0,0
