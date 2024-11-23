@@ -26,6 +26,7 @@ class AccountMove(models.Model):
         for rec in self:
             is_ipnr = False
             # PARA LAS COMPRAS:
+            """
             if (record.move_type in ['in_invoice', 'in_refund']):
                 # Control de que el destino de la compra va a España o no está definido:
                 if not record.picking_partner_id.country_id.id
@@ -63,7 +64,7 @@ class AccountMove(models.Model):
     )
     else:
                 rec.is_ipnr = False
-
+            """
 
 
     @api.depends("is_ipnr", "invoice_date", "company_id")
