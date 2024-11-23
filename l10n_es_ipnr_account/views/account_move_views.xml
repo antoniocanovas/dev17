@@ -27,7 +27,6 @@
                 <field name="is_ipnr" invisible="1" />
             </xpath>
 
-            # 1. Botón, mensaje de aviso y campos en línea relativos al impuesto del plástico:
             <!-- Apunte de compras/ventas para el impuesto al plástico: -->
             <xpath expr="//header" position="inside">
                 <button name="create_plastic_tax_entry" type="object" data-hotkey="shift+r"
