@@ -19,6 +19,27 @@
                             name="ipnr_show_in_reports"
                             invisible="ipnr_enable == False"
                         />
+
+                        <field name="plastic_journal_id"
+                            invisible="ipnr_enable == False"
+                            required="ipnr_date_from ==  True"
+                        />
+                        <field name="plastic_commercial_account_id"
+                            invisible="ipnr_enable == False"
+                            required="ipnr_date_from ==  True"
+                        />
+                        <field name="plastic_manufacture_account_id"
+                            invisible="ipnr_enable == False"
+                            required="ipnr_date_from ==  True"
+                        />
+                        <field name="company_plastic_acquirer"
+                            invisible="ipnr_enable == False"
+                            required="ipnr_date_from ==  True"
+                        />
+                        <field name="company_plastic_manufacturer"
+                            invisible="ipnr_enable == False"
+                            required="ipnr_date_from ==  True"
+                        />
                     </group>
                 </page>
             </notebook>

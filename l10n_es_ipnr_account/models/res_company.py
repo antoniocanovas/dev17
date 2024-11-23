@@ -15,6 +15,16 @@ class ResCompany(models.Model):
         help="If active, IPNR amount is shown in reports.",
     )
 
+    plastic_journal_id = fields.Many2one('account.journal', string='Plastic tax journal')
+    plastic_commercial_account_id = fields.Many2one('account.account', string='Plastic Commercial',
+                                                        help='Plastic AEAT account for commercial operations with plastic.')
+    plastic_manufacture_account_id = fields.Many2one('account.account', string='Plastic Manufacture',
+                                                         help='Plastic AEAT account for manufacturing plastics.')
+
+    company_plastic_acquirer = fields.Boolean(string="Plastic Acquirer", default=True)
+    company_plastic_manufacturer = fields.Boolean(string="Plastic Manufacturer", default=False)
+
+#    @api.depends('company_plastic_acquirer', 'company_plastic_manufacturer')
     @api.depends('company_plastic_acquirer', 'company_plastic_manufacturer')
     def check_ipnr_enable(self):
         for record in self:
