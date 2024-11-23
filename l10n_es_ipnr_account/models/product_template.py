@@ -14,6 +14,14 @@ class ProductTemplate(models.Model):
         required=True,
     )
 
+    tax_plastic_type = fields.Selection(
+        selection=[
+            ("manufacturer", _("Manufacturer")),
+            ("acquirer", _("Acquirer")),
+            #("both", _("Both")),
+        ],
+    )
+
     plastic_tax_weight = fields.Float(
         string="Plastic weight",
         digits="MOD592 Weight",
