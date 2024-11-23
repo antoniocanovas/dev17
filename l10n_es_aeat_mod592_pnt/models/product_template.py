@@ -30,3 +30,11 @@ class ProductTemplate(models.Model):
     pnt_plastic_1000unit_tax = fields.Float('Plastic tax x 1000', store=False,
                                             digits='Product Price',
                                             compute='_get_plastic_1000unit_tax')
+
+    tax_plastic_type = fields.Selection(
+        selection=[
+            ("manufacturer", _("Manufacturer")),
+            ("acquirer", _("Acquirer")),
+#            ("both", _("Both")),
+        ],
+    )

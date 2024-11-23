@@ -13,3 +13,12 @@ class ProductTemplate(models.Model):
         string="Subject To IPNR",
         required=True,
     )
+
+    plastic_tax_weight = fields.Float(
+        string="Plastic weight",
+        digits="MOD592 Weight",
+    )
+    plastic_weight_non_recyclable = fields.Float(
+        string="Plastic weight non recyclable",
+        digits="MOD592 Weight",
+    )

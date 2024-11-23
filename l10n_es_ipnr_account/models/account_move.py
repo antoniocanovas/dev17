@@ -24,10 +24,47 @@ class AccountMove(models.Model):
     )
     def _compute_is_ipnr(self):
         for rec in self:
-            if rec.is_invoice():
-                return super()._compute_is_ipnr()
-            else:
+            is_ipnr = False
+            # PARA LAS COMPRAS:
+            if (record.move_type in ['in_invoice', 'in_refund']):
+                # Control de que el destino de la compra va a España o no está definido:
+                if not record.picking_partner_id.country_id.id
+                        or not record.picking_partner_id.state_id.id
+                        or not record.spain_tax_zone:
+                    purchase_tax_zone = True
+
+            # PARA LAS VENTAS:
+            if record.move_type in ['out_invoice', 'out_refund']
+                or not record.picking_partner_id.country_id.id)
+                or not record.picking_partner_id.state_id.id or record.spain_tax_zone:
+                sale_tax_zone = True
+
+
+
+                # Si es cliente extranjero y el plástico fue importado pagando tasas, podemos recuperar el importe:
+                if not (record.spain_tax_zone):
+                    for li in record.invoice_line_ids:
+# ESTO HAY QUE CORREGIRLO, NECESITAMOS LOS CAMPOS DE FABRICADO O COMPRADO EN EL PRODUCTO DESDE ESTE MÓDULO:
+                        if (li.product_id.pnt_plastic_weight != 0) and (
+                                li.product_id.categ_id.pnt_is_manufactured == False):
+                            message = "El producto " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
+                            raise UserError(message)
+                # Caso de venta en España de plástico fabricado por nosotros en España, requiere impuesto:
+                if (record.spain_tax_zone) and not (record.pnt_plastictax_move_id.id):
+                    for li in record.invoice_line_ids:
+                        if (li.product_id.pnt_plastic_weight != 0) and (
+                                li.product_id.categ_id.pnt_is_manufactured == True):
+                            message = "El producto " + li.product_id.name + " requiere impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
+                            raise UserError(message)
+
+            # Considerar en la siguiente línea que es zona española el destino y distinguir entre compra y venta:
+            rec.is_ipnr = rec.company_id.ipnr_enable and (
+                    not rec.fiscal_position_id or rec.fiscal_position_id.ipnr_subject
+    )
+    else:
                 rec.is_ipnr = False
+
+
 
     @api.depends("is_ipnr", "invoice_date", "company_id")
     def _compute_ipnr_is_date(self):
@@ -127,6 +164,10 @@ class AccountMove(models.Model):
             move.automatic_ipnr_exception()
             move.apply_ipnr()
         return moves
+
+
+
+
 
     # ACP DEV:
 

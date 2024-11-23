@@ -36,4 +36,12 @@
             <field name="price">0.45</field>
         </record>
     </data>
+
+    <data noupdate="1">
+        <record model="decimal.precision" id="mod592_weight_digits">
+            <field name="name">MOD592 Weight</field>
+            <field name="digits">6</field>
+        </record>
+    </data>
+
 </odoo>

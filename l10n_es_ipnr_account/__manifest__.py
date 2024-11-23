@@ -19,7 +19,7 @@
         "security/ir.model.access.csv",
         "views/l10n_es_ipnr_amount_views.xml",
         "views/product_category_views.xml",
-        #"views/product_views.xml",
+        "views/product_views.xml",
         "views/account_move_views.xml",
         "views/report_invoice.xml",
         "views/res_company_views.xml",
