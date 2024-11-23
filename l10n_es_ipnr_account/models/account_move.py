@@ -47,14 +47,14 @@ class AccountMove(models.Model):
                     for li in record.invoice_line_ids:
 # ESTO HAY QUE CORREGIRLO, NECESITAMOS LOS CAMPOS DE FABRICADO O COMPRADO EN EL PRODUCTO DESDE ESTE MÓDULO:
                         if (li.product_id.plastic_weight_non_recyclable != 0) and (
-                                li.product_id.categ_id.pnt_is_manufactured == False):
+                                li.product_id.tax_plastic_type != 'manufacturer'):
                             message = "El producto " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
                 # Caso de venta en España de plástico fabricado por nosotros en España, requiere impuesto:
                 if (record.spain_tax_zone) and not (record.pnt_plastictax_move_id.id):
                     for li in record.invoice_line_ids:
                         if (li.product_id.plastic_weight_non_recyclable != 0) and (
-                                li.product_id.categ_id.pnt_is_manufactured == True):
+                                li.product_id.tax_plastic_type == 'manufacturer'):
                             message = "El producto " + li.product_id.name + " requiere impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
 
@@ -226,11 +226,11 @@ class AccountMove(models.Model):
                     if not (self.spain_tax_zone) and (self.move_type in ['in_invoice','in_refund']):
                         show_button = True
                     # Operaciones de venta fuera de España, sólo recuperamos si es comercio (no fabricados):
-                    if not (self.spain_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.pnt_is_manufactured == False):
+                    if not (self.spain_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.tax_plastic_type == 'manufacturer'):
                         show_button = True
                     # Si vendemos o compramos plástico en España, el impuesto va en PVP o ya lo pagó el proveedor.
                     # Si vendemos en España plástico PRODUCIDO aquí, hemos de pagar (si venta en el extranjero, no):
-                    if (self.spain_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.pnt_is_manufactured):
+                    if (self.spain_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.tax_plastic_type == 'manufacturer'):
                         show_button = True
         self.plastic_tax = show_button
     plastic_tax = fields.Boolean('Plastic tax', store=False, compute='_get_show_button_plastic_tax')
@@ -275,7 +275,7 @@ class AccountMove(models.Model):
         for li in self.invoice_line_ids:
             if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
                 # En la venta pagamos impuesto por plástico FABRICADO aquí y vendido aquí:
-                if (li.product_id.pnt_is_manufactured):
+                if (li.product_id.tax_plastic_type == 'manufacturer'):
                     accountpurchase = li.product_id.property_account_expense_id
                     if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
                     accountsale = li.product_id.property_account_income_id
@@ -303,7 +303,7 @@ class AccountMove(models.Model):
         # En la venta reclamamos abono de impuesto pagado si vendemos fabricados IMPORTADOS (que pagamos en aduana anteriormente la tasa):
         for li in self.invoice_line_ids:
             if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
-                if not (li.product_id.pnt_is_manufactured):
+                if (li.product_id.tax_plastic_type != 'manufacturer'):
                     accountpurchase = li.product_id.property_account_expense_id
                     if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
                     accountsale = li.product_id.property_account_income_id
@@ -333,7 +333,7 @@ class AccountMove(models.Model):
         for li in self.invoice_line_ids:
             if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
                 # Para venta pagamos impuesto por plástico FABRICADO aquí y vendido aquí, pero no si vuelve a STOCK:
-                if (li.product_id.pnt_is_manufactured):
+                if (li.product_id.tax_plastic_type == 'manufacturer'):
                     accountpurchase = li.product_id.property_account_expense_id
                     if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
                     accountsale = li.product_id.property_account_income_id
@@ -362,7 +362,7 @@ class AccountMove(models.Model):
         # hemos de volver a pagarlo ya que introducimos plático en España:
         for li in self.invoice_line_ids:
             if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
-                if not (li.product_id.pnt_is_manufactured):
+                if (li.product_id.tax_plastic_type != 'manufacturer'):
                     accountpurchase = li.product_id.property_account_expense_id
                     if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
                     accountsale = li.product_id.property_account_income_id
@@ -391,7 +391,7 @@ class AccountMove(models.Model):
                 # esto en los productos de materia prima "plastic_weight_non_recyclable" == 0):
                 for li in self.invoice_line_ids:
                     if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
-                        if not (li.product_id.pnt_is_manufactured):
+                        if (li.product_id.tax_plastic_type != 'manufacturer'):
                             accountpurchase = li.product_id.property_account_expense_id
                             if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
                             accountsale = li.product_id.property_account_income_id
@@ -421,7 +421,7 @@ class AccountMove(models.Model):
                 # en el caso de devolución:
                 for li in self.invoice_line_ids:
                     if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
-                        if not (li.product_id.pnt_is_manufactured):
+                        if (li.product_id.tax_plastic_type != 'manufacturer'):
                             accountpurchase = li.product_id.property_account_expense_id
                             if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
                             accountsale = li.product_id.property_account_income_id
@@ -477,12 +477,12 @@ class AccountMove(models.Model):
                 # Si es cliente extranjero y el plástico fue importado pagando tasas, podemos recuperar el importe:
                 if not (record.spain_tax_zone) and not (record.pnt_plastictax_move_id.id):
                     for li in record.invoice_line_ids:
-                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.categ_id.pnt_is_manufactured == False):
+                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.categ_id.tax_plastic_type != 'manufacturer'):
                             message = "El producto " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
                 # Caso de venta en España de plástico fabricado por nosotros en España, requiere impuesto:
                 if (record.spain_tax_zone) and not (record.pnt_plastictax_move_id.id):
                     for li in record.invoice_line_ids:
-                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.categ_id.pnt_is_manufactured == True):
+                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.categ_id.tax_plastic_type == 'manufacturer'):
                             message = "El producto " + li.product_id.name + " requiere impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
