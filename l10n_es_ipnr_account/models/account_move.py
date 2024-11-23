@@ -1,7 +1,7 @@
 # Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models
+from odoo import api, models, fields, _
 from odoo.osv import expression
 
 
@@ -128,9 +128,9 @@ class AccountMove(models.Model):
             move.apply_ipnr()
         return moves
 
-# ACP DEV:
+    # ACP DEV:
 
-# PARA TERRITORIO ESPAÑOL, EXCLUIR PROVINCIAS CON CODE = GC y TF, el código del tipo de envío es dropship
+    # PARA TERRITORIO ESPAÑOL, EXCLUIR PROVINCIAS CON CODE = GC y TF, el código del tipo de envío es dropship
     def _get_spain_tax_zone(self):
         taxzone, destination = False, self.picking_partner_id
         if (destination.country_id.code == 'ES') and (destination.state_id.id) and (destination.state_id.code not in ['GC','TF']):
