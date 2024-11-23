@@ -15,10 +15,10 @@ class ResCompany(models.Model):
         help="If active, IPNR amount is shown in reports.",
     )
 
-    plastic_journal_id = fields.Many2one('account.journal', string='Plastic tax journal')
-    plastic_commercial_account_id = fields.Many2one('account.account', string='Plastic Commercial',
+    plastic_journal_id = fields.Many2one('account.journal', string='Tax journal')
+    plastic_commercial_account_id = fields.Many2one('account.account', string='Commercial account',
                                                         help='Plastic AEAT account for commercial operations with plastic.')
-    plastic_manufacture_account_id = fields.Many2one('account.account', string='Plastic Manufacture',
+    plastic_manufacture_account_id = fields.Many2one('account.account', string='Manufactured account',
                                                          help='Plastic AEAT account for manufacturing plastics.')
 
     company_plastic_acquirer = fields.Boolean(string="Plastic Acquirer", default=True)
