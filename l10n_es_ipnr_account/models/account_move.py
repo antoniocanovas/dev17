@@ -64,7 +64,7 @@ class AccountMove(models.Model):
     else:
                 rec.is_ipnr = False
             """
-            rec.is_ipnr = is_ipnr
+            record.is_ipnr = is_ipnr
 
     @api.depends("is_ipnr", "invoice_date", "company_id")
     def _compute_ipnr_is_date(self):
