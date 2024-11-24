@@ -23,7 +23,7 @@ class AccountMove(models.Model):
         "move_type",
     )
     def _compute_is_ipnr(self):
-        for rec in self:
+        for record in self:
             is_ipnr = False
             # PARA LAS COMPRAS:
             if (record.move_type in ['in_invoice', 'in_refund']):
