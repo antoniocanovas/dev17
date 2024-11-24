@@ -36,9 +36,10 @@ class AccountMove(models.Model):
 
             # PARA LAS VENTAS:
             if ((record.move_type in ['out_invoice', 'out_refund']) and
-                (not record.picking_partner_id.country_id.id
-                or not record.picking_partner_id.state_id.id or record.spain_tax_zone):
-                sale_tax_zone = True
+                (not record.picking_partner_id.country_id.id or
+                 not record.picking_partner_id.state_id.id or
+                 record.spain_tax_zone)):
+                is_ipnr = True
 
             record.is_ipnr = is_ipnr
 
