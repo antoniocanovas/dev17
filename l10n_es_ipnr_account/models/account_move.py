@@ -34,37 +34,12 @@ class AccountMove(models.Model):
                         record.spain_tax_zone == True)):
                     is_ipnr = True
 
-            """
             # PARA LAS VENTAS:
-            if record.move_type in ['out_invoice', 'out_refund']
-                or not record.picking_partner_id.country_id.id)
-                or not record.picking_partner_id.state_id.id or record.spain_tax_zone:
+            if ((record.move_type in ['out_invoice', 'out_refund']) and
+                (not record.picking_partner_id.country_id.id
+                or not record.picking_partner_id.state_id.id or record.spain_tax_zone):
                 sale_tax_zone = True
 
-
-
-                # Si es cliente extranjero y el plástico fue importado pagando tasas, podemos recuperar el importe:
-                if not (record.spain_tax_zone):
-                    for li in record.invoice_line_ids:
-                        if (li.product_id.plastic_weight_non_recyclable != 0) and (
-                                li.product_id.tax_plastic_type != 'manufacturer'):
-                            message = "El producto " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
-                            raise UserError(message)
-                # Caso de venta en España de plástico fabricado por nosotros en España, requiere impuesto:
-                if (record.spain_tax_zone) and not (record.plastictax_move_id.id):
-                    for li in record.invoice_line_ids:
-                        if (li.product_id.plastic_weight_non_recyclable != 0) and (
-                                li.product_id.tax_plastic_type == 'manufacturer'):
-                            message = "El producto " + li.product_id.name + " requiere impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
-                            raise UserError(message)
-
-            # Considerar en la siguiente línea que es zona española el destino y distinguir entre compra y venta:
-            rec.is_ipnr = rec.company_id.ipnr_enable and (
-                    not rec.fiscal_position_id or rec.fiscal_position_id.ipnr_subject
-    )
-    else:
-                rec.is_ipnr = False
-            """
             record.is_ipnr = is_ipnr
 
     @api.depends("is_ipnr", "invoice_date", "company_id")
@@ -217,7 +192,9 @@ class AccountMove(models.Model):
     @api.depends('state', 'plastictax_move_id', 'write_date')
     def _get_show_button_plastic_tax(self):
         show_button = False
-        if (self.state not in ['cancel']) and (self.move_type in ['in_invoice','in_refund','out_invoice','out_refund']) and not (self.plastictax_move_id.id):
+        if ((self.state not in ['cancel']) and
+                (self.move_type in ['in_invoice','in_refund','out_invoice','out_refund']) and not
+                (self.plastictax_move_id.id)):
             for li in self.invoice_line_ids:
                 # Con esta condición verificamos que es plástico:
                 if (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
