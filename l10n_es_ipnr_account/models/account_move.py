@@ -26,14 +26,14 @@ class AccountMove(models.Model):
         for rec in self:
             is_ipnr = False
             # PARA LAS COMPRAS:
-            """
             if (record.move_type in ['in_invoice', 'in_refund']):
                 # Control de que el destino de la compra va a España o no está definido:
                 if not record.picking_partner_id.country_id.id
                         or not record.picking_partner_id.state_id.id
                         or not record.spain_tax_zone:
-                    purchase_tax_zone = True
+                    is_ipnr = True
 
+            """
             # PARA LAS VENTAS:
             if record.move_type in ['out_invoice', 'out_refund']
                 or not record.picking_partner_id.country_id.id)
@@ -45,7 +45,6 @@ class AccountMove(models.Model):
                 # Si es cliente extranjero y el plástico fue importado pagando tasas, podemos recuperar el importe:
                 if not (record.spain_tax_zone):
                     for li in record.invoice_line_ids:
-# ESTO HAY QUE CORREGIRLO, NECESITAMOS LOS CAMPOS DE FABRICADO O COMPRADO EN EL PRODUCTO DESDE ESTE MÓDULO:
                         if (li.product_id.plastic_weight_non_recyclable != 0) and (
                                 li.product_id.tax_plastic_type != 'manufacturer'):
                             message = "El producto " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
@@ -65,7 +64,7 @@ class AccountMove(models.Model):
     else:
                 rec.is_ipnr = False
             """
-
+            rec.is_ipnr = is_ipnr
 
     @api.depends("is_ipnr", "invoice_date", "company_id")
     def _compute_ipnr_is_date(self):
