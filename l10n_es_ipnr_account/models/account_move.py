@@ -389,68 +389,69 @@ class AccountMove(models.Model):
     def tax_entry_in_invoice(self):
                 # Pagamos impuesto en aduana por Compra de plástico en el extranjero (la materia prima no paga, para
                 # esto en los productos de materia prima "plastic_weight_non_recyclable" == 0):
-                for li in self.invoice_line_ids:
-                    if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
-                        if (li.product_id.tax_plastic_type != 'manufacturer'):
-                            accountpurchase = li.product_id.property_account_expense_id
-                            if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
-                            accountsale = li.product_id.property_account_income_id
-                            if not accountsale.id: accountsale = li.product_id.categ_id.property_account_income_categ_id
+                tax_entry = self.plastictax_move_id
+                taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
+                taxline = self.env['account.move.line'].search(
+                    [('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
+                taxunit = taxline.price_unit
 
-                            tax_entry = self.plastictax_move_id
+                if (taxline.quantity > 0):
+                    for li in self.invoice_line_ids:
+                        if ((li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
+                                (li.quantity != 0) and (li.id != taxline.id)):
                             tax_entry['line_ids'] = [(0, 0, {
                                 'product_id': li.product_id.id,
                                 'display_type': li.display_type,
                                 'name': li.product_id.name,
-                                'price_unit': abs(li.plastic_tax / li.quantity),
-                                'debit': abs(li.plastic_tax),
-                                'account_id': accountpurchase.id,
+                                'price_unit': abs(taxunit),
+                                'debit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
+                                'account_id': li.account_id.id,
                                 'analytic_distribution': li.analytic_distribution,
                                 'partner_id': self.partner_id.id,
-                                'quantity': li.quantity,
+                                'quantity': li.quantity * li.product_id.plastic_weight_non_recyclable,
                             }), (0, 0, {
                                 'name': self.name or '/',
-                                'credit': abs(li.plastic_tax),
+                                'credit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
                                 'account_id': self.env.company.plastic_commercial_account_id.id,
                                 'partner_id': self.partner_id.id,
                             })]
 
     def tax_entry_in_refund(self):
-                # Abono del anterior:
-                # Solicitud de devolución de impuesto en aduana por Compra de plástico en el extranjero,
-                # en el caso de devolución:
-                for li in self.invoice_line_ids:
-                    if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):
-                        if (li.product_id.tax_plastic_type != 'manufacturer'):
-                            accountpurchase = li.product_id.property_account_expense_id
-                            if not accountpurchase.id: accountpurchase = li.product_id.categ_id.property_account_expense_categ_id
-                            accountsale = li.product_id.property_account_income_id
-                            if not accountsale.id: accountsale = li.product_id.categ_id.property_account_income_categ_id
+                # Abono del anterior,
+                # Solicitud de devolución de impuesto en aduana por Compra de plástico en el extranjero:
+                tax_entry = self.plastictax_move_id
+                taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
+                taxline = self.env['account.move.line'].search(
+                    [('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
+                taxunit = taxline.price_unit
 
-                            tax_entry = self.plastictax_move_id
+                if (taxline.quantity > 0):
+                    for li in self.invoice_line_ids:
+                        if ((li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
+                                (li.quantity != 0) and (li.id != taxline.id)):
                             tax_entry['line_ids'] = [(0, 0, {
                                 'product_id': li.product_id.id,
                                 'display_type': li.display_type,
                                 'name': li.product_id.name,
-                                'price_unit': abs(li.plastic_tax / li.quantity),
-                                'debit': abs(li.plastic_tax),
+                                'price_unit': abs(taxunit),
+                                'debit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
                                 'account_id': self.env.company.plastic_commercial_account_id.id,
                                 'analytic_distribution': li.analytic_distribution,
                                 'partner_id': self.partner_id.id,
-                                'quantity': li.quantity,
+                                'quantity': li.quantity * li.product_id.plastic_weight_non_recyclable,
                             }), (0, 0, {
                                 'name': self.name or '/',
-                                'credit': abs(li.plastic_tax),
-                                'account_id': accountpurchase.id,
+                                'credit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
+                                'account_id': li.account_id.id,
                                 'partner_id': self.partner_id.id,
                             })]
-
 
     # Caso 1.- Compramos plástico fuera de España => Impuesto (contemplado)
     # Caso 2.- Compramos plástico dentro de España => Ese plástico ya pagó impuesto (contemplado)
     # Caso 3.- Vendemos en España algo comprado fuera y pagó impuesto => Cobrar al cliente en pvp (contemplado)
     # Caso 4.- Vendemos fuera algo comprado fuera de España => Reclamar impuesto ya pagado (contemplado)
     # Caso 5.- Vendemos fuera algo fabricando por nosotros => No paga impuestos (contemplado en tarifa + constrains)
+
     @api.constrains('state','plastictax_move_id')
     def _check_plastic_tax_required(self):
         for record in self:

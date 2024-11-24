@@ -14,7 +14,7 @@
             <field name="uom_po_id" ref="uom.product_uom_kgm" />
         </record>
     </data>
-
+    <!-- Quitado versión nov 2024 mezcla oca + apunte por factura para múltiples cuentas contables:
     <data noupdate="1">
         <record id="aportacion_ipnr_ai_product_template" model="product.product">
             <field name="name">Aportación IPNR Comercialización (R.D. 1055/2022)</field>
@@ -28,7 +28,7 @@
             <field name="uom_po_id" ref="uom.product_uom_kgm" />
         </record>
     </data>
-
+    -->
     <data noupdate="0">
         <record id="aportacion_ipnr_2024" model="l10n.es.ipnr.amount">
             <field name="name">Aportación IPNR 2024</field>
