@@ -477,12 +477,12 @@ class AccountMove(models.Model):
                 # Si es cliente extranjero y el plástico fue importado pagando tasas, podemos recuperar el importe:
                 if not (record.spain_tax_zone) and not (record.pnt_plastictax_move_id.id):
                     for li in record.invoice_line_ids:
-                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.categ_id.tax_plastic_type != 'manufacturer'):
+                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.tax_plastic_type != 'manufacturer'):
                             message = "El producto " + li.product_id.name + " es susceptible de recuperar el impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
                 # Caso de venta en España de plástico fabricado por nosotros en España, requiere impuesto:
                 if (record.spain_tax_zone) and not (record.pnt_plastictax_move_id.id):
                     for li in record.invoice_line_ids:
-                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.categ_id.tax_plastic_type == 'manufacturer'):
+                        if (li.product_id.plastic_weight_non_recyclable != 0) and (li.product_id.tax_plastic_type == 'manufacturer'):
                             message = "El producto " + li.product_id.name + " requiere impuesto al plástico, crea o asigna el apunte correspondiente en esta factura"
                             raise UserError(message)
