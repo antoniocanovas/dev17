@@ -225,7 +225,7 @@ class AccountMove(models.Model):
                     if not (self.spain_tax_zone) and (self.move_type in ['in_invoice','in_refund']):
                         show_button = True
                     # Operaciones de venta fuera de España, sólo recuperamos si es comercio (no fabricados):
-                    if not (self.spain_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.tax_plastic_type == 'manufacturer'):
+                    if not (self.spain_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.tax_plastic_type == 'acquirer'):
                         show_button = True
                     # Si vendemos o compramos plástico en España, el impuesto va en PVP o ya lo pagó el proveedor.
                     # Si vendemos en España plástico PRODUCIDO aquí, hemos de pagar (si venta en el extranjero, no):
