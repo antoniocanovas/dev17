@@ -145,16 +145,7 @@ class AccountMove(models.Model):
 
 
 
-    # ACP DEV: PURCHASE_ID NO SE PUEDE USAR, NO SE CUMPLIMENTA, SERÁ DE OTRO DESARROLLO !!!
-
-    # PARA TERRITORIO ESPAÑOL, EXCLUIR PROVINCIAS CON CODE = GC y TF, el código del tipo de envío es dropship
-    def _get_spain_tax_zone(self):
-        taxzone, destination = False, self.picking_partner_id
-        if (destination.country_id.code == 'ES') and (destination.state_id.id) and (destination.state_id.code not in ['GC','TF']):
-            taxzone = True
-        self.spain_tax_zone = taxzone
-    spain_tax_zone = fields.Boolean('Spain tax zone', store=False, compute='_get_spain_tax_zone')
-
+    # DESARROLLO ANTONIO CÁNOVAS PARA CREAR APUNTES:
     def _get_picking_partner(self):
         destination = self.partner_id
         if (self.move_type in ['out_invoice','out_refund']) and (self.partner_shipping_id.id):
@@ -189,6 +180,8 @@ class AccountMove(models.Model):
                                       '- Podemos asignar un apunte creado previamente (o nulo) manualmente o crearlo automáticamente. \n'
                                       '- Se recomienda diario independiente para facilitar la búsqueda y filtros oportunos. \n'
                                       '(más información en la web oficial AEAT) \n')
+
+    spain_tax_zone = fields.Boolean(related='picking_partner_id.ipnr_tax_zone')
 
     @api.depends('state', 'plastictax_move_id', 'write_date')
     def _get_show_button_plastic_tax(self):
@@ -252,7 +245,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = self.company.plastic_tax
+        taxunit = self.env.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -281,7 +274,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = self.company.plastic_tax
+        taxunit = self.env.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -311,7 +304,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = self.company.plastic_tax
+        taxunit = self.env.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -340,7 +333,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = self.company.plastic_tax
+        taxunit = self.env.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -371,7 +364,7 @@ class AccountMove(models.Model):
                 taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
                 taxline = self.env['account.move.line'].search(
                     [('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-                taxunit = self.company.plastic_tax
+                taxunit = self.env.company.plastic_tax
 
                 if (taxline.quantity > 0):
                     for li in self.invoice_line_ids:
@@ -399,9 +392,8 @@ class AccountMove(models.Model):
                 # Solicitud de devolución de impuesto en aduana por Compra de plástico en el extranjero:
                 tax_entry = self.plastictax_move_id
                 taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
-                taxline = self.env['account.move.line'].search(
-                    [('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-                taxunit = self.company.plastic_tax
+                taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
+                taxunit = self.env.company.plastic_tax
 
                 if (taxline.quantity > 0):
                     for li in self.invoice_line_ids:
