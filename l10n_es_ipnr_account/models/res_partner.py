@@ -9,9 +9,9 @@ class ResPartner(models.Model):
 
     # PARA TERRITORIO ESPAÑOL, EXCLUIR PROVINCIAS CON CODE = GC y TF, el código del tipo de envío es dropship
     @api.depends('country_id','state_id')
-    def _get_spanish_plastic_tax_zone(self):
+    def _get_ipnr_tax_zone(self):
         taxzone = False
         if (self.country_id.code == 'ES') and (self.state_id.id) and (self.state_id.code not in ['GC','TF']):
             taxzone = True
-        self.plastic_tax_zone = taxzone
-    plastic_tax_zone = fields.Boolean('Plastic tax zone', store=True, compute='_get_spanish_plastic_tax_zone')
+        self.ipnr_tax_zone = taxzone
+    ipnr_tax_zone = fields.Boolean('Plastic tax zone', store=True, compute='_get_ipnr_tax_zone')
