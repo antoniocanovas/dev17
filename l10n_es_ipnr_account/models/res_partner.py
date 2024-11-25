@@ -11,7 +11,7 @@ class ResPartner(models.Model):
     @api.depends('country_id','state_id')
     def _get_spanish_plastic_tax_zone(self):
         taxzone = False
-        if (self.country_id.code == 'ES') and (destination.state_id.id) and (destination.state_id.code not in ['GC','TF']):
+        if (self.country_id.code == 'ES') and (self.state_id.id) and (self.state_id.code not in ['GC','TF']):
             taxzone = True
         self.plastic_tax_zone = taxzone
     plastic_tax_zone = fields.Boolean('Plastic tax zone', store=True, compute='_get_spanish_plastic_tax_zone')
