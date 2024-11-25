@@ -24,9 +24,9 @@ class ProductTemplate(models.Model):
 
     plastic_tax_weight = fields.Float(
         string="Plastic weight",
-        digits="MOD592 Weight",
+        digits="IPNR Weight",
     )
     plastic_weight_non_recyclable = fields.Float(
         string="Plastic weight non recyclable",
-        digits="MOD592 Weight",
+        digits="IPNR Weight",
     )
