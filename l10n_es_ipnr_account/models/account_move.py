@@ -276,27 +276,25 @@ class AccountMove(models.Model):
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
         taxunit = self.env.company.plastic_tax
 
-        if (taxline.quantity > 0):
-            for li in self.invoice_line_ids:
-                if ((li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
-                        (li.quantity != 0) and (li.id != taxline.id)):
-                    tax_entry['line_ids'] = [(0, 0, {
-                        'product_id': li.product_id.id,
-                        'display_type': li.display_type,
-                        'name': li.product_id.name,
-                        'price_unit': abs(taxunit),
-                        'credit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
-                        'account_id': li.account_id.id,
-                        'analytic_distribution': li.analytic_distribution,
-                        'partner_id': self.partner_id.id,
-                        'quantity': li.quantity * li.product_id.plastic_weight_non_recyclable,
-                    }), (0, 0, {
-                        'name': self.name or '/',
-                        'debit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
-                        # Chequear si es comercial o manufacturer:
-                        'account_id': self.env.company.plastic_commercial_account_id.id,
-                        'partner_id': self.partner_id.id,
-                    })]
+        for li in self.invoice_line_ids:
+            if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
+                    (li.quantity != 0) and (li.id != taxline.id) and (li.product_id.tax_plastic_type == 'acquirer'):
+                tax_entry['line_ids'] = [(0, 0, {
+                    'product_id': li.product_id.id,
+                    'display_type': li.display_type,
+                    'name': li.product_id.name,
+                    'price_unit': abs(taxunit),
+                    'credit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
+                    'account_id': li.account_id.id,
+                    'analytic_distribution': li.analytic_distribution,
+                    'partner_id': self.partner_id.id,
+                    'quantity': li.quantity * li.product_id.plastic_weight_non_recyclable,
+                }), (0, 0, {
+                    'name': self.name or '/',
+                    'debit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
+                    'account_id': self.env.company.plastic_commercial_account_id.id,
+                    'partner_id': self.partner_id.id,
+                })]
 
 
 
@@ -306,26 +304,25 @@ class AccountMove(models.Model):
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
         taxunit = self.env.company.plastic_tax
 
-        if (taxline.quantity > 0):
-            for li in self.invoice_line_ids:
-                if ((li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
-                        (li.quantity != 0) and (li.id != taxline.id)):
-                    tax_entry['line_ids'] = [(0, 0, {
-                        'product_id': li.product_id.id,
-                        'display_type': li.display_type,
-                        'name': li.product_id.name,
-                        'price_unit': abs(taxunit),
-                        'debit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
-                        'account_id': self.env.company.plastic_manufacture_account_id.id,
-                        'analytic_distribution': li.analytic_distribution,
-                        'partner_id': self.partner_id.id,
-                        'quantity': li.quantity * li.product_id.plastic_weight_non_recyclable,
-                    }), (0, 0, {
-                        'name': self.name or '/',
-                        'credit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
-                        'account_id': li.account_id.id,
-                        'partner_id': self.partner_id.id,
-                    })]
+        for li in self.invoice_line_ids:
+            if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
+                    (li.quantity != 0) and (li.id != taxline.id) and (li.product_id.tax_plastic_type == 'acquirer'):
+                tax_entry['line_ids'] = [(0, 0, {
+                    'product_id': li.product_id.id,
+                    'display_type': li.display_type,
+                    'name': li.product_id.name,
+                    'price_unit': abs(taxunit),
+                    'debit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
+                    'account_id': self.env.company.plastic_manufacture_account_id.id,
+                    'analytic_distribution': li.analytic_distribution,
+                    'partner_id': self.partner_id.id,
+                    'quantity': li.quantity * li.product_id.plastic_weight_non_recyclable,
+                }), (0, 0, {
+                    'name': self.name or '/',
+                    'credit': abs(li.quantity * li.product_id.plastic_weight_non_recyclable * taxunit),
+                    'account_id': li.account_id.id,
+                    'partner_id': self.partner_id.id,
+                })]
 
     def tax_entry_out_refund_no_spain(self):
         # En venta si nos han devuelto el impuesto (porque pagamos "no fabricado"
