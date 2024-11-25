@@ -10,8 +10,9 @@ class ResPartner(models.Model):
     # PARA TERRITORIO ESPAÑOL, EXCLUIR PROVINCIAS CON CODE = GC y TF, el código del tipo de envío es dropship
     @api.depends('country_id','state_id')
     def _get_ipnr_tax_zone(self):
-        taxzone = False
-        if (self.country_id.code == 'ES') and (self.state_id.id) and (self.state_id.code not in ['GC','TF']):
-            taxzone = True
-        self.ipnr_tax_zone = taxzone
+        for record in self:
+            taxzone = False
+            if (record.country_id.code == 'ES') and (record.state_id.id) and (record.state_id.code not in ['GC','TF']):
+                taxzone = True
+            record['ipnr_tax_zone'] = taxzone
     ipnr_tax_zone = fields.Boolean('IPNR tax zone', store=True, compute='_get_ipnr_tax_zone')
