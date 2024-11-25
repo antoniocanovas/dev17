@@ -150,8 +150,10 @@ class AccountMove(models.Model):
         destination = self.partner_id
         if (self.move_type in ['out_invoice','out_refund']) and (self.partner_shipping_id.id):
             destination = self.partner_shipping_id
-        if (self.move_type in ['in_invoice','in_refund']) and (self.purchase_id.picking_type_id.code == 'dropship'):
-            destination = self.purchase_id.dest_address_id
+        if (self.move_type in ['in_invoice','in_refund']):
+            destination = self.env.company.partner_id
+#        if (self.move_type in ['in_invoice','in_refund']) and (self.purchase_id.picking_type_id.code == 'dropship'):
+#            destination = self.purchase_id.dest_address_id
         self.picking_partner_id = destination.id
     picking_partner_id = fields.Many2one('res.partner', string='Picking destination', store=False, index=True,
                                              compute='_get_picking_partner')
