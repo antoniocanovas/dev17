@@ -11,7 +11,7 @@
                 <field
                     name="is_ipnr"
                     readonly="state != 'draft'"
-                    invisible="ipnr_company == False"
+                    invisible="ipnr_company == False or move_type not in ['out_invoice','out_refund','in_invoice','in_refund']"
                 />
             </xpath>
             <xpath
