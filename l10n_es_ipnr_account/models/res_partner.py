@@ -14,4 +14,4 @@ class ResPartner(models.Model):
         if (self.country_id.code == 'ES') and (self.state_id.id) and (self.state_id.code not in ['GC','TF']):
             taxzone = True
         self.ipnr_tax_zone = taxzone
-    ipnr_tax_zone = fields.Boolean('Plastic tax zone', store=True, compute='_get_ipnr_tax_zone')
+    ipnr_tax_zone = fields.Boolean('IPNR tax zone', store=True, compute='_get_ipnr_tax_zone')
