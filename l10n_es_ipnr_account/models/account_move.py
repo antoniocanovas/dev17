@@ -277,8 +277,8 @@ class AccountMove(models.Model):
         taxunit = self.env.company.plastic_tax
 
         for li in self.invoice_line_ids:
-            if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
-                    (li.quantity != 0) and (li.id != taxline.id) and (li.product_id.tax_plastic_type == 'acquirer'):
+            if ((li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
+                    (li.quantity != 0) and (li.id != taxline.id) and (li.product_id.tax_plastic_type == 'acquirer')):
                 tax_entry['line_ids'] = [(0, 0, {
                     'product_id': li.product_id.id,
                     'display_type': li.display_type,
@@ -305,8 +305,8 @@ class AccountMove(models.Model):
         taxunit = self.env.company.plastic_tax
 
         for li in self.invoice_line_ids:
-            if (li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
-                    (li.quantity != 0) and (li.id != taxline.id) and (li.product_id.tax_plastic_type == 'acquirer'):
+            if ((li.product_id.id) and (li.product_id.plastic_weight_non_recyclable != 0) and
+                    (li.quantity != 0) and (li.id != taxline.id) and (li.product_id.tax_plastic_type == 'acquirer')):
                 tax_entry['line_ids'] = [(0, 0, {
                     'product_id': li.product_id.id,
                     'display_type': li.display_type,
