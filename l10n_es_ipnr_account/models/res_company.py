@@ -3,7 +3,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-
+from datetime import datetime
 
 class ResCompany(models.Model):
     _inherit = "res.company"
@@ -23,6 +23,15 @@ class ResCompany(models.Model):
 
     company_plastic_acquirer = fields.Boolean(string="Plastic Acquirer", default=True)
     company_plastic_manufacturer = fields.Boolean(string="Plastic Manufacturer", default=False)
+
+
+    def _get_today_plastic_tax(self):
+        price = 0
+        today = datetime.today()
+        line = self.env['l10n.es.ipnr.amount'].search([('date_from', '<', today), ('price', '>', 0)], limit=1)
+        if line.id: price = line.price
+        self.plastic_tax = price
+    plastic_tax = fields.Monetary('IPNR Tax', compute='_get_today_plastic_tax')
 
 #    @api.depends('company_plastic_acquirer', 'company_plastic_manufacturer')
     @api.depends('company_plastic_acquirer', 'company_plastic_manufacturer')

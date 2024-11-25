@@ -40,6 +40,7 @@
                             invisible="ipnr_enable == False"
                             required="ipnr_date_from ==  True"
                         />
+                        <field name="plastic_tax" widget='monetary' options="{'currency_field': 'currency_id'}" />
                     </group>
                 </page>
             </notebook>
