@@ -10,8 +10,7 @@
     "category": "Accounting",
     "website": "https://github.com/OCA/l10n-spain",
     "depends": [
-        "account",
-    #    'l10n_es_aeat_mod592'
+        "account", "contacts",
     ],
     "data": [
         "data/data.xml",
