@@ -153,7 +153,7 @@ class AccountMove(models.Model):
         if (self.move_type in ['in_invoice','in_refund']) and (self.purchase_id.picking_type_id.code == 'dropship'):
             destination = self.purchase_id.dest_address_id
         self.picking_partner_id = destination.id
-    picking_partner_id = fields.Many2one('res.partner', string='Picking destination', store=False,
+    picking_partner_id = fields.Many2one('res.partner', string='Picking destination', store=False, index=True,
                                              compute='_get_picking_partner')
 
     plastictax_move_id = fields.Many2one('account.move', store=True, string='Plastic tax entry', copy=False,
