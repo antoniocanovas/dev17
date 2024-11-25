@@ -12,11 +12,6 @@ class TestL10nEsIpnrCommon(common.TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         cls.company.write({"ipnr_enable": True, "ipnr_date_from": "2022-01-01"})
         cls.partner = cls.env["res.partner"].create({"name": "Test"})
-        cls.fiscal_position_ipnr = cls.env["account.fiscal.position"].create(
-            {"name": "Test Fiscal Ipnr", "active": True, "ipnr_subject": True}
-        )
-        cls.fiscal_position_no_ipnr = cls.env["account.fiscal.position"].create(
-            {"name": "Test Fiscal Ipnr", "active": True, "ipnr_subject": False}
         )
         cls.category_ipnr = cls.env["product.category"].create(
             {"name": "Ipnr Category", "ipnr_subject": True}
