@@ -1,0 +1,17 @@
+# Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from odoo import fields, models
+
+
+class ResPartner(models.Model):
+    _inherit = "res.partner"
+
+    # PARA TERRITORIO ESPAÑOL, EXCLUIR PROVINCIAS CON CODE = GC y TF, el código del tipo de envío es dropship
+    @api.depends('country_id','state_id')
+    def _get_spanish_plastic_tax_zone(self):
+        taxzone = False
+        if (self.country_id.code == 'ES') and (destination.state_id.id) and (destination.state_id.code not in ['GC','TF']):
+            taxzone = True
+        self.plastic_tax_zone = taxzone
+    plastic_tax_zone = fields.Boolean('Plastic tax zone', store=True, compute='_get_spanish_plastic_tax_zone')
