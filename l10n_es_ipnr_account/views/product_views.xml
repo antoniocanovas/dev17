@@ -8,9 +8,9 @@
         <field name="arch" type="xml">
             <field name="categ_id" position="before">
                 <field name="ipnr_subject" />
-                <field name="tax_plastic_type" required="ipnr_subject" />
-                <field name="plastic_tax_weight" required="ipnr_subject" />
-                <field name="plastic_weight_non_recyclable" required="ipnr_subject"/>
+                <field name="tax_plastic_type" required="ipnr_subject" invisible="ipnr_subject == 'no'" />
+                <field name="plastic_tax_weight" required="ipnr_subject" invisible="ipnr_subject == 'no'" />
+                <field name="plastic_weight_non_recyclable" required="ipnr_subject" invisible="ipnr_subject == 'no'" />
 
             </field>
         </field>

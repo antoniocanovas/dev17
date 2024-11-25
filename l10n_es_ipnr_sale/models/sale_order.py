@@ -15,9 +15,10 @@ class SaleOrder(models.Model):
         "editable_states": ["draft", "sent"],
     }
 
-    @api.depends("company_id", "fiscal_position_id")
+    @api.depends("partner_shipping_id", "company_id")
     def _compute_is_ipnr(self):
-        return super()._compute_is_ipnr()
+        for rec in self:
+            rec.is_ipnr = rec.company_id.ipnr_enable and rec.partner_shipping_id.ipnr_tax_zone
 
     @api.depends("is_ipnr", "date_order", "company_id")
     def _compute_ipnr_is_date(self):
