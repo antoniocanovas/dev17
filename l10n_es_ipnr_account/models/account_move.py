@@ -252,7 +252,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = taxline.price_unit
+        taxunit = self.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -281,7 +281,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = taxline.price_unit
+        taxunit = self.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -311,7 +311,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = taxline.price_unit
+        taxunit = self.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -340,7 +340,7 @@ class AccountMove(models.Model):
         tax_entry = self.plastictax_move_id
         taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
         taxline = self.env['account.move.line'].search([('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-        taxunit = taxline.price_unit
+        taxunit = self.company.plastic_tax
 
         if (taxline.quantity > 0):
             for li in self.invoice_line_ids:
@@ -371,7 +371,7 @@ class AccountMove(models.Model):
                 taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
                 taxline = self.env['account.move.line'].search(
                     [('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-                taxunit = taxline.price_unit
+                taxunit = self.company.plastic_tax
 
                 if (taxline.quantity > 0):
                     for li in self.invoice_line_ids:
@@ -401,7 +401,7 @@ class AccountMove(models.Model):
                 taxproduct = self.env.ref('l10n_es_ipnr_account.aportacion_ipnr_product_template')
                 taxline = self.env['account.move.line'].search(
                     [('move_id', '=', self.id), ('product_id', '=', taxproduct.id)])
-                taxunit = taxline.price_unit
+                taxunit = self.company.plastic_tax
 
                 if (taxline.quantity > 0):
                     for li in self.invoice_line_ids:
