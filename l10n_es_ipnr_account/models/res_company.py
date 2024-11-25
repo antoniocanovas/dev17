@@ -28,7 +28,8 @@ class ResCompany(models.Model):
     def _get_today_plastic_tax(self):
         price = 0
         today = datetime.today()
-        line = self.env['l10n.es.ipnr.amount'].search([('date_from', '<', today), ('price', '>', 0)], limit=1)
+        line = self.env['l10n.es.ipnr.amount'].search([
+            ('price','>',0),('date_from','<=',today),'|',('date_to','=',False),('date_to','>=',today)],limit=1)
         if line.id: price = line.price
         self.plastic_tax = price
     plastic_tax = fields.Monetary('IPNR Tax', compute='_get_today_plastic_tax')
