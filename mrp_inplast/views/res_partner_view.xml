@@ -8,7 +8,7 @@
                 <field name="sscc_qty"/>
             </xpath>
 
-            <xpath expr="//notepad" position="inside">
+            <xpath expr="//notebook" position="inside">
                 <page name="bom_templates" string="BOM Templates" groups="mrp.group_mrp_manager">
                     <field name="mrp_bom_template_ids"/>
                 </page>
