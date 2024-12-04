@@ -14,6 +14,10 @@
                         icon="fa-refresh"
                         confirm="This will generate a new SSCC code if it is not already set."/>
             </xpath>
+            <!-- El empaquetado es incompatible con el cliente: -->
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="incompatible_bom_template"/>
+            </xpath>
         </field>
     </record>
 </odoo>
