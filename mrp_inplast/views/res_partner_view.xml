@@ -7,6 +7,13 @@
             <xpath expr="//field[@name='property_delivery_carrier_id']" position="after">
                 <field name="sscc_qty"/>
             </xpath>
+
+            <xpath expr="//notepad" position="inside">
+                <page name="bom_templates" string="BOM Templates" groups="mrp.group_mrp_manager">
+                    <field name="mrp_bom_template_ids"/>
+                </page>
+            </xpath>
+
         </field>
     </record>
 </odoo>
