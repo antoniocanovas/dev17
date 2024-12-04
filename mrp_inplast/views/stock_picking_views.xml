@@ -21,7 +21,7 @@
 
             <!-- Mensajes de aviso y bloqueo por empaquetado no compatible con el cliente:  -->
             <xpath expr="//header" position="after">
-                <div class="alert alert-info mb-0" role="alert" invisible="not incompatible_bom_template">
+                <div class="alert alert-danger mb-0" role="alert" invisible="not incompatible_bom_template">
                     Revisa los empaquetados de los productos reservados, son incompatibles con el cliente.
                 </div>
             </xpath>
