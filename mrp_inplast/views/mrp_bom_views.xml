@@ -21,8 +21,8 @@
                 <field name="box_line_id"/>
                 <field name="mrp_tool_id" domain="[('product_tmpl_id','=',product_tmpl_id)]"/>
                 <field name="mrp_bom_template_id"
-                       required="pnt_product_type in ['packaging']"
-                       invisible="pnt_product_type not in ['packaging']"/>
+                       required="pnt_product_type in ['packing']"
+                       invisible="pnt_product_type not in ['packing']"/>
                 <field name="pnt_product_type" invisible="1"/>
             </field>
 
