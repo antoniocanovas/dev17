@@ -23,7 +23,7 @@ class StockPicking(models.Model):
                             bom_template.id not in record.partner_id.mrp_bom_template_ids.ids):
                         allowed = True
             record['incompatible_bom_template'] = allowed
-    incompatible_bom_template = fields.Many2one('Incompatible packaging', store=True, compute='_get_not_allowed_partner_packaging')
+    incompatible_bom_template = fields.Boolean('Incompatible packaging', store=True, compute='_get_not_allowed_partner_packaging')
 
     @api.constrains('state')
     def _not_allowed_partner_packaging_constrains(self):
