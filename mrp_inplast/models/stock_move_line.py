@@ -6,7 +6,7 @@ class StockMoveLine(models.Model):
     def _get_mrp_bom_template(self):
         for record in self:
             bomtemplate = False
-            mrpproduction = self.env['mrp.production'].search([('name','=',self.origin)])
+            mrpproduction = self.env['mrp.production'].search([('name', '=', record.origin)])
             if mrpproduction.id:
                 bomtemplate = mrpproduction[0].bom_id.mrp_bom_template_id.id
             record['mrp_bom_template_id'] = bomtemplate
