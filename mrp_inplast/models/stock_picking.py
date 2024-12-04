@@ -12,7 +12,7 @@ class StockPicking(models.Model):
         return True
 
     @api.depends('move_line_ids')
-    def _get_net_allowed_packaging(self):
+    def _get_not_allowed_packaging(self):
         for record in self:
             allowed = False
             for sm in record.move_ids_without_package:
