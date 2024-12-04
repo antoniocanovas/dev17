@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_picking_form_custom" model="ir.ui.view">
+        <field name="name">stock.picking.form.custom.button</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Inserta el botón después del botón con name 'print_return_label' -->
+            <xpath expr="//header/button[@name='print_return_label']" position="after">
+                <button name="add_sscc"
+                        string="Añadir SSCC"
+                        type="object"
+                        class="oe_highlight"
+                        groups="base.group_user"
+                        icon="fa-refresh"
+                        confirm="This will generate a new SSCC code if it is not already set."/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

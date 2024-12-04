@@ -1,0 +1,13 @@
+<odoo>
+    <record id="inplast_mrp_workcenter_inh_form" model="ir.ui.view">
+        <field name="name">inplast.mrp.workcenter.inh.form</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field name="arch" type="xml">
+            <!-- Inserta el consumo eléctrito teórico para usar en analítica: -->
+            <xpath expr="//field[@name='resource_calendar_id']" position="after">
+                <field name="power_kw"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

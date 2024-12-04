@@ -1,0 +1,13 @@
+<odoo>
+    <record id="inplast_mrp_production_inh_form" model="ir.ui.view">
+        <field name="name">inplast.mrp.production.inh.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Inserta la herramienta utilizada en función de la lista de materiales: -->
+            <xpath expr="//div[@name='bom_div']" position="after">
+                <field name="mrp_tool_id" domain="[('product_tmpl_id','=',product_tmpl_id)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
