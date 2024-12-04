@@ -12,7 +12,7 @@ class StockPicking(models.Model):
         return True
 
     @api.depends('move_line_ids','partner_id.mrp_bom_template_ids')
-    def _get_not_allowed_packaging(self):
+    def _get_not_allowed_partner_packaging(self):
         for record in self:
             allowed = False
             for sm in record.move_ids_without_package:
@@ -23,4 +23,9 @@ class StockPicking(models.Model):
                             bom_template.id not in record.partner_id.mrp_bom_template_ids.ids):
                         allowed = True
             record['incompatible_bom_template'] = allowed
-    incompatible_bom_template = fields.Boolean('Not allowed packaging', store=True, compute='_get_not_allowed_packaging')
+    incompatible_bom_template_id = fields.Many2one('Incompatible packaging', store=True, compute='_get_not_allowed_partner_packaging')
+
+    @api.constrains('state')
+    def _not_allowed_partner_packaging_constrains(self):
+        if self.state == 'done' and self.incompatible_bom_template == True:
+            raise UserError('Incompatible packaging format for this customer. Review and reserva manually.')
