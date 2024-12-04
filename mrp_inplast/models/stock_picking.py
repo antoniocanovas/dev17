@@ -11,7 +11,7 @@ class StockPicking(models.Model):
                 line.lot_id.get_next_sscc()
         return True
 
-    @api.depends('move_line_ids')
+    @api.depends('move_line_ids','partner_id.mrp_bom_template_ids')
     def _get_not_allowed_packaging(self):
         for record in self:
             allowed = False
