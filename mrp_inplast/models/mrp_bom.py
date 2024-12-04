@@ -15,7 +15,7 @@ class MrpBom(models.Model):
     _inherit = 'mrp.bom'
 
     pnt_raw_type_id = fields.Many2one('uom.category', string='Distribution type')
-    bom_template_id = fields.Many2one('product.bom.template', string='BOM Template')
+    mrp_bom_template_id = fields.Many2one('product.bom.template', string='BOM Template')
 
     # Método interno para ser llamado desde una BA, para los casos de Lista de Materiales por %
     def bom_percent_update(self):

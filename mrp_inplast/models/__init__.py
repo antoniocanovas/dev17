@@ -15,3 +15,4 @@ from . import product_bom_template_line
 from . import product_packing_wizard
 from . import mrp_workcenter
 from . import product_packaging
+from . import stock_move_line

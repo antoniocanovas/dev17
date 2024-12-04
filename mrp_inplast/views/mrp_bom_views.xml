@@ -20,7 +20,7 @@
                 <field name="pallet_line_id"/>
                 <field name="box_line_id"/>
                 <field name="mrp_tool_id" domain="[('product_tmpl_id','=',product_tmpl_id)]"/>
-                <field name="bom_template_id"/>
+                <field name="mrp_bom_template_id"/>
             </field>
 
             <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="after">
