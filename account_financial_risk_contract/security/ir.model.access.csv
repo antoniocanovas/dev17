@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_risk_contract_user,Risk contract user,account_financial_risk_contract.model_risk_contract,account.group_account_invoice,1,0,0,0
+access_risk_contract_manager,Risk contract manager,account_financial_risk_contract.model_risk_contract,account.group_account_manager,1,1,1,1
+access_risk_batch_user,Risk batch user,account_financial_risk_contract.model_risk_batch,account.group_account_invoice,1,0,0,0
+access_risk_batch_manager,Risk batch manager,account_financial_risk_contract.model_risk_batch,account.group_account_manager,1,1,1,1

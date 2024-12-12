@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="action_risk_contract" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="limit">80</field>
+        <field name="name">Risk contracts</field>
+        <field name="res_model">risk.contract</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_risk_batch" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="limit">80</field>
+        <field name="name">Risk batches</field>
+        <field name="res_model">risk.batch</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_risk_contract"
+              name="Risk contracts"
+              parent="account.menu_finance_receivables"
+              action="action_risk_contract"
+              sequence="110"/>
+
+    <menuitem id="menu_risk_batch"
+              name="Risk batches"
+              parent="account.menu_finance_receivables"
+              action="action_risk_batch"
+              sequence="120"/>
+
+</odoo>

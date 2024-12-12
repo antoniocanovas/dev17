@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="action_partner_risk_contracts" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_partner_id': active_id,'default_partner_id': active_id}</field>
+        <field name="domain">[('partner_id', '=',active_id)]</field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="help"><![CDATA[<p> Risk contracts for partner </p>]]></field>
+        <field name="limit">80</field>
+        <field name="name">Risk contracts</field>
+        <field name="res_model">risk.contract</field>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="partner_risk_contract_form" model="ir.ui.view">
+        <field name="name">partner.risk.contract.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account_financial_risk.res_partner_view_risk"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" icon="fa-info" type="action"
+                        name="%(account_financial_risk_contract.action_partner_risk_contracts)d"
+                        groups="account.group_account_invoice">
+                    <field name="risk_contract_count" string="Risk contracts" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <field name="credit_policy" position="replace">
+                <field name="risk_contract_id" readonly="1"/>
+                <field name="risk_contract_description"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

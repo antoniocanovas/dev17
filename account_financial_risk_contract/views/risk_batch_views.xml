@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="risk_batch_tree" model="ir.ui.view">
+        <field name="arch" type="xml">
+            <tree string="Risk batches">
+                <field name="name"/>
+                <field name="supplier_id" optional="show"/>
+                <field name="create_uid" widget="many2one_avatar_user" optional="show"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+                <field name="date" optional="hide"/>
+                <field name="supplier_id" optional="show"/>
+                <field name="amount" optional="show"/>
+                <field name="state" optional="show"/>
+                <field name="currency_id" optional="hide"/>
+            </tree>
+        </field>
+        <field name="model">risk.batch</field>
+        <field name="name">Default tree view for Risk Batches</field>
+        <field name="type">tree</field>
+    </record>
+
+    <record id="risk_batch_form" model="ir.ui.view">
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                </header>
+                <sheet name="main" string="Risk batch">
+                    <h2>
+                        <field name="name"/>
+                    </h2>
+                    <group name="general_data">
+                        <group>
+                            <field name="amount"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="supplier_id"/>
+                            <field name="insurance_amount" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="invoice_ids" domain="[('credit_limit', '>', 0),
+                        ('payment_state', 'in', ['not_paid', 'in_payment', 'partial']),('state','in', ['posted']),
+                        ('risk_batch_id','=',False),('move_type', 'in', ['out_invoice'])]">
+                            <tree create="False">
+                                <field name="name"/>
+                                <field name="invoice_date_due"/>
+                                <field name="partner_id"/>
+                                <field name="activity_ids"/>
+                                <field name="amount_untaxed_signed"/>
+                                <field name="payment_state" widget="badge"
+                                       decoration-danger="payment_state == 'not_paid'"
+                                       decoration-warning="payment_state in ('partial', 'in_payment')"
+                                       decoration-success="payment_state in ('paid', 'reversed')"
+                                       invisible="(payment_state in ['invoicing_legacy'])"
+                                       optional="show"/>
+                                <field name="state" widget="badge" decoration-success="state == 'posted'" decoration-info="state == 'draft'" optional="show"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="description" class="field_description" placeholder="Description..."/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh':'recipients'}"/>
+                </div>
+            </form>
+        </field>
+        <field name="model">risk.batch</field>
+        <field name="name">Default form view for Risk Batches</field>
+        <field name="type">form</field>
+    </record>
+
+
+</odoo>
