@@ -44,23 +44,20 @@ class RiskBatch(models.Model):
         "Amount", store=False, copy=True, compute="_get_invoices_net_amount"
     )
 
-    def _get_batch_risk_cost(self):
-        amount = 0
-        for li in self.invoice_ids:
-            contract = self.env["risk.contract"].search(
-                [("partner_id", "=", li.partner_id.id), ("state", "=", "done")],
-                order="date_begin desc",
-                limit=1,
-            )
-            if contract.id:
-                amount += li.amount_untaxed_signed * (contract.margin / 100)
-        self.insurance_amount = amount
+    insurance_amount = fields.Monetary("Insurance cost")
 
-    insurance_amount = fields.Monetary(
-        "Insurance cost", store=False, copy=True, compute="_get_batch_risk_cost"
-    )
+    @api.constrains('state')
+    def _check_and_compute_insurance_amount(self):
+        for record in self:
+            if record.state="draft":
+                record['insurance_amount'] = 0
+            else:       # es "done"
+                amount = 1
+                record['insurance_amount'] = amount
 
-    # NO FUNCIONA, NO SE ACTIVA (sería lo ideal y borrar el wizard):
+
+
+    # NO FUNCIONA el depends, NO SE ACTIVA (sería lo ideal y borrar el wizard):
     #    @api.depends('invoice_ids')
     def update_invoice_risk_batch_id(self):
         for record in self:
