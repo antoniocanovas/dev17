@@ -3,7 +3,7 @@
 
 {
     'name': 'Account financial risk contracts',
-    'version': '17.0.2.0.0',
+    'version': '17.0.3.0.0',
     'category': '',
     "license": "AGPL-3",
     'website': "https://www.ingenieriacloud.com",
