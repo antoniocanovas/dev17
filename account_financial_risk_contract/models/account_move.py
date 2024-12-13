@@ -19,4 +19,4 @@ class AccountMove(models.Model):
             record['is_my_country'] = is_my_country
     is_my_country = fields.Boolean('National', help='National / export', compute='_get_is_my_country')
 
-    is_confirming = fields.Boolean(related='payment_mode_id.is_confirming')
+#    is_confirming = fields.Boolean(related='payment_mode_id.is_confirming')
