@@ -14,6 +14,7 @@
         'account_financial_risk',
         'base_automation',
         'account_payment_mode',
+        'account_payment_partner',
     ],
     'data': [
         'views/res_partner_views.xml',
