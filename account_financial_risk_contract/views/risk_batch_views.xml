@@ -61,6 +61,8 @@
                                        invisible="(payment_state in ['invoicing_legacy'])"
                                        optional="show"/>
                                 <field name="state" widget="badge" decoration-success="state == 'posted'" decoration-info="state == 'draft'" optional="show"/>
+                                <field name="is_my_country" optional="hide"/>
+                                <field name="is_confirming" optional="hide"/>
                                 <field name="currency_id" column_invisible="1"/>
                             </tree>
                         </field>

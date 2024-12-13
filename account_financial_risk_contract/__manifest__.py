@@ -13,6 +13,7 @@
         'account',
         'account_financial_risk',
         'base_automation',
+        'account_payment_mode',
     ],
     'data': [
         'views/res_partner_views.xml',
@@ -20,6 +21,7 @@
         'views/risk_batch_views.xml',
         'views/account_move_views.xml',
         'views/menu_views.xml',
+        'views/account_payment_mode_views.xml',
         'security/user_groups.xml',
         'security/ir.model.access.csv',
         'data/server_actions.xml',
