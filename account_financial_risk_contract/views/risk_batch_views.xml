@@ -11,6 +11,7 @@
                 <field name="date" optional="hide"/>
                 <field name="supplier_id" optional="show"/>
                 <field name="amount" optional="show"/>
+                <field name="insurance_amount" optional="show"/>
                 <field name="state" optional="show"/>
                 <field name="currency_id" optional="hide"/>
             </tree>
