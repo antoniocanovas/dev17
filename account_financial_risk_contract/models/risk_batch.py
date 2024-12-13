@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from datetime import datetime
+from datetime import date
 
 import logging
 
@@ -61,7 +61,7 @@ class RiskBatch(models.Model):
                     # El cliente tiene riesgo con la empresa aseguradora de este lote:
                     if contract.supplier_id.id != record.supplier_id.id:
                         raise UserError('No available contract for ' + customer.name + ' with ' + record.supplier_id.name)
-                    if contract.date_end != False and contract.date_end < datetime.date.today():
+                    if contract.date_end != False and contract.date_end < date.today():
                         raise UserError('Contract date overdue for ' + customer.name)
 
                     # Importe concedido en contrato de riesgo:
