@@ -49,11 +49,9 @@ class RiskBatch(models.Model):
     @api.constrains('state')
     def _check_and_compute_insurance_amount(self):
         for record in self:
-            if record.state == "draft":
-                record['insurance_amount'] = 0
-            else:  # es "done"
+            amount = 0
+            if record.state == "done":
                 customers = set()
-                amount = 0
                 for li in record.invoice_ids:
                     customers.add(li.commercial_partner_id)
 
