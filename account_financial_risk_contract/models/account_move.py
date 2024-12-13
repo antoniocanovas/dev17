@@ -10,7 +10,7 @@ class AccountMove(models.Model):
     credit_limit = fields.Float(related="partner_id.credit_limit")
 
     @api.depends('commercial_partner_id.country_id')
-    def _get_is_local(self):
+    def _get_is_my_country(self):
         for record in self:
             is_my_country = False
             local_country = self.env.company.country_id
