@@ -56,6 +56,10 @@ class RiskBatch(models.Model):
                     customers.add(li.commercial_partner_id)
 
                 for customer in customers:
+                    # El cliente tiene riesgo con la empresa aseguradora de este lote:
+                    if customer.risk_contract_id.supplier_id.id != record.supplier_id.id:
+                        raise UserError('No available contract for ' + customer.name + ' with ' + record.supplier_id.name)
+
                     # Importe concedido en contrato de riesgo:
                     contract = customer.risk_contract_id
                     insurance_risk = contract.amount
