@@ -51,11 +51,56 @@ class RiskBatch(models.Model):
         for record in self:
             if record.state == "draft":
                 record['insurance_amount'] = 0
-            else:       # es "done"
-                amount = 1
-                record['insurance_amount'] = amount
+            else:  # es "done"
+                customers = set()
+                amount = 0
+                for li in record.invoice_ids:
+                    customers.add(li.commercial_partner_id)
 
+                for customer in customers:
+                    # Importe concedido en contrato de riesgo:
+                    contract = customer.risk_contract_id
+                    insurance_risk = contract.amount
+                    if contract.plus:
+                        insurance_risk += contract.plus_amount
 
+                    # Riesgo de otros lotes de facturas ya enviadas:
+                    unpaid_sent_invoices = self.env['account.move'].search(
+                        [('commercial_partner_id', '=', customer.id), ('amount_total', '!=', 0),
+                         ('risk_batch_id', '!=', False), ('risk_batch_id', '!=', record.id)])
+                    customer_risk_sent = 0
+                    for invoice in unpaid_sent_invoices:
+                        customer_risk_sent += invoice.amount_total
+                    # Riesgo disponible antes de validar este lote:
+                    customer_risk_available = insurance_risk - customer_risk_sent
+
+                    # Chequeo de riesgo disponible tras validar este lote:
+                    customer_invoices = self.env['account.move'].search(
+                        [('id', 'in', record.invoice_ids.ids), ('commercial_partner_id', '=', customer.id)])
+                    additional_risk = 0
+                    for li in customer_invoices:
+                        additional_risk += li.amount_total
+                    # Alerta de riesgo sobrepasado, o cálculo de coste estimado:
+                    if additional_risk > customer_risk_available:
+                        raise UserError(
+                            'Customer ' + customer.name + ' exceeds contract risk, delete any invoice. Available risk: ' + str(
+                                customer_risk_available) + ', this batch risk: ' + str(additional_risk))
+                    else:
+                        standard_pending_risk = contract.amount - customer_risk_sent
+
+                        if standard_pending_risk > 0 and additional_risk < standard_pending_risk:
+                            used_standard_risk = additional_risk
+                            used_plus_risk = 0
+                        elif standard_pending_risk > 0 and additional_risk > standard_pending_risk:
+                            used_standard_risk = standard_pending_risk
+                            used_plus_risk = additional_risk - standard_pending_risk
+                        else:
+                            used_standard_risk = 0
+                            used_plus_risk = additional_risk
+
+                        amount += used_standard_risk * contract.margin / 100 + used_plus_risk * contract.plus_margin / 100
+
+            record['insurance_amount'] = amount
 
     # NO FUNCIONA el depends, NO SE ACTIVA (sería lo ideal y borrar el wizard):
     #    @api.depends('invoice_ids')
