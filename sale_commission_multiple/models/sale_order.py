@@ -6,6 +6,16 @@ class SaleOrder(models.Model):
 
     @api.depends('partner_id')
     def _get_partner_referrers(self):
-        self.referrer_plan_ids = [(6,0,[self.partner_id.refferrer_plan_ids.ids])]
+        for record in self:
+            lines = []
+            if record.partner_id.referrer_plan_ids.ids:
+                for li in record.partner_id.referrer_plan_ids:
+                    newline = self.env['referrer.plan.rel'].create({
+                        'referrer_id': li.referrer_id.id,
+                        'commission_plan_id': li.commission_plan_id.id,
+                        'sale_id': record.id,
+                    })
+                    lines.append(newline.id)
+            record['referrer_plan_ids'] = [(6,0,lines)]
     referrer_plan_ids = fields.One2many('referrer.plan.rel', 'sale_id', string='Referrers', store=True,
                                         compute='_get_partner_referrers')
