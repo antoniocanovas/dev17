@@ -8,6 +8,8 @@ Several referrer per sale order or invoice.
     'author': 'Punt Sistemes SL',
     'depends': [
         'crm',
+        'sale_management',
+        'account',
         'partner_commission',
     ],
     'data': [
