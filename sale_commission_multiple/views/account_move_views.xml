@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="multiple_commissions" string="Referrers">
-                    <field name="referrer_plan_ids" nolabel="1" colspan="4" context="{'default_sale_id':id, 'default_partner_id':partner_id}">
+                    <field name="referrer_plan_ids" readonly="0" nolabel="1" colspan="4" context="{'default_sale_id':id, 'default_partner_id':partner_id}">
                             <tree editable="1">
                                 <field name="invoice_id" column_invisible="1"/>
                                 <field name="partner_id" column_invisible="1"/>
