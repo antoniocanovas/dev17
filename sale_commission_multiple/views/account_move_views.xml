@@ -1,17 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-    <record id="referrers_plan_sale_order_inh_form" model="ir.ui.view">
-        <field name="name">referres.plan.sale.order.inh.form</field>
-        <field name="model">sale.order</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+    <record id="referrer_plan_invoice_inh_form" model="ir.ui.view">
+        <field name="name">referrer.plan.invoice.inh.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="multiple_commissions" string="Referrers">
                     <field name="referrer_plan_ids" nolabel="1" colspan="4" context="{'default_sale_id':id, 'default_partner_id':partner_id}">
                             <tree editable="1">
-                                <field name="sale_id" column_invisible="1"/>
+                                <field name="invoice_id" column_invisible="1"/>
                                 <field name="partner_id" column_invisible="1"/>
                                 <field name="referrer_id" required="1"/>
                                 <field name="commission_plan_id" required="1"/>
