@@ -15,6 +15,7 @@ Several referrer per sale order or invoice.
     'data': [
         'security/ir.model.access.csv',
         'views/res_partner_views.xml',
+        'views/sale_order_views.xml',
     ],
     'installable': True,
 }
