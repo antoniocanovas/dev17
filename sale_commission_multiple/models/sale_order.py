@@ -1,4 +1,4 @@
-res_partner.pyfrom odoo import models, fields
+from odoo import models, fields
 
 
 class SaleOrder(models.Model):
