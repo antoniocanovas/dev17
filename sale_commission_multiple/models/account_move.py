@@ -1,7 +1,7 @@
 res_partner.pyfrom odoo import models, fields
 
 
-class ResPartner(models.Model):
+class AccountMove(models.Model):
     _inherit = "account.move"
 
     referrer_plan_ids = fields.One2many('referrer.plan.rel', 'invoice_id', string='Referrers')
