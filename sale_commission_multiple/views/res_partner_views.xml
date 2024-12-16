@@ -6,9 +6,9 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='sales_purchases']/group" position="inside">
                 <group name="multiple_commissions" string="Referrers">
-                    <field name="referrer_plan_ids" context="{'default_partner_id':id}">
+                    <field name="referrer_plan_ids" nolabel="1" colspan="2" context="{'default_partner_id':id}">
                             <tree editable="1">
-                                <field name="partner_id" invisible="1"/>
+                                <field name="partner_id" column_invisible="1"/>
                                 <field name="referrer_id" required="1"/>
                                 <field name="commission_plan_id" required="1"/>
                             </tree>
