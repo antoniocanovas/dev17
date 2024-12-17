@@ -27,4 +27,5 @@ class ReferrerPlanRel(models.Model):
     @api.depends('referrer_id')
     def _get_default_commission_plan_id(self):
         for record in self:
+            raise UserError('si paso')
             record['commission_plan_id'] = record.referrer_id.commission_plan_id.id
