@@ -1,0 +1,12 @@
+<odoo>
+    <record id="partner_product_exclusive_inh_form" model="ir.ui.view">
+        <field name="name">partner.product.exclusive.inh.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']/group" position="after">
+                <field name="product_exclusive_risk" widget="monetary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
