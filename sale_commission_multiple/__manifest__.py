@@ -3,7 +3,7 @@
     'version': '17.0.1.0.0',
     'category': '',
     'description': u"""
-Several referrer per sale order or invoice.
+Several referrer per sale order or invoice (Enterprise Edition).
 """,
     'author': 'Punt Sistemes SL',
     'depends': [
