@@ -13,7 +13,7 @@
                             <tree editable="1">
                                 <field name="sale_id" column_invisible="1"/>
                                 <field name="partner_id" column_invisible="1"/>
-                                <field name="referrer_id" required="1"/>
+                                <field name="referrer_id" required="1" readonly="0"/>
                                 <field name="commission_plan_id" required="1"/>
                             </tree>
                     </field>
