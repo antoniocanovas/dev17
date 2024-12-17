@@ -2,9 +2,9 @@
     <record id="partner_product_exclusive_inh_form" model="ir.ui.view">
         <field name="name">partner.product.exclusive.inh.form</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="inherit_id" ref="account_financial_risk.res_partner_view_risk"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']" position="after">
+            <xpath expr="//field[@name='risk_total']" position="after">
                 <field name="product_exclusive_risk" widget="monetary"/>
             </xpath>
         </field>
