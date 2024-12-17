@@ -18,7 +18,8 @@ class SaleOrder(models.Model):
                     lines.append(newline.id)
             record['referrer_plan_ids'] = [(6,0,lines)]
     referrer_plan_ids = fields.One2many('referrer.plan.rel', 'sale_id', string='Referrers', store=True,
-                                        compute='_get_partner_referrers')
+                                        #compute='_get_partner_referrers'
+                                        )
 
     """
     def _create_invoices(self):
