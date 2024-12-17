@@ -7,7 +7,7 @@ class ResPartner(models.Model):
     def _get_product_exclusive_risk(self):
         for record in self:
             value = 0
-            products = self.env['product.product'].search([('partner_demanding_id','=',record.id)])
+            products = self.env['product.product'].search([('partner_requesting_id','=',record.id)])
             for p in products:
                 if p.qty_available > 0:
                     value += p.standard_price * p.qty_available
