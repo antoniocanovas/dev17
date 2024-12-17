@@ -9,7 +9,7 @@ class AccountMove(models.Model):
     def _get_partner_referrers(self):
         for record in self:
             lines = []
-            if record.partner_id.referrer_plan_ids.ids:
+            if record.partner_id.referrer_plan_ids.ids and record.id:
                 for li in record.partner_id.referrer_plan_ids:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
