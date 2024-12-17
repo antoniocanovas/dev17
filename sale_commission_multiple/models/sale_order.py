@@ -8,6 +8,10 @@ class SaleOrder(models.Model):
     def _get_partner_referrers(self):
         for record in self:
             lines = []
+            # Para evitar error de que duplica al crear el pedido de venta:
+            if record._origin.partner_id == record.partner_id:
+                lines = record.referrer_plan_ids.ids
+            # Creación de líneas de comisionistas desde el partner:
             if record.partner_id.referrer_plan_ids.ids:
                 for li in record.partner_id.referrer_plan_ids:
                     newline = self.env['referrer.plan.rel'].create({
