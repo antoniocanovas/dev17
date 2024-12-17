@@ -9,8 +9,8 @@ class ResPartner(models.Model):
             value = 0
             products = self.env['product.product'].search([('partner_demanding_id','=',record.id)])
             for p in products:
-                value += 1
-                #value += p.standard_price * p."cantidad disponible"
+                if p.qty_available > 0:
+                    value += p.standard_price * p.qty_available
             record['product_exclusive_risk'] = value
     product_exclusive_risk = fields.Monetary('Stock risk', help='Stock risk in exclusive products.',
                                              compute='_get_product_exclusive_risk')
