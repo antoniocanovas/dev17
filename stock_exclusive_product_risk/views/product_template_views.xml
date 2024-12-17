@@ -9,7 +9,7 @@
         <field name="priority">90</field>
         <field name="arch" type="xml">
 
-            <xpath expr="//group[@name='group_standard_price']/label" position="before">
+            <xpath expr="//field[@name='uom_po_id']" position="after">
                 <field name="partner_requesting_id"/>
             </xpath>
 
