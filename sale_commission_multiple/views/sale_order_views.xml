@@ -32,11 +32,11 @@
             <field name="referrer_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
+            -->
 
             <field name='referrer_id' position="after">
                 <field name="referrer_plan_view_ids" widget="many2many_tags" readonly="1"/>
             </field>
-            -->
         </field>
     </record>
 
