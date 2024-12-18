@@ -44,7 +44,7 @@ class AccountMove(models.Model):
                 # (original) if not move.commission_po_line_id:
                 if not move.referrer_plan_ids.credit_commission_po_line_id.ids:
                     continue
-            raise UserError(sign)
+
             # Aquí creamos el bucle para varios comisionistas (alcanza el resto del método):
             for li in move.referrer_plan_ids:
                 comm_by_rule = defaultdict(float)
