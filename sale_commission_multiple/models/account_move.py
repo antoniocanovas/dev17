@@ -79,7 +79,6 @@ class AccountMove(models.Model):
                                             format_date(self.env, line.deferred_start_date),
                                             format_date(self.env, line.deferred_end_date))
                         commission = move.currency_id.round(line.price_subtotal * rule.rate / 100.0)
-                        raise UserError(commission)
                         comm_by_rule[rule] += commission
 
                 # regulate commissions
@@ -87,6 +86,10 @@ class AccountMove(models.Model):
                     if r.is_capped:
                         amount = min(amount, r.max_commission)
                         comm_by_rule[r] = amount
+
+                raise UserError(amount)
+
+
 
                 total = sum(comm_by_rule.values())
                 if not total:
