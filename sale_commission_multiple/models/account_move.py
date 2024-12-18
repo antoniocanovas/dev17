@@ -45,7 +45,32 @@ class AccountMove(models.Model):
                 order = None
                 desc_lines = ""
                 for line in move.invoice_line_ids:
-                    rule = line._get_commission_rule()
+
+                    # (original, ponemos aquí el método completo: rule = line._get_commission_rule()
+                    template = self.env['sale.order.template']
+                    sale_order = self.subscription_id or self.sale_line_ids.order_id
+                    if len(sale_order) == 1:
+                        template = sale_order.sale_order_template_id
+                    # check whether the product is part of the subscription template
+                    template_products = template.sale_order_template_line_ids.product_id.mapped('product_tmpl_id')
+                    template_id = template.id if template and self.product_id.product_tmpl_id.id in template_products.ids else None
+                    sub_pricelist = self.subscription_id.pricelist_id
+                    pricelist_id = sub_pricelist and sub_pricelist.id or self.sale_line_ids.mapped(
+                        'order_id.pricelist_id')[:1].id
+
+                    # In order of precedence, the commission plan can be one of:
+                    # 1. the commission plan set on the subscription
+                    # 2. the commission plan set on the sale order
+                    # 3. the referrer's commission plan
+                    # (original) plan = self.sale_line_ids.order_id.commission_plan_id or self.move_id.referrer_id.commission_plan_id
+                    plan = li.commission_plan_id
+                    if self.subscription_id:
+                        plan = self.subscription_id.commission_plan_id
+                    rule = line.plan._match_rules(self.product_id, template_id, pricelist_id)
+
+
+
+                    # Aquí continúa el estándar enterprise:
                     if rule:
                         if not product:
                             product = rule.plan_id.product_id
