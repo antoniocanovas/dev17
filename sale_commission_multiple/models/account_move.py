@@ -68,7 +68,7 @@ class AccountMove(models.Model):
 
                     #if not plan:
                     #    return self.env['commission.rule']
-                    rule = plan._match_rules(self.product_id, template_id, pricelist_id)
+                    rule = plan._match_rules(line.product_id, template_id, pricelist_id)
 
 
 
