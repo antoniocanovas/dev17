@@ -140,9 +140,6 @@ class AccountMove(models.Model):
                         'purchase_type': 'commission',
                     })
 
-                # hasta aquí ok !!
-                raise UserError(purchase)
-
                 # Por aquí continúa el estándar del módulo:
                 line = self.env['purchase.order.line'].sudo().create({
                     'name': desc,
@@ -154,6 +151,10 @@ class AccountMove(models.Model):
                     'order_id': purchase.id,
                     'qty_received': 1,
                 })
+
+
+                # hasta aquí ok !!
+                raise UserError(line)
 
                 if move.move_type in ['out_invoice', 'in_invoice']:
                     # link the purchase order line to the invoice
