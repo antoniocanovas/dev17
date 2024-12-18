@@ -2,6 +2,7 @@ from odoo import models, fields, api, _
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from odoo.tools import formatLang, format_date
+from odoo.exceptions import UserError
 
 class AccountMove(models.Model):
     _inherit = "account.move"
