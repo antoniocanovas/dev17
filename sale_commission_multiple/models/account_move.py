@@ -21,7 +21,7 @@ class AccountMove(models.Model):
                         'commission_plan_id': li.commission_plan_id.id,
                         'invoice_id': record.id,
                     })
-                    newline.write({'commission_plan_id':li.commission_plan_id.id})
+#                    newline.write({'commission_plan_id':li.commission_plan_id.id})
                     lines.append(newline.id)
 
             record['referrer_plan_ids'] = [(6,0,lines)]
