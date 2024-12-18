@@ -12,10 +12,17 @@ class AccountMove(models.Model):
         for record in self:
             lines = []
             if record.partner_id.referrer_plan_ids.ids and record.id:
+                # Factura nueva, tiramos de comisionistas del contacto:
                 referrers = record.partner_id.referrer_plan_ids
+                # Si la factura viene desde pedido de venta:
+                salelines = self.env['account.move.line'].search([('move_id','=',record.id),('sale_line_ids','!=',False)])
+                if salelines.ids:
+                    referrers = salelines[0].order_id.referrer_plan_ids
+                # Si es factura rectificativa:
                 original_invoice = self.env['account.move'].search([('reversal_move_id','in',record.id)])
                 if record.move_type in ['in_refund','out_refund'] and original_invoice.ids:
                     referrers = original_invoice[0].referrer_plan_ids
+
                 for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
@@ -169,17 +176,3 @@ class AccountMove(models.Model):
                                  move._get_html_link(),
                                  formatLang(self.env, total, currency_obj=move.currency_id))
                 purchase.message_post(body=msg_body)
-
-
-    """
-    # PENDIENTE DE REVISAR ESTO, PARA CANCELAR COMISIONES (creo que no hace falta):
-    def _reverse_moves(self, default_values_list=None, cancel=False):
-        if not default_values_list:
-            default_values_list = [{} for move in self]
-        for move, default_values in zip(self, default_values_list):
-            default_values.update({
-                'referrer_id': move.referrer_id.id,
-                'commission_po_line_id': move.commission_po_line_id.id,
-            })
-        return super(AccountMove, self)._reverse_moves(default_values_list=default_values_list, cancel=cancel)
-    """
