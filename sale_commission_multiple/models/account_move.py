@@ -68,9 +68,6 @@ class AccountMove(models.Model):
                     #if not plan: (siempre va a haber, si hay "li" ya que es un campo requerido)
                     #    return self.env['commission.rule']
                     rule = plan._match_rules(line.product_id, template_id, pricelist_id)
-                    raise UserError(rule)
-
-
 
                     # Aquí continúa el estándar enterprise:
                     if rule:
@@ -82,6 +79,7 @@ class AccountMove(models.Model):
                                             format_date(self.env, line.deferred_start_date),
                                             format_date(self.env, line.deferred_end_date))
                         commission = move.currency_id.round(line.price_subtotal * rule.rate / 100.0)
+                        raise UserError(commission)
                         comm_by_rule[rule] += commission
 
                 # regulate commissions
