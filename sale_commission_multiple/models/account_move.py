@@ -65,10 +65,10 @@ class AccountMove(models.Model):
                     plan = line.sale_line_ids.order_id.commission_plan_id or li.commission_plan_id
                     if line.subscription_id:
                         plan = line.subscription_id.commission_plan_id
-                    raise UserError(plan.name)
                     #if not plan: (siempre va a haber, si hay "li" ya que es un campo requerido)
                     #    return self.env['commission.rule']
                     rule = plan._match_rules(line.product_id, template_id, pricelist_id)
+                    raise UserError(rule.name)
 
 
 
