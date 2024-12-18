@@ -99,8 +99,6 @@ class AccountMove(models.Model):
                     partner=move.partner_id.name,
                     amount=formatLang(self.env, move.amount_untaxed, currency_obj=move.currency_id),
                 )
-                # hasta aquí ok !!
-                raise UserError(desc)
 
                 if order:
                     desc += f"\n{order.name}, {desc_lines}"
@@ -115,6 +113,8 @@ class AccountMove(models.Model):
                         n_months = delta.years * 12 + delta.months + delta.days // 30
                         if n_months:
                             desc += _(' (%d month(s))', n_months)
+                # hasta aquí ok !!
+                raise UserError(order)
 
                 # Saltamos método estándar para incluir código directamente:
                 # (original) purchase = move._get_commission_purchase_order()
