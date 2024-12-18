@@ -67,7 +67,7 @@ class AccountMove(models.Model):
                     plan = li.commission_plan_id
                     if line.subscription_id:
                         plan = line.subscription_id.commission_plan_id
-                    rule = plan._match_rules(line.product_id, template_id, pricelist_id)
+                    rule = plan._match_rules(line.product_id)
 
 
 
