@@ -81,6 +81,8 @@ class AccountMove(models.Model):
                         commission = move.currency_id.round(line.price_subtotal * rule.rate / 100.0)
                         comm_by_rule[rule] += commission
 
+
+                        raise UserError(commission)
                 # regulate commissions
                 for r, amount in comm_by_rule.items():
                     if r.is_capped:
