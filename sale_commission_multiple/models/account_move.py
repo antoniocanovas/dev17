@@ -34,7 +34,7 @@ class AccountMove(models.Model):
             else:
                 sign = -1
                 # (original) if not move.commission_po_line_id:
-                if not move.referrer_plan_ids.commission_po_line_id.id:
+                if not move.reversal_move_id.referrer_plan_ids.commission_po_line_id.id:
                     continue
 
             # Aquí creamos el bucle para varios comisionistas (alcanza el resto del método):
