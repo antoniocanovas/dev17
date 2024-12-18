@@ -68,7 +68,7 @@ class AccountMove(models.Model):
                     #if not plan: (siempre va a haber, si hay "li" ya que es un campo requerido)
                     #    return self.env['commission.rule']
                     rule = plan._match_rules(line.product_id, template_id, pricelist_id)
-                    raise UserError(rule.name)
+                    raise UserError(rule)
 
 
 
