@@ -172,8 +172,8 @@ class AccountMove(models.Model):
                 purchase.message_post(body=msg_body)
 
 
-
-    # PENDIENTE DE REVISAR ESTO, PARA CANCELAR COMISIONES:
+    """
+    # PENDIENTE DE REVISAR ESTO, PARA CANCELAR COMISIONES (creo que no hace falta):
     def _reverse_moves(self, default_values_list=None, cancel=False):
         if not default_values_list:
             default_values_list = [{} for move in self]
@@ -183,3 +183,4 @@ class AccountMove(models.Model):
                 'commission_po_line_id': move.commission_po_line_id.id,
             })
         return super(AccountMove, self)._reverse_moves(default_values_list=default_values_list, cancel=cancel)
+    """
