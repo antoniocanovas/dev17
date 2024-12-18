@@ -13,8 +13,9 @@ class AccountMove(models.Model):
             lines = []
             if record.partner_id.referrer_plan_ids.ids and record.id:
                 referrers = record.partner_id.referrer_plan_ids
-                if record.move_type in ['in_refund','out_refund'] and record.reversal_move_id.ids:
-                    referrers = record.reversal_move_id[0].referrer_plan_ids
+                original_invoice = self.env['account.move'].search([('reversal_move_id','in',record.id)])
+                if record.move_type in ['in_refund','out_refund'] and original_invoice_ids:
+                    referrers = original_invoice[0].referrer_plan_ids
                 for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
