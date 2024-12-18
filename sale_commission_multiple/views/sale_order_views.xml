@@ -32,9 +32,11 @@
             <xpath expr="//field[@name='referrer_id']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
+            <!--
             <xpath expr="//field[@name='referrer_id']" position="after">
                 <field name="referrer_plan_view_ids" widget="many2many_tags" readonly="1"/>
             </xpath>
+            -->
         </field>
     </record>
 
