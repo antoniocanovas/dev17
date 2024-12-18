@@ -15,9 +15,9 @@ class AccountMove(models.Model):
                 # Factura nueva, tiramos de comisionistas del contacto:
                 referrers = record.partner_id.referrer_plan_ids
                 # Si la factura viene desde pedido de venta:
-                salelines = self.env['account.move.line'].search([('move_id','=',record.id),('sale_line_ids','!=',False)])
-                if salelines.ids:
-                    referrers = salelines[0].order_id.referrer_plan_ids
+                amsalelines = self.env['account.move.line'].search([('move_id','=',record.id),('sale_line_ids','!=',False)])
+                if amsalelines.ids:
+                    referrers = amsalelines[0].sale_line_ids[0].order_id.referrer_plan_ids
                 # Si es factura rectificativa:
                 original_invoice = self.env['account.move'].search([('reversal_move_id','in',record.id)])
                 if record.move_type in ['in_refund','out_refund'] and original_invoice.ids:
