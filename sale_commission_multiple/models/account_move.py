@@ -2,7 +2,7 @@ from odoo import models, fields, api, _
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from odoo.tools import formatLang, format_date
-
+from odoo.exceptions import UserError
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -65,8 +65,8 @@ class AccountMove(models.Model):
                     plan = line.sale_line_ids.order_id.commission_plan_id or li.commission_plan_id
                     if line.subscription_id:
                         plan = line.subscription_id.commission_plan_id
-
-                    #if not plan:
+                    raise UserError(plan.name)
+                    #if not plan: (siempre va a haber, si hay "li" ya que es un campo requerido)
                     #    return self.env['commission.rule']
                     rule = plan._match_rules(line.product_id, template_id, pricelist_id)
 
@@ -178,31 +178,3 @@ class AccountMove(models.Model):
                 'commission_po_line_id': move.commission_po_line_id.id,
             })
         return super(AccountMove, self)._reverse_moves(default_values_list=default_values_list, cancel=cancel)
-
-class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
-
-    def _get_commission_rule(self):
-        self.ensure_one()
-        template = self.env['sale.order.template']
-        sale_order = self.subscription_id or self.sale_line_ids.order_id
-        if len(sale_order) == 1:
-            template = sale_order.sale_order_template_id
-        # check whether the product is part of the subscription template
-        template_products = template.sale_order_template_line_ids.product_id.mapped('product_tmpl_id')
-        template_id = template.id if template and self.product_id.product_tmpl_id.id in template_products.ids else None
-        sub_pricelist = self.subscription_id.pricelist_id
-        pricelist_id = sub_pricelist and sub_pricelist.id or self.sale_line_ids.mapped('order_id.pricelist_id')[:1].id
-
-        # In order of precedence, the commission plan can be one of:
-        # 1. the commission plan set on the subscription
-        # 2. the commission plan set on the sale order
-        # 3. the referrer's commission plan
-        plan = self.sale_line_ids.order_id.commission_plan_id or self.move_id.referrer_id.commission_plan_id
-        if self.subscription_id:
-            plan = self.subscription_id.commission_plan_id
-
-        if not plan:
-            return self.env['commission.rule']
-
-        return plan._match_rules(self.product_id, template_id, pricelist_id)
