@@ -15,6 +15,7 @@ class ReferrerPlanRel(models.Model):
     invoice_id = fields.Many2one('account.move', string="Invoice")
     # Registro de comisión creada (único por factura y comisionista):
     commission_po_line_id = fields.Many2one('purchase.order.line', string="Purchase line")
+    credit_commission_po_line_id = fields.Many2one('purchase.order.line', string="Purchase credit")
 
     @api.depends('partner_id','referrer_id')
     def _get_name(self):
