@@ -2,7 +2,6 @@ from odoo import models, fields, api, _
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from odoo.tools import formatLang, format_date
-from odoo.exceptions import UserError
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -35,7 +34,7 @@ class AccountMove(models.Model):
             else:
                 sign = -1
                 # (original) if not move.commission_po_line_id:
-                if not move.referrer_plan_ids.commission_po_line_id:
+                if not move.referrer_plan_ids.commission_po_line_id.id:
                     continue
 
             # Aquí creamos el bucle para varios comisionistas (alcanza el resto del método):
