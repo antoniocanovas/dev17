@@ -22,6 +22,7 @@
         </field>
     </record>
 
+            <!--
 
     <record id="referrers_plan_partner_commission_sale_order_inh_form" model="ir.ui.view">
         <field name="name">referres.plan.partner.commission.sale.order.inh.form</field>
@@ -32,13 +33,12 @@
             <xpath expr="//field[@name='referrer_id']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!--
             <xpath expr="//field[@name='referrer_id']" position="after">
                 <field name="referrer_plan_view_ids" widget="many2many_tags" readonly="1"/>
             </xpath>
-            -->
         </field>
     </record>
+            -->
 
 
 
