@@ -18,9 +18,9 @@ class AccountMove(models.Model):
                 for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
-#                        'commission_plan_id': li.commission_plan_id.id,
                         'invoice_id': record.id,
                     })
+                    # Para evitar que en la creación ponga el valor por defecto y tome el de la factura:
                     newline.write({'commission_plan_id':li.commission_plan_id.id})
                     lines.append(newline.id)
 
@@ -41,7 +41,7 @@ class AccountMove(models.Model):
                 # (original) if not move.commission_po_line_id:
                 if not move.reversal_move_id.referrer_plan_ids.commission_po_line_id.id:
                     continue
-
+            raise UserError(sign)
             # Aquí creamos el bucle para varios comisionistas (alcanza el resto del método):
             for li in move.referrer_plan_ids:
                 comm_by_rule = defaultdict(float)
