@@ -166,10 +166,6 @@ class AccountMove(models.Model):
                 purchase.message_post(body=msg_body)
 
 
-                # hasta aquí ok !!
-                raise UserError(msg_body)
-
-
 
     # PENDIENTE DE REVISAR ESTO, PARA CANCELAR COMISIONES:
     def _reverse_moves(self, default_values_list=None, cancel=False):
