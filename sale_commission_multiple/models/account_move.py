@@ -18,10 +18,10 @@ class AccountMove(models.Model):
                 for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
-                        'commission_plan_id': li.commission_plan_id.id,
+#                        'commission_plan_id': li.commission_plan_id.id,
                         'invoice_id': record.id,
                     })
-#                    newline.write({'commission_plan_id':li.commission_plan_id.id})
+                    newline.write({'commission_plan_id':li.commission_plan_id.id})
                     lines.append(newline.id)
 
             record['referrer_plan_ids'] = [(6,0,lines)]
