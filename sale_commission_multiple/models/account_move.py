@@ -152,10 +152,6 @@ class AccountMove(models.Model):
                     'qty_received': 1,
                 })
 
-
-                # hasta aquí ok !!
-                raise UserError(line)
-
                 if move.move_type in ['out_invoice', 'in_invoice']:
                     # link the purchase order line to the invoice
                     # (original) move.commission_po_line_id = line
@@ -168,6 +164,10 @@ class AccountMove(models.Model):
                                  move._get_html_link(),
                                  formatLang(self.env, total, currency_obj=move.currency_id))
                 purchase.message_post(body=msg_body)
+
+
+                # hasta aquí ok !!
+                raise UserError(msg_body)
 
 
 
