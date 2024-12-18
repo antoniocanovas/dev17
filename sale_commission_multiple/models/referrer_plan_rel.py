@@ -21,10 +21,10 @@ class ReferrerPlanRel(models.Model):
     def _get_name(self):
         for record in self:
             name = ""
-            if record.partner_id.id:
-                name += record.partner_id.name
             if record.referrer_id.id:
-                name += " => " + record.referrer_id.name
+                name += record.referrer_id.name
+            if record.commision_plan_id.id:
+                name += " (" + record.commision_plan_id.name + ")"
             record['name'] = name
 
     @api.depends('referrer_id')

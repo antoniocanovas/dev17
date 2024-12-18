@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
                         'commission_plan_id': li.commission_plan_id.id,
-                        #'sale_id': record.id,
+                        'sale_id': record.id,
                     })
                     lines.append(newline.id)
             record['referrer_plan_ids'] = [(6,0,lines)]
