@@ -10,8 +10,11 @@ class ReferrerPlanRel(models.Model):
                                          compute="_get_default_commission_plan_id")
     partner_id = fields.Many2one('res.partner', string="Customer")
     referrer_id = fields.Many2one('res.partner', string="Referrer")
+    # Campos de relación para o2m:
     sale_id = fields.Many2one('sale.order', string="Sale order")
     invoice_id = fields.Many2one('account.move', string="Invoice")
+    # Registro de comisión creada (único por factura y comisionista):
+    commission_po_line_id = fields.Many2one('purchase.order.line', string="Purchase line")
 
     @api.depends('partner_id','referrer_id')
     def _get_name(self):
@@ -27,3 +30,4 @@ class ReferrerPlanRel(models.Model):
     def _get_default_commission_plan_id(self):
         for record in self:
             record['commission_plan_id'] = record.referrer_id.commission_plan_id.id
+
