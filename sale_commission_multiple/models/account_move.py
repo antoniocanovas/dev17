@@ -87,12 +87,7 @@ class AccountMove(models.Model):
                         amount = min(amount, r.max_commission)
                         comm_by_rule[r] = amount
 
-                # hasta aquí ok !!
-
-
-
                 total = sum(comm_by_rule.values())
-                raise UserError(total)
 
                 if not total:
                     continue
@@ -104,6 +99,9 @@ class AccountMove(models.Model):
                     partner=move.partner_id.name,
                     amount=formatLang(self.env, move.amount_untaxed, currency_obj=move.currency_id),
                 )
+                # hasta aquí ok !!
+                raise UserError(desc)
+
                 if order:
                     desc += f"\n{order.name}, {desc_lines}"
                     # extend the description to show the number of months to defer the expense over
