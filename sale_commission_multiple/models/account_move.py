@@ -12,13 +12,17 @@ class AccountMove(models.Model):
         for record in self:
             lines = []
             if record.partner_id.referrer_plan_ids.ids and record.id:
-                for li in record.partner_id.referrer_plan_ids:
+                referrers = record.partner_id.referrer_plan_ids
+                if record.move_type in ['in_refund','out_refund'] and record.reversal_move_id.ids:
+                    referrers = record.reversal_move_id[0].referrer_plan_ids
+                for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
                         'commission_plan_id': li.commission_plan_id.id,
                         'invoice_id': record.id,
                     })
                     lines.append(newline.id)
+
             record['referrer_plan_ids'] = [(6,0,lines)]
     referrer_plan_ids = fields.One2many('referrer.plan.rel', 'invoice_id', string='Referrers', store=True,
                                         compute='_get_partner_referrers')
@@ -44,7 +48,6 @@ class AccountMove(models.Model):
                 order = None
                 desc_lines = ""
                 for line in move.invoice_line_ids:
-
                     # (original, ponemos aquí el método completo: rule = line._get_commission_rule()
                     template = line.env['sale.order.template']
                     sale_order = line.subscription_id or line.sale_line_ids.order_id
