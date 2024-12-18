@@ -113,8 +113,6 @@ class AccountMove(models.Model):
                         n_months = delta.years * 12 + delta.months + delta.days // 30
                         if n_months:
                             desc += _(' (%d month(s))', n_months)
-                # hasta aquí ok !!
-                raise UserError(order)
 
                 # Saltamos método estándar para incluir código directamente:
                 # (original) purchase = move._get_commission_purchase_order()
@@ -141,6 +139,9 @@ class AccountMove(models.Model):
                         'origin': self.name,
                         'purchase_type': 'commission',
                     })
+
+                # hasta aquí ok !!
+                raise UserError(purchase)
 
                 # Por aquí continúa el estándar del módulo:
                 line = self.env['purchase.order.line'].sudo().create({
