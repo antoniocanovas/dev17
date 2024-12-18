@@ -21,7 +21,7 @@ class SaleOrder(models.Model):
     referrer_plan_ids = fields.One2many('referrer.plan.rel', 'sale_id', string='Referrers', store=True,
                                         compute='_get_partner_referrers'
                                         )
-    referrer_plan_view_ids = fields.One2many(related='referrer_plan_ids')
+    referrer_plan_resume_ids = fields.One2many(related='referrer_plan_ids')
 
     """
     def _create_invoices(self):
