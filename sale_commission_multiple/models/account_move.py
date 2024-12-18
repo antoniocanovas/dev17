@@ -89,7 +89,7 @@ class AccountMove(models.Model):
                         amount = min(amount, r.max_commission)
                         comm_by_rule[r] = amount
 
-                raise UserError(amount)
+                raise UserError(comm_by_rule[r])
 
 
 
