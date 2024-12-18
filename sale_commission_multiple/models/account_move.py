@@ -65,8 +65,8 @@ class AccountMove(models.Model):
                     # (original) plan = self.sale_line_ids.order_id.commission_plan_id or self.move_id.referrer_id.commission_plan_id
                     pricelist_id = line.sale_line_ids.mapped('order_id.pricelist_id')[:1].id
                     plan = li.commission_plan_id
-                    if self.subscription_id:
-                        plan = self.subscription_id.commission_plan_id
+                    if line.subscription_id:
+                        plan = line.subscription_id.commission_plan_id
                     rule = line.plan._match_rules(self.product_id, template_id, pricelist_id)
 
 
