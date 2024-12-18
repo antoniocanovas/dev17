@@ -22,16 +22,17 @@
         </field>
     </record>
 
-    <record id="referrers_partner_commission_so_inh_form" model="ir.ui.view">
-        <field name="name">referrers.partner.commission.so.inh.form</field>
+    <record id="referrers_partner_commission_inh_form" model="ir.ui.view">
+        <field name="name">referrers.partner.commission.inh.form</field>
         <field name="model">sale.order</field>
         <field name="type">form</field>
         <field name="inherit_id" ref="partner_commission.view_move_form_inherit_partner_commission"/>
         <field name="arch" type="xml">
+            <!--
             <field name="referrer_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
-            <!--
+
             <field name='referrer_id' position="after">
                 <field name="referrer_plan_view_ids" widget="many2many_tags" readonly="1"/>
             </field>
