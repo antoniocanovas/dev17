@@ -1,4 +1,18 @@
 <odoo>
+    <record id="menu_stock_picking_nlp" model="ir.ui.menu">
+        <field name="name">Procesador NLP</field>
+        <field name="sequence">10</field>
+        <field name="web_icon">fa-magic</field>
+    </record>
+
+    <!-- SUBMENÚ CONFIGURACIÓN -->
+    <record id="menu_stock_picking_nlp_config" model="ir.ui.menu">
+        <field name="name">Configuración</field>
+        <field name="parent_id" ref="menu_stock_picking_nlp"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- CONFIGURACIÓN DEL PROCESADOR NLP -->
     <record id="view_stock_picking_nlp_form" model="ir.ui.view">
         <field name="name">stock.picking.nlp.form</field>
         <field name="model">stock.picking.nlp</field>
@@ -6,16 +20,13 @@
             <form string="Procesador NLP para Entregas">
                 <sheet>
                     <group>
-                        <field name="OPENAI_API_KEY" />
                         <field name="question" placeholder="Escribe tu pregunta aquí..."/>
                         <field name="response" readonly="1"/>
                     </group>
-
                     <button string="Enviar Pregunta"
                             type="object"
                             name="action_process_question"
                             class="oe_highlight"/>
-
                 </sheet>
             </form>
         </field>
@@ -28,44 +39,23 @@
             <tree string="Procesador NLP">
                 <field name="question"/>
                 <field name="response"/>
-
-
             </tree>
         </field>
     </record>
 
-    <!-- ACTION -->
+    <!-- ACCIÓN -->
     <record id="action_stock_picking_nlp" model="ir.actions.act_window">
-        <field name="binding_model_id" eval="False"/>
-        <field name="binding_type">action</field>
-        <field name="domain" eval="False"/>
-        <field name="filter" eval="False"/>
-        <field name="limit">80</field>
         <field name="name">Procesador NLP</field>
         <field name="res_model">stock.picking.nlp</field>
-        <field name="search_view_id" eval="False"/>
-        <field name="target">current</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="usage" eval="False"/>
-        <field name="view_id" eval="False"/>
         <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
     </record>
 
-    <record id="pruebas_stock_menu" model="ir.ui.menu">
-        <field name="active" eval="True"/>
-        <field name="name">ia</field>
-        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
-        <field name="sequence">100</field>
-        <field name="web_icon" eval="False"/>
-    </record>
-
-    <!-- MENU ITEM -->
-    <record id="stock_picking_nlp_menu" model="ir.ui.menu">
-        <field name="action" ref="action_stock_picking_nlp"/>
-        <field name="active" eval="True"/>
-        <field name="parent_id" ref="ia.pruebas_stock_menu"/>
+    <!-- MENÚ EN CONFIGURACIÓN -->
+    <record id="menu_stock_picking_nlp_action" model="ir.ui.menu">
         <field name="name">Procesador NLP</field>
-        <field name="sequence">100</field>
-        <field name="web_icon" eval="False"/>
+        <field name="action" ref="action_stock_picking_nlp"/>
+        <field name="parent_id" ref="menu_stock_picking_nlp_config"/>
+        <field name="sequence">30</field>
     </record>
 </odoo>
