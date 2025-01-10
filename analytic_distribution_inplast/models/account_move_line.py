@@ -9,6 +9,12 @@ class AccountMoveLine(models.Model):
 
     analytic_distribution_account_id = fields.Many2one('account.analytic.account', string='Distribution',
                                                        help='Analytic distribution account')
+    analytic_distribution_plan_id = fields.Many2one('account.analytic.plan', string='Distribution plan',
+                                                    compute='_get_analytic_distribution_plan')
+
+    def _get_analytic_distribution_plan(self):
+        self.analytic_distribution_plan_id = self.env.company.analytic_distribution_plan_id.id
+
 
     # Eliminado tras reunión con Ibarra (enero 2025):
     #analytic_categ_plan_id = fields.Many2one('account.analytic.plan', string='Category')
