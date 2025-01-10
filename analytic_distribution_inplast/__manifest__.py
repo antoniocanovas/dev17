@@ -25,6 +25,7 @@
     "depends": [
         'analytic_distribution_base',
         'mrp',
+        'mrp_inplast',
     ],
     "author": "Punt Sistemes",
     "category": 'Account',
@@ -34,6 +35,7 @@
     """,
     "data": [
         'views/analytic_distribution_views.xml',
+        'views/res_company_views.xml',
     ],
     "demo": [],
     "installable": True,
