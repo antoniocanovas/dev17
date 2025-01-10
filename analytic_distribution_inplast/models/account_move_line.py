@@ -4,8 +4,8 @@
 
 from odoo import fields, models, api
 
-class AccountMove(models.Model):
-    _inherit = 'account.move'
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
 
     analytic_distribution_account_id = fields.Many2one('account.analytic.account', string='Distribution',
                                                        help='Analytic distribution account')
