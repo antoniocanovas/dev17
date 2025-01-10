@@ -11,6 +11,8 @@ pruebas-ia
     ],
     "data": [
         "views/stock_picking_nlp_views.xml",
+        "views/query_promt_manager_view.xml",
+        "views/res_config_view.xml",
         "security/ir.model.access.csv",
     ],
     "installable": True,

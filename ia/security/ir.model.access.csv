@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_picking_nlp_user,access_stock_picking_nlp_user,model_stock_picking_nlp,base.group_user,1,1,1,1
+access_query_prompt_manager_user,access_query_prompt_manager_user,model_query_prompt_manager,base.group_user,1,1,1,1

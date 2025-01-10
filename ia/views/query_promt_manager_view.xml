@@ -1,0 +1,53 @@
+<odoo>
+     <record id="menu_stock_picking_nlp_action" model="ir.ui.menu">
+        <field name="name">Procesador NLP</field>
+        <field name="action" ref="action_stock_picking_nlp"/>
+        <field name="parent_id" ref="menu_stock_picking_nlp_config"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- QUERY PROMPT MANAGER -->
+    <record id="view_query_prompt_manager_form" model="ir.ui.view">
+        <field name="name">query.prompt.manager.form</field>
+        <field name="model">query.prompt.manager</field>
+        <field name="arch" type="xml">
+            <form string="Query Prompt Manager">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="prompt"/>
+                        <field name="sql_query"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_query_prompt_manager_tree" model="ir.ui.view">
+        <field name="name">query.prompt.manager.tree</field>
+        <field name="model">query.prompt.manager</field>
+        <field name="arch" type="xml">
+            <tree string="Query Prompt Manager">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="prompt"/>
+                <field name="sql_query"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_query_prompt_manager" model="ir.actions.act_window">
+        <field name="name">Query Prompt Manager</field>
+        <field name="res_model">query.prompt.manager</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="menu_query_prompt_manager" model="ir.ui.menu">
+        <field name="name">Query Prompt Manager</field>
+        <field name="action" ref="action_query_prompt_manager"/>
+        <field name="parent_id" ref="menu_stock_picking_nlp_config"/>
+        <field name="sequence">40</field>
+    </record>
+</odoo>
