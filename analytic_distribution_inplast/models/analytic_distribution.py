@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 class AnalyticDistribution(models.Model):
     _inherit = "analytic.distribution"
 
-    compute_mode = fields.Selection(
+    compute_method = fields.Selection(
         [
             ("demo", "demo INPLAST"),
             ("r13", "R13.- Electricidad"),
@@ -53,13 +53,13 @@ class AnalyticDistribution(models.Model):
         self.inplast_computed_modes()
 
     def inplast_computed_modes(self):
-        if self.compute_mode == "demo":
+        if self.compute_method == "demo":
             raise UserError("ok")
-        elif self.compute_mode == "r13":
+        elif self.compute_method == "r13":
             self.compute_r13()
-        elif self.compute_mode in ["r14","r15"]:
+        elif self.compute_method in ["r14","r15"]:
             self.compute_r14()
-        elif self.compute_mode == "r22":
+        elif self.compute_method == "r22":
             self.compute_r22()
 
 
