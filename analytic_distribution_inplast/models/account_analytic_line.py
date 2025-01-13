@@ -20,3 +20,5 @@ class AccountAnalyticLine(models.Model):
         self.analytic_distribution_plan_id = self.env.company.analytic_distribution_plan_id.id
     analytic_distribution_plan_id = fields.Many2one('account.analytic.plan', string='Distribution plan',
                                                     compute='_get_analytic_distribution_plan')
+
+    maintenance_equipment_id = fields.Many2one('maintenance.equipment', string='Equipment')
