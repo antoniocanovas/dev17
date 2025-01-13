@@ -12,8 +12,9 @@ class AccountAnalyticLine(models.Model):
         string='Fixed Analytic',
         help='Active will be fixed distribution, variable if not.')
 
-    analytic_distribution_account_id = fields.Many2one('account.analytic.account', string='Distribution',
-                                                       help='Analytic distribution account')
+    analytic_distribution_account_id = fields.Many2one(
+        'account.analytic.account', string='Distribution',
+        help='Analytic distribution account')
     def _get_analytic_distribution_plan(self):
         self.analytic_distribution_plan_id = self.env.company.analytic_distribution_plan_id.id
     analytic_distribution_plan_id = fields.Many2one('account.analytic.plan', string='Distribution plan',
