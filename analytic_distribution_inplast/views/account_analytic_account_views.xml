@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="analytic_distribution_account_inh_list" model="ir.ui.view">
+        <field name="name">account.distribution.account.inh.list</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="reconcile" position="after">
+                    <field name="fixed_analytic_distribution" widget="boolean_toggle"/>
+                </field>
+            </data>
+        </field>
+    </record>
+
+    <record id="analytic_distribution_account_inh_form" model="ir.ui.view">
+        <field name="name">account.distribution.account.inh.form</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="deprecated" position="after">
+                    <field name="fixed_analytic_distribution" widget="boolean_toggle"/>
+                </field>
+            </data>
+        </field>
+    </record>
+
+</odoo>
