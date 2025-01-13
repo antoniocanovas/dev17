@@ -15,11 +15,11 @@
                 <field name="income_credit" position="after">
                     <field name="income_analytic_distribution_account_ids" widget="many2many_tags"
                            domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
-                </>
+                <field/>
                 <field name="expense_credit" position="after">
                     <field name="expense_analytic_distribution_account_ids" widget="many2many_tags"
                            domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
-                </>
+                <field/>
                 <field name="analytic_distribution_plan_id" invisible="1"/>
             </data>
         </field>
