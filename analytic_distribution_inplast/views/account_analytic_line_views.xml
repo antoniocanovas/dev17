@@ -12,7 +12,7 @@
                     <field name="analytic_distribution_account_id"
                            options="{'no_create':true}"
                            domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
-                    <field name="maintenance_equipment_id"/>
+                    <field name="workcenter_id"/>
                     <field name="analytic_distribution_plan_id" invisible="1"/>
                 </field>
             </data>
@@ -27,7 +27,7 @@
             <data>
                 <field name="account_id" position="after">
                     <field name="fixed_analytic_distribution" widget="boolean_toggle"/>
-                    <field name="maintenance_equipment_id" optional="hide"/>
+                    <field name="workcenter_id" optional="hide"/>
                     <field name="analytic_distribution_account_id" optional="show"/>
                 </field>
             </data>
