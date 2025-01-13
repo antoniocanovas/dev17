@@ -9,6 +9,7 @@
             <data>
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="after">
                     <field name="analytic_distribution_account_id" required="not display_type"
+                           options="{'no_create':true}"
                            domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
                     <field name="analytic_distribution_plan_id" column_invisible="1"/>
                 </xpath>
