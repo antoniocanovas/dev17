@@ -26,7 +26,6 @@
         'analytic_distribution_base',
         'mrp',
         'mrp_inplast',
-        'maintenance',
     ],
     "author": "Punt Sistemes",
     "category": 'Account',
