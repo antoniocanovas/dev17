@@ -10,5 +10,5 @@ class AccountAnalyticAccount(models.Model):
     #product_id = fields.Many2one('product.product', string='Distribution Product')
     #categ_id = fields.Many2one('product.category', string='Distribution Category')
     #department_id = fields.Many2one('hr.department', string='Distribution department')
-    analytic_distribution_account_id = fields.Many2one('account.analytic.account', string='Distribution',
+    analytic_distribution_account_id = fields.Many2one('account.analytic.account', string='Department',
                                                        help='Analytic distribution account')

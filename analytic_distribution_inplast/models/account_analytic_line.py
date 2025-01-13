@@ -13,7 +13,7 @@ class AccountAnalyticLine(models.Model):
         help='Active will be fixed distribution, variable if not.')
 
     analytic_distribution_account_id = fields.Many2one(
-        'account.analytic.account', string='Distribution',
+        'account.analytic.account', string='Department',
         help='Analytic distribution account')
     @api.depends('name')
     def _get_analytic_distribution_plan(self):
