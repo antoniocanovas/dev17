@@ -15,6 +15,18 @@ class AnalyticDistribution(models.Model):
         ]
     )
 
+    def _get_analytic_distribution_plan(self):
+        self.analytic_distribution_plan_id = self.env.company.analytic_distribution_plan_id.id
+    analytic_distribution_plan_id = fields.Many2one('account.analytic.plan', string='Distribution plan',
+                                                    compute='_get_analytic_distribution_plan')
+
+    income_analytic_distribution_account_ids = fields.Many2many('account.analytic.account', string='Income distrib.',
+                                                       help='Analytic distribution account')
+    expense_analytic_distribution_account_ids = fields.Many2many('account.analytic.account', string='Expense distrib',
+                                                       help='Analytic distribution account')
+
+
+
     workcenter_ids = fields.Many2many("mrp.workcenter", string="Workcenters")
 
     def compute_distribution(self):

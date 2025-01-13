@@ -6,11 +6,22 @@
         <field name="name">inplast.analytic.distribution.inh.form</field>
         <field name="model">analytic.distribution</field>
         <field name="arch" type="xml">
-            <xpath expr="//notebook" position="inside">
-                <page name="workcenters" string="Workcenters">
-                    <field name="workcenter_ids" colspan="2"/>
-                </page>
-            </xpath>
+            <data>
+                <xpath expr="//notebook" position="inside">
+                    <page name="workcenters" string="Workcenters">
+                        <field name="workcenter_ids" colspan="2"/>
+                    </page>
+                </xpath>
+                <field name="income_credit" position="after">
+                    <field name="income_analytic_distribution_account_ids" widget="many2many_tags"
+                           domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
+                </>
+                <field name="expense_credit" position="after">
+                    <field name="expense_analytic_distribution_account_ids" widget="many2many_tags"
+                           domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
+                </>
+                <field name="analytic_distribution_plan_id" invisible="1"/>
+            </data>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" ref="analytic_distribution_base.analytic_distribution_default_form"/>
