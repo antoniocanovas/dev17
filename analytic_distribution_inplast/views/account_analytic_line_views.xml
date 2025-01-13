@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="analytic_distribution_analytic_line_inh_list" model="ir.ui.view">
-        <field name="name">account.distribution.analytic.line.inh.list</field>
+        <field name="name">analytic.distribution.analytic.line.inh.form</field>
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
         <field name="arch" type="xml">
@@ -17,14 +17,15 @@
         </field>
     </record>
 
-    <record id="analytic_distribution_account_inh_form" model="ir.ui.view">
-        <field name="name">account.distribution.account.inh.form</field>
-        <field name="model">account.account</field>
-        <field name="inherit_id" ref="account.view_account_form"/>
+    <record id="analytic_distribution_analytic_line_inh_tree" model="ir.ui.view">
+        <field name="name">analytic.distribution.analytic.line.inh.tree</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree"/>
         <field name="arch" type="xml">
             <data>
-                <field name="deprecated" position="after">
+                <field name="account_id" position="after">
                     <field name="fixed_analytic_distribution" widget="boolean_toggle"/>
+                    <field name="analytic_distribution_account_id" optional="show"/>
                 </field>
             </data>
         </field>
