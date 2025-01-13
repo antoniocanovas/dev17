@@ -8,6 +8,5 @@ class AccountAccount(models.Model):
     _inherit = 'account.account'
 
     fixed_analytic_distribution = fields.Boolean(
-        'account.account',
         string='Fixed Analytic',
         help='Active will be fixed distribution, variable if not.')
