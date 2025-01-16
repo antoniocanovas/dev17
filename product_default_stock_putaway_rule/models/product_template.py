@@ -14,11 +14,11 @@ class ProductTemplate(models.Model):
                     rule = self.env.company.default_stock_putaway_rule_id
                     if record.categ_id.default_stock_putaway_rule_id.id:
                         rule = record.categ_id.default_stock_putaway_rule_id
-                self.env['stock.putaway.rule'].create({
-                    'product_id': product.id,
-                    'location_in_id': rule.location_in_id.id,
-                    'location_out_id': rule.location_out_id.id,
-                    'storage_category_id': rule.storage_category_id.id,
-                    'package_type_ids': [(6,0,rule.package_type_ids.ids)],
-                    'company_id': self.env.company.id,
-                })
+                    self.env['stock.putaway.rule'].create({
+                        'product_id': product.id,
+                        'location_in_id': rule.location_in_id.id,
+                        'location_out_id': rule.location_out_id.id,
+                        'storage_category_id': rule.storage_category_id.id,
+                        'package_type_ids': [(6,0,rule.package_type_ids.ids)],
+                        'company_id': self.env.company.id,
+                    })
