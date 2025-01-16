@@ -6,7 +6,7 @@
         <field name="model">product.category</field>
         <field name="inherit_id" ref="account.view_category_property_form"/>
         <field name="arch" type="xml">
-            <field name="route_ids" position="after">
+            <field name="parent_id" position="after">
                 <field name="default_stock_putaway_rule_id"/>
             </field>
         </field>
