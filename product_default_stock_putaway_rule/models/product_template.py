@@ -7,7 +7,7 @@ class ProductTemplate(models.Model):
 
     def create_default_product_stock_putaway_rule(self):
         for record in self:
-            if (record.detailed_type == "product"):
+            if (record.detailed_type == "product") and (record.product_variant_ids.ids):
                 product = record.product_variant_ids[0]
                 product_rules = self.env['stock.putaway.rule'].search([('product_id','=',product.id)])
                 if not product_rules.ids:
