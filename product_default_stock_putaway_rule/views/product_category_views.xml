@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="product_default_stock_rule_category_inh_form" model="ir.ui.view">
+        <field name="name">product.default.stock.rule.category.inh.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="account.view_category_property_form"/>
+        <field name="arch" type="xml">
+            <field name="route_ids" position="after">
+                <field name="default_stock_putaway_rule_id"/>
+            </field>
+        </field>
+        <field name="priority">99</field>
+        <field name="type">form</field>
+    </record>
+
+</odoo>

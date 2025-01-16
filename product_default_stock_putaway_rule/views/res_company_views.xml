@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_default_stock_rule_res_company_inh_form" model="ir.ui.view">
+        <field name="name">product.default.stock.rule.res.company.inh.form</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="default_stock_putaway_rule_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
