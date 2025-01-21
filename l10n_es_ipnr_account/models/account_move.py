@@ -217,7 +217,7 @@ class AccountMove(models.Model):
                     if not (self.ipnr_tax_zone) and (self.move_type in ['out_invoice','out_refund']) and (li.product_id.tax_plastic_type == 'acquirer'):
                         show_button = True
         self.plastic_tax = show_button
-    plastic_tax = fields.Boolean('Plastic tax', store=False, compute='_get_show_button_plastic_tax')
+    plastic_tax = fields.Boolean('Plastic tax', store=False, compute='_get_plastic_tax_required')
 
     def create_plastic_tax_entry(self):
         # Si es venta o abono de compra: el debe a la 700(producto) y haber a la 475
