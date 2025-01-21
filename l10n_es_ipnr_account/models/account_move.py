@@ -197,11 +197,9 @@ class AccountMove(models.Model):
     ipnr_tax_zone = fields.Boolean(related='picking_partner_id.ipnr_tax_zone')
 
     @api.depends('state', 'plastictax_move_id', 'write_date')
-    def _get_show_button_plastic_tax(self):
+    def _get_plastic_tax_required(self):
         show_button = False
-        if ((self.state not in ['cancel']) and
-                (self.move_type in ['in_invoice','in_refund','out_invoice','out_refund']) and not
-                (self.plastictax_move_id.id)):
+        if (self.state not in ['cancel']) and (self.move_type in ['in_invoice','in_refund','out_invoice','out_refund']):
             for li in self.invoice_line_ids:
                 # Con esta condición verificamos que es plástico:
                 if (li.product_id.ipnr_subject != 'no') and (li.product_id.plastic_weight_non_recyclable != 0) and (li.quantity != 0):

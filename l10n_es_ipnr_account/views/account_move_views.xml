@@ -31,7 +31,7 @@
             <xpath expr="//header" position="inside">
                 <button name="create_plastic_tax_entry" type="object" data-hotkey="shift+r"
                         string="Plastic Tax entry" class="oe_highlight"
-                        invisible="plastic_tax == False"/>
+                        invisible="not plastic_tax or plastictax_move_id"/>
             </xpath>
             <xpath expr="//header" position="after">
                 <div class="alert alert-info mb-0" role="alert" invisible="plastic_tax == False">
