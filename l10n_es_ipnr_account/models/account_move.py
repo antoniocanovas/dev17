@@ -392,7 +392,6 @@ class AccountMove(models.Model):
                 # Si compramos fuera, no habrá línea de impuestos:
 #                if (taxline.quantity > 0) (cambio 21/01/25):
                 if self.plastic_tax:
-                    raise UserError('ok')
                     for li in self.invoice_line_ids:
                         if ((li.product_id.ipnr_subject != 'no') and (li.product_id.id) and (li.quantity != 0) and
                                 (li.product_id.plastic_weight_non_recyclable != 0) and (li.id != taxline.id)):
