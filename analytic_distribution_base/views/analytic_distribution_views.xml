@@ -80,6 +80,14 @@
                         </page>
                         <page name="account_accounts" string="Accounts">
                             <group>
+                                <group string="Analytic Income">
+                                    <field name="income_analytic_ids" widget="many2many_tags"/>
+                                </group>
+                                <group string="Analytic Expense">
+                                    <field name="expense_analytic_ids" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                            <group>
                                 <group string="Income accounts">
                                     <field name="income_account_ids" nolabel="1" colspan="2">
                                         <tree>
@@ -94,16 +102,6 @@
                                             <field name="code"/>
                                             <field name="name"/>
                                         </tree>
-                                    </field>
-                                </group>
-                            </group>
-                            <group>
-                                <group string="Analytic Income">
-                                    <field name="income_analytic_ids" nolabel="1" colspan="2">
-                                    </field>
-                                </group>
-                                <group string="Analytic Expense">
-                                    <field name="expense_analytic_ids" nolabel="1" colspan="2">
                                     </field>
                                 </group>
                             </group>
