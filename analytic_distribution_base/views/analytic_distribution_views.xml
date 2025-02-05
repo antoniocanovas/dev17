@@ -81,8 +81,6 @@
                         <page name="account_accounts" string="Accounts">
                             <group>
                                 <group string="Income accounts">
-                                    <field name="income_debit" readonly="1"/>
-                                    <field name="income_credit" readonly="1"/>
                                     <field name="income_account_ids" nolabel="1" colspan="2">
                                         <tree>
                                             <field name="code"/>
@@ -91,13 +89,21 @@
                                     </field>
                                 </group>
                                 <group string="Expense accounts">
-                                    <field name="expense_debit" readonly="1"/>
-                                    <field name="expense_credit" readonly="1"/>
                                     <field name="expense_account_ids" nolabel="1" colspan="2">
                                         <tree>
                                             <field name="code"/>
                                             <field name="name"/>
                                         </tree>
+                                    </field>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Analytic Income">
+                                    <field name="income_analytic_account_ids" nolabel="1" colspan="2">
+                                    </field>
+                                </group>
+                                <group string="Analytic Expense">
+                                    <field name="expense_analytic_account_ids" nolabel="1" colspan="2">
                                     </field>
                                 </group>
                             </group>

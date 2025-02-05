@@ -8,3 +8,4 @@ class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
 
     analytic_distribution_id = fields.Many2one('analytic.distribution', string='Analytic distribution')
+    analytic_distribution_period_id = fields.Many2one('analytic.distribution.period', string='Analytic dist period')

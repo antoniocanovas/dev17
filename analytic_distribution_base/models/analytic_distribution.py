@@ -22,10 +22,6 @@ class AnalyticDistribution(models.Model):
         self.analytic_line_count = len(self.analytic_line_ids.ids)
     analytic_line_count = fields.Integer('Lines', compute='_get_analytic_line_count')
 
-    income_credit  = fields.Monetary('Income credit')
-    income_debit   = fields.Monetary('Income debit')
-    expense_credit = fields.Monetary('Expense credit')
-    expense_debit  = fields.Monetary('Expense debit')
     currency_id    = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
 
     income_account_ids = fields.Many2many(
@@ -40,6 +36,20 @@ class AnalyticDistribution(models.Model):
         relation='expense_account_rel',
         column1='distribution_id',
         column2='account_id',
+    )
+
+    income_analytic_ids = fields.Many2many(
+        'account.analytic.account', string='Income analytics',
+        relation='income_analytic_account_rel',
+        column1='distribution_id',
+        column2='analytic_account_id',
+    )
+
+    expense_account_ids = fields.Many2many(
+        'account.analytic.account', string='Expense analytics',
+        relation='expense_analytic_account_rel',
+        column1='distribution_id',
+        column2='analytic_account_id',
     )
 
     def compute_distribution(self):
