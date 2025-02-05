@@ -2,4 +2,4 @@
 
 from . import account_analytic_line
 from . import analytic_distribution
-from . import analytic_distribution_period
+from . import analytic_distribution_item

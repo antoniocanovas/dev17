@@ -13,8 +13,6 @@ class AnalyticDistribution(models.Model):
     name = fields.Char('Name', required=True)
     amount = fields.Float('Amount', copy=False)
     compute_method = fields.Selection([('demo','Demo')], string="Compute method")
-    date_from = fields.Date('From date', copy=False)
-    date_to = fields.Date('To date', copy=False, default=lambda self: datetime.today())
     analytic_line_ids = fields.One2many('account.analytic.line', 'analytic_distribution_id', string='Analytic lines')
     comment = fields.Html('Comments', store=True, copy=False)
 

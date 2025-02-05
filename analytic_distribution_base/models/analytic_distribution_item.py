@@ -7,8 +7,8 @@ from datetime import datetime
 from odoo.exceptions import UserError
 
 class AnalyticDistribution(models.Model):
-    _name = 'analytic.distribution.month'
-    _description = 'Analytic distribution period'
+    _name = 'analytic.distribution.item'
+    _description = 'Analytic distribution item'
 
     name = fields.Char('Name', required=True)
     date_from = fields.Date('From date', copy=False)
