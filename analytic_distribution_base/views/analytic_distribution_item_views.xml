@@ -65,38 +65,10 @@
                     <group>
                             <field name="date_from" required="1"/>
                             <field name="date_to" required="1"/>
-                    </group>
-                    <notebook>
-                        <page name="general_analytic_distribution" string="General">
-                            <group>
                                 <field name="comment" placeholder="Notes" nolabel="1" colspan="2"/>
-                            </group>
-                        </page>
-                        <page name="account_accounts" string="Accounts">
-                            <group>
-                                <group string="Income accounts">
-                                    <field name="income_debit" readonly="1"/>
-                                    <field name="income_credit" readonly="1"/>
-                                    <field name="income_account_ids" nolabel="1" colspan="2">
-                                        <tree>
-                                            <field name="code"/>
-                                            <field name="name"/>
-                                        </tree>
-                                    </field>
-                                </group>
-                                <group string="Expense accounts">
-                                    <field name="expense_debit" readonly="1"/>
-                                    <field name="expense_credit" readonly="1"/>
-                                    <field name="expense_account_ids" nolabel="1" colspan="2">
-                                        <tree>
-                                            <field name="code"/>
-                                            <field name="name"/>
-                                        </tree>
-                                    </field>
-                                </group>
-                            </group>
-                        </page>
-                    </notebook>
+                        <field name="analytic_distribution_ids"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
                 </sheet>
             </form>
         </field>
