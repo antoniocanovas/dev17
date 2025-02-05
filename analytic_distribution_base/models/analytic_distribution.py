@@ -45,7 +45,7 @@ class AnalyticDistribution(models.Model):
         column2='analytic_account_id',
     )
 
-    expense_account_ids = fields.Many2many(
+    expense_analytic_ids = fields.Many2many(
         'account.analytic.account', string='Expense analytics',
         relation='expense_analytic_account_rel',
         column1='distribution_id',
