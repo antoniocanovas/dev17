@@ -55,8 +55,6 @@
                                 name="%(analytic_distribution_action_window)d">
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
-                        <button class="oe_stat_button" icon="fa-puzzle-piece" type="object"
-                                name="compute_distribution" string="Compute"/>
                     </div>
 
                     <h1>
