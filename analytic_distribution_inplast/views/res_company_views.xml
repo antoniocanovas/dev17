@@ -12,15 +12,9 @@
                     <group string="Account analytic default plans">
                         <field name="analytic_product_plan_id"/>
                         <field name="analytic_distribution_plan_id"/>
-                        <!--  Eliminado tras reunión con Ibarra (enero 2025):
-                        <field name="analytic_categ_plan_id"/>
-                        <field name="analytic_department_plan_id"/>
-                    </group>
-                    <group string="Account analytic by Region">
-                        <field name="analytic_spain_account_id"/>
-                        <field name="analytic_eu_account_id"/>
-                        <field name="analytic_non_eu_account_id"/>
-                        -->
+                        <field name="default_sale_analytic_distribution_account_id"
+                               options="{'no_create':true}"
+                               domain="[('plan_id','=',analytic_distribution_plan_id)]"/>
                     </group>
                 </page>
             </xpath>

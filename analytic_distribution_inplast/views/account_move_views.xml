@@ -14,7 +14,10 @@
                     <field name="analytic_distribution_plan_id" column_invisible="1"/>
                 </xpath>
                 <xpath expr="//page[@name='aml_tab']/field[@name='line_ids']/tree[1]/field[@name='account_id']" position="after">
-                    <field name="analytic_distribution_account_id" optional="show"/>
+                    <field name="analytic_distribution_account_id"
+                           domain="[('plan_id','=',analytic_distribution_plan_id)]"
+                           options="{'no_create':true}" required="1" optional="show"/>
+                    <field name="analytic_distribution_plan_id" column_invisible="1"/>
                 </xpath>
             </data>
         </field>
