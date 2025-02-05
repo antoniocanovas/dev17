@@ -99,11 +99,11 @@
                             </group>
                             <group>
                                 <group string="Analytic Income">
-                                    <field name="income_analytic_account_ids" nolabel="1" colspan="2">
+                                    <field name="income_analytic_ids" nolabel="1" colspan="2">
                                     </field>
                                 </group>
                                 <group string="Analytic Expense">
-                                    <field name="expense_analytic_account_ids" nolabel="1" colspan="2">
+                                    <field name="expense_analytic_ids" nolabel="1" colspan="2">
                                     </field>
                                 </group>
                             </group>
