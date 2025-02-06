@@ -34,7 +34,7 @@
         Custom analytic distributions for Inplast. 
     """,
     "data": [
-        'views/analytic_distribution_views.xml',
+        'views/analytic_distribution_template_views.xml',
         'views/res_company_views.xml',
         'views/account_move_views.xml',
         'views/account_account_views.xml',

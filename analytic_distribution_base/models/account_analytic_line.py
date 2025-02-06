@@ -7,5 +7,5 @@ from odoo import fields, models, api
 class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
 
-    analytic_distribution_id = fields.Many2one('analytic.distribution', string='Analytic distribution')
-    analytic_distribution_period_id = fields.Many2one('analytic.distribution.period', string='Analytic dist period')
+    analytic_distribution_template_id = fields.Many2one('analytic.distribution.template', string='Analytic distribution template')
+    analytic_distribution_period_id = fields.Many2one('analytic.distribution', string='Analytic distribution')

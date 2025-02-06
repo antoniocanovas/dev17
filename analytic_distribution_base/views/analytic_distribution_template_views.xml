@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <!-- WINDOW ACTIONS analytic.distribution Model: -->
-    <record model="ir.actions.act_window" id="analytic_distribution_action_window" >
-        <field name="name">Analytic Distribution items</field>
+    <!-- WINDOW ACTIONS analytic.distribution.template Model: -->
+    <record model="ir.actions.act_window" id="analytic_distribution_template_action_window" >
+        <field name="name">Custom Analytic Distributions</field>
         <field name="type">ir.actions.act_window</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
         <field name="domain" eval="False"/>
         <field name="filter" eval="False"/>
         <field name="limit">80</field>
-        <field name="res_model">analytic.distribution</field>
+        <field name="res_model">analytic.distribution.template</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
     </record>
 
     <!-- WINDOW ACTION o2m buttom to analytic lines: -->
-    <record id="action_view_analytic_item_lines" model="ir.actions.act_window">
+    <record id="action_view_analytic_lines" model="ir.actions.act_window">
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
-        <field name="context">{'search_default_analytic_distribution_template_id': active_id,'default_analytic_distribution_id': active_id}</field>
+        <field name="context">{'search_default_analytic_distribution_template_id': active_id,'default_analytic_distribution_template_id': active_id}</field>
         <field name="domain">[('analytic_distribution_template_id', '=', active_id)]</field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="help"><![CDATA[<p>Analytic lines</p>]]></field>
@@ -34,19 +34,19 @@
 
 
     <!-- MENU: -->
-    <record id="analytic_distribution_menu" model="ir.ui.menu">
-        <field name="action" ref="analytic_distribution_action_window"/>
+    <record id="analytic_distribution_template_menu" model="ir.ui.menu">
+        <field name="action" ref="analytic_distribution_template_action_window"/>
         <field name="active" eval="True"/>
-        <field name="name">Analytic distribution item</field>
+        <field name="name">Analytic distribution</field>
         <field name="parent_id" ref="account.menu_finance_entries_management"/>
-        <field name="sequence">20</field>
+        <field name="sequence">50</field>
         <field name="web_icon" eval="False"/>
     </record>
 
     <!-- FORM VIEW: -->
-    <record id="analytic_distribution_default_form" model="ir.ui.view">
-        <field name="name">analytic.distribution.default.form</field>
-        <field name="model">analytic.distribution</field>
+    <record id="analytic_distribution_template_default_form" model="ir.ui.view">
+        <field name="name">analytic.distribution.template.default.form</field>
+        <field name="model">analytic.distribution.template</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
@@ -55,19 +55,40 @@
                                 name="%(analytic_distribution_template_action_window)d">
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
-                        <button class="oe_stat_button" icon="fa-puzzle-piece" type="object"
-                                name="compute_distribution" string="Compute"/>
                     </div>
 
                     <h1>
                         <field name="name" placeholder="Analytic distribution name ..."/>
                     </h1>
                     <group>
-                        <field name="date_from" required="1"/>
-                        <field name="date_to" required="1"/>
+                        <field name="compute_method" required="1"/>
                         <field name="comment" placeholder="Notes" nolabel="1" colspan="2"/>
-                        <field name="analytic_distribution_template_ids"/>
-                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <group string="Analytic Income">
+                            <field name="income_analytic_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Analytic Expense">
+                            <field name="expense_analytic_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Income accounts">
+                            <field name="income_account_ids" nolabel="1" colspan="2">
+                                <tree>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Expense accounts">
+                            <field name="expense_account_ids" nolabel="1" colspan="2">
+                                <tree>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
                     </group>
                 </sheet>
             </form>
@@ -81,14 +102,13 @@
     </record>
 
     <!-- TREE VIEW: -->
-    <record id="analytic_distribution_default_tree" model="ir.ui.view">
-        <field name="name">analytic.distribution.default.tree</field>
-        <field name="model">analytic.distribution</field>
+    <record id="analytic_distribution_template_default_tree" model="ir.ui.view">
+        <field name="name">analytic.distribution.template.default.tree</field>
+        <field name="model">analytic.distribution.template</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="date_from"/>
-                <field name="date_to"/>
+                <field name="compute_method"/>
             </tree>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
