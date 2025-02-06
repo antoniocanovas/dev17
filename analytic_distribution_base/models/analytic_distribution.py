@@ -16,7 +16,7 @@ class AnalyticDistribution(models.Model):
     analytic_line_ids = fields.One2many('account.analytic.line', 'analytic_distribution_period_id', string='Analytic lines')
     comment = fields.Html('Comments', store=True, copy=False)
 
-    analytic_distribution_ids = fields.Many2many('analytic.distribution.template', string='Distributions')
+    analytic_distribution_template_ids = fields.Many2many('analytic.distribution.template', string='Distributions')
     def _get_analytic_line_count(self):
         self.analytic_line_count = len(self.analytic_line_ids.ids)
     analytic_line_count = fields.Integer('Lines', compute='_get_analytic_line_count')
