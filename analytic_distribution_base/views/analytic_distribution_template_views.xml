@@ -38,8 +38,8 @@
         <field name="action" ref="analytic_distribution_template_action_window"/>
         <field name="active" eval="True"/>
         <field name="name">Analytic distribution templates</field>
-        <field name="parent_id" ref="account.menu_finance_entries_management"/>
-        <field name="sequence">50</field>
+        <field name="parent_id" ref="account.menu_analytic_accounting"/>
+        <field name="sequence">100</field>
         <field name="web_icon" eval="False"/>
     </record>
 
