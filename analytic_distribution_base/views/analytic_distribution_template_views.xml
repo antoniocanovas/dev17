@@ -3,7 +3,7 @@
 
     <!-- WINDOW ACTIONS analytic.distribution.template Model: -->
     <record model="ir.actions.act_window" id="analytic_distribution_template_action_window" >
-        <field name="name">Analytic Distributions</field>
+        <field name="name">Analytic Distribution templates</field>
         <field name="type">ir.actions.act_window</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
@@ -65,15 +65,8 @@
                         <field name="comment" placeholder="Notes" nolabel="1" colspan="2"/>
                     </group>
                     <group>
-                        <group string="Analytic Income">
-                            <field name="income_analytic_ids" widget="many2many_tags"/>
-                        </group>
-                        <group string="Analytic Expense">
-                            <field name="expense_analytic_ids" widget="many2many_tags"/>
-                        </group>
-                    </group>
-                    <group>
                         <group string="Income accounts">
+                            <field name="income_analytic_ids" widget="many2many_tags"/>
                             <field name="income_account_ids" nolabel="1" colspan="2">
                                 <tree>
                                     <field name="code"/>
@@ -82,6 +75,7 @@
                             </field>
                         </group>
                         <group string="Expense accounts">
+                            <field name="expense_analytic_ids" widget="many2many_tags"/>
                             <field name="expense_account_ids" nolabel="1" colspan="2">
                                 <tree>
                                     <field name="code"/>
