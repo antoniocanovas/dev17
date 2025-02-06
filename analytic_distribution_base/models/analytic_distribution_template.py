@@ -37,14 +37,14 @@ class AnalyticDistributionTemplate(models.Model):
     )
 
     income_analytic_ids = fields.Many2many(
-        'account.analytic.account', string='Income analytics',
+        'account.analytic.account', string='Analytics income',
         relation='income_analytic_account_rel',
         column1='distribution_id',
         column2='analytic_account_id',
     )
 
     expense_analytic_ids = fields.Many2many(
-        'account.analytic.account', string='Expense analytics',
+        'account.analytic.account', string='Analytics expense',
         relation='expense_analytic_account_rel',
         column1='distribution_id',
         column2='analytic_account_id',
