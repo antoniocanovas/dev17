@@ -6,9 +6,9 @@ from odoo import fields, models, api
 from datetime import datetime
 from odoo.exceptions import UserError
 
-class AnalyticDistribution(models.Model):
-    _name = 'analytic.distribution'
-    _description = 'Analytic distribution'
+class AnalyticDistributionTemplate(models.Model):
+    _name = 'analytic.distribution.template'
+    _description = 'Analytic distribution templates'
 
     name = fields.Char('Name', required=True)
     amount = fields.Float('Amount', copy=False)

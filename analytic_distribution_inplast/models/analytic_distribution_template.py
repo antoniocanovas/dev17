@@ -2,8 +2,8 @@ from odoo import fields, models, api
 from odoo.exceptions import UserError
 
 
-class AnalyticDistribution(models.Model):
-    _inherit = "analytic.distribution"
+class AnalyticDistributionTemple(models.Model):
+    _inherit = "analytic.distribution.template"
 
     compute_method = fields.Selection(
         [
