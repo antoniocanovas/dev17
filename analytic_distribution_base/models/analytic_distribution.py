@@ -9,6 +9,8 @@ from odoo.exceptions import UserError
 class AnalyticDistribution(models.Model):
     _name = 'analytic.distribution'
     _description = 'Analytic distribution'
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+
 
     name = fields.Char('Name', required=True)
     date_from = fields.Date('From date', copy=False)
