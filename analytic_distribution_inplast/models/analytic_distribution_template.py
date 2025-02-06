@@ -20,27 +20,6 @@ class AnalyticDistributionTemple(models.Model):
     analytic_distribution_plan_id = fields.Many2one('account.analytic.plan', string='Distribution plan',
                                                     compute='_get_analytic_distribution_plan')
 
-    income_analytic_distribution_account_ids = fields.Many2many(
-        'account.analytic.account',
-        string='Income distrib.',
-        help='Analytic distribution account',
-        relation = "income_ada_rel",
-        column1 = "distribution_id",
-        column2 = "analytic_account_id",
-        copy = True,
-    )
-
-    expense_analytic_distribution_account_ids = fields.Many2many(
-        'account.analytic.account',
-        string='Expense distrib',
-        help='Analytic distribution account',
-        relation = "expense_ada_rel",
-        column1 = "distribution_id",
-        column2 = "analytic_account_id",
-        copy = True,
-    )
-
-
 
     workcenter_ids = fields.Many2many("mrp.workcenter", string="Workcenters")
 
