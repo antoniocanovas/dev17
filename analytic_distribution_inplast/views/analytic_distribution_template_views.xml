@@ -2,9 +2,9 @@
 <odoo>
 
     <!-- FORM INH VIEW: -->
-    <record id="inplast_analytic_distribution_inh_form" model="ir.ui.view">
-        <field name="name">inplast.analytic.distribution.inh.form</field>
-        <field name="model">analytic.distribution</field>
+    <record id="inplast_analytic_distribution_template_inh_form" model="ir.ui.view">
+        <field name="name">inplast.analytic.distribution.template.inh.form</field>
+        <field name="model">analytic.distribution.template</field>
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//notebook" position="inside">
@@ -25,7 +25,7 @@
             </data>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
-        <field name="inherit_id" ref="analytic_distribution_base.analytic_distribution_default_form"/>
+        <field name="inherit_id" ref="analytic_distribution_base.analytic_distribution_template_default_form"/>
         <field name="key" eval="False"/>
         <field name="mode">extension</field>
         <field name="priority">32</field>
