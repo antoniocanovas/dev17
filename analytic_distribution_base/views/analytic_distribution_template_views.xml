@@ -85,6 +85,15 @@
                         </group>
                     </group>
                 </sheet>
+                <!-- Attachment preview -->
+                <div class="o_attachment_preview" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund') or state != 'draft'"/>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'always'}"/>
+                </div>
+
             </form>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
