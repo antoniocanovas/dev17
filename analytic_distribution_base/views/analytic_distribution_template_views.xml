@@ -64,26 +64,30 @@
                         <field name="compute_method" required="1"/>
                         <field name="comment" placeholder="Notes" nolabel="1" colspan="2"/>
                     </group>
-                    <group>
-                        <group string="Income accounts">
-                            <field name="income_analytic_ids" widget="many2many_tags"/>
-                            <field name="income_account_ids" nolabel="1" colspan="2">
-                                <tree>
-                                    <field name="code"/>
-                                    <field name="name"/>
-                                </tree>
-                            </field>
-                        </group>
-                        <group string="Expense accounts">
-                            <field name="expense_analytic_ids" widget="many2many_tags"/>
-                            <field name="expense_account_ids" nolabel="1" colspan="2">
-                                <tree>
-                                    <field name="code"/>
-                                    <field name="name"/>
-                                </tree>
-                            </field>
-                        </group>
-                    </group>
+                    <notebook>
+                        <page name="accounting" string="Accounting">
+                            <group>
+                                <group string="Income accounts">
+                                    <field name="income_analytic_ids" widget="many2many_tags"/>
+                                    <field name="income_account_ids" nolabel="1" colspan="2">
+                                        <tree>
+                                            <field name="code"/>
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Expense accounts">
+                                    <field name="expense_analytic_ids" widget="many2many_tags"/>
+                                    <field name="expense_account_ids" nolabel="1" colspan="2">
+                                        <tree>
+                                            <field name="code"/>
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <!-- Chatter -->
                 <div class="oe_chatter">
