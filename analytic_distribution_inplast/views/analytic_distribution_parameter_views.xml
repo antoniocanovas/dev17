@@ -12,6 +12,7 @@
         <field name="limit">80</field>
         <field name="res_model">analytic.distribution.parameter</field>
         <field name="view_mode">form</field>
+        <field name="res_id">1</field>
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
     </record>
