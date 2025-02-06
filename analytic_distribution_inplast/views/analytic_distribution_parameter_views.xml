@@ -33,7 +33,7 @@
         <field name="name">analytic.distribution.parameter.default.form</field>
         <field name="model">analytic.distribution.parameter</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="0">
                 <sheet>
                     <h1>
                         <field name="name" placeholder="Analytic distribution parameters name ..."/>

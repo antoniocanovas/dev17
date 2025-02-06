@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="analytic_distribution_inplast_parameter" model="analytic_distribution_inplast.analytic_distribution_parameter">
+        <field name="name">analytic.distribution.inplast.parameter</field>
+        <field name="name">Parámetros generales</field>
+    </record>
+
+</odoo>
