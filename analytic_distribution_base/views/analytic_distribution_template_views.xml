@@ -3,7 +3,7 @@
 
     <!-- WINDOW ACTIONS analytic.distribution.template Model: -->
     <record model="ir.actions.act_window" id="analytic_distribution_template_action_window" >
-        <field name="name">Custom Analytic Distributions</field>
+        <field name="name">Analytic Distributions</field>
         <field name="type">ir.actions.act_window</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
@@ -37,7 +37,7 @@
     <record id="analytic_distribution_template_menu" model="ir.ui.menu">
         <field name="action" ref="analytic_distribution_template_action_window"/>
         <field name="active" eval="True"/>
-        <field name="name">Analytic distribution</field>
+        <field name="name">Analytic distribution templates</field>
         <field name="parent_id" ref="account.menu_finance_entries_management"/>
         <field name="sequence">50</field>
         <field name="web_icon" eval="False"/>
@@ -58,7 +58,7 @@
                     </div>
 
                     <h1>
-                        <field name="name" placeholder="Analytic distribution name ..."/>
+                        <field name="name" placeholder="Analytic distribution template name ..."/>
                     </h1>
                     <group>
                         <field name="compute_method" required="1"/>

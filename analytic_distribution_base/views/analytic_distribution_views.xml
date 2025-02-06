@@ -37,7 +37,7 @@
     <record id="analytic_distribution_menu" model="ir.ui.menu">
         <field name="action" ref="analytic_distribution_action_window"/>
         <field name="active" eval="True"/>
-        <field name="name">Analytic distribution item</field>
+        <field name="name">Analytic distributions</field>
         <field name="parent_id" ref="account.menu_finance_entries_management"/>
         <field name="sequence">20</field>
         <field name="web_icon" eval="False"/>
