@@ -39,7 +39,7 @@
         <field name="active" eval="True"/>
         <field name="name">Analytic distribution templates</field>
         <field name="parent_id" ref="account.menu_analytic_accounting"/>
-        <field name="sequence">100</field>
+        <field name="sequence">110</field>
         <field name="web_icon" eval="False"/>
     </record>
 
