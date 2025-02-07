@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <data noupdate="1">
+        <record id="analytic_distribution_inplast_parameter"
+                model="analytic.distribution.parameter">
 
-    <record id="analytic_distribution_inplast_parameter" model="analytic_distribution_inplast.analytic_distribution_parameter">
-        <field name="name">analytic.distribution.inplast.parameter</field>
-        <field name="name">Parámetros generales</field>
-    </record>
+            <field name="name">Parámetros generales</field>
+        </record>
 
+        <record model="decimal.precision" id="inplast_analytic_digits">
+            <field name="name">INPLAST Analytic</field>
+            <field name="digits">6</field>
+        </record>
+    </data>
 </odoo>
