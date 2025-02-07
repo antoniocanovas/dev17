@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_analytic_distribution_form_custom_fields" model="ir.ui.view">
+        <field name="name">analytic.distribution.form.custom.fields</field>
+        <field name="model">analytic.distribution</field>
+        <field name="inherit_id" ref="analytic_distribution_base.analytic_distribution_default_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group>
+                    <group string="Albaranes de Asas">
+                        <field name="picking_in_handles_qty" readonly="1"/>
+                        <field name="picking_in_handles_ids"
+                               widget="many2many_tags"
+                               domain="[
+                               ('scheduled_date', '&gt;=', date_from),
+                               ('scheduled_date', '&lt;=', date_to),
+                               ('move_ids_without_package.product_id.categ_id.type', '=', 'handle')
+                           ]"
+                        />
+                    </group>
+                    <group string="Albaranes de Tapones">
+                        <field name="picking_in_caps_qty" readonly="1"/>
+                        <field name="picking_in_caps_ids"
+                               widget="many2many_tags"
+                               domain="[
+                               ('scheduled_date', '&gt;=', date_from),
+                               ('scheduled_date', '&lt;=', date_to),
+                               ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp','cap_distribution'])
+                           ]"
+                        />
+                    </group>
+                </group>
+                <group>
+                    <group string="Palets de Tapones">
+                        <field name="sale_pallet_cap_qty" readonly="1"/>
+                        <field name="sale_pallet_cap_ids" widget="many2many_tags" readonly="1"/>
+                    </group>
+                    <group string="Palets de Tapones">
+                        <field name="sale_pallet_cap_qty" readonly="1"/>
+                        <field name="sale_pallet_cap_ids" widget="many2many_tags" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

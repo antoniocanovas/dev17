@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- WINDOW ACTIONS analytic.distribution.parameter Model: -->
-    <record model="ir.actions.act_window" id="analytic_distribution_parameter_action_window" >
+    <record model="ir.actions.act_window" id="analytic_distribution_parameter_action_window">
         <field name="name">Analytic Distribution Parameters</field>
         <field name="type">ir.actions.act_window</field>
         <field name="binding_model_id" eval="False"/>
@@ -34,12 +34,41 @@
         <field name="model">analytic.distribution.parameter</field>
         <field name="arch" type="xml">
             <form create="0">
-                <sheet>
-                    <h1>
-                        <field name="name" placeholder="Analytic distribution parameters name ..."/>
-                    </h1>
+                 <sheet>
                     <group>
+                        <field name="name" invisible="1"/>
                     </group>
+
+                        <group >
+                            <group string="Warehouse">
+                                <field name="truck_load" widget="float_time"/>
+                                <field name="container_load" widget="float_time"/>
+                                <field name="picking_unload" widget="float_time"/>
+                            </group>
+                            <group string="Internal Transfer Relocation (h/day)">
+                                <field name="raw_color_reloc_day" widget="float_time"/>
+                                <field name="raw_pallet_reloc_day" widget="float_time"/>
+                                <field name="raw_cboard_reloc_day" widget="float_time"/>
+                                <field name="raw_bag_reloc_day" widget="float_time"/>
+                            </group>
+                        </group>
+
+                        <group >
+                            <group string="Raw Material Reception">
+                                <field name="raw_cistern_unload" widget="float_time"/>
+                                <field name="raw_sack_unload" widget="float_time"/>
+                                <field name="raw_color_unload" widget="float_time"/>
+                                <field name="raw_pallet_unload" widget="float_time"/>
+                                <field name="raw_cardboard_unload" widget="float_time"/>
+                                <field name="raw_bag_unload" widget="float_time"/>
+                            </group>
+
+                            <group string="Other">
+                                <field name="pallet_reloc"/>
+                                <field name="ctr_box_qty"/>
+                            </group>
+                        </group>
+
                 </sheet>
                 <!-- Chatter -->
                 <div class="oe_chatter">
