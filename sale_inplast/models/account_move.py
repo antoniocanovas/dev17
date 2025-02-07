@@ -40,7 +40,7 @@ class AccountMove(models.Model):
                 ]
             )
             if has_pricelist:
-                raise UserError("Voy a actualizar " + li.product_id.name)
+                raise UserError("Voy a actualizar " + line.product_id.name)
                 line._compute_price_unit()
         # result = super(AccountMove, self).button_update_prices_from_pricelist()
         result = super(AccountMove, self).action_post()
