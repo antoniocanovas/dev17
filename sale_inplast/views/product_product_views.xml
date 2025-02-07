@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="inplast_invoice" model="ir.ui.view">
+        <field name="name">INPLAST Product</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <!-- Mostrar campo de color en la vista tree de product.product al buscar en línea de ventas: -->
+            <xpath expr="//field[@name='standard_price']" position="after">
+                <field name="pnt_product_dye" optional="show"/>
+            </xpath>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>

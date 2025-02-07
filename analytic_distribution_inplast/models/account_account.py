@@ -7,6 +7,7 @@ from odoo import fields, models, api
 class AccountAccount(models.Model):
     _inherit = 'account.account'
 
+    # PDTE QUITAR SI SE AÑADE COMO PLAN ANALÍTICO:
     fixed_analytic_distribution = fields.Boolean(
         string='Fixed Analytic',
         help='Active will be fixed distribution, variable if not.')

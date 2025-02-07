@@ -1,0 +1,42 @@
+<odoo>
+    <!-- Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+    <template
+            id="report_saleorder_document"
+            inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//td[@name='td_name']" position="inside">
+            <t
+                    t-if="line.pnt_base_1k_price and line.product_id.detailed_type != 'service'"
+            >
+                <br /><span
+                    style="font-size: 70%; opacity: 0.7;"
+            >Precio por millar:
+                <span
+                        t-field="line.pnt_base_1k_price"
+                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                />
+            </span>
+
+            </t>
+        </xpath>
+    </template>
+
+   <!-- <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="inside">
+            <t
+                    t-if="line.pnt_base_1k_price and line.product_id.detailed_type != 'service'"
+            >
+                <br /><span
+                    style="font-size: 70%; opacity: 0.7;"
+            >Precio por millar:
+                <span
+                        t-field="line.pnt_base_1k_price"
+                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                />
+            </span>
+
+            </t>
+        </xpath>
+    </template>-->
+</odoo>
