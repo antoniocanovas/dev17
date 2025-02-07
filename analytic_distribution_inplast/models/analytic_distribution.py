@@ -38,6 +38,9 @@ class AnalyticDistribution(models.Model):
 
     sale_pallet_cap_ids = fields.Many2many(
         'sale.order.line',
+        relation='analytic_distribution_sl_inplast_caps_rel',  # nombre único para la tabla rel
+        column1='analytic_distribution_id',
+        column2='sale_line_id',
         string="Líneas de Palets de Tapones",
         compute="_compute_sale_pallet_cap",
     )
@@ -47,12 +50,15 @@ class AnalyticDistribution(models.Model):
     )
     sale_pallet_handles_ids = fields.Many2many(
         'sale.order.line',
+        relation='analytic_distribution_sl_inplast_handles_rel',  # nombre único para la tabla rel
+        column1='analytic_distribution_id',
+        column2='sale_line_id',
         string="Líneas de Palets de Tapones",
         compute="_compute_sale_pallet_cap",
     )
     sale_pallet_handles_qty = fields.Float(
         string="Cantidad de Palets de Tapones",
-        compute="_compute_sale_pallet_cap",
+        compute="_compute_sale_pallet_handles",
     )
 
     @api.depends('date_from', 'date_to')
@@ -114,7 +120,7 @@ class AnalyticDistribution(models.Model):
     @api.depends('date_from', 'date_to')
     def _compute_sale_pallet_handles(self):
         """Calcula las líneas de venta del periodo que tengan productos de
-        familia de tapones (por ejemplo, 'cap_mrp' y 'cap_distribution') y suma
+        familia de tapones (por ejemplo, 'handles') y suma
         la cantidad vendida."""
         for rec in self:
             sale_lines = self.env['sale.order.line'].search([
@@ -122,5 +128,5 @@ class AnalyticDistribution(models.Model):
                 ('order_id.date_order', '<=', rec.date_to),
                 ('product_id.categ_id.type', '=', 'handle'),
             ])
-            rec.sale_pallet_cap_ids = sale_lines
-            rec.sale_pallet_cap_qty = sum(sale_lines.mapped('product_uom_qty'))
+            rec.sale_pallet_handles_ids = sale_lines
+            rec.sale_pallet_handles_qty = sum(sale_lines.mapped('product_uom_qty'))
