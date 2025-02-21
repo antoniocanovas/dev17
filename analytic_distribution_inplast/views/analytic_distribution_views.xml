@@ -1,129 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-  <record id="view_analytic_distribution_form_custom_fields" model="ir.ui.view">
-    <field name="name">analytic.distribution.form.custom.fields</field>
-    <field name="model">analytic.distribution</field>
-    <field name="inherit_id" ref="analytic_distribution_base.analytic_distribution_default_form"/>
-    <field name="arch" type="xml">
-      <!-- DATOS GENERALES RESUMEN: -->
-      <xpath expr="//tree" position="inside">
-        <field name="picking_hour_qty" optional="show" widget="float_time"/>
-        <field name="picking_hour_cost" optional="show" widget="monetary"/>
-      </xpath>
+    <record id="view_analytic_distribution_form_custom_fields" model="ir.ui.view">
+        <field name="name">analytic.distribution.form.custom.fields</field>
+        <field name="model">analytic.distribution</field>
+        <field name="inherit_id" ref="analytic_distribution_base.analytic_distribution_default_form"/>
+        <field name="arch" type="xml">
+            <!-- DATOS GENERALES RESUMEN: -->
+            <xpath expr="//tree" position="inside">
+                <field name="picking_hour_qty" optional="show" widget="float_time"/>
+                <field name="picking_hour_cost" optional="show" widget="monetary"/>
+            </xpath>
 
 
-      <xpath expr="//notebook" position="inside">
-        <page name="picking" string="Picking">
-          <!-- Grupo para Albaranes de Asas y Tapones -->
-          <group>
-            <group string="Albaranes de Asas">
-              <!-- Muestra el número de albaranes, la lista y la suma de UoM -->
-              <field name="picking_in_handles_qty" readonly="1"/>
-              <field name="picking_in_handles_ids" widget="many2many_tags" readonly="1"/>
-              <field name="picking_in_pallet_handles_qty" readonly="1"/>
-            </group>
-            <group string="Albaranes de Tapones">
-              <!-- Muestra el número de albaranes, la lista y la suma de UoM -->
-              <field name="picking_in_caps_qty" readonly="1"/>
-              <field name="picking_in_caps_ids" widget="many2many_tags" readonly="1"/>
-              <field name="picking_in_pallet_caps_qty" readonly="1"/>
-            </group>
-          </group>
+            <xpath expr="//notebook" position="inside">
+                <page name="picking" string="Picking">
+                    <!-- Grupo para Albaranes de Asas y Tapones -->
+                    <group>
+                        <group string="Albaranes de Asas">
+                            <!-- Muestra el número de albaranes, la lista y la suma de UoM -->
+                            <field name="picking_in_handles_qty" readonly="1"/>
+                            <field name="picking_in_handles_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_pallet_handles_qty" readonly="1"/>
+                        </group>
+                        <group string="Albaranes de Tapones">
+                            <!-- Muestra el número de albaranes, la lista y la suma de UoM -->
+                            <field name="picking_in_caps_qty" readonly="1"/>
+                            <field name="picking_in_caps_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_pallet_caps_qty" readonly="1"/>
+                        </group>
+                    </group>
 
-          <!-- Grupo para Sale Orders (la lógica igual que la de pickings) -->
-          <group>
-            <group string="Sale Orders de Tapones">
-              <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos tapones -->
-              <field name="sale_caps_order_count" readonly="1"/>
-              <field name="sale_caps_pallet_qty" readonly="1"/>
-              <field name="sale_caps_order_ids" widget="many2many_tags" readonly="1"/>
-              <field name="sale_caps_picking_ids" readonly="1"/>
-              <field name="sale_caps_picking_qty" widget="many2many_tags" readonly="1"/>
-              <field name="sale_caps_picking_pallet_qty" readonly="1"/>
-            </group>
-            <group string="Sale Orders de Asas">
-              <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos de asas -->
-              <field name="sale_handles_order_count" readonly="1"/>
-              <field name="sale_handles_order_qty" readonly="1"/>
-              <field name="sale_handles_order_ids" widget="many2many_tags" readonly="1"/>
-            </group>
-          </group>
+                    <!-- Grupo para Sale Orders (la lógica igual que la de pickings) -->
+                    <group>
+                        <group string="Sale Orders de Tapones">
+                            <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos tapones -->
+                            <field name="sale_caps_order_count" readonly="1"/>
+                            <field name="sale_caps_pallet_qty" readonly="1"/>
+                            <field name="sale_caps_order_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="sale_caps_picking_ids" widget="many2many_tags" readonly="1"
+                                   options="{'clickable': True}"/>
+                            <field name="sale_caps_picking_qty" readonly="1"/>
+                            <field name="sale_caps_picking_pallet_qty" readonly="1"/>
 
-          <group>
-            <!-- Grupo para Albaranes de Cisternas -->
-            <group string="Albaranes de Cisternas">
-              <field name="picking_in_cistern_qty" readonly="1"/>
-              <field name="picking_in_cistern_ids" widget="many2many_tags" readonly="1"/>
-            </group>
+                        </group>
+                        <group string="Sale Orders de Asas">
+                            <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos de asas -->
+                            <field name="sale_handles_order_count" readonly="1"/>
+                            <field name="sale_handles_order_qty" readonly="1"/>
+                            <field name="sale_handles_order_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
+                    </group>
 
-            <!-- Grupo para Albaranes de Sacos -->
-            <group string="Albaranes de Sacos">
-              <field name="picking_in_sack_qty" readonly="1"/>
-              <field name="picking_in_sack_ids" widget="many2many_tags" readonly="1"/>
-            </group>
-          </group>
+                    <group>
+                        <!-- Grupo para Albaranes de Cisternas -->
+                        <group string="Albaranes de Cisternas">
+                            <field name="picking_in_cistern_qty" readonly="1"/>
+                            <field name="picking_in_cistern_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
 
-          <group>
-            <!-- Grupo para Albaranes de Color -->
-            <group string="Albaranes de Color">
-              <field name="picking_in_color_qty" readonly="1"/>
-              <field name="picking_in_color_ids" widget="many2many_tags" readonly="1"/>
-            </group>
+                        <!-- Grupo para Albaranes de Sacos -->
+                        <group string="Albaranes de Sacos">
+                            <field name="picking_in_sack_qty" readonly="1"/>
+                            <field name="picking_in_sack_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
+                    </group>
 
-            <!-- Grupo para Albaranes de Cartón -->
-            <group string="Albaranes de Cartón">
-              <field name="picking_in_cardboard_qty" readonly="1"/>
-              <field name="picking_in_cardboard_ids" widget="many2many_tags" readonly="1"/>
-            </group>
-          </group>
+                    <group>
+                        <!-- Grupo para Albaranes de Color -->
+                        <group string="Albaranes de Color">
+                            <field name="picking_in_color_qty" readonly="1"/>
+                            <field name="picking_in_color_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
 
-          <group>
-            <!-- Grupo para Albaranes de Bolsas -->
-            <group string="Albaranes de Bolsas">
-              <field name="picking_in_bag_qty" readonly="1"/>
-              <field name="picking_in_bag_ids" widget="many2many_tags" readonly="1"/>
-            </group>
+                        <!-- Grupo para Albaranes de Cartón -->
+                        <group string="Albaranes de Cartón">
+                            <field name="picking_in_cardboard_qty" readonly="1"/>
+                            <field name="picking_in_cardboard_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
+                    </group>
 
-            <group string="sales container">
-              <field name="sale_container_ids" widget="many2many_tags" readonly="1"/>
-              <field name="sale_container_qty" readonly="1"/>
-            </group>
-          </group>
-        </page>
+                    <group>
+                        <!-- Grupo para Albaranes de Bolsas -->
+                        <group string="Albaranes de Bolsas">
+                            <field name="picking_in_bag_qty" readonly="1"/>
+                            <field name="picking_in_bag_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
 
-        <page name="general_parameters" string="Parameters">
-          <group>
-            <group string="Warehouse expeditions">
-              <field name="truck_load" widget="float_time" readonly="1"/>
-              <field name="container_load" widget="float_time" readonly="1"/>
-              <field name="picking_unload" widget="float_time" readonly="1"/>
-            </group>
-            <group string="Internal Transfer Relocations (h/day)">
-              <field name="raw_color_reloc_daily" widget="float_time" readonly="1"/>
-              <field name="raw_pallet_reloc_daily" widget="float_time" readonly="1"/>
-              <field name="raw_cboard_reloc_daily" widget="float_time" readonly="1"/>
-              <field name="raw_bag_reloc_daily" widget="float_time" readonly="1"/>
-            </group>
-          </group>
+                        <group string="sales container">
+                            <field name="sale_container_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="sale_container_qty" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
 
-          <group >
-            <group string="Raw Material Reception">
-              <field name="raw_cistern_unload" widget="float_time" readonly="1"/>
-              <field name="raw_sack_unload" widget="float_time" readonly="1"/>
-              <field name="raw_color_unload" widget="float_time" readonly="1"/>
-              <field name="raw_pallet_unload" widget="float_time" readonly="1"/>
-              <field name="raw_cardboard_unload" widget="float_time" readonly="1"/>
-              <field name="raw_bag_unload" widget="float_time" readonly="1"/>
-            </group>
+                <page name="general_parameters" string="Parameters">
+                    <group>
+                        <group string="Warehouse expeditions">
+                            <field name="truck_load" widget="float_time" readonly="1"/>
+                            <field name="container_load" widget="float_time" readonly="1"/>
+                            <field name="picking_unload" widget="float_time" readonly="1"/>
+                        </group>
+                        <group string="Internal Transfer Relocations (h/day)">
+                            <field name="raw_color_reloc_daily" widget="float_time" readonly="1"/>
+                            <field name="raw_pallet_reloc_daily" widget="float_time" readonly="1"/>
+                            <field name="raw_cboard_reloc_daily" widget="float_time" readonly="1"/>
+                            <field name="raw_bag_reloc_daily" widget="float_time" readonly="1"/>
+                        </group>
+                    </group>
 
-            <group string="Other">
-              <field name="pallet_reloc" readonly="1"/>
-              <field name="container_box_qty" readonly="1"/>
-            </group>
-          </group>
-        </page>
+                    <group>
+                        <group string="Raw Material Reception">
+                            <field name="raw_cistern_unload" widget="float_time" readonly="1"/>
+                            <field name="raw_sack_unload" widget="float_time" readonly="1"/>
+                            <field name="raw_color_unload" widget="float_time" readonly="1"/>
+                            <field name="raw_pallet_unload" widget="float_time" readonly="1"/>
+                            <field name="raw_cardboard_unload" widget="float_time" readonly="1"/>
+                            <field name="raw_bag_unload" widget="float_time" readonly="1"/>
+                        </group>
 
-      </xpath>
-    </field>
-  </record>
+                        <group string="Other">
+                            <field name="pallet_reloc" readonly="1"/>
+                            <field name="container_box_qty" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+
+            </xpath>
+        </field>
+    </record>
 </odoo>

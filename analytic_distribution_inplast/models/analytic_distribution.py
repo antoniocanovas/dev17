@@ -5,6 +5,7 @@ from docutils.nodes import container
 from odoo import fields, models, api
 from odoo.exceptions import UserError
 
+
 class AnalyticDistribution(models.Model):
     _inherit = 'analytic.distribution'
 
@@ -20,7 +21,7 @@ class AnalyticDistribution(models.Model):
         ).unlink()
         # Actualizar los parámetros generales analíticos de 'Analytic parameters' para este mes:
         self._update_general_parameters()
-        
+
         # Calcular por líneas en función de cada plantilla:
         for li in self.line_ids:
             if li.template_id.compute_method == "demo":
@@ -72,12 +73,10 @@ class AnalyticDistribution(models.Model):
                         'product_id': product.id,
                         'name': li.template_id.name,
                         'amount': - product_pallets * pallet_picking_unload * li.picking_hour_cost,
-                        product_field_id : analytic_account.id,
+                        product_field_id: analytic_account.id,
                         'analytic_distribution_id': self.id,
                         'analytic_distribution_template_id': li.template_id.id,
                     })
-
-
 
     # =========================================================================
     # Traemos todos los campos de parámetros en el momento del recálculo y guardamos:
@@ -183,7 +182,6 @@ class AnalyticDistribution(models.Model):
                 'plan_id': self.env.company.analytic_product_plan_id.id
             })
         return analytic_account
-
 
     # =========================================================================
     # 1) PICKINGS: HANDLES (Asas)
@@ -320,7 +318,8 @@ class AnalyticDistribution(models.Model):
         string="Pickings",
         compute="_compute_sale_caps_picking_ids")
     sale_caps_picking_qty = fields.Float(string="Pickings qty", compute="_compute_sale_caps_picking_qty")
-    sale_caps_picking_pallet_qty = fields.Float(string="Pallet pickings qty", compute="_compute_sale_caps_picking_pallet_qty")
+    sale_caps_picking_pallet_qty = fields.Float(string="Pallet pickings qty",
+                                                compute="_compute_sale_caps_picking_pallet_qty")
 
     @api.depends('date_from', 'date_to')
     def _compute_sale_caps_picking_ids(self):
@@ -331,7 +330,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '>=', rec.date_from),
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
-                ('sale_id','in', rec.sale_caps_order_ids),
+                ('sale_id', 'in', rec.sale_caps_order_ids.ids),
                 ('picking_type_code', '=', 'outgoing'),
                 ('state', 'not in', ['draft', 'cancel']),
             ])
@@ -385,7 +384,7 @@ class AnalyticDistribution(models.Model):
                     lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
-            rec.sale_caps_order_qty = total_qty
+            rec.sale_caps_pallet_qty = total_qty
 
     # =========================================================================
     # 4) SALE ORDERS: HANDLES (Asas)
@@ -636,8 +635,9 @@ class AnalyticDistribution(models.Model):
     # 11) sale: container
     # =========================================================================
 
-    sale_container_ids = fields.Many2many('sale.order.line',compute='_compute_sale_container_ids',string='Sale Container')
-    sale_container_qty = fields.Integer(string='Cantidad de Container',compute='_compute_sale_container_qty')
+    sale_container_ids = fields.Many2many('sale.order.line', compute='_compute_sale_container_ids',
+                                          string='Sale Container')
+    sale_container_qty = fields.Integer(string='Cantidad de Container', compute='_compute_sale_container_qty')
 
     @api.depends('date_from', 'date_to')
     def _compute_sale_container_ids(self):
@@ -646,7 +646,7 @@ class AnalyticDistribution(models.Model):
                 ('order_id.date_order', '>=', rec.date_from),
                 ('order_id.date_order', '<=', rec.date_to),
                 ('state', 'in', ['sale']),
-                ('bom_template_type', 'in', ['box','box_nonmrp' ]),
+                ('bom_template_type', 'in', ['box', 'box_nonmrp']),
             ])
             parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
             container_box_qty = parameters.container_box_qty
@@ -655,17 +655,17 @@ class AnalyticDistribution(models.Model):
                 if container_box_qty != 0 and (line.product_uom_qty % container_box_qty) == 0:
                     sale_line_container.append(line.id)
 
-            rec.sale_container_ids = [(6,0,sale_line_container)]
+            rec.sale_container_ids = [(6, 0, sale_line_container)]
+
     @api.depends('date_from', 'date_to')
     def _compute_sale_container_qty(self):
         for record in self:
             containers = 0
             parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
             container_box_qty = parameters.container_box_qty
-            for li  in record.sale_container_ids:
-                containers += li.product_uom_qty/container_box_qty
+            for li in record.sale_container_ids:
+                containers += li.product_uom_qty / container_box_qty
             record.sale_container_qty = containers
-
 
     # =========================================================================
     # MÉTODOS DE CÁLCULO PARA DISTRIBUCIONES ANALÍTICAS:
