@@ -35,7 +35,7 @@
             <group string="Sale Orders de Tapones">
               <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos tapones -->
               <field name="sale_caps_order_count" readonly="1"/>
-              <field name="sale_caps_order_qty" readonly="1"/>
+              <field name="sale_caps_pallet_qty" readonly="1"/>
               <field name="sale_caps_order_ids" widget="many2many_tags" readonly="1"/>
               <field name="sale_caps_picking_ids" readonly="1"/>
               <field name="sale_caps_picking_qty" widget="many2many_tags" readonly="1"/>
