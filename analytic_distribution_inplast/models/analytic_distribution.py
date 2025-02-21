@@ -312,7 +312,13 @@ class AnalyticDistribution(models.Model):
         string="Pallet",
         compute="_compute_sale_caps_pallet_qty",
     )
-    sale_caps_picking_ids = fields.Many2many(string="Pickings", compute="_compute_sale_caps_picking_ids")
+    sale_caps_picking_ids = fields.Many2many(
+        'stock.picking',
+        relation='analytic_distribution_sale_caps_picking_rel',
+        column1='analytic_distribution_id',
+        column2='picking_id',
+        string="Pickings",
+        compute="_compute_sale_caps_picking_ids")
     sale_caps_picking_qty = fields.Float(string="Pickings qty", compute="_compute_sale_caps_picking_qty")
     sale_caps_picking_pallet_qty = fields.Float(string="Pallet pickings qty", compute="_compute_sale_caps_picking_pallet_qty")
 
