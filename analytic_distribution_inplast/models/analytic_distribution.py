@@ -301,17 +301,53 @@ class AnalyticDistribution(models.Model):
         relation='analytic_distribution_sale_caps_order_rel',  # relación rel única
         column1='analytic_distribution_id',
         column2='sale_order_id',
-        string="Cap sale orders",
+        string="Orders",
         compute="_compute_sale_caps_order_ids",
     )
     sale_caps_order_count = fields.Integer(
-        string="Cap orders qty",
+        string="Orders qty",
         compute="_compute_sale_caps_order_count",
     )
-    sale_caps_order_qty = fields.Float(
-        string="Cap pallet sales",
-        compute="_compute_sale_caps_order_qty",
+    sale_caps_pallet_qty = fields.Float(
+        string="Pallet",
+        compute="_compute_sale_caps_pallet_qty",
     )
+    sale_caps_picking_ids = fields.Many2many(string="Pickings", compute="_compute_sale_caps_picking_ids")
+    sale_caps_picking_qty = fields.Float(string="Pickings qty", compute="_compute_sale_caps_picking_qty")
+    sale_caps_picking_pallet_qty = fields.Float(string="Pallet pickings qty", compute="_compute_sale_caps_picking_pallet_qty")
+
+    @api.depends('date_from', 'date_to')
+    def _compute_sale_caps_picking_ids(self):
+        """Obtiene los pickings del período y filtra aquellos que contengan líneas
+        con productos de categoría 'cap_mrp' o 'cap_distribution'."""
+        for rec in self:
+            pickings = self.env['stock.picking'].search([
+                ('scheduled_date', '>=', rec.date_from),
+                ('scheduled_date', '<=', rec.date_to),
+                ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
+                ('sale_id','in', rec.sale_caps_order_ids),
+                ('picking_type_code', '=', 'outgoing'),
+                ('state', 'not in', ['draft', 'cancel']),
+            ])
+            rec.sale_caps_picking_ids = pickings
+
+    @api.depends('sale_caps_picking_ids')
+    def _compute_sale_caps_picking_qty(self):
+        for rec in self:
+            rec.sale_caps_picking_qty = len(rec.sale_caps_picking_ids)
+
+    @api.depends('sale_caps_picking_ids')
+    def _compute_sale_caps_picking_pallet_qty(self):
+        """Suma el 'product_uom_qty' de las líneas de sale order que tengan
+        productos de categoría 'cap_mrp' o 'cap_distribution'."""
+        for rec in self:
+            total_qty = 0.0
+            for so in rec.sale_caps_picking_ids:
+                lines = so.move_ids_without_package.filtered(
+                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
+                )
+                total_qty += sum(lines.mapped('product_uom_qty'))
+            rec.sale_caps_picking_pallet_qty = total_qty
 
     @api.depends('date_from', 'date_to')
     def _compute_sale_caps_order_ids(self):
@@ -333,7 +369,7 @@ class AnalyticDistribution(models.Model):
             rec.sale_caps_order_count = len(rec.sale_caps_order_ids)
 
     @api.depends('sale_caps_order_ids')
-    def _compute_sale_caps_order_qty(self):
+    def _compute_sale_caps_pallet_qty(self):
         """Suma el 'product_uom_qty' de las líneas de sale order que tengan
         productos de categoría 'cap_mrp' o 'cap_distribution'."""
         for rec in self:
