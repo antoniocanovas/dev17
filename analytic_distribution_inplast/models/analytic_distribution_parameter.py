@@ -16,37 +16,37 @@ class AnalyticDistributionParameter(models.Model):
 
     # Warehouse (load/unload)
     truck_load = fields.Float(
-        string='Truck load ',
+        string='Truck load',
         help="Time required to load a truck."
     )
     container_load = fields.Float(
-        string='Container load ',
+        string='Container load',
         help="Time required to load a container."
     )
     picking_unload = fields.Float(
-        string='Picking unload ',
+        string='Picking unload',
         help="Time required to unload a picking slip (1h per slip)."
     )
 
     # Raw material reception (load/unload)
     raw_cistern_unload = fields.Float(
-        string='Cistern unload ',
+        string='Cistern unload',
         help="Time required to unload a cistern."
     )
     raw_sack_unload = fields.Float(
-        string='Sack unload ',
+        string='Sack unload',
         help="Time required to unload sacks of raw material."
     )
     raw_color_unload = fields.Float(
-        string='Color unload ',
+        string='Color unload',
         help="Time required to unload color material."
     )
     raw_pallet_unload = fields.Float(
-        string='Pallet unload ',
+        string='Pallet unload',
         help="Time required to unload pallets."
     )
     raw_cardboard_unload = fields.Float(
-        string='Cardboard unload ',
+        string='Cardboard unload',
         help="Time required to unload cardboard."
     )
     raw_bag_unload = fields.Float(
@@ -55,19 +55,19 @@ class AnalyticDistributionParameter(models.Model):
     )
 
     # Internal transfer to production
-    raw_color_reloc_day = fields.Float(
+    raw_color_reloc_daily = fields.Float(
         string='Color',
         help="Daily internal relocation time for color (hours per day)."
     )
-    raw_pallet_reloc_day = fields.Float(
+    raw_pallet_reloc_daily = fields.Float(
         string='Pallet ',
         help="Daily internal relocation time for pallets (hours per day)."
     )
-    raw_cboard_reloc_day = fields.Float(
+    raw_cboard_reloc_daily = fields.Float(
         string='Cardboard',
         help="Daily internal relocation time for cardboard (hours per day)."
     )
-    raw_bag_reloc_day = fields.Float(
+    raw_bag_reloc_daily = fields.Float(
         string='Bag',
         help="Daily internal relocation time for bags (hours per day)."
     )
@@ -77,7 +77,7 @@ class AnalyticDistributionParameter(models.Model):
         string='Minutes per pallet',
         help="Minutes required to relocate each pallet."
     )
-    ctr_box_qty = fields.Integer(
+    container_box_qty = fields.Integer(
         string='Boxes per container',
         help="Number of boxes that fit in a container."
     )

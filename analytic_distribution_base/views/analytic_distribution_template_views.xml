@@ -56,10 +56,11 @@
                             <field widget="statinfo" name="analytic_line_count" string="Lines"/>
                         </button>
                     </div>
-
-                    <h1>
-                        <field name="name" placeholder="Analytic distribution template name ..."/>
-                    </h1>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Analytic distribution template name ..."/>
+                        </h1>
+                    </div>
                     <group>
                         <field name="compute_method" required="1"/>
                         <field name="comment" placeholder="Notes" nolabel="1" colspan="2"/>

@@ -3,7 +3,6 @@
     <data noupdate="1">
         <record id="analytic_distribution_inplast_parameter"
                 model="analytic.distribution.parameter">
-
             <field name="name">Parámetros generales</field>
         </record>
 

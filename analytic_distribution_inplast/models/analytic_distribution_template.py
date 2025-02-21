@@ -5,205 +5,41 @@ from odoo.exceptions import UserError
 class AnalyticDistributionTemple(models.Model):
     _inherit = "analytic.distribution.template"
 
-    compute_method = fields.Selection(
+    compute_method = fields.Selection(selection_add=
         [
-            ("demo", "demo INPLAST"),
+            ("r1", "R1.- Descarga y ubicación de asas (PDTE)"),
+            ("r2", "R2.- Recogida de palet y ubicación (PDTE)"),
+            ("r3", "R3.- Carga contenedor (PDTE)"),
+            ("r3.1", "R3.1.- Desubicación y carga (PDTE)"),
+            ("r4", "R4.- Recepción y pesaje de materiales (PDTE)"),
+            ("r5", "R5.- Aprovisionamiento materiales producción (PDTE)"),
+            ("r6", "R6.- Coste almacenamiento MP (PDTE)"),
+            ("r7", "R7.- Coste almacenamiento producto (PDTE)"),
+            ("r8", "R8.- Materia prima (PDTE)"),
+            ("r9", "R9.- Materia prima 2 (PDTE)"),
+            ("r10", "R10.- Gastos personal (PDTE)"),
+            ("r11", "R11.- Gastos personal 2 (PDTE)"),
+            ("r12", "R12.- Amortizaciones (PDTE)"),
             ("r13", "R13.- Electricidad"),
-            ("r14", "R14.- Calidad"),
-            ("r15", "R15.- Calidad"),
-            ("r22", "R22.- Ventas por región y subfamilia"),
+            ("r14", "R14.- Calidad (PDTE)"),
+            ("r15", "R15.- Calidad 2 (PDTE)"),
+            ("r16", "R16.- Gastos taller y mantenimiento (PDTE)"),
+            ("r17", "R17.- Gastos taller y mantenimiento 2 (PDTE)"),
+            ("r18", "R18.- Gastos planificación (PDTE)"),
+            ("r19", "R19.- Gastos planificación 2 (PDTE)"),
+            ("r20", "R20.- Gastos planificación 3 (PDTE)"),
+            ("r21", "R21.- Gastos planificación 4 (PDTE)"),
+            ("r22", "R22.- Comercial (PDTE)"),
+            ("r23", "R23.- Generales (PDTE)"),
         ]
     )
 
+    workcenter_ids = fields.Many2many("mrp.workcenter", string="Workcenters")
+
+
+    # 10/feb esto sobra, que se elimine tras validar con Alex que irá a través de planes analíticos generales:
     def _get_analytic_distribution_plan(self):
         self.analytic_distribution_plan_id = self.env.company.analytic_distribution_plan_id.id
     analytic_distribution_plan_id = fields.Many2one('account.analytic.plan', string='Distribution plan',
                                                     compute='_get_analytic_distribution_plan')
 
-
-    workcenter_ids = fields.Many2many("mrp.workcenter", string="Workcenters")
-
-    def compute_distribution(self):
-        """Extend this function with custom Inplast analytic compute modes"""
-        super().compute_distribution()
-        self.env["account.analytic.line"].search(
-            [("analytic_distribution_id", "=", self.id)]
-        ).unlink()
-        self.inplast_computed_modes()
-
-    def inplast_computed_modes(self):
-        if self.compute_method == "demo":
-            raise UserError("ok")
-        elif self.compute_method == "r13":
-            self.compute_r13()
-        elif self.compute_method in ["r14","r15"]:
-            self.compute_r14()
-        elif self.compute_method == "r22":
-            self.compute_r22()
-
-
-    def compute_r13(self):
-        datefrom = self.date_from
-        dateto = self.date_to
-        total_kwh = 0  # Total de kWh consumidos por todas las máquinas
-        workcenters = self.workcenter_ids
-        amount = self.amount  # El coste a distribuir
-
-        # Wororders entre fechas:
-        workorders = self.env["mrp.workorder"].search(
-            [
-                ("workcenter_id", "in", workcenters.ids),
-                ("date_start", ">=", datefrom),
-                ("date_start", "<=", dateto),
-            ]
-        )
-
-        # Inicialización de listas simples
-        mrpproducts = []
-        product_total_kwh = []
-
-        # Cálculo del total de kWh consumidos
-        for wo in workorders:
-            product = wo.product_id
-            duration = wo.duration
-            machine = wo.workcenter_id
-
-            # Identificamos productos únicos y agregamos a la lista si no están
-            if product not in mrpproducts:
-                mrpproducts.append(product)
-                product_total_kwh.append(0)  # Inicializamos su consumo total a 0
-
-            # Calculamos el consumo de kWh
-            kwh_consumed = duration * machine.power_kw
-            total_kwh += kwh_consumed
-
-            # Actualizamos el consumo total por producto
-            product_index = mrpproducts.index(product)
-            product_total_kwh[product_index] += kwh_consumed
-
-        # Verificar si hay consumo total de kWh para evitar la división por cero
-        if total_kwh == 0:
-            raise UserError("No hay consumo de energía registrado.")
-
-        # Crear entradas analíticas para cada producto
-        for i in range(len(mrpproducts)):
-            product = mrpproducts[i]
-            product_kwh = product_total_kwh[i]
-
-            machine_percentage = (product_kwh / total_kwh) * 100
-            machine_cost = (amount * machine_percentage) / 100
-
-            # Buscar la cuenta analítica para el producto base tapón, o crearla:
-            analytic_product = product
-            if product.pnt_product_type == 'packing':
-                analytic_product = product.pnt_parent_id
-
-            analytic_account = self.env['account.analytic.account'].search([
-                ('product_id','=',analytic_product.id)
-            ])
-            if not analytic_account.id:
-                analytic_account = self.env['account.analytic.account'].create({
-                    'product_id': analytic_product.id,
-                    'plan_id': self.env.company.analytic_product_plan_id.id,
-                    'name': analytic_product.name,
-                })
-
-
-            self.env["account.analytic.line"].create(
-                {
-                    "name": f"Consumo {product.name}",
-                    "amount": machine_cost,
-                    "product_id": product.id,
-                    "date": fields.Date.today(),
-                    "analytic_distribution_id": self.id,
-                    "account_id": analytic_account.id,
-                }
-            )
-
-        return True
-
-    def compute_r14(self):
-        datefrom = self.date_from
-        dateto = self.date_to
-        total_duration = 0  # Total de kWh consumidos por todas las máquinas
-        workcenters = self.workcenter_ids
-        amount = self.amount  # El máximo coste a distribuir
-
-        # Órdenes de manufactura consideradas entre fechas:
-        workorders = self.env["mrp.workorder"].search(
-            [
-                ("workcenter_id", "in", workcenters.ids),
-                ("date_start", ">=", datefrom),
-                ("date_start", "<=", dateto),
-            ]
-        )
-
-        # Inicialización de listas simples
-        mrpproducts = []
-        product_total_duration = []
-
-        # Cálculo del total de kWh consumidos
-        for wo in workorders:
-            product = wo.product_id
-            duration = wo.duration
-            machine = wo.workcenter_id
-
-            # Identificamos productos únicos y agregamos a la lista si no están
-            if product not in mrpproducts:
-                mrpproducts.append(product)
-                product_total_duration.append(0)  # Inicializamos su consumo total a 0
-
-            total_duration += duration
-
-            # Actualizamos el consumo total por producto
-            product_index = mrpproducts.index(product)
-            product_total_duration[product_index] += duration
-
-        # Verificar si hay consumo total de kWh para evitar la división por cero
-        if total_duration == 0:
-            raise UserError("No hay consumo de energía registrado.")
-
-        # Crear entradas analíticas para cada producto
-        for i in range(len(mrpproducts)):
-            product = mrpproducts[i]
-            product_kwh = product_total_duration[i]
-
-            machine_percentage = (product_kwh / total_duration) * 100
-            machine_cost = (amount * machine_percentage) / 100
-
-            self.env["account.analytic.line"].create(
-                {
-                    "name": f"Consumo {product.name}",
-                    "amount": machine_cost,
-                    "product_id": product.id,
-                    "date": fields.Date.today(),
-                    "analytic_distribution_id": self.id,
-                }
-            )
-
-        return True
-
-    def compute_r22(self):
-        # El chequeo de región es el siguiente: país = España (ES), o posición fiscal "intracomuntaria" (EU) y otros.
-        # La parametrización está hecha:
-        analytic_spain = self.env.company.analytic_spain_account_id.id
-        analytic_eu= self.env.companyanalytic_eu_account_id.id
-        analytic_noneu = self.env.company.analytic_non_eu_account_id.id
-        amount = self.amount
-
-        fiscal_position_eu_external_id = "account." + self.company.id + "_" + "fp_intra"
-        partner_eu = self.env.ref(fiscal_position_eu_external_id)
-
-        if not analytic_spain.id or not analytic_eu.id or not analytic_noneu.id:
-            raise UserError('Go to company => Analytic parametrization and assign region accounts.')
-
-        # Cálculo para España: Todos los account.move.line de las cuentas, cuyo partner.country_id es España.
-        #  Es UE si la posición fiscal es partner_eu.id; el resto a "Resto del mundo".
-
-        #  Se hace el porcentaje sobre el total de venta,
-        #  Se crea array de familia que ha sido cada venta (por array de venta, familia),
-        #  Si existe cuenta analítica para esta familia, se añade apunte contable, en otro caso se crea y después añade.
-
-        # El array podría ser: [ 'region', 'familia' , 'importe']
-        # Después calcular en base al array.
-        return True

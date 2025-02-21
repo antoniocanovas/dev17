@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_analytic_distribution_template, Analytic distribution template admin,model_analytic_distribution_template,analytic.group_analytic_accounting,1,1,1,1
 access_analytic_distribution, Analytic distribution item admin,model_analytic_distribution,analytic.group_analytic_accounting,1,1,1,1
+access_analytic_distribution_line, Analytic distribution line admin,model_analytic_distribution_line,analytic.group_analytic_accounting,1,1,1,1
