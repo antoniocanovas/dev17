@@ -211,6 +211,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', '=', 'handle'),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_handles_ids = pickings
 
@@ -228,6 +229,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', '=', 'handle'),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             total_qty = 0.0
             for picking in pickings:
@@ -265,6 +267,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_caps_ids = pickings
 
@@ -282,6 +285,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             total_qty = 0.0
             for picking in pickings:
@@ -332,7 +336,7 @@ class AnalyticDistribution(models.Model):
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
                 ('sale_id', 'in', rec.sale_caps_order_ids.ids),
                 ('picking_type_code', '=', 'outgoing'),
-                ('state', 'not in', ['draft', 'cancel']),
+                ('state', 'in', ['done']),
             ])
             rec.sale_caps_picking_ids = pickings
 
@@ -362,6 +366,7 @@ class AnalyticDistribution(models.Model):
             sale_orders = self.env['sale.order'].search([
                 ('date_order', '>=', rec.date_from),
                 ('date_order', '<=', rec.date_to),
+                ('state', 'in', ['sale']),
             ])
             caps_orders = sale_orders.filtered(
                 lambda o: any(line.product_id.categ_id.type in ['cap_mrp', 'cap_distribution'] for line in o.order_line)
@@ -414,6 +419,7 @@ class AnalyticDistribution(models.Model):
             sale_orders = self.env['sale.order'].search([
                 ('date_order', '>=', rec.date_from),
                 ('date_order', '<=', rec.date_to),
+                ('state', 'in', ['sale']),
             ])
             handles_orders = sale_orders.filtered(
                 lambda o: any(line.product_id.categ_id.type == 'handle' for line in o.order_line)
@@ -462,6 +468,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['raw_cistern']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_cistern_ids = pickings
 
@@ -494,6 +501,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['raw_sack']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_sack_ids = pickings
 
@@ -526,6 +534,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['raw_color']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_color_ids = pickings
 
@@ -558,6 +567,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['raw_cardboard']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_cardboard_ids = pickings
 
@@ -590,6 +600,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['raw_bag']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_bag_ids = pickings
 
@@ -623,6 +634,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['raw_pallet']),
                 ('picking_type_code', '=', 'incoming'),
+                ('state', 'in', ['done']),
             ])
             rec.picking_in_pallet_ids = pickings
 
