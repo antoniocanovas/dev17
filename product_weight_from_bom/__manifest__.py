@@ -4,7 +4,7 @@
 
 {
     "name": "Product Weight from bom Calculation",
-    "version": "16.0.1.0.1",
+    "version": "17.0.1.0.1",
     "author": "Savoir-faire Linux,Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-attribute",
     "license": "AGPL-3",
