@@ -23,6 +23,9 @@
                                    invisible="pnt_product_type not in ['packing']"
                                    required="pnt_product_type in ['packing']"
                             />
+                            <field name="pnt_net_weight"
+                                   invisible="pnt_product_type not in ['packing']"
+                            />
                             <field name="pnt_box_qty"
                                    invisible="pnt_product_type not in ['packing']"
                             />

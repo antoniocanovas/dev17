@@ -39,6 +39,17 @@ class ProductTemplate(models.Model):
     pnt_product_raw = fields.Char(string="Product raw", store=True, copy=True, translate=True)
     product_base_dye = fields.Char(string=" Main product dye", copy=True, translate=True,compute="_compute_product_base_fields",)
     product_base_raw = fields.Char(string="Main product raw",  copy=True, translate=True,compute="_compute_product_base_fields",)
+    pnt_net_weight = fields.Float('Net Weight', compute='_compute_net_weight', digits='Stock Weight')
+
+    @api.depends('pnt_parent_id','pnt_parent_id.weight')
+    def _compute_net_weight(self):
+        for record in self:
+            net_weight = record.weight
+            if (record.pnt_parent_id.id) and (record.pnt_product_type in ['packing']):
+                net_weight = record.pnt_parent_id.weight * record.pnt_parent_qty
+            record['pnt_net_weight'] = net_weight
+
+
     pnt_box_qty = fields.Integer("Box quantity")
 
     pnt_product_coa = fields.Many2one(
