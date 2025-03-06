@@ -17,6 +17,7 @@ Several referrer per sale order or invoice (Enterprise Edition).
         'views/res_partner_views.xml',
         'views/sale_order_views.xml',
         'views/account_move_views.xml',
+        'views/res_company_views.xml',
     ],
     'installable': True,
 }
