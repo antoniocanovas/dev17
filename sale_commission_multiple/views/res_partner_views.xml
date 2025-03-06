@@ -5,7 +5,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='sales_purchases']/group" position="inside">
-                <group name="multiple_commissions" string="Referrers" invisible="commercial_partner_id != active_id">
+                <group name="multiple_commissions" string="Referrers"
+                       invisible="commercial_partner_id != active_id and customer_referrer_unique">
                     <field name="referrer_plan_ids" nolabel="1" colspan="2" context="{'default_partner_id':id}">
                             <tree editable="1">
                                 <field name="partner_id" column_invisible="1"/>
@@ -13,6 +14,7 @@
                                 <field name="commission_plan_id" required="1" readonly="0"/>
                             </tree>
                     </field>
+                    <field name="customer_referrer_unique" invisible="1"/>
                 </group>
             </xpath>
         </field>

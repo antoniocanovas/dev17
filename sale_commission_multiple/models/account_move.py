@@ -12,8 +12,10 @@ class AccountMove(models.Model):
         for record in self:
             lines = []
             if record.partner_id.commercial_partner_id.referrer_plan_ids.ids and record.id:
-                # Factura nueva, tiramos de comisionistas del contacto:
+                # Factura nueva, tiramos de comisionistas de la central o del contacto:
                 referrers = record.partner_id.commercial_partner_id.referrer_plan_ids
+                if not self.env.company.customer_referrer_unique:
+                    referrers = record.partner_id.referrer_plan_ids
                 # Si la factura viene desde pedido de venta:
                 amsalelines = self.env['account.move.line'].search([('move_id','=',record.id),('sale_line_ids','!=',False)])
                 if amsalelines.ids:

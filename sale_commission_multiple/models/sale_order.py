@@ -8,11 +8,14 @@ class SaleOrder(models.Model):
     def _get_partner_referrers(self):
         for record in self:
             lines = []
-            customer_referrer_unique = self.env.company.customer_referrer_unique
+            # Comisionista por defecto la central, pero si puede tener distinto cada delegacion, toma el del partner:
+            referrers = record.partner_id.commercial_partner_id.referrer_plan_ids
+            if not self.env.company.customer_referrer_unique:
+                referrers = record.partner_id.referrer_plan_ids
+
             # Creación de líneas de comisionistas desde el partner:
-            if
-            if record.partner_id.commercial_partner_id.referrer_plan_ids.ids and record.id:
-                for li in record.partner_id.commercial_partner_id.referrer_plan_ids:
+            if referrer.ids and record.id:
+                for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
                         'commission_plan_id': li.commission_plan_id.id,
