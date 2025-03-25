@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
                 referrers = record.partner_id.referrer_plan_ids
 
             # Creación de líneas de comisionistas desde el partner:
-            if referrer.ids and record.id:
+            if referrers.ids and record.id:
                 for li in referrers:
                     newline = self.env['referrer.plan.rel'].create({
                         'referrer_id': li.referrer_id.id,
