@@ -49,7 +49,14 @@ class AnalyticDistribution(models.Model):
         dateto = self.date_to
         picking_hour_cost = li.picking_hour_cost
 
-        for picking in self.sale_caps_picking_ids:
+        # Albaranes que van desde producción a almacén en el rango de fechas (todos son tapones):
+        # Son todos los que tienen las MO en incoming_picking (m2o a albarán de salida)
+        pickings = self.env['mrp.production'].search([
+            ('date_finished', '>=', datefrom),
+            ('date_finished', '<=', dateto),
+            ]).incoming_picking
+
+        for picking in pickings:
             products = set()
             total_pallets = 0
 
@@ -61,7 +68,7 @@ class AnalyticDistribution(models.Model):
             total_pallets += sum(lines.mapped('product_uom_qty'))
             if total_pallets == 0:
                 continue
-            mrp_pallet_picking = self.truck_load / total_pallets
+            pallet_picking = li.picking_hour_cost / 60 * self.pallet_reloc
 
             # Productos distintos en el albarán, del tipo TAPÓN:
             for sm in lines:
@@ -84,7 +91,7 @@ class AnalyticDistribution(models.Model):
                     new_aal = self.env['account.analytic.line'].create({
                         'product_id': product.pnt_parent_id.id,
                         'name': li.template_id.name + " - " + picking.name,
-                        'amount': - product_pallets * mrp_pallet_picking * li.picking_hour_cost,
+                        'amount': - product_pallets * pallet_picking,
                         product_field_id: analytic_account.id,
                         fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
                         department_field_id: self.env.company.analytic_warehouse_department_id.id,
