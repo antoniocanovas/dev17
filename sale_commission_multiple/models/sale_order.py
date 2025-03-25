@@ -8,7 +8,7 @@ class SaleOrder(models.Model):
     def _get_partner_referrers(self):
         for record in self:
             lines = []
-            # Comisionista por defecto la central, pero si puede tener distinto cada delegacion, toma el del partner:
+            # Comisionistas por defecto los de la central, salvo que esté deshabilitado en la configuración de empresa:
             referrers = record.partner_id.commercial_partner_id.referrer_plan_ids
             if not self.env.company.customer_referrer_unique:
                 referrers = record.partner_id.referrer_plan_ids
