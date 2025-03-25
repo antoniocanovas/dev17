@@ -61,7 +61,7 @@ class AnalyticDistribution(models.Model):
                         product_pallets += sm.product_uom_qty
 
                 # Buscamos si ya existe o se crea la cuenta analítica para este producto:
-                analytic_account = self.check_or_create_analytic_account(product)
+                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
                 # Pdte: Ver si hay planes adicionales que cumplimentar, y cambiar el estándar account_id:
                 if product_pallets > 0:
                     product_field_id = self.env.company.product_field_id.name
@@ -70,10 +70,12 @@ class AnalyticDistribution(models.Model):
                     department_field_id = self.env.company.department_field_id.name
 
                     new_aal = self.env['account.analytic.line'].create({
-                        'product_id': product.id,
-                        'name': li.template_id.name,
+                        'product_id': product.pnt_parent_id.id,
+                        'name': li.template_id.name + " - " + picking.name,
                         'amount': - product_pallets * pallet_picking_unload * li.picking_hour_cost,
                         product_field_id: analytic_account.id,
+                        fixed_variable_field_id: self.env.company.analytic_fixed_account_id.id,
+                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
                         'analytic_distribution_id': self.id,
                         'analytic_distribution_template_id': li.template_id.id,
                     })
@@ -410,6 +412,58 @@ class AnalyticDistribution(models.Model):
         string="Handle pallets sales",
         compute="_compute_sale_handles_order_qty",
     )
+
+
+    sale_handles_picking_ids = fields.Many2many(
+        'stock.picking',
+        relation='analytic_distribution_sale_handles_picking_rel',
+        column1='analytic_distribution_id',
+        column2='picking_id',
+        string="Pickings",
+        compute="_compute_sale_handles_picking_ids")
+    sale_handles_picking_qty = fields.Float(string="Pickings qty", compute="_compute_sale_handles_picking_qty")
+    sale_handles_picking_pallet_qty = fields.Float(string="Pallet pickings qty",
+                                                   compute="_compute_sale_handles_picking_pallet_qty")
+
+
+    @api.depends('date_from', 'date_to')
+    def _compute_sale_handles_picking_ids(self):
+        """Obtiene los pickings del período y filtra aquellos que contengan líneas
+        con productos de categoría 'handle'."""
+        for rec in self:
+            pickings = self.env['stock.picking'].search([
+                ('scheduled_date', '>=', rec.date_from),
+                ('scheduled_date', '<=', rec.date_to),
+                ('move_ids_without_package.product_id.categ_id.type', 'in', ['handle']),
+                ('sale_id', 'in', rec.sale_handles_order_ids.ids),
+                ('picking_type_code', '=', 'outgoing'),
+                ('state', 'in', ['done']),
+            ])
+            rec.sale_handles_picking_ids = pickings
+
+
+    @api.depends('sale_handles_picking_ids')
+    def _compute_sale_handles_picking_qty(self):
+        for rec in self:
+            rec.sale_handles_picking_qty = len(rec.sale_handles_picking_ids)
+
+
+    @api.depends('sale_handles_picking_ids')
+    def _compute_sale_handles_picking_pallet_qty(self):
+        """Suma el 'product_uom_qty' de las líneas de sale order que tengan
+        productos de categoría 'handle'."""
+        for rec in self:
+            total_qty = 0.0
+            for so in rec.sale_handles_picking_ids:
+                lines = so.move_ids_without_package.filtered(
+                    lambda l: l.product_id.categ_id.type in ['handle']
+                )
+                total_qty += sum(lines.mapped('product_uom_qty'))
+            rec.sale_handles_picking_pallet_qty = total_qty
+
+
+
+
 
     @api.depends('date_from', 'date_to')
     def _compute_sale_handles_order_ids(self):

@@ -23,6 +23,19 @@
                             <field name="department_field_id"/>
                         </group>
                     </group>
+                    <group name="specific_analytic_accounts">
+                        <group string="Departments">
+                            <field name="analytic_warehouse_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
+                            <field name="analytic_maintenance_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
+                            <field name="analytic_sale_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
+                            <field name="analytic_quality_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
+                            <field name="analytic_administration_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
+                        </group>
+                        <group string="Accounts">
+                            <field name="analytic_fixed_account_id" domain="[('plan_id','=',analytic_fixed_variable_plan_id)]"/>
+                            <field name="analytic_variable_account_id" domain="[('plan_id','=',analytic_fixed_variable_plan_id)]"/>
+                        </group>
+                    </group>
                 </page>
             </xpath>
         </field>

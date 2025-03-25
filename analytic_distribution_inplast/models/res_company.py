@@ -84,3 +84,13 @@ class ResCompany(models.Model):
                 ('field_description', '=', self.analytic_department_plan_id.name),
             ])
         self.department_field_id = aal_field
+
+
+    analytic_fixed_account_id = fields.Many2one('account.analytic.account', string='Fixed expense')
+    analytic_variable_account_id = fields.Many2one('account.analytic.account', string='Variable expense')
+
+    analytic_warehouse_department_id = fields.Many2one('account.analytic.account', string='Warehouse')
+    analytic_maintenance_department_id = fields.Many2one('account.analytic.account', string='Maintenance')
+    analytic_sale_department_id = fields.Many2one('account.analytic.account', string='Sales')
+    analytic_administration_department_id = fields.Many2one('account.analytic.account', string='Administration')
+    analytic_quality_department_id = fields.Many2one('account.analytic.account', string='Quality')
