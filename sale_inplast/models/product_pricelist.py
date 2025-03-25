@@ -97,7 +97,7 @@ class ProductPricelist(models.Model):
 
                 # El impuesto al plástico aplica a ciertos régimenes fiscales, definimos en la tarifa (única por cliente)
                 # Aunque al crear la línea ya se asignó por onchange, aquí se actualiza por si cambia el impuesto:
-            # Quito la parte del impuesto al plástico (23/05/24) para usar OCA:
+                # Quito la parte del impuesto al plástico (23/05/24) para usar OCA:
                 #plastic_tax = 0
                 #if self.pnt_plastic_tax:
                 #    plastic_tax = li.product_tmpl_id.pnt_plastic_1000unit_tax / 1000
@@ -138,28 +138,22 @@ class ProductPricelist(models.Model):
             unit_price = price1000 / 1000
             li.write({'pnt_new_price':unit_price, 'pnt_tracking_date':date.today()})
 
-            # Cálculos para actualizar o añadir los productos PACKING de cada producto en la tarifa:
+            # Cálculos para actualizar PACKING de cada producto en la tarifa:
             if product.pnt_product_type == 'final':
                 for packing in product.pnt_packing_ids:
-                    if packing.sale_ok == True:
-                        pricelistitem = self.env['product.pricelist.item'].search([('product_tmpl_id','=',packing.id)])
-                        if len(pricelistitem.ids) > 1:
-                            raise UserError('Producto duplicado en tarifa: ' + str(pricelistitem.product_tmpl_id.name))
-                        elif len(pricelistitem.ids) == 1:
-                            pricelistitem.write({'pnt_new_price': li.pnt_new_price * packing.pnt_parent_qty})
-                        else:
-                            pricelistitem = self.env['product.pricelist.item'].create({
-                                'pricelist_id':self.id,
-                                'product_tmpl_id': packing.id,
-                                'compute_price': 'fixed',
-                                'applied_on': '1_product',
-                                'pnt_new_price': li.pnt_new_price * packing.pnt_parent_qty,
-                            })
+                    pricelistitem = self.env['product.pricelist.item'].search([
+                        ('product_tmpl_id', '=', packing.id),
+                        ('pricelist_id', '=', self.id),
+                    ])
+                    if len(pricelistitem.ids) > 1:
+                        raise UserError('Producto duplicado en tarifa: ' + str(pricelistitem.product_tmpl_id.name))
+                    if len(pricelistitem.ids) == 1 and packing.sale_ok == True:
+                        pricelistitem.write({'pnt_new_price': li.pnt_new_price * packing.pnt_parent_qty})
 
         self.pnt_pending_update = True
 
-
-    # Buscar nuevos PACKINGS con precios actuales:
+    """
+    # Buscar nuevos PACKINGS con precios actuales (25/03/25 no aplica porque ahora un producto es de muchos clientes):
     def product_packings_search(self):
         for li in self.item_ids:
             product = li.product_tmpl_id
@@ -180,3 +174,4 @@ class ProductPricelist(models.Model):
                                     'price_surcharge': li.price_surcharge * packing.pnt_parent_qty,
                                     'pnt_new_price': li.pnt_new_price * packing.pnt_parent_qty,
                                 })
+    """
