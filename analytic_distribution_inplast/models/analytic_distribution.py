@@ -29,12 +29,72 @@ class AnalyticDistribution(models.Model):
                 # raise UserError("ok")
             elif li.template_id.compute_method == "r1":
                 self.compute_r1(li)
+            elif li.template_id.compute_method == "r2":
+                self.compute_r2(li)
+            # VOY POR AQUÍ:
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
             elif li.template_id.compute_method in ["r14", "r15"]:
                 self.compute_r14(li)
             elif li.template_id.compute_method == "r22":
                 self.compute_r22(li)
+
+
+    ###########################################
+    # R2: Recogida de palets de tapones y ubicación (A MEDIAS, NO ENTIENDO ENUNCIADO).
+    ###########################################
+
+    def compute_r2(self, li):
+        datefrom = self.date_from
+        dateto = self.date_to
+        picking_hour_cost = li.picking_hour_cost
+
+        for picking in self.sale_caps_picking_ids:
+            products = set()
+            total_pallets = 0
+
+            # Total palets en albarán (no incluyo 'cap_distribution' porque esos no vienen de fábrica):
+            lines = picking.move_ids_without_package.filtered(
+                lambda l: l.product_id.categ_id.type in ['cap_mrp'] and l.product_id.pnt_product_type == 'packing'
+            )
+
+            total_pallets += sum(lines.mapped('product_uom_qty'))
+            if total_pallets == 0:
+                continue
+            mrp_pallet_picking = self.truck_load / total_pallets
+
+            # Productos distintos en el albarán, del tipo TAPÓN:
+            for sm in lines:
+                products.add(sm.product_id)
+            # Bucle para cada apunte analítico:
+            for product in products:
+                product_pallets = 0
+                for sm in lines:
+                    if sm.product_id == product:
+                        product_pallets += sm.product_uom_qty
+
+                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
+                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
+                if product_pallets > 0:
+                    product_field_id = self.env.company.product_field_id.name
+                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                    machine_field_id = self.env.company.machine_field_id.name
+                    department_field_id = self.env.company.department_field_id.name
+
+                    new_aal = self.env['account.analytic.line'].create({
+                        'product_id': product.pnt_parent_id.id,
+                        'name': li.template_id.name + " - " + picking.name,
+                        'amount': - product_pallets * mrp_pallet_picking * li.picking_hour_cost,
+                        product_field_id: analytic_account.id,
+                        fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                        'analytic_distribution_id': self.id,
+                        'analytic_distribution_template_id': li.template_id.id,
+                    })
+
+    ###########################################
+    # R1: Descarga y ubicación de ASAS.
+    ###########################################
 
     def compute_r1(self, li):
         datefrom = self.date_from
@@ -46,8 +106,12 @@ class AnalyticDistribution(models.Model):
             total_pallets = 0
 
             # Total palets en albarán:
-            lines = picking.move_ids_without_package.filtered(lambda l: l.product_id.categ_id.type == 'handle')
+            lines = picking.move_ids_without_package.filtered(
+                lambda l: l.product_id.categ_id.type == 'handle' and l.product_id.pnt_product_type == 'packing'
+            )
             total_pallets += sum(lines.mapped('product_uom_qty'))
+            if total_pallets == 0:
+                continue
             pallet_picking_unload = self.picking_unload / total_pallets
 
             # Productos distintos en el albarán, del tipo asa:
@@ -62,7 +126,6 @@ class AnalyticDistribution(models.Model):
 
                 # Buscamos si ya existe o se crea la cuenta analítica para este producto:
                 analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
-                # Pdte: Ver si hay planes adicionales que cumplimentar, y cambiar el estándar account_id:
                 if product_pallets > 0:
                     product_field_id = self.env.company.product_field_id.name
                     fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
@@ -322,7 +385,10 @@ class AnalyticDistribution(models.Model):
         column1='analytic_distribution_id',
         column2='picking_id',
         string="Pickings",
-        compute="_compute_sale_caps_picking_ids")
+        compute="_compute_sale_caps_picking_ids",
+        help="Albaranes de salida de tapones en el periodo especificado; sin pertencia a pedidos cerrados en esa fecha, "
+             "para incluir anteriores que se sirven ahora"
+    )
     sale_caps_picking_qty = fields.Float(string="Pickings qty", compute="_compute_sale_caps_picking_qty")
     sale_caps_picking_pallet_qty = fields.Float(string="Pallet pickings qty",
                                                 compute="_compute_sale_caps_picking_pallet_qty")
@@ -336,7 +402,7 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '>=', rec.date_from),
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
-                ('sale_id', 'in', rec.sale_caps_order_ids.ids),
+            #    ('sale_id', 'in', rec.sale_caps_order_ids.ids),
                 ('picking_type_code', '=', 'outgoing'),
                 ('state', 'in', ['done']),
             ])
@@ -435,12 +501,11 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '>=', rec.date_from),
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['handle']),
-                ('sale_id', 'in', rec.sale_handles_order_ids.ids),
+                #('sale_id', 'in', rec.sale_handles_order_ids.ids), (quitado para que incluya servidos de pedidos anteriores.
                 ('picking_type_code', '=', 'outgoing'),
                 ('state', 'in', ['done']),
             ])
             rec.sale_handles_picking_ids = pickings
-
 
     @api.depends('sale_handles_picking_ids')
     def _compute_sale_handles_picking_qty(self):
