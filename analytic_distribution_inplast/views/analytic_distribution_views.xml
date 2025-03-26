@@ -18,15 +18,17 @@
                     <group>
                         <group string="Albaranes de Asas">
                             <!-- Muestra el número de albaranes, la lista y la suma de UoM -->
-                            <field name="picking_in_handles_qty" readonly="1"/>
-                            <field name="picking_in_handles_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="picking_in_pallet_handles_qty" readonly="1"/>
+                            <field name="picking_in_handles_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_handles_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_pallet_handles_qty" string="Pallet" readonly="1"/>
+                            <field name="picking_in_pallet_handles_hour" string="Hours" widget="float_time"/>
                         </group>
                         <group string="Albaranes de Tapones">
                             <!-- Muestra el número de albaranes, la lista y la suma de UoM -->
-                            <field name="picking_in_caps_qty" readonly="1"/>
-                            <field name="picking_in_caps_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="picking_in_pallet_caps_qty" readonly="1"/>
+                            <field name="picking_in_caps_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_caps_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_pallet_caps_qty" string="Pallet" readonly="1"/>
+                            <field name="picking_in_pallet_caps_hour" string="Hours" widget="float_time"/>
                         </group>
                     </group>
 
@@ -34,77 +36,84 @@
                     <group>
                         <group string="Sale Orders de Asas">
                             <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos de asas -->
-                            <field name="sale_handles_order_count" readonly="1"/>
-                            <field name="sale_handles_order_qty" readonly="1"/>
-                            <field name="sale_handles_order_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="sale_handles_picking_ids" widget="many2many_tags" readonly="1"
+                            <field name="sale_handles_order_count" string="Sales qty" readonly="1"/>
+                            <field name="sale_handles_order_qty" string="Pallets" readonly="1"/>
+                            <field name="sale_handles_order_ids" string="Sales" widget="many2many_tags" readonly="1"/>
+                            <field name="sale_handles_picking_ids" string="Pickings" widget="many2many_tags" readonly="1"
                                    options="{'clickable': True}"/>
-                            <field name="sale_handles_picking_qty" readonly="1"/>
-                            <field name="sale_handles_picking_pallet_qty" readonly="1"/>
+                            <field name="sale_handles_picking_qty" string="Pickings qty" readonly="1"/>
+                            <field name="sale_handles_picking_pallet_qty" string="Picking pallets" readonly="1"/>
                         </group>
                         <group string="Sale Orders de Tapones">
                             <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos tapones -->
-                            <field name="sale_caps_order_count" readonly="1"/>
-                            <field name="sale_caps_pallet_qty" readonly="1"/>
-                            <field name="sale_caps_order_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="sale_caps_picking_ids" widget="many2many_tags" readonly="1"
+                            <field name="sale_caps_order_count" string="Sales qty" readonly="1"/>
+                            <field name="sale_caps_pallet_qty" string="Pallets" readonly="1"/>
+                            <field name="sale_caps_order_ids" string="Sales" widget="many2many_tags" readonly="1"/>
+                            <field name="sale_caps_picking_ids" string="Pickings" widget="many2many_tags" readonly="1"
                                    options="{'clickable': True}"/>
-                            <field name="sale_caps_picking_qty" readonly="1"/>
-                            <field name="sale_caps_picking_pallet_qty" readonly="1"/>
-
+                            <field name="sale_caps_picking_qty" string="Pickings qty" readonly="1"/>
+                            <field name="sale_caps_picking_pallet_qty" string="Picking pallets" readonly="1"/>
                         </group>
                     </group>
 
                     <group string="Manufacturing to Stock">
                         <group>
-                            <field name="picking_mrp2stock_ids" widget="many2many_tags"/>
-                            <field name="picking_mrp2stock_hour" widget="float_time"/>
+                            <field name="picking_mrp2stock_ids" string="Picking" widget="many2many_tags"/>
+                            <field name="picking_mrp2stock_hour" string="Hours" widget="float_time"/>
                         </group>
                         <group>
-                            <field name="picking_mrp2stock_qty"/>
-                            <field name="picking_mrp2stock_pallets_qty"/>
+                            <field name="picking_mrp2stock_qty" string="Picking qty"/>
+                            <field name="picking_mrp2stock_pallets_qty" string="Pallets"/>
                         </group>
                     </group>
 
                     <group>
                         <!-- Grupo para Albaranes de Cisternas -->
                         <group string="Albaranes de Cisternas">
-                            <field name="picking_in_cistern_qty" readonly="1"/>
-                            <field name="picking_in_cistern_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_cistern_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_cistern_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_cistern_hour" string="Hours" widget="float_time"/>
                         </group>
 
                         <!-- Grupo para Albaranes de Sacos -->
                         <group string="Albaranes de Sacos">
-                            <field name="picking_in_sack_qty" readonly="1"/>
-                            <field name="picking_in_sack_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_sack_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_sack_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_sack_hour" string="Hours" widget="float_time"/>
                         </group>
                     </group>
 
                     <group>
                         <!-- Grupo para Albaranes de Color -->
                         <group string="Albaranes de Color">
-                            <field name="picking_in_color_qty" readonly="1"/>
-                            <field name="picking_in_color_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_color_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_color_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_color_hour" string="Hours" widget="float_time"/>
                         </group>
 
                         <!-- Grupo para Albaranes de Cartón -->
                         <group string="Albaranes de Cartón">
-                            <field name="picking_in_cardboard_qty" readonly="1"/>
-                            <field name="picking_in_cardboard_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_cardboard_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_cardboard_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_cardboard_hour" string="Hours" widget="float_time"/>
                         </group>
                     </group>
 
                     <group>
                         <!-- Grupo para Albaranes de Bolsas -->
                         <group string="Albaranes de Bolsas">
-                            <field name="picking_in_bag_qty" readonly="1"/>
-                            <field name="picking_in_bag_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_bag_ids" string="Pickings" widget="many2many_tags" readonly="1"/>
+                            <field name="picking_in_bag_qty" string="Pickings qty" readonly="1"/>
+                            <field name="picking_in_bag_hour" string="Hours" widget="float_time"/>
                         </group>
 
+                        <!-- Grupo para Albaranes de CONTENEDORES llenos de cajas sueltas -->
                         <group string="container sales">
-                            <field name="sale_container_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="sale_container_qty" readonly="1"/>
-                            <field name="sale_container_hour" widget="float_time"/>
+                            <field name="sale_container_ids" string="Period sales" widget="many2many_tags" readonly="1"/>
+                            <field name="sale_container_qty" string="Sales qty" readonly="1"/>
+                            <field name="move_container_ids" string="Moves" widget="many2many_tags"/>
+                            <field name="move_container_qty" string="Moves qty" readonly="1"/>
+                            <field name="sale_container_hour" string="Hours" widget="float_time"/>
                         </group>
                     </group>
                 </page>
@@ -138,6 +147,7 @@
                             <field name="pallet_reloc" readonly="1"/>
                             <field name="container_box_qty" readonly="1"/>
                         </group>
+
                     </group>
                 </page>
 

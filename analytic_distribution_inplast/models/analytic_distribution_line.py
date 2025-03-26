@@ -37,7 +37,7 @@ class AnalyticDistributionLine(models.Model):
             # Carga de tapones y asas en la central (nº de albaranes):
             caps_handle_picking_load = (distribution.sale_caps_picking_qty + distribution.sale_handles_picking_qty) * parameters.truck_load
             # Añadir costes de traslado desde producción a STOCK según R2:
-            mrp2stock_picking = distribution.picking_mrp2stock_hour
+            mrp2stock_picking = distribution.picking_mrp2stock_hour * parameters.pallet_reloc / 60
 
             rec.picking_hour_qty = (cistern_unload + sack_unload + color_unload + cardboard_unload +
                                     bag_unload + pallet_unload + internal_pickings + container_load +

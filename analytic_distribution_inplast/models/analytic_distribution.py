@@ -31,6 +31,8 @@ class AnalyticDistribution(models.Model):
                 self.compute_r1(li)
             elif li.template_id.compute_method == "r2":
                 self.compute_r2(li)
+            elif li.template_id.compute_method == "r3":
+                self.compute_r3(li)
             # VOY POR AQUÍ:
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
@@ -38,6 +40,105 @@ class AnalyticDistribution(models.Model):
                 self.compute_r14(li)
             elif li.template_id.compute_method == "r22":
                 self.compute_r22(li)
+
+
+    ###########################################
+    # R3: Carga Contenedor de cajas.
+    ###########################################
+    def compute_r3(self, li):
+        # Albaranes que tienen múltiplos de las cajas por contenedor indicadas en la parametrización:
+
+        # VOY POR AQUÍ:
+        pickings = self.picking_mrp2stock_ids
+
+        for picking in pickings:
+            products = set()
+            total_pallets = 0
+
+            # Total palets en albarán (no incluyo 'cap_distribution' porque esos no vienen de fábrica):
+            lines = picking.move_ids_without_package.filtered(
+                lambda l: l.product_id.categ_id.type in ['cap_mrp'] and l.product_id.pnt_product_type == 'packing'
+            )
+
+            total_pallets += sum(lines.mapped('product_uom_qty'))
+            if total_pallets == 0:
+                continue
+            pallet_picking = li.picking_hour_cost / 60 * self.pallet_reloc
+
+            # Productos distintos en el albarán, del tipo TAPÓN:
+            for sm in lines:
+                products.add(sm.product_id)
+            # Bucle para cada apunte analítico:
+            for product in products:
+                product_pallets = 0
+                for sm in lines:
+                    if sm.product_id == product:
+                        product_pallets += sm.product_uom_qty
+
+                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
+                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
+                if product_pallets > 0:
+                    product_field_id = self.env.company.product_field_id.name
+                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                    machine_field_id = self.env.company.machine_field_id.name
+                    department_field_id = self.env.company.department_field_id.name
+
+                    new_aal = self.env['account.analytic.line'].create({
+                        'product_id': product.pnt_parent_id.id,
+                        'name': li.template_id.name + " - " + picking.name,
+                        'amount': - product_pallets * pallet_picking,
+                        product_field_id: analytic_account.id,
+                        fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                        'analytic_distribution_id': self.id,
+                        'analytic_distribution_template_id': li.template_id.id,
+                    })
+
+    ###########################################
+    # R1: Descarga y ubicación de ASAS.
+    ###########################################
+    def compute_r1(self, li):
+        for picking in self.picking_in_handles_ids:
+            products = set()
+            total_pallets = 0
+
+            # Total palets en albarán:
+            lines = picking.move_ids_without_package.filtered(
+                lambda l: l.product_id.categ_id.type == 'handle' and l.product_id.pnt_product_type == 'packing'
+            )
+            total_pallets += sum(lines.mapped('product_uom_qty'))
+            if total_pallets == 0:
+                continue
+            pallet_picking_unload = self.picking_unload / total_pallets
+
+            # Productos distintos en el albarán, del tipo asa:
+            for sm in lines:
+                products.add(sm.product_id)
+            # Bucle para cada apunte analítico:
+            for product in products:
+                product_pallets = 0
+                for sm in lines:
+                    if sm.product_id == product:
+                        product_pallets += sm.product_uom_qty
+
+                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
+                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
+                if product_pallets > 0:
+                    product_field_id = self.env.company.product_field_id.name
+                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                    machine_field_id = self.env.company.machine_field_id.name
+                    department_field_id = self.env.company.department_field_id.name
+
+                    new_aal = self.env['account.analytic.line'].create({
+                        'product_id': product.pnt_parent_id.id,
+                        'name': li.template_id.name + " - " + picking.name,
+                        'amount': - product_pallets * pallet_picking_unload * li.picking_hour_cost,
+                        product_field_id: analytic_account.id,
+                        fixed_variable_field_id: self.env.company.analytic_fixed_account_id.id,
+                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                        'analytic_distribution_id': self.id,
+                        'analytic_distribution_template_id': li.template_id.id,
+                    })
 
 
     ###########################################
@@ -91,55 +192,6 @@ class AnalyticDistribution(models.Model):
                         'analytic_distribution_template_id': li.template_id.id,
                     })
 
-    ###########################################
-    # R1: Descarga y ubicación de ASAS.
-    ###########################################
-    def compute_r1(self, li):
-        datefrom = self.date_from
-        dateto = self.date_to
-        picking_hour_cost = li.picking_hour_cost
-
-        for picking in self.picking_in_handles_ids:
-            products = set()
-            total_pallets = 0
-
-            # Total palets en albarán:
-            lines = picking.move_ids_without_package.filtered(
-                lambda l: l.product_id.categ_id.type == 'handle' and l.product_id.pnt_product_type == 'packing'
-            )
-            total_pallets += sum(lines.mapped('product_uom_qty'))
-            if total_pallets == 0:
-                continue
-            pallet_picking_unload = self.picking_unload / total_pallets
-
-            # Productos distintos en el albarán, del tipo asa:
-            for sm in lines:
-                products.add(sm.product_id)
-            # Bucle para cada apunte analítico:
-            for product in products:
-                product_pallets = 0
-                for sm in lines:
-                    if sm.product_id == product:
-                        product_pallets += sm.product_uom_qty
-
-                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
-                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
-                if product_pallets > 0:
-                    product_field_id = self.env.company.product_field_id.name
-                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
-                    machine_field_id = self.env.company.machine_field_id.name
-                    department_field_id = self.env.company.department_field_id.name
-
-                    new_aal = self.env['account.analytic.line'].create({
-                        'product_id': product.pnt_parent_id.id,
-                        'name': li.template_id.name + " - " + picking.name,
-                        'amount': - product_pallets * pallet_picking_unload * li.picking_hour_cost,
-                        product_field_id: analytic_account.id,
-                        fixed_variable_field_id: self.env.company.analytic_fixed_account_id.id,
-                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
-                        'analytic_distribution_id': self.id,
-                        'analytic_distribution_template_id': li.template_id.id,
-                    })
 
     # =========================================================================
     # Traemos todos los campos de parámetros en el momento del recálculo y guardamos:
@@ -263,7 +315,11 @@ class AnalyticDistribution(models.Model):
     )
     picking_in_pallet_handles_qty = fields.Float(
         string="Handle pallets in",
-        compute="_compute_picking_in_handles",
+        compute="_compute_picking_in_pallet_handles_qty",
+    )
+    picking_in_pallet_handles_hour = fields.Float(
+        string="Picking in pallet handles Hours",
+        compute="_compute_picking_in_pallet_handles_hour"
     )
 
     @api.depends('date_from', 'date_to')
@@ -284,23 +340,24 @@ class AnalyticDistribution(models.Model):
             rec.picking_in_handles_qty = len(rec.picking_in_handles_ids)
 
     @api.depends('date_from', 'date_to')
-    def _compute_picking_in_handles(self):
+    def _compute_picking_in_pallet_handles_qty(self):
         """Suma el campo 'product_uom_qty' de las líneas de movimientos con productos 'handle'."""
         for rec in self:
-            pickings = self.env['stock.picking'].search([
-                ('scheduled_date', '>=', rec.date_from),
-                ('scheduled_date', '<=', rec.date_to),
-                ('move_ids_without_package.product_id.categ_id.type', '=', 'handle'),
-                ('picking_type_code', '=', 'incoming'),
-                ('state', 'in', ['done']),
-            ])
+            pickings = rec.picking_in_handles_ids
             total_qty = 0.0
             for picking in pickings:
                 lines = picking.move_ids_without_package.filtered(
-                    lambda l: l.product_id.categ_id.type == 'handle'
+                    lambda l: l.product_id.categ_id.type == 'handle' and l.product_id.pnt_product_type == 'packing'
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.picking_in_pallet_handles_qty = total_qty
+
+    @api.depends('date_from', 'date_to')
+    def _compute_picking_in_pallet_handles_hour(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_pallet_handles_hour = rec.picking_in_handles_qty * rec.picking_unload
+
 
     # =========================================================================
     # 2) PICKINGS: CAPS (Tapones)
@@ -319,7 +376,11 @@ class AnalyticDistribution(models.Model):
     )
     picking_in_pallet_caps_qty = fields.Float(
         string="Cap pallets received",
-        compute="_compute_picking_in_caps",
+        compute="_compute_picking_in_pallet_caps_qty",
+    )
+    picking_in_pallet_caps_hour = fields.Float(
+        string="Picking in pallet caps Hours",
+        compute="_compute_picking_in_pallet_caps_hour",
     )
 
     @api.depends('date_from', 'date_to')
@@ -340,23 +401,23 @@ class AnalyticDistribution(models.Model):
             rec.picking_in_caps_qty = len(rec.picking_in_caps_ids)
 
     @api.depends('date_from', 'date_to')
-    def _compute_picking_in_caps(self):
+    def _compute_picking_in_pallet_caps_qty(self):
         """Suma el campo 'product_uom_qty' de las líneas de movimientos con productos de tapones."""
         for rec in self:
-            pickings = self.env['stock.picking'].search([
-                ('scheduled_date', '>=', rec.date_from),
-                ('scheduled_date', '<=', rec.date_to),
-                ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
-                ('picking_type_code', '=', 'incoming'),
-                ('state', 'in', ['done']),
-            ])
+            pickings = rec.picking_in_caps_ids
             total_qty = 0.0
             for picking in pickings:
                 lines = picking.move_ids_without_package.filtered(
-                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
+                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution'] and l.product_id.pnt_product_type == 'packing'
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.picking_in_pallet_caps_qty = total_qty
+
+    @api.depends('date_from', 'date_to')
+    def _compute_picking_in_pallet_caps_hour(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_pallet_caps_hour = rec.picking_in_caps_qty * rec.picking_unload
 
     # MRP TO STOCK PICKINGS:
     picking_mrp2stock_ids = fields.Many2many(
@@ -375,9 +436,10 @@ class AnalyticDistribution(models.Model):
         compute="_compute_picking_mrp2stock_pallets_qty"
     )
     picking_mrp2stock_hour = fields.Float(
-        string="Hours",
+        string="Picking MRP2Stock Hours",
         compute="_compute_picking_mrp2stock_hours"
     )
+    @api.depends('date_from', 'date_to')
     def _compute_picking_mrp2stock(self):
         pickings = self.env['mrp.production'].search([
             ('date_finished', '>=', self.date_from),
@@ -387,9 +449,11 @@ class AnalyticDistribution(models.Model):
         ]).incoming_picking
         self.picking_mrp2stock_ids = [(6,0,pickings.ids)]
 
+    @api.depends('picking_mrp2stock_ids')
     def _compute_picking_mrp2stock_qty(self):
         self.picking_mrp2stock_qty = len(self.picking_mrp2stock_ids)
 
+    @api.depends('picking_mrp2stock_ids')
     def _compute_picking_mrp2stock_pallets_qty(self):
         # Total palets en albarán (no incluyo 'cap_distribution' porque esos no vienen de fábrica):
         total_pallets = 0
@@ -400,6 +464,7 @@ class AnalyticDistribution(models.Model):
             total_pallets += sum(lines.mapped('product_uom_qty'))
         self.picking_mrp2stock_pallets_qty = total_pallets
 
+    @api.depends('picking_mrp2stock_pallets_qty')
     def _compute_picking_mrp2stock_hours(self):
         self.picking_mrp2stock_hour = self.picking_mrp2stock_pallets_qty * self.pallet_reloc / 60
 
@@ -445,7 +510,6 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '>=', rec.date_from),
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['cap_mrp', 'cap_distribution']),
-            #    ('sale_id', 'in', rec.sale_caps_order_ids.ids),
                 ('picking_type_code', '=', 'outgoing'),
                 ('state', 'in', ['done']),
             ])
@@ -464,7 +528,7 @@ class AnalyticDistribution(models.Model):
             total_qty = 0.0
             for so in rec.sale_caps_picking_ids:
                 lines = so.move_ids_without_package.filtered(
-                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
+                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution'] and l.product_id.pnt_product_type == 'packing'
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.sale_caps_picking_pallet_qty = total_qty
@@ -480,7 +544,9 @@ class AnalyticDistribution(models.Model):
                 ('state', 'in', ['sale']),
             ])
             caps_orders = sale_orders.filtered(
-                lambda o: any(line.product_id.categ_id.type in ['cap_mrp', 'cap_distribution'] for line in o.order_line)
+                lambda o: any(line.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
+                              and line.product_id.pnt_product_type == 'packing'
+                              for line in o.order_line)
             )
             rec.sale_caps_order_ids = caps_orders
 
@@ -497,7 +563,7 @@ class AnalyticDistribution(models.Model):
             total_qty = 0.0
             for so in rec.sale_caps_order_ids:
                 lines = so.order_line.filtered(
-                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
+                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution'] and l.product_id.pnt_product_type == 'packing'
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.sale_caps_pallet_qty = total_qty
@@ -522,7 +588,6 @@ class AnalyticDistribution(models.Model):
         compute="_compute_sale_handles_order_qty",
     )
 
-
     sale_handles_picking_ids = fields.Many2many(
         'stock.picking',
         relation='analytic_distribution_sale_handles_picking_rel',
@@ -530,10 +595,16 @@ class AnalyticDistribution(models.Model):
         column2='picking_id',
         string="Pickings",
         compute="_compute_sale_handles_picking_ids")
-    sale_handles_picking_qty = fields.Float(string="Pickings qty", compute="_compute_sale_handles_picking_qty")
-    sale_handles_picking_pallet_qty = fields.Float(string="Pallet pickings qty",
-                                                   compute="_compute_sale_handles_picking_pallet_qty")
 
+    sale_handles_picking_qty = fields.Float(
+        string="Pickings qty",
+        compute="_compute_sale_handles_picking_qty"
+    )
+
+    sale_handles_picking_pallet_qty = fields.Float(
+        string="Pallet pickings qty",
+        compute="_compute_sale_handles_picking_pallet_qty"
+    )
 
     @api.depends('date_from', 'date_to')
     def _compute_sale_handles_picking_ids(self):
@@ -544,7 +615,6 @@ class AnalyticDistribution(models.Model):
                 ('scheduled_date', '>=', rec.date_from),
                 ('scheduled_date', '<=', rec.date_to),
                 ('move_ids_without_package.product_id.categ_id.type', 'in', ['handle']),
-                #('sale_id', 'in', rec.sale_handles_order_ids.ids), (quitado para que incluya servidos de pedidos anteriores.
                 ('picking_type_code', '=', 'outgoing'),
                 ('state', 'in', ['done']),
             ])
@@ -564,7 +634,7 @@ class AnalyticDistribution(models.Model):
             total_qty = 0.0
             for so in rec.sale_handles_picking_ids:
                 lines = so.move_ids_without_package.filtered(
-                    lambda l: l.product_id.categ_id.type in ['handle']
+                    lambda l: l.product_id.categ_id.type in ['handle'] and l.product_id.pnt_product_type == 'packing'
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.sale_handles_picking_pallet_qty = total_qty
@@ -584,7 +654,9 @@ class AnalyticDistribution(models.Model):
                 ('state', 'in', ['sale']),
             ])
             handles_orders = sale_orders.filtered(
-                lambda o: any(line.product_id.categ_id.type == 'handle' for line in o.order_line)
+                lambda o: any(line.product_id.categ_id.type == 'handle'
+                              and line.product_id.pnt_product_type == 'packing'
+                              for line in o.order_line)
             )
             rec.sale_handles_order_ids = handles_orders
 
@@ -601,7 +673,7 @@ class AnalyticDistribution(models.Model):
             total_qty = 0.0
             for so in rec.sale_handles_order_ids:
                 lines = so.order_line.filtered(
-                    lambda l: l.product_id.categ_id.type == 'handle'
+                    lambda l: l.product_id.categ_id.type == 'handle' and l.product_id.pnt_product_type == 'packing'
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.sale_handles_order_qty = total_qty
@@ -621,7 +693,10 @@ class AnalyticDistribution(models.Model):
         string="Cistern qty",
         compute="_compute_picking_in_cistern_qty",
     )
-
+    picking_in_cistern_hour = fields.Float(
+        string="Picking in cistern Hours",
+        compute="_compute_picking_in_cistern_hours",
+    )
     @api.depends('date_from', 'date_to')
     def _compute_picking_in_cistern_ids(self):
         for rec in self:
@@ -639,6 +714,12 @@ class AnalyticDistribution(models.Model):
         for rec in self:
             rec.picking_in_cistern_qty = len(rec.picking_in_cistern_ids)
 
+    @api.depends('picking_in_cistern_qty')
+    def _compute_picking_in_cistern_hours(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_cistern_hour = rec.picking_in_cistern_qty * rec.raw_cistern_unload
+
     # =========================================================================
     # 6) PICKINGS: SACOS
     # =========================================================================
@@ -654,7 +735,10 @@ class AnalyticDistribution(models.Model):
         string="Sack pikings qty",
         compute="_compute_picking_in_sack_qty",
     )
-
+    picking_in_sack_hour = fields.Float(
+        string="Picking in sack Hours",
+        compute="_compute_picking_in_sack_hours",
+    )
     @api.depends('date_from', 'date_to')
     def _compute_picking_in_sack_ids(self):
         for rec in self:
@@ -672,6 +756,12 @@ class AnalyticDistribution(models.Model):
         for rec in self:
             rec.picking_in_sack_qty = len(rec.picking_in_sack_ids)
 
+    @api.depends('picking_in_sack_qty')
+    def _compute_picking_in_sack_hours(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_sack_hour = rec.picking_in_sack_qty * rec.raw_sack_unload
+
     # =========================================================================
     # 7) PICKINGS: COLOR
     # =========================================================================
@@ -687,7 +777,10 @@ class AnalyticDistribution(models.Model):
         string="Color picking in qty",
         compute="_compute_picking_in_color_qty",
     )
-
+    picking_in_color_hour = fields.Float(
+        string="Picking in color Hours",
+        compute="_compute_picking_in_color_hours",
+    )
     @api.depends('date_from', 'date_to')
     def _compute_picking_in_color_ids(self):
         for rec in self:
@@ -705,6 +798,12 @@ class AnalyticDistribution(models.Model):
         for rec in self:
             rec.picking_in_color_qty = len(rec.picking_in_color_ids)
 
+    @api.depends('picking_in_color_qty')
+    def _compute_picking_in_color_hours(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_color_hour = rec.picking_in_color_qty * rec.raw_color_unload
+
     # =========================================================================
     # 8) PICKINGS: CARTÓN
     # =========================================================================
@@ -720,7 +819,10 @@ class AnalyticDistribution(models.Model):
         string="Cardboard piking qty",
         compute="_compute_picking_in_cardboard_qty",
     )
-
+    picking_in_cardboard_hour = fields.Float(
+        string="Picking in cardboard Hours",
+        compute="_compute_picking_in_cardboard_hours",
+    )
     @api.depends('date_from', 'date_to')
     def _compute_picking_in_cardboard_ids(self):
         for rec in self:
@@ -738,6 +840,12 @@ class AnalyticDistribution(models.Model):
         for rec in self:
             rec.picking_in_cardboard_qty = len(rec.picking_in_cardboard_ids)
 
+    @api.depends('picking_in_cardboard_qty')
+    def _compute_picking_in_cardboard_hours(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_cardboard_hour = rec.picking_in_cardboard_qty * rec.raw_cardboard_unload
+
     # =========================================================================
     # 9) PICKINGS: BOLSAS
     # =========================================================================
@@ -753,7 +861,10 @@ class AnalyticDistribution(models.Model):
         string="Bag pickings qty",
         compute="_compute_picking_in_bag_qty",
     )
-
+    picking_in_bag_hour = fields.Float(
+        string="Picking in bag Hours",
+        compute="_compute_picking_in_bag_hours",
+    )
     @api.depends('date_from', 'date_to')
     def _compute_picking_in_bag_ids(self):
         for rec in self:
@@ -771,6 +882,12 @@ class AnalyticDistribution(models.Model):
         for rec in self:
             rec.picking_in_bag_qty = len(rec.picking_in_bag_ids)
 
+    @api.depends('picking_in_bag_qty')
+    def _compute_picking_in_bag_hours(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_bag_hour = rec.picking_in_bag_qty * rec.raw_bag_unload
+
     # =========================================================================
     # 10) PICKINGS: pallets
     # =========================================================================
@@ -787,7 +904,10 @@ class AnalyticDistribution(models.Model):
         string="Pallet pickings in qty",
         compute="_compute_picking_in_pallet_qty",
     )
-
+    picking_in_pallet_hour = fields.Float(
+        string="Picking in pallet Hours",
+        compute="_compute_picking_in_pallet_hours",
+    )
     @api.depends('date_from', 'date_to')
     def _compute_picking_in_pallet_ids(self):
         for rec in self:
@@ -805,17 +925,28 @@ class AnalyticDistribution(models.Model):
         for rec in self:
             rec.picking_in_pallet_qty = len(rec.picking_in_pallet_ids)
 
+    @api.depends('picking_in_pallet_qty')
+    def _compute_picking_in_pallet_hours(self):
+        """Horas empleadas."""
+        for rec in self:
+            rec.picking_in_pallet_hour = rec.picking_in_pallet_qty * rec.raw_pallet_unload
+
     # =========================================================================
     # 11) sale: container
     # =========================================================================
 
-    sale_container_ids = fields.Many2many('sale.order.line', compute='_compute_sale_container_ids',
+    sale_container_ids = fields.Many2many('sale.order.line',
+                                          compute='_compute_sale_container_ids',
                                           string='Sale Container')
-    sale_container_qty = fields.Integer(string='Cantidad de Container', compute='_compute_sale_container_qty')
-    sale_container_hour = fields.Float(string='Hours', compute='_compute_sale_container_hour')
+    sale_container_qty = fields.Integer(string='Contenedores', compute='_compute_sale_container_qty')
+    sale_container_hour = fields.Float(string='Sale container Hours', compute='_compute_sale_container_hour')
+    move_container_ids = fields.Many2many('stock.move', string='Container moves', compute='_compute_stock_move_container')
+    move_container_qty = fields.Float(string='Containers pickings qty', compute='_compute_move_container_qty')
+
     @api.depends('date_from', 'date_to')
     def _compute_sale_container_ids(self):
         for rec in self:
+            # ESTO NO VALE PORQUE NO SON LOS SERVIDOS, SON LOS VENDIDOS:
             sales = self.env['sale.order.line'].search([
                 ('order_id.date_order', '>=', rec.date_from),
                 ('order_id.date_order', '<=', rec.date_to),
@@ -841,10 +972,45 @@ class AnalyticDistribution(models.Model):
                 containers += li.product_uom_qty / container_box_qty
             record.sale_container_qty = containers
 
+
     @api.depends('date_from', 'date_to')
+    def _compute_stock_move_container(self):
+        for rec in self:
+            moves = self.env['stock.move'].search([
+                ('sale_line_id', '!=', False),
+                ('state','in',['done']),
+                ('picking_id.date_done','>=',rec.date_from),
+                ('picking_id.date_done','<=',rec.date_to),
+                ('product_id.mrp_bom_template_id.type', 'in', ['box', 'box_nonmrp']),
+                ('picking_id.picking_type_code','=','outgoing')
+            ])
+
+            # Filtrar por número de cajas por contenedor indicado en parametrización:
+            parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
+            container_box_qty = parameters.container_box_qty
+            sale_line_container = []
+            for line in sales:
+                if container_box_qty != 0 and (line.product_uom_qty % container_box_qty) == 0:
+                    sale_line_container.append(line.id)
+
+            rec.move_container_ids = moves
+
+    @api.depends('move_container_ids')
+    def _compute_move_container_qty(self):
+        # REVISAR, ESTÁ A MEDIAS:
+        for rec in self:
+            containers = 0
+            parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
+            container_box_qty = parameters.container_box_qty
+            for li in rec.sale_container_ids:
+                containers += li.product_uom_qty / container_box_qty
+            rec.move_container_qty = containers
+
+    @api.depends('sale_container_qty')
     def _compute_sale_container_hour(self):
         for record in self:
             record.sale_container_hour = record.sale_container_qty * record.container_load
+
 
     # =========================================================================
     # MÉTODOS DE CÁLCULO PARA DISTRIBUCIONES ANALÍTICAS:
