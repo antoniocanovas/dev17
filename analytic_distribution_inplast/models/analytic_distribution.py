@@ -44,10 +44,6 @@ class AnalyticDistribution(models.Model):
     # R2: Recogida de palets de tapones y ubicación (A MEDIAS, NO ENTIENDO ENUNCIADO).
     ###########################################
     def compute_r2(self, li):
-        datefrom = self.date_from
-        dateto = self.date_to
-        picking_hour_cost = li.picking_hour_cost
-
         # Albaranes que van desde producción a almacén en el rango de fechas (todos son tapones):
         # Son todos los que tienen las MO en incoming_picking (m2o a albarán de salida)
         pickings = self.picking_mrp2stock_ids
@@ -378,6 +374,10 @@ class AnalyticDistribution(models.Model):
         string="Pallets",
         compute="_compute_picking_mrp2stock_pallets_qty"
     )
+    picking_mrp2stock_hour = fields.Float(
+        string="Hours",
+        compute="_compute_picking_mrp2stock_hours"
+    )
     def _compute_picking_mrp2stock(self):
         pickings = self.env['mrp.production'].search([
             ('date_finished', '>=', self.date_from),
@@ -386,6 +386,7 @@ class AnalyticDistribution(models.Model):
             ('incoming_picking','!=',False),
         ]).incoming_picking
         self.picking_mrp2stock_ids = [(6,0,pickings.ids)]
+
     def _compute_picking_mrp2stock_qty(self):
         self.picking_mrp2stock_qty = len(self.picking_mrp2stock_ids)
 
@@ -398,6 +399,9 @@ class AnalyticDistribution(models.Model):
             )
             total_pallets += sum(lines.mapped('product_uom_qty'))
         self.picking_mrp2stock_pallets_qty = total_pallets
+
+    def _compute_picking_mrp2stock_hours(self):
+        self.picking_mrp2stock_hour = self.picking_mrp2stock_pallets_qty * self.pallet_reloc / 60
 
     # =========================================================================
     # 3) SALE ORDERS: CAPS (Tapones)

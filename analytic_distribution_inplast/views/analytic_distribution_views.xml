@@ -58,6 +58,7 @@
                     <group string="Manufacturing to Stock">
                         <group>
                             <field name="picking_mrp2stock_ids" widget="many2many_tags"/>
+                            <field name="picking_mrp2stock_hour" widget="float_time"/>
                         </group>
                         <group>
                             <field name="picking_mrp2stock_qty"/>
