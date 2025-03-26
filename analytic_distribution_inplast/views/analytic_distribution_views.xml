@@ -32,6 +32,16 @@
 
                     <!-- Grupo para Sale Orders (la lógica igual que la de pickings) -->
                     <group>
+                        <group string="Sale Orders de Asas">
+                            <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos de asas -->
+                            <field name="sale_handles_order_count" readonly="1"/>
+                            <field name="sale_handles_order_qty" readonly="1"/>
+                            <field name="sale_handles_order_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="sale_handles_picking_ids" widget="many2many_tags" readonly="1"
+                                   options="{'clickable': True}"/>
+                            <field name="sale_handles_picking_qty" readonly="1"/>
+                            <field name="sale_handles_picking_pallet_qty" readonly="1"/>
+                        </group>
                         <group string="Sale Orders de Tapones">
                             <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos tapones -->
                             <field name="sale_caps_order_count" readonly="1"/>
@@ -42,16 +52,6 @@
                             <field name="sale_caps_picking_qty" readonly="1"/>
                             <field name="sale_caps_picking_pallet_qty" readonly="1"/>
 
-                        </group>
-                        <group string="Sale Orders de Asas">
-                            <!-- Número de sale orders, suma de qty y listado de sale orders que incluyen líneas con productos de asas -->
-                            <field name="sale_handles_order_count" readonly="1"/>
-                            <field name="sale_handles_order_qty" readonly="1"/>
-                            <field name="sale_handles_order_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="sale_handles_picking_ids" widget="many2many_tags" readonly="1"
-                                   options="{'clickable': True}"/>
-                            <field name="sale_handles_picking_qty" readonly="1"/>
-                            <field name="sale_handles_picking_pallet_qty" readonly="1"/>
                         </group>
                     </group>
 
@@ -101,9 +101,10 @@
                             <field name="picking_in_bag_ids" widget="many2many_tags" readonly="1"/>
                         </group>
 
-                        <group string="sales container">
+                        <group string="container sales">
                             <field name="sale_container_ids" widget="many2many_tags" readonly="1"/>
                             <field name="sale_container_qty" readonly="1"/>
+                            <field name="sale_container_hour" widget="float_time"/>
                         </group>
                     </group>
                 </page>

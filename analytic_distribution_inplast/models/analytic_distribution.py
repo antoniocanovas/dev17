@@ -812,7 +812,7 @@ class AnalyticDistribution(models.Model):
     sale_container_ids = fields.Many2many('sale.order.line', compute='_compute_sale_container_ids',
                                           string='Sale Container')
     sale_container_qty = fields.Integer(string='Cantidad de Container', compute='_compute_sale_container_qty')
-
+    sale_container_hour = fields.Float(string='Hours', compute='_compute_sale_container_hour')
     @api.depends('date_from', 'date_to')
     def _compute_sale_container_ids(self):
         for rec in self:
@@ -840,6 +840,11 @@ class AnalyticDistribution(models.Model):
             for li in record.sale_container_ids:
                 containers += li.product_uom_qty / container_box_qty
             record.sale_container_qty = containers
+
+    @api.depends('date_from', 'date_to')
+    def _compute_sale_container_hour(self):
+        for record in self:
+            record.sale_container_hour = record.sale_container_qty * record.container_load
 
     # =========================================================================
     # MÉTODOS DE CÁLCULO PARA DISTRIBUCIONES ANALÍTICAS:
