@@ -43,7 +43,6 @@ class AnalyticDistribution(models.Model):
     ###########################################
     # R2: Recogida de palets de tapones y ubicación (A MEDIAS, NO ENTIENDO ENUNCIADO).
     ###########################################
-
     def compute_r2(self, li):
         datefrom = self.date_from
         dateto = self.date_to
@@ -51,10 +50,7 @@ class AnalyticDistribution(models.Model):
 
         # Albaranes que van desde producción a almacén en el rango de fechas (todos son tapones):
         # Son todos los que tienen las MO en incoming_picking (m2o a albarán de salida)
-        pickings = self.env['mrp.production'].search([
-            ('date_finished', '>=', datefrom),
-            ('date_finished', '<=', dateto),
-            ]).incoming_picking
+        pickings = self.picking_mrp2stock_ids
 
         for picking in pickings:
             products = set()
@@ -102,7 +98,6 @@ class AnalyticDistribution(models.Model):
     ###########################################
     # R1: Descarga y ubicación de ASAS.
     ###########################################
-
     def compute_r1(self, li):
         datefrom = self.date_from
         dateto = self.date_to
@@ -366,6 +361,43 @@ class AnalyticDistribution(models.Model):
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.picking_in_pallet_caps_qty = total_qty
+
+    # MRP TO STOCK PICKINGS:
+    picking_mrp2stock_ids = fields.Many2many(
+        'stock.picking',
+        string="Pickings",
+        help="MRP to stock pickings",
+        compute="_compute_picking_mrp2stock",
+    )
+    picking_mrp2stock_qty = fields.Float(
+        string="Pickings qty",
+        help="MRP to stock picking qty",
+        compute="_compute_picking_mrp2stock_qty",
+    )
+    picking_mrp2stock_pallets_qty = fields.Float(
+        string="Pallets",
+        compute="_compute_picking_mrp2stock_pallets_qty"
+    )
+    def _compute_picking_mrp2stock(self):
+        pickings = self.env['mrp.production'].search([
+            ('date_finished', '>=', self.date_from),
+            ('date_finished', '<=', self.date_to),
+            ('state','in',['done']),
+            ('incoming_picking','!=',False),
+        ]).incoming_picking
+        self.picking_mrp2stock_ids = [(6,0,pickings.ids)]
+    def _compute_picking_mrp2stock_qty(self):
+        self.picking_mrp2stock_qty = len(self.picking_mrp2stock_ids)
+
+    def _compute_picking_mrp2stock_pallets_qty(self):
+        # Total palets en albarán (no incluyo 'cap_distribution' porque esos no vienen de fábrica):
+        total_pallets = 0
+        for picking in self.picking_mrp2stock_ids:
+            lines = picking.move_ids_without_package.filtered(
+                lambda l: l.product_id.categ_id.type in ['cap_mrp'] and l.product_id.pnt_product_type == 'packing'
+            )
+            total_pallets += sum(lines.mapped('product_uom_qty'))
+        self.picking_mrp2stock_pallets_qty = total_pallets
 
     # =========================================================================
     # 3) SALE ORDERS: CAPS (Tapones)

@@ -55,6 +55,16 @@
                         </group>
                     </group>
 
+                    <group string="Manufacturing to Stock">
+                        <group>
+                            <field name="picking_mrp2stock_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="picking_mrp2stock_qty"/>
+                            <field name="picking_mrp2stock_pallets_qty"/>
+                        </group>
+                    </group>
+
                     <group>
                         <!-- Grupo para Albaranes de Cisternas -->
                         <group string="Albaranes de Cisternas">
