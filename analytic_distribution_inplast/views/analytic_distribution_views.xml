@@ -7,13 +7,15 @@
         <field name="arch" type="xml">
             <!-- DATOS GENERALES RESUMEN: -->
             <xpath expr="//tree" position="inside">
-                <field name="picking_hour_qty" optional="show" widget="float_time"/>
                 <field name="picking_hour_cost" optional="show" widget="monetary"/>
             </xpath>
 
-
             <xpath expr="//notebook" position="inside">
                 <page name="picking" string="Picking">
+                    <!-- Grupo general: -->
+                    <group string="General">
+                        <field name="picking_hour_qty" widget="float_time"/>
+                    </group>
                     <!-- Grupo para Albaranes de Asas y Tapones -->
                     <group>
                         <group string="Albaranes de Asas">

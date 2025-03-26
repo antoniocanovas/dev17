@@ -9,6 +9,37 @@ from odoo.exceptions import UserError
 class AnalyticDistribution(models.Model):
     _inherit = 'analytic.distribution'
 
+
+    picking_hour_qty = fields.Float(string='Pickig hours',compute='_compute_picking_hour_qty')
+    @api.depends('date_from', 'date_to')
+    def _compute_picking_hour_qty(self):
+        for rec in self:
+            parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
+            # R1: Descarga de tapones y asas en la central (nº de albaranes):
+            caps_handle_picking_unload = (rec.picking_in_caps_qty + rec.picking_in_handles_qty) * rec.picking_unload
+            # R2: Traslado desde producción a STOCK:
+            mrp2stock_picking = rec.picking_mrp2stock_hour * rec.pallet_reloc / 60
+            # R3: Carga manual de contenedores, ya que ocupan mucho tiempo:
+            container_load = rec.move_container_qty * rec.container_load
+            # R3.1: Carga de tapones y asas en la central (nº de albaranes):
+            # (previo por horas, he pasado a minutos el 26/03/25) caps_handle_picking_load = (distribution.sale_caps_picking_qty + distribution.sale_handles_picking_qty) * parameters.truck_load
+            caps_handle_picking_load = (rec.sale_caps_picking_qty + rec.sale_handles_picking_qty) * rec.pallet_reloc / 60
+
+            # Costes de descarga de Materia prima y productos de packaging:
+            cistern_unload = rec.raw_cistern_unload * rec.picking_in_cistern_qty
+            sack_unload = rec.raw_sack_unload * rec.picking_in_sack_qty
+            color_unload = rec.raw_color_unload * rec.picking_in_color_qty
+            cardboard_unload = rec.raw_cardboard_unload * rec.picking_in_cardboard_qty
+            bag_unload = rec.raw_bag_unload * rec.picking_in_bag_qty
+            pallet_unload = rec.raw_pallet_unload * rec.picking_in_pallet_qty
+            # Movimientos internos (calculado por estimación de tiempo diario):
+            internal_pickings = rec.days * (rec.raw_color_reloc_daily + rec.raw_cboard_reloc_daily + rec.raw_bag_reloc_daily + rec.raw_pallet_reloc_daily)
+
+            rec.picking_hour_qty = (cistern_unload + sack_unload + color_unload + cardboard_unload +
+                                    bag_unload + pallet_unload + internal_pickings + container_load +
+                                    caps_handle_picking_unload + caps_handle_picking_load + mrp2stock_picking)
+
+
     def compute_distribution(self):
         """Extend this function with custom Inplast analytic compute modes"""
         super().compute_distribution()
@@ -33,6 +64,8 @@ class AnalyticDistribution(models.Model):
                 self.compute_r2(li)
             elif li.template_id.compute_method == "r3":
                 self.compute_r3(li)
+            elif li.template_id.compute_method == "r3.1":
+                self.compute_r31(li)
             # VOY POR AQUÍ:
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
@@ -47,52 +80,25 @@ class AnalyticDistribution(models.Model):
     ###########################################
     def compute_r3(self, li):
         # Albaranes que tienen múltiplos de las cajas por contenedor indicadas en la parametrización:
-
-        # VOY POR AQUÍ:
-        pickings = self.picking_mrp2stock_ids
-
-        for picking in pickings:
-            products = set()
-            total_pallets = 0
-
-            # Total palets en albarán (no incluyo 'cap_distribution' porque esos no vienen de fábrica):
-            lines = picking.move_ids_without_package.filtered(
-                lambda l: l.product_id.categ_id.type in ['cap_mrp'] and l.product_id.pnt_product_type == 'packing'
-            )
-
-            total_pallets += sum(lines.mapped('product_uom_qty'))
-            if total_pallets == 0:
-                continue
-            pallet_picking = li.picking_hour_cost / 60 * self.pallet_reloc
-
-            # Productos distintos en el albarán, del tipo TAPÓN:
-            for sm in lines:
-                products.add(sm.product_id)
-            # Bucle para cada apunte analítico:
-            for product in products:
-                product_pallets = 0
-                for sm in lines:
-                    if sm.product_id == product:
-                        product_pallets += sm.product_uom_qty
-
+        for sm in self.move_container_ids:
+                # Cada SM es un contenedor.
                 # Buscamos si ya existe o se crea la cuenta analítica para este producto:
-                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
-                if product_pallets > 0:
-                    product_field_id = self.env.company.product_field_id.name
-                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
-                    machine_field_id = self.env.company.machine_field_id.name
-                    department_field_id = self.env.company.department_field_id.name
+                analytic_account = self.check_or_create_analytic_account(sm.product_id.pnt_parent_id)
+                product_field_id = self.env.company.product_field_id.name
+                fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                machine_field_id = self.env.company.machine_field_id.name
+                department_field_id = self.env.company.department_field_id.name
 
-                    new_aal = self.env['account.analytic.line'].create({
-                        'product_id': product.pnt_parent_id.id,
-                        'name': li.template_id.name + " - " + picking.name,
-                        'amount': - product_pallets * pallet_picking,
-                        product_field_id: analytic_account.id,
-                        fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
-                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
-                        'analytic_distribution_id': self.id,
-                        'analytic_distribution_template_id': li.template_id.id,
-                    })
+                new_aal = self.env['account.analytic.line'].create({
+                    'product_id': sm.product_id.pnt_parent_id.id,
+                    'name': li.template_id.name + " - " + sm.picking_id.name,
+                    'amount': - self.container_load * li.picking_hour_cost,
+                    product_field_id: analytic_account.id,
+                    fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                    'analytic_distribution_id': self.id,
+                    'analytic_distribution_template_id': li.template_id.id,
+                })
 
     ###########################################
     # R1: Descarga y ubicación de ASAS.
@@ -528,7 +534,9 @@ class AnalyticDistribution(models.Model):
             total_qty = 0.0
             for so in rec.sale_caps_picking_ids:
                 lines = so.move_ids_without_package.filtered(
-                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution'] and l.product_id.pnt_product_type == 'packing'
+                    lambda l: l.product_id.categ_id.type in ['cap_mrp', 'cap_distribution']
+                              and l.product_id.pnt_product_type == 'packing'
+                              and l.product_id.mrp_bom_template_id.type in ['pallet','pallet_nonmrp']
                 )
                 total_qty += sum(lines.mapped('product_uom_qty'))
             rec.sale_caps_picking_pallet_qty = total_qty
@@ -982,7 +990,8 @@ class AnalyticDistribution(models.Model):
                 ('picking_id.date_done','>=',rec.date_from),
                 ('picking_id.date_done','<=',rec.date_to),
                 ('product_id.mrp_bom_template_id.type', 'in', ['box', 'box_nonmrp']),
-                ('picking_id.picking_type_code','=','outgoing')
+                ('picking_id.picking_type_code','=','outgoing'),
+                ('product_uom_qty','>',0),
             ])
 
             # Filtrar por número de cajas por contenedor indicado en parametrización:
