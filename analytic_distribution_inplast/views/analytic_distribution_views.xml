@@ -113,7 +113,7 @@
                             <field name="sale_container_qty" string="Sales qty" readonly="1"/>
                             <field name="move_container_ids" string="Moves" widget="many2many_tags"/>
                             <field name="move_container_qty" string="Moves qty" readonly="1"/>
-                            <field name="sale_container_hour" string="Hours" widget="float_time"/>
+                            <field name="move_container_hour" string="Hours" widget="float_time"/>
                         </group>
                     </group>
                 </page>

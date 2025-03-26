@@ -939,9 +939,9 @@ class AnalyticDistribution(models.Model):
                                           compute='_compute_sale_container_ids',
                                           string='Sale Container')
     sale_container_qty = fields.Integer(string='Contenedores', compute='_compute_sale_container_qty')
-    sale_container_hour = fields.Float(string='Sale container Hours', compute='_compute_sale_container_hour')
     move_container_ids = fields.Many2many('stock.move', string='Container moves', compute='_compute_stock_move_container')
     move_container_qty = fields.Float(string='Containers pickings qty', compute='_compute_move_container_qty')
+    move_container_hour = fields.Float(string='Move container Hours', compute='_compute_move_container_hour')
 
     @api.depends('date_from', 'date_to')
     def _compute_sale_container_ids(self):
@@ -988,28 +988,27 @@ class AnalyticDistribution(models.Model):
             # Filtrar por número de cajas por contenedor indicado en parametrización:
             parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
             container_box_qty = parameters.container_box_qty
-            sale_line_container = []
-            for line in sales:
+            move_container = []
+            for line in moves:
                 if container_box_qty != 0 and (line.product_uom_qty % container_box_qty) == 0:
-                    sale_line_container.append(line.id)
+                    move_container.append(line.id)
 
-            rec.move_container_ids = moves
+            rec.move_container_ids = move_container
 
     @api.depends('move_container_ids')
     def _compute_move_container_qty(self):
-        # REVISAR, ESTÁ A MEDIAS:
         for rec in self:
             containers = 0
             parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
             container_box_qty = parameters.container_box_qty
-            for li in rec.sale_container_ids:
+            for li in rec.move_container_ids:
                 containers += li.product_uom_qty / container_box_qty
             rec.move_container_qty = containers
 
-    @api.depends('sale_container_qty')
-    def _compute_sale_container_hour(self):
+    @api.depends('move_container_qty')
+    def _compute_move_container_hour(self):
         for record in self:
-            record.sale_container_hour = record.sale_container_qty * record.container_load
+            record.move_container_hour = record.move_container_qty * record.container_load
 
 
     # =========================================================================
