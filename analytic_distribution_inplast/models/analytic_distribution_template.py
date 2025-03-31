@@ -7,14 +7,14 @@ class AnalyticDistributionTemple(models.Model):
 
     compute_method = fields.Selection(selection_add=
         [
-            ("r1", "R1.- Descarga y ubicación de asas (PDTE)"),
-            ("r2", "R2.- Recogida de palet y ubicación (PDTE)"),
-            ("r3", "R3.- Carga contenedor (PDTE)"),
-            ("r3.1", "R3.1.- Desubicación y carga (PDTE)"),
-            ("r4", "R4.- Recepción y pesaje de materiales (PDTE)"),
-            ("r5", "R5.- Aprovisionamiento materiales producción (PDTE)"),
-            ("r6", "R6.- Coste almacenamiento MP (PDTE)"),
-            ("r7", "R7.- Coste almacenamiento producto (PDTE)"),
+            ("r1", "R1.- Descarga y ubicación de asas"),
+            ("r2", "R2.- Recogida de palet y ubicación"),
+            ("r3", "R3.- Carga contenedor"),
+            ("r3.1", "R3.1.- Desubicación y carga"),
+            ("r4", "R4.- Recepción y pesaje de materiales"),
+            ("r5", "R5.- Aprovisionamiento materiales producción"),
+            ("r6", "R6.- Coste almacenamiento MP"),
+            ("r7", "R7.- Coste almacenamiento producto"),
             ("r8", "R8.- Materia prima (PDTE)"),
             ("r9", "R9.- Materia prima 2 (PDTE)"),
             ("r10", "R10.- Gastos personal (PDTE)"),
