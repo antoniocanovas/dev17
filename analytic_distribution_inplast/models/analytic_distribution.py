@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # Copyright
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from docutils.nodes import container
 from odoo import fields, models, api
 from odoo.exceptions import UserError
+from datetime import datetime, timedelta
 
 
 class AnalyticDistribution(models.Model):
@@ -23,7 +23,7 @@ class AnalyticDistribution(models.Model):
             container_load = rec.move_container_qty * rec.container_load
             # R3.1: Carga de tapones y asas en la central (nº de albaranes):
             # (previo por horas, he pasado a minutos el 26/03/25) caps_handle_picking_load = (distribution.sale_caps_picking_qty + distribution.sale_handles_picking_qty) * parameters.truck_load
-            caps_handle_picking_load = (rec.sale_caps_picking_pallet_qty + rec.sale_handles_picking_pallet_qty) * rec.pallet_reloc / 60
+            caps_handle_picking_load = (rec.sale_caps_picking_pallet_qty) * rec.pallet_reloc / 60
 
             # R4: Recepción y pesaje de materiales (materias primas y embalajes):
             cistern_unload = rec.raw_cistern_unload * rec.picking_in_cistern_qty
@@ -32,15 +32,28 @@ class AnalyticDistribution(models.Model):
             cardboard_unload = rec.raw_cardboard_unload * rec.picking_in_cardboard_qty
             bag_unload = rec.raw_bag_unload * rec.picking_in_bag_qty
             pallet_unload = rec.raw_pallet_unload * rec.picking_in_pallet_qty
-
+            r4 = cistern_unload + sack_unload + color_unload + cardboard_unload + bag_unload + pallet_unload
             # R5.- Movimientos de materia prima a producción:
             stk2mrp_pickings = rec.days * (rec.raw_color_reloc_daily + rec.raw_cboard_reloc_daily + rec.raw_bag_reloc_daily + rec.raw_pallet_reloc_daily)
 
-            rec.picking_hour_qty = (cistern_unload + sack_unload + color_unload + cardboard_unload +
-                                    bag_unload + pallet_unload + stk2mrp_pickings + container_load +
-                                    caps_handle_picking_unload + caps_handle_picking_load + mrp2stock_picking)
-
-
+            rec.picking_hour_qty = (
+                    caps_handle_picking_unload +
+                    mrp2stock_picking +
+                    container_load +
+                    caps_handle_picking_load +
+                    r4 +
+                    stk2mrp_pickings
+            )
+            """
+            raise UserError(
+                "R1: " + str(caps_handle_picking_unload) + "\n" +
+                "R2: " + str(mrp2stock_picking) + "\n" +
+                "R3: " + str(container_load) + "\n" +
+                "R3.1: " + str(caps_handle_picking_load) + "\n" +
+                "R4: " + str(r4) + "\n" +
+                "R5: " + str(stk2mrp_pickings)
+            )
+            """
     def compute_distribution(self):
         """Extend this function with custom Inplast analytic compute modes"""
         super().compute_distribution()
@@ -73,6 +86,8 @@ class AnalyticDistribution(models.Model):
                 self.compute_r5(li)
             elif li.template_id.compute_method == "r6":
                 self.compute_r6(li)
+            elif li.template_id.compute_method == "r7":
+                self.compute_r7(li)
             # VOY POR AQUÍ:
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
@@ -130,55 +145,42 @@ class AnalyticDistribution(models.Model):
 
 
     ###########################################
-    # R2: Recogida de palets de tapones y ubicación (A MEDIAS, NO ENTIENDO ENUNCIADO).
+    # R2: Recogida de palets de tapones y ubicación.
     ###########################################
     def compute_r2(self, li):
-        # Albaranes que van desde producción a almacén en el rango de fechas (todos son tapones):
-        # Son todos los que tienen las MO en incoming_picking (m2o a albarán de salida)
-        pickings = self.picking_mrp2stock_ids
-
-        for picking in pickings:
-            products = set()
-            total_pallets = 0
-
-            # Total palets en albarán (no incluyo 'cap_distribution' porque esos no vienen de fábrica):
-            lines = picking.move_ids_without_package.filtered(
-                lambda l: l.product_id.categ_id.type in ['cap_mrp'] and l.product_id.pnt_product_type == 'packing'
-            )
-
-            total_pallets += sum(lines.mapped('product_uom_qty'))
-            if total_pallets == 0:
-                continue
-            pallet_picking = li.picking_hour_cost / 60 * self.pallet_reloc
-
-            # Productos distintos en el albarán, del tipo TAPÓN:
-            for sm in lines:
-                products.add(sm.product_id)
-            # Bucle para cada apunte analítico:
+        for rec in self:
+            pickings = rec.picking_mrp2stock_ids
+            moves = self.env['stock.move'].search([
+                ('id','in',pickings.move_ids_without_package.ids),
+                ('product_id.mrp_bom_template_id.type', '=','pallet'),
+            ])
+            products = moves.product_id.pnt_parent_id
+            # Para realizar un sólo apunte por producto base:
             for product in products:
-                product_pallets = 0
-                for sm in lines:
-                    if sm.product_id == product:
-                        product_pallets += sm.product_uom_qty
-
+                lines = moves.filtered(lambda l: l.product_id.pnt_parent_id == product)
+                product_pickings = lines.picking_id
+                total_pallets = sum(lines.mapped('product_uom_qty'))
+                picking_names = "[ "
+                for picking in product_pickings:
+                    picking_names += picking.name + " "
+                picking_names += "]"
+                picking_cost = total_pallets * li.picking_hour_cost * rec.pallet_reloc / 60
                 # Buscamos si ya existe o se crea la cuenta analítica para este producto:
-                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
-                if product_pallets > 0:
-                    product_field_id = self.env.company.product_field_id.name
-                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
-                    machine_field_id = self.env.company.machine_field_id.name
-                    department_field_id = self.env.company.department_field_id.name
-
-                    new_aal = self.env['account.analytic.line'].create({
-                        'product_id': product.pnt_parent_id.id,
-                        'name': li.template_id.name + " - " + picking.name,
-                        'amount': - product_pallets * pallet_picking,
-                        product_field_id: analytic_account.id,
-                        fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
-                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
-                        'analytic_distribution_id': self.id,
-                        'analytic_distribution_template_id': li.template_id.id,
-                    })
+                analytic_account = self.check_or_create_analytic_account(product)
+                # Creamos el apunte analítico:
+                product_field_id = self.env.company.product_field_id.name
+                fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                department_field_id = self.env.company.department_field_id.name
+                new_aal = self.env['account.analytic.line'].create({
+                    'product_id': product.id,
+                    'name': li.template_id.name + " - " + rec.name + " " + picking_names,
+                    'amount': -1 * abs(picking_cost),
+                    product_field_id: analytic_account.id,
+                    fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                    'analytic_distribution_id': self.id,
+                    'analytic_distribution_template_id': li.template_id.id,
+                })
 
 
     ###########################################
@@ -242,7 +244,7 @@ class AnalyticDistribution(models.Model):
                 for picking in pickings: picking_names += picking.name + " "
                 picking_names += "]"
                 total_pallets = sum(lines.mapped('product_uom_qty'))
-                picking_cost = total_pallets * li.picking_hour_cost / 60 * rec.pallet_reloc
+                picking_cost = total_pallets * li.picking_hour_cost * rec.pallet_reloc / 60
                 # Buscamos si ya existe o se crea la cuenta analítica para este producto:
                 analytic_account = self.check_or_create_analytic_account(product)
                 product_field_id = self.env.company.product_field_id.name
@@ -251,7 +253,7 @@ class AnalyticDistribution(models.Model):
                 new_aal = self.env['account.analytic.line'].create({
                     'product_id': product.id,
                     'name': li.template_id.name + " - " + rec.name + " " + picking_names,
-                    'amount': -1 * picking_cost,
+                    'amount': -1 * abs(picking_cost),
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
                     department_field_id: self.env.company.analytic_warehouse_department_id.id,
@@ -292,6 +294,7 @@ class AnalyticDistribution(models.Model):
                         ('id', 'in', moves.ids),
                         ('product_id', '=', product.id),
                     ])
+                    # este reparto está mal, hay que tener el importe estimado por días total del mes,
 
                     # Reparto proporcional por si un albarán lleva varios productos [len(picking_moves)]
                     product_pickings = product_moves.picking_id
@@ -318,7 +321,7 @@ class AnalyticDistribution(models.Model):
                     new_aal = self.env['account.analytic.line'].create({
                         'product_id': product.id,
                         'name': li.template_id.name + " - " + rec.name + " " + picking_names,
-                        'amount': -1 * picking_cost,
+                        'amount': -1 * abs(picking_cost),
                         product_field_id: analytic_account.id,
                         fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
                         department_field_id: self.env.company.analytic_warehouse_department_id.id,
@@ -326,48 +329,57 @@ class AnalyticDistribution(models.Model):
                         'analytic_distribution_template_id': li.template_id.id,
                     })
 
-        ###########################################
-        # R5: Aprovisionamiento materiales producción.
-        # Unidades totales por artículos y tipo. Tiempo diario estimado.
-        ###########################################
-        def compute_r5(self, li):
-            for rec in self:
-                # No hay tiempos diarios para 'raw_cistern','raw_sack',
-                categ_types = ['raw_pallet', 'raw_bag', 'raw_cardboard', 'raw_color']
-                types = [
-                    #                ['raw_cistern',rec.raw_cistern_reloc_daily],
-                    #                ['raw_sack',rec.raw_sack_reloc_daily],
-                    ['raw_pallet', rec.raw_pallet_reloc_daily],
-                    ['raw_bag', rec.raw_bag_reloc_daily],
-                    ['raw_cardboard', rec.raw_cboard_reloc_daily],
-                    ['raw_color', rec.raw_color_reloc_daily],
-                ]
-                # Recorremos los tipos posibles de encontrar, con su estimacion de tiempos por tipo según la tabla anterior:
-                for type in types:
-                    moves = self.env['stock.move'].search([
-                        ('date', '>=', rec.date_from),
-                        ('date', '<=', rec.date_to),
-                        ('location_dest_id.usage', '=', 'production'),  # Destino es una ubicación de producción
-                        ('location_id.usage', '!=', 'production'),  # Origen no es una ubicación de producción
-                        ('product_id.categ_id.type', '=', type[0]),  # Tipos de familia del producto
-                        ('state', '=', 'done'),  # Albarán en estado "done"
-                        ('product_uom_qty', '>', 0),
-                    ])
+    ###########################################
+    # R5: Aprovisionamiento materiales producción.
+    # Kg totales por artículos y tipo. Tiempo diario estimado por dirección financiera.
+    ###########################################
+    def compute_r5(self, li):
+        for rec in self:
+            # No hay tiempos diarios para 'raw_cistern','raw_sack',
+            categ_types = ['raw_pallet', 'raw_bag', 'raw_cardboard', 'raw_color']
+            types = [
+                #                ['raw_cistern',rec.raw_cistern_reloc_daily],
+                #                ['raw_sack',rec.raw_sack_reloc_daily],
+                ['raw_pallet', rec.raw_pallet_reloc_daily],
+                ['raw_bag', rec.raw_bag_reloc_daily],
+                ['raw_cardboard', rec.raw_cboard_reloc_daily],
+                ['raw_color', rec.raw_color_reloc_daily],
+            ]
 
-                    # Suma de kg total por tipo de materia prima para después hacer reparto proporcional:
-                    total_weight = sum(moves.mapped('product_uom_qty'))
+            # Recorremos los tipos posibles de encontrar, con su estimacion de tiempos por tipo según la tabla anterior:
+            for type in types:
+                moves = self.env['stock.move'].search([
+                    ('date', '>=', rec.date_from),
+                    ('date', '<=', rec.date_to),
+                    ('location_dest_id.usage', '=', 'production'),  # Destino es una ubicación de producción
+                    ('location_id.usage', '!=', 'production'),  # Origen no es una ubicación de producción
+                    ('product_id.categ_id.type', '=', type[0]),  # Tipos de familia del producto
+                    ('state', '=', 'done'),  # Albarán en estado "done"
+                    ('product_uom_qty', '>', 0),
+                ])
+
+                # Suma de kg total por tipo de materia prima para después hacer reparto proporcional:
+                # total_weight = sum(moves.mapped('product_uom_qty')) NO HACE FALTA ESTE, SINO EL DEL POR TIPO.
+
+                # El tiempo es estimado por tipo de producto, así que hay que recorrer por tipo:
+                for type in types:
+                    type_moves = self.env['stock.move'].search([
+                        ('id', 'in', moves.ids),
+                        ('product_id.categ_id.type', '=', type[0]),
+                    ])
+                    type_weight = sum(type_moves.mapped('product_uom_qty'))
 
                     # Recorremos por producto para hacer un único apunte R4 por cada cuenta analítica:
-                    products = moves.product_id
+                    products = type_moves.product_id
                     for product in products:
                         product_moves = self.env['stock.move'].search([
-                            ('id', 'in', moves.ids),
+                            ('id', 'in', type_moves.ids),
                             ('product_id', '=', product.id),
                         ])
 
                         # Reparto proporcional por si un albarán lleva varios productos [len(picking_moves)]
                         product_weight = sum(product_moves.mapped('product_uom_qty'))
-                        picking_cost = product_weight / total_weight * li.picking_hour_cost * type[1] * rec.days
+                        picking_cost = (product_weight / type_weight) * li.picking_hour_cost * (type[1] * rec.days)
                         # Nombre del apunte analítico:
                         mrp_names = "[ "
                         for ref in product_moves: mrp_names += ref.reference + " "
@@ -383,13 +395,175 @@ class AnalyticDistribution(models.Model):
                         new_aal = self.env['account.analytic.line'].create({
                             'product_id': product.id,
                             'name': li.template_id.name + " - " + rec.name + " " + mrp_names,
-                            'amount': -1 * picking_cost,
+                            'amount': -1 * abs(picking_cost),
                             product_field_id: analytic_account.id,
                             fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
                             department_field_id: self.env.company.analytic_warehouse_department_id.id,
                             'analytic_distribution_id': self.id,
                             'analytic_distribution_template_id': li.template_id.id,
                         })
+
+
+    ###########################################
+    # R6: Coste almacenamiento materia prima, por producto.
+    # Sobre cuentas contables de amortizaciones. Kg mes anterior, kg fecha fin => media.
+    ###########################################
+    def compute_r6(self, li):
+        for rec in self:
+            categ_types = ['raw_cistern', 'raw_sack', 'raw_pallet', 'raw_bag', 'raw_cardboard', 'raw_color']
+
+            total_weight_before = 0.0
+            total_weight_after  = 0.0
+
+            # Total de kg en stock de MP en fecha de inicio:
+            moves_before = self.env['stock.move.line'].search([
+                ('product_id.categ_id.type', 'in', categ_types),
+                ('date', '<=', rec.date_from),
+                ('product_id.detailed_type','=','product'),
+                '|',  # Operador "OR"
+                ('location_id.usage', '=', 'internal'),
+                ('location_dest_id.usage', '=', 'internal'),
+            ], order='date')
+            for move_line in moves_before:
+                # Multiplicar la cantidad por el peso del producto.
+                move_weight = move_line.qty_done * move_line.product_id.weight
+                # Sumar o restar el peso según la dirección del movimiento.
+                if move_line.location_id.usage == 'internal':
+                    total_weight_before -= move_weight
+                if move_line.location_dest_id.usage == 'internal':
+                    total_weight_before += move_weight
+
+            # Total de kg en stock de MP en fecha de fin:
+            moves_after = self.env['stock.move.line'].search([
+                ('product_id.categ_id.type', 'in', categ_types),
+                ('date', '<=', rec.date_to),
+                ('product_id.detailed_type', '=', 'product'),
+                '|',  # Operador "OR"
+                ('location_id.usage', '=', 'internal'),
+                ('location_dest_id.usage', '=', 'internal'),
+            ], order='date')
+            for move_line in moves_after:
+                # Multiplicar la cantidad por el peso del producto.
+                move_weight = move_line.qty_done * move_line.product_id.weight
+                # Sumar o restar el peso según la dirección del movimiento.
+                if move_line.location_id.usage == 'internal':
+                    total_weight_after -= move_weight
+                if move_line.location_dest_id.usage == 'internal':
+                    total_weight_after += move_weight
+            # Peso medio entre inicio y fin de periodo:
+            stock_media_kg_cost = li.balance / (total_weight_before + total_weight_after) * 2
+
+            # Distribución analítica proporcional:
+            products_before = moves_before.product_id
+            products_after = moves_after.product_id
+            products = products_before + products_after
+            for product in products:
+                total_product_weight_before = 0
+                total_product_weight_after  = 0
+
+                product_moves_before = self.env['stock.move.line'].search([
+                    ('id', 'in', moves_before.ids),
+                    ('product_id', '=', product.id),
+                ])
+                for move_line in product_moves_before:
+                    # Multiplicar la cantidad por el peso del producto.
+                    move_weight = move_line.qty_done * move_line.product_id.weight
+                    # Sumar o restar el peso según la dirección del movimiento.
+                    if move_line.location_id.usage == 'internal':
+                        total_product_weight_before -= move_weight
+                    if move_line.location_dest_id.usage == 'internal':
+                        total_product_weight_before += move_weight
+
+                product_moves_after = self.env['stock.move.line'].search([
+                    ('id', 'in', moves_after.ids),
+                    ('product_id', '=', product.id),
+                ])
+                for move_line in product_moves_after:
+                    # Multiplicar la cantidad por el peso del producto.
+                    move_weight = move_line.qty_done * move_line.product_id.weight
+                    # Sumar o restar el peso según la dirección del movimiento.
+                    if move_line.location_id.usage == 'internal':
+                        total_product_weight_after -= move_weight
+                    if move_line.location_dest_id.usage == 'internal':
+                        total_product_weight_after += move_weight
+
+                product_stock_cost = stock_media_kg_cost * (total_product_weight_before + total_product_weight_after) / 2
+
+                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
+                analytic_account = self.check_or_create_analytic_account(product)
+
+                # Creación del apunte analítico:
+                product_field_id = self.env.company.product_field_id.name
+                fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                department_field_id = self.env.company.department_field_id.name
+                new_aal = self.env['account.analytic.line'].create({
+                    'product_id': product.id,
+                    'name': li.template_id.name + " - " + rec.name,
+                    'amount': -1 * abs(product_stock_cost),
+                    product_field_id: analytic_account.id,
+                    fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                    'analytic_distribution_id': self.id,
+                    'analytic_distribution_template_id': li.template_id.id,
+                })
+
+    ###########################################
+    # R7: Coste almacenamiento producto FINAL.
+    # Huecos por día y producto para repartir proporcionalmente (lo haremos por s/n y tipo de empaquetado).
+    ###########################################
+
+    def compute_r7(self, li):
+        for rec in self:
+            bom_templates = ['pallet', 'pallet_nonmrp']
+            today = datetime.today()
+            products_packing = self.env['product.product'].search([
+                ('detailed_type', '=', 'product'),
+                ('mrp_bom_template_id.type', 'in', bom_templates),
+            ])
+
+            # Cálculo del total de jornadas para poder hacer la proporción:
+            total_storages  = 0
+            for ppack in products_packing:
+                stock_before = ppack.with_context(to_date=rec.date_from).qty_available
+                current_date = rec.date_from
+                while current_date <= rec.date_to and current_date <= today:
+                    stock_current_date = ppack.with_context(to_date=current_date).qty_available
+                    total_storages += stock_current_date
+                    current_date += timedelta(days=1)
+
+            # Cálculo por producto base pararealizar la imputación analítica:
+            products = products_packing.pnt_parent_id
+            for product in products:
+                storages = 0
+                product_packings = self.env['product.product'].search([
+                    ('id','in',products_packing.ids),
+                    ('pnt_parent_id','=',product.id),
+                ])
+                for ppacking in product_packings:
+                    stock_before = ppacking.with_context(to_date=rec.date_from).qty_available
+                    current_date = rec.date_from
+                    while current_date <= rec.date_to and current_date <= today:
+                        stock_current_date = ppacking.with_context(to_date=current_date).qty_available
+                        storages += stock_current_date
+                        current_date += timedelta(days=1)
+
+                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
+                analytic_account = self.check_or_create_analytic_account(product)
+                # Creación del apunte analítico:
+                product_field_id = self.env.company.product_field_id.name
+                fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                department_field_id = self.env.company.department_field_id.name
+                new_aal = self.env['account.analytic.line'].create({
+                    'product_id': product.id,
+                    'name': li.template_id.name + " - " + rec.name,
+                    'amount': -1 * abs(li.balance * storages / total_storages),
+                    product_field_id: analytic_account.id,
+                    fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                    'analytic_distribution_id': self.id,
+                    'analytic_distribution_template_id': li.template_id.id,
+                })
+
 
     # =========================================================================
     # Traemos todos los campos de parámetros en el momento del recálculo y guardamos:
@@ -622,7 +796,7 @@ class AnalyticDistribution(models.Model):
         'stock.picking',
         string="Pickings",
         help="MRP to stock pickings",
-        compute="_compute_picking_mrp2stock",
+        compute="_compute_picking_mrp2stock_ids",
     )
     picking_mrp2stock_qty = fields.Float(
         string="Pickings qty",
@@ -638,12 +812,13 @@ class AnalyticDistribution(models.Model):
         compute="_compute_picking_mrp2stock_hours"
     )
     @api.depends('date_from', 'date_to')
-    def _compute_picking_mrp2stock(self):
+    def _compute_picking_mrp2stock_ids(self):
         pickings = self.env['mrp.production'].search([
             ('date_finished', '>=', self.date_from),
             ('date_finished', '<=', self.date_to),
             ('state','in',['done']),
             ('incoming_picking','!=',False),
+            ('product_id.mrp_bom_template_id.type','=','pallet')
         ]).incoming_picking
         self.picking_mrp2stock_ids = [(6,0,pickings.ids)]
 

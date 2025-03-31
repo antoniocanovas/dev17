@@ -4,6 +4,7 @@
 from docutils.nodes import container
 from odoo import fields, models, api
 from odoo.exceptions import UserError
+from datetime import datetime, timedelta
 
 
 class AnalyticDistribution(models.Model):
@@ -12,70 +13,58 @@ class AnalyticDistribution(models.Model):
 
 
     ###########################################
-    # R5: Aprovisionamiento materiales producción.
-    # Unidades totales por artículos y tipo. Tiempo diario estimado.
+    # R8:
+    #
     ###########################################
-    def compute_r6(self, li):
+
+    def compute_r8(self, li):
         for rec in self:
-            ## VOY POR AQUÍ:
+            bom_templates = ['pallet', 'pallet_nonmrp']
+            today = datetime.today()
+            products_packing = self.env['product.product'].search([
+                ('detailed_type', '=', 'product'),
+                ('mrp_bom_template_id.type', 'in', bom_templates),
+            ])
 
+            # Cálculo del total de jornadas para poder hacer la proporción:
+            total_storages  = 0
+            for ppack in products_packing:
+                stock_before = ppack.with_context(to_date=rec.date_from).qty_available
+                current_date = rec.date_from
+                while current_date <= rec.date_to and current_date <= today:
+                    stock_current_date = ppack.with_context(to_date=current_date).qty_available
+                    total_storages += stock_current_date
+                    current_date += timedelta(days=1)
 
-
-            # No hay tiempos diarios para 'raw_cistern','raw_sack',
-            categ_types = ['raw_pallet','raw_bag','raw_cardboard','raw_color']
-            types = [
-#                ['raw_cistern',rec.raw_cistern_reloc_daily],
-#                ['raw_sack',rec.raw_sack_reloc_daily],
-                ['raw_pallet',rec.raw_pallet_reloc_daily],
-                ['raw_bag',rec.raw_bag_reloc_daily],
-                ['raw_cardboard',rec.raw_cboard_reloc_daily],
-                ['raw_color',rec.raw_color_reloc_daily],
-            ]
-            # Recorremos los tipos posibles de encontrar, con su estimacion de tiempos por tipo según la tabla anterior:
-            for type in types:
-                moves = self.env['stock.move'].search([
-                    ('date', '>=', rec.date_from),
-                    ('date', '<=', rec.date_to),
-                    ('location_dest_id.usage', '=', 'production'),  # Destino es una ubicación de producción
-                    ('location_id.usage', '!=', 'production'),  # Origen no es una ubicación de producción
-                    ('product_id.categ_id.type', '=', type[0]),  # Tipos de familia del producto
-                    ('state', '=', 'done'),  # Albarán en estado "done"
-                    ('product_uom_qty', '>', 0),
+            # Cálculo por producto base pararealizar la imputación analítica:
+            products = products_packing.pnt_parent_id
+            for product in products:
+                storages = 0
+                product_packings = self.env['product.product'].search([
+                    ('id','in',products_packing.ids),
+                    ('pnt_parent_id','=',product.id),
                 ])
+                for ppacking in product_packings:
+                    stock_before = ppacking.with_context(to_date=rec.date_from).qty_available
+                    current_date = rec.date_from
+                    while current_date <= rec.date_to and current_date <= today:
+                        stock_current_date = ppacking.with_context(to_date=current_date).qty_available
+                        storages += stock_current_date
+                        current_date += timedelta(days=1)
 
-                # Suma de kg total por tipo de materia prima para después hacer reparto proporcional:
-                total_weight = sum(moves.mapped('product_uom_qty'))
-
-                # Recorremos por producto para hacer un único apunte R4 por cada cuenta analítica:
-                products = moves.product_id
-                for product in products:
-                    product_moves = self.env['stock.move'].search([
-                        ('id', 'in', moves.ids),
-                        ('product_id', '=', product.id),
-                    ])
-
-                    # Reparto proporcional por si un albarán lleva varios productos [len(picking_moves)]
-                    product_weight = sum(product_moves.mapped('product_uom_qty'))
-                    picking_cost = product_weight / total_weight * li.picking_hour_cost * type[1] * rec.days
-                    # Nombre del apunte analítico:
-                    mrp_names = "[ "
-                    for ref in product_moves: mrp_names += ref.reference + " "
-                    mrp_names += "]"
-
-                    # Buscamos si ya existe o se crea la cuenta analítica para este producto:
-                    analytic_account = self.check_or_create_analytic_account(product)
-
-                    # Creación del apunte analítico:
-                    product_field_id = self.env.company.product_field_id.name
-                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
-                    department_field_id = self.env.company.department_field_id.name
-                    new_aal = self.env['account.analytic.line'].create({
-                        'product_id': product.id,
-                        'name': li.template_id.name + " - " + rec.name + " " + mrp_names,
-                        'amount': -1 * picking_cost,
-                        product_field_id: analytic_account.id,
-                        fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
-                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
-                        'analytic_distribution_id': self.id,
-                        'analytic_distribution_template_id': li.template_id.id,
-                    })
+                # Buscamos si ya existe o se crea la cuenta analítica para este producto:
+                analytic_account = self.check_or_create_analytic_account(product)
+                # Creación del apunte analítico:
+                product_field_id = self.env.company.product_field_id.name
+                fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                department_field_id = self.env.company.department_field_id.name
+                new_aal = self.env['account.analytic.line'].create({
+                    'product_id': product.id,
+                    'name': li.template_id.name + " - " + rec.name,
+                    'amount': -1 * abs(li.balance * storages / total_storages),
+                    product_field_id: analytic_account.id,
+                    fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                    'analytic_distribution_id': self.id,
+                    'analytic_distribution_template_id': li.template_id.id,
+                })
