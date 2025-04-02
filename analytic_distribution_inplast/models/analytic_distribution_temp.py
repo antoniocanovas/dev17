@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from docutils.nodes import container
 from odoo import fields, models, api
 from odoo.exceptions import UserError
 from datetime import datetime, timedelta
@@ -9,7 +8,6 @@ from datetime import datetime, timedelta
 
 class AnalyticDistribution(models.Model):
     _inherit = 'analytic.distribution'
-
 
 
     ###########################################

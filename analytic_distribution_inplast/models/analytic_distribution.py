@@ -33,6 +33,7 @@ class AnalyticDistribution(models.Model):
             bag_unload = rec.raw_bag_unload * rec.picking_in_bag_qty
             pallet_unload = rec.raw_pallet_unload * rec.picking_in_pallet_qty
             r4 = cistern_unload + sack_unload + color_unload + cardboard_unload + bag_unload + pallet_unload
+
             # R5.- Movimientos de materia prima a producción:
             stk2mrp_pickings = rec.days * (rec.raw_color_reloc_daily + rec.raw_cboard_reloc_daily + rec.raw_bag_reloc_daily + rec.raw_pallet_reloc_daily)
 
@@ -44,16 +45,7 @@ class AnalyticDistribution(models.Model):
                     r4 +
                     stk2mrp_pickings
             )
-            """
-            raise UserError(
-                "R1: " + str(caps_handle_picking_unload) + "\n" +
-                "R2: " + str(mrp2stock_picking) + "\n" +
-                "R3: " + str(container_load) + "\n" +
-                "R3.1: " + str(caps_handle_picking_load) + "\n" +
-                "R4: " + str(r4) + "\n" +
-                "R5: " + str(stk2mrp_pickings)
-            )
-            """
+
     def compute_distribution(self):
         """Extend this function with custom Inplast analytic compute modes"""
         super().compute_distribution()
@@ -96,52 +88,66 @@ class AnalyticDistribution(models.Model):
             elif li.template_id.compute_method == "r22":
                 self.compute_r22(li)
 
-
     ###########################################
     # R1: Descarga y ubicación de ASAS.
+    # Un apunte por producto ASA.
     ###########################################
     def compute_r1(self, li):
-        for picking in self.picking_in_handles_ids:
-            products = set()
-            total_pallets = 0
-
-            # Total palets en albarán:
-            lines = picking.move_ids_without_package.filtered(
-                lambda l: l.product_id.categ_id.type == 'handle' and l.product_id.pnt_product_type == 'packing'
-            )
-            total_pallets += sum(lines.mapped('product_uom_qty'))
-            if total_pallets == 0:
-                continue
-            pallet_picking_unload = self.picking_unload / total_pallets
-
-            # Productos distintos en el albarán, del tipo asa:
-            for sm in lines:
-                products.add(sm.product_id)
-            # Bucle para cada apunte analítico:
+        for rec in self:
+            pickings = rec.picking_in_handles_ids
+            moves = self.env['stock.move'].search([
+                ('picking_id','in',pickings.ids),
+                ('product_id.mrp_bom_template_id.type', 'in',['pallet','pallet_nonmrp']),
+                ('product_id.categ_id.type','=', 'handle' ),
+                ('product_uom_qty', '>', 0),
+            ])
+            products = moves.product_id.pnt_parent_id
+            # Para realizar un sólo apunte por producto base:
             for product in products:
-                product_pallets = 0
-                for sm in lines:
-                    if sm.product_id == product:
-                        product_pallets += sm.product_uom_qty
+                picking_cost = 0
+                lines = moves.filtered(lambda l: l.product_id.pnt_parent_id == product)
+                product_pickings = lines.picking_id
+                # Para el reparto proporcional por albarán:
+                for picking in product_pickings:
+                    # Total de pallets a descargar (de todos los modelos de asas y de este en particular):
+                    handles_lines = picking.move_ids_without_package.filtered(
+                        lambda l: l.product_id.categ_id.type == 'handle'
+                                  and l.product_id.pnt_product_type == 'packing'
+                    )
+                    product_lines = picking.move_ids_without_package.filtered(
+                        lambda l: l.product_id.categ_id.type == 'handle'
+                                  and l.product_id.pnt_product_type == 'packing'
+                                  and l.product_id.pnt_parent_id == product
+                    )
+                    # Proporción del coste en función del nº de pallets del producto:
+                    total_picking_pallets = sum(handles_lines.mapped('product_uom_qty'))
+                    product_picking_pallets = sum(product_lines.mapped('product_uom_qty'))
+                    picking_time = rec.picking_unload * (product_picking_pallets / total_picking_pallets)
+                    picking_cost += picking_time * li.picking_hour_cost
 
                 # Buscamos si ya existe o se crea la cuenta analítica para este producto:
-                analytic_account = self.check_or_create_analytic_account(product.pnt_parent_id)
-                if product_pallets > 0:
-                    product_field_id = self.env.company.product_field_id.name
-                    fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
-                    machine_field_id = self.env.company.machine_field_id.name
-                    department_field_id = self.env.company.department_field_id.name
+                analytic_account = self.check_or_create_analytic_account(product)
+                # Creación del apunte analítico:
+                product_field_id = self.env.company.product_field_id.name
+                fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
+                machine_field_id = self.env.company.machine_field_id.name
+                department_field_id = self.env.company.department_field_id.name
+                # Albaranes correspondientes al apunte analítico:
+                picking_names = "[ "
+                for picking in product_pickings:
+                    picking_names += picking.name + " "
+                picking_names += "]"
 
-                    new_aal = self.env['account.analytic.line'].create({
-                        'product_id': product.pnt_parent_id.id,
-                        'name': li.template_id.name + " - " + picking.name,
-                        'amount': - product_pallets * pallet_picking_unload * li.picking_hour_cost,
-                        product_field_id: analytic_account.id,
-                        fixed_variable_field_id: self.env.company.analytic_fixed_account_id.id,
-                        department_field_id: self.env.company.analytic_warehouse_department_id.id,
-                        'analytic_distribution_id': self.id,
-                        'analytic_distribution_template_id': li.template_id.id,
-                    })
+                new_aal = self.env['account.analytic.line'].create({
+                    'product_id': product.id,
+                    'name': li.template_id.name + " - " + rec.name + " " + picking_names,
+                    'amount': -1 * abs(picking_cost),
+                    product_field_id: analytic_account.id,
+                    fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
+                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
+                    'analytic_distribution_id': self.id,
+                    'analytic_distribution_template_id': li.template_id.id,
+                })
 
 
     ###########################################
