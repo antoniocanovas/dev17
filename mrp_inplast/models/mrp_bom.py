@@ -15,7 +15,9 @@ class MrpBom(models.Model):
     _inherit = 'mrp.bom'
 
     pnt_raw_type_id = fields.Many2one('uom.category', string='Distribution type')
-    mrp_bom_template_id = fields.Many2one('product.bom.template', string='BOM Template')
+    # Cambio a related (19/02/25) borrar en un futuro la línea comentada:
+    #mrp_bom_template_id = fields.Many2one('product.bom.template', string='BOM Template')
+    mrp_bom_template_id = fields.Many2one(related='product_tmpl_id.mrp_bom_template_id')
     pnt_product_type = fields.Selection(related='product_tmpl_id.pnt_product_type')
 
     # Método interno para ser llamado desde una BA, para los casos de Lista de Materiales por %
@@ -84,17 +86,20 @@ class MrpBom(models.Model):
 
     mrp_tool_id = fields.Many2one('mrp.product.tool', string='Tool')
 
-    def bom_product_color_update(self):
+    def bom_product_color_and_raw_update(self):
         for record in self:
-            name = ""
+            namedye = ""
             colors = self.env['mrp.bom.line'].search([
                 ('bom_id', '=', record.id),
                 ('product_id.pnt_product_type', 'in', ['dye','semi'])])
+            raws = self.env['mrp.bom.line'].search([
+                ('bom_id', '=', record.id),
+                ('product_id.pnt_product_type', 'in', ['raw', 'semi'])])
             if len(colors.ids) == 1:
                 if colors.product_id.pnt_product_type == 'dye':
-                    name = colors.product_id.name
+                    namedye = colors.product_id.name
                 elif colors.product_id.pnt_product_dye:
-                    name = colors.product_id.pnt_product_dye
+                    namedye = colors.product_id.pnt_product_dye
 
             if len(colors.ids) == 2:
                 names = []
@@ -105,9 +110,35 @@ class MrpBom(models.Model):
                         names.append(li.product_id.pnt_product_dye)
                     else:
                         names.append("")
-                name = names[0] + " + " + names[1]
+                namedye = names[0] + " + " + names[1]
 
             if len(colors.ids) > 2:
-                name = "MULTICOLOR"
-            if name != "":
-                record.product_id['pnt_product_dye'] = name
+                namedye = "MULTICOLOR"
+            if namedye != "":
+                record.product_tmpl_id['pnt_product_dye'] = namedye
+
+
+            # Actualizar el campo pnt_product_raw
+            nameraw = ""
+            if len(raws.ids) == 1:
+                if raws.product_id.pnt_product_type == 'raw':
+                    nameraw = raws.product_id.name
+                elif raws.product_id.pnt_product_raw:
+                    nameraw = raws.product_id.pnt_product_raw
+
+            if len(raws.ids) == 2:
+                names = []
+                for li in raws:
+                    if li.product_id.pnt_product_type == 'raw':
+                        names.append(li.product_id.name)
+                    elif li.product_id.pnt_product_raw:
+                        names.append(li.product_id.pnt_product_raw)
+                    else:
+                        names.append("")
+                nameraw = names[0] + " + " + names[1]
+
+            if len(raws.ids) > 2:
+                nameraw = "MULTIRAWS"
+            if nameraw != "":
+                record.product_tmpl_id['pnt_product_raw'] = nameraw
+

@@ -59,7 +59,7 @@ class MrpProductTool(models.Model):
             if record.pnt_tool_id.id:
                 ppm = record.pnt_tool_id.pnt_hole_count * 60 * record.pnt_cps
             record['pnt_ppm'] = ppm
-    pnt_ppm = fields.Integer('PPM', store=True, readonly=False, compute='_get_pnt_piecesperminute')
+    pnt_ppm = fields.Float('PPM', store=True, readonly=False, compute='_get_pnt_piecesperminute')
     pnt_cps = fields.Float('CPS')
 
     pnt_accesory_ids = fields.Many2many(related="pnt_tool_id.pnt_tool_accesory_ids")

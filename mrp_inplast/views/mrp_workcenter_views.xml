@@ -7,6 +7,7 @@
             <!-- Inserta el consumo eléctrito teórico para usar en analítica: -->
             <xpath expr="//field[@name='resource_calendar_id']" position="after">
                 <field name="power_kw"/>
+                <field name="analytic_hr_per_hour"/>
             </xpath>
         </field>
     </record>

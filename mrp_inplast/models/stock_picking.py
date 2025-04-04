@@ -27,5 +27,6 @@ class StockPicking(models.Model):
 
     @api.constrains('state')
     def _not_allowed_partner_packaging_constrains(self):
-        if self.state == 'done' and self.incompatible_bom_template == True:
-            raise UserError('Incompatible packaging format for this customer. Review and reserve manually.')
+        for record in self:
+            if record.state == 'done' and record.incompatible_bom_template == True:
+                raise UserError('Incompatible packaging format for this customer. Review and reserve manually.')

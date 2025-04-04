@@ -20,21 +20,21 @@
     </record>
 
     <!-- Actualización del nombre del color del producto en base a colorantes en BOM: -->
-    <record id="ba_bom_product_color_update" model="base.automation">
+    <record id="ba_bom_product_color_and_raw_update" model="base.automation">
         <field name="name">=> BA BOM product color update</field>
         <field name="model_id" ref="mrp_inplast.model_mrp_bom"/>
         <field name="trigger">on_write</field>
         <field name="active" eval="True"/>
     </record>
 
-    <record id="as_bom_product_color_update" model="ir.actions.server">
+    <record id="as_bom_product_color_and_raw_update" model="ir.actions.server">
         <field name="name">=> AS BOM product color update</field>
         <field name="model_id" ref="mrp_inplast.model_mrp_bom"/>
         <field name="state">code</field>
         <field name="code">
-            record.bom_product_color_update()
+            record.bom_product_color_and_raw_update()
         </field>
-        <field name="base_automation_id" ref="mrp_inplast.ba_bom_product_color_update"/>
+        <field name="base_automation_id" ref="mrp_inplast.ba_bom_product_color_and_raw_update"/>
     </record>
 
 </odoo>
