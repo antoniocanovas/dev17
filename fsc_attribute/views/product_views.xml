@@ -21,10 +21,9 @@
                     <separator/>
                 </filter>
                 <!--
-                <xpath expr="//filter[@name='group_by_product_tmpl_id']" position="after"> -->
+                <xpath expr="//filter[@name='group_by_product_tmpl_id']" position="after">
                     <filter string="Dimension" name="fsc_dimension" context="{'group_by':'fsc_dimension_value_id'}"/>
                     <filter string="Quality" name="fsc_quality" context="{'group_by':'fsc_quality_value_id'}"/>
-                <!--
                 </xpath> -->
             </data>
         </field>
