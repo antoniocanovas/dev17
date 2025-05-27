@@ -3,7 +3,7 @@
 
 {
     'name': 'FSC',
-    'version': '18.0.1.0.0',
+    'version': '17.0.1.0.0',
     'category': 'mrp',
     "license": "AGPL-3",
     'website': "https://puntsistemes.es",
