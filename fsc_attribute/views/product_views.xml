@@ -10,20 +10,22 @@
         <field name="priority">90</field>
         <field name="arch" type="xml">
             <data>
-                <field name="all_product_tag_ids" position="before">
+                <field name="name" position="before">
                     <field name="fsc_dimension_value_id"/>
                     <field name="fsc_quality_value_id"/>
                 </field>
-                <filter name="combo" position="after">
+                <filter>
                     <separator/>
                     <filter string="Dimensions" name="with_dimension" domain="[('fsc_dimension_value_id','!=',False)]"/>
                     <filter string="Qualities" name="with_quality" domain="[('fsc_quality_value_id','!=',False)]"/>
                     <separator/>
                 </filter>
-                <xpath expr="//filter[@name='group_by_product_tmpl_id']" position="after">
+                <!--
+                <xpath expr="//filter[@name='group_by_product_tmpl_id']" position="after"> -->
                     <filter string="Dimension" name="fsc_dimension" context="{'group_by':'fsc_dimension_value_id'}"/>
                     <filter string="Quality" name="fsc_quality" context="{'group_by':'fsc_quality_value_id'}"/>
-                </xpath>
+                <!--
+                </xpath> -->
             </data>
         </field>
     </record>
