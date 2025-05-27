@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <!-- VISTAS FORM COMUNES: -->
+    <record id="product_template_material_inh_form" model="ir.ui.view">
+        <field name="name">product.template.material.inh.form</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='product_tooltip']" position="before">
+                <field name="material_id" readonly="is_product_variant"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!-- VISTAS DE BÚSQUEDA: -->
+    <record id="product_template_material_inh_search" model="ir.ui.view">
+        <field name="name">product.shoes.material.inh.search</field>
+        <field name="model">product.template</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <data>
+                <field name="categ_id" position="after">
+                    <field name="material_id"/>
+                </field>
+                <xpath expr="//group/filter[@name='type']" position="after">
+                    <filter string="Material" name="material" context="{'group_by':'material_id'}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

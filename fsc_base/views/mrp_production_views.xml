@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="fsc_mrp_form_inh" model="ir.ui.view">
+        <field name="name">fsc.mrp.form.inh</field>
+        <field name="model">mrp.production</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="fsc_efficiency" readonly="1" invisible="not wood_tracking"/>
+                <field name="fsc_percentage" readonly="1" invisible="not wood_tracking"/>
+                <field name="material_id"/>
+                <field name="fsc_origin_format_value_id" readonly="1" invisible="not wood_tracking"/>
+                <field name="wood_tracking" invisible="1"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>

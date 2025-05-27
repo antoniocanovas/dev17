@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    # BASE AUTOMATION al validar producción:
+    <record id="fsc_base_mrp_update_aa" model="base.automation">
+        <field name="name">=> FSC MRP update</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="trigger">on_write</field>
+        <field name="trigger_field_ids" eval="[(6,0, [ref('mrp.field_mrp_production__state')])]"
+        />
+
+    </record>
+    # SERVER ACTION al validar producción:
+    <record id="fsc_base_mrp_update_as" model="ir.actions.server">
+        <field name="name">=> FSC MRP update AS</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="evaluation_type">value</field>
+        <field name="state">code</field>
+        <field name="code">
+            record._fsc_update_mrp_production()
+        </field>
+        <field name="base_automation_id" ref="fsc_base.fsc_base_mrp_update_aa"/>
+    </record>
+
+</odoo>

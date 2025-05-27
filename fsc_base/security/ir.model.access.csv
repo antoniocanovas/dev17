@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fsc_audit, FSC Audit,model_fsc_audit,stock.group_stock_manager,1,1,1,1
+access_fsc_audit_line, FSC Audit Lines,model_fsc_audit_line,stock.group_stock_manager,1,1,1,1
+access_fsc_audit_product, FSC Audit Products,model_fsc_audit_product,stock.group_stock_manager,1,1,1,1
+access_eutr_audit, EUTR Audit,model_eutr_audit,stock.group_stock_manager,1,1,1,1
+access_eutr_audit_line, EUTR Audit Line,model_eutr_audit_line,stock.group_stock_manager,1,1,1,1

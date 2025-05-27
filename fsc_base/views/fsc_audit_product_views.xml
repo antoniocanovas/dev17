@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- FORM VIEW: -->
+    <record id="fsc_audit_product_default_form" model="ir.ui.view">
+        <field name="name">fsc.audit.product.default.form</field>
+        <field name="model">fsc.audit.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name" required="1" placeholder="e.g. Audit #..." />
+                    </h1>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="material_id"/>
+                        <field name="fsc_format_id"/>
+                        <field name="fsc_audit_line_id"/>
+                        <field name="fsc_audit_id"/>
+                        <field name="type"/>
+                        <field name="volume"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">form</field>
+    </record>
+
+    <!-- list VIEW: -->
+    <record id="fsc_audit_product_default_list" model="ir.ui.view">
+        <field name="name">fsc.audit.default.list</field>
+        <field name="model">fsc.audit.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" optional="hide"/>
+                <field name="product_id" optional="show"/>
+                <field name="material_id"/>
+                <field name="fsc_format_id"/>
+                <field name="volume"/>
+                <field name="type"/>
+                <field name="fsc_audit_line_id" optional="hide"/>
+                <field name="fsc_audit_id" optional="hide"/>
+            </tree>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">tree</field>
+    </record>
+
+    <!-- VISTA DE BÚSQUEDA: -->
+    <record id="fsc_audit_product_default_search" model="ir.ui.view">
+        <field name="name">fsc.audit.product.default.search</field>
+        <field name="model">fsc.audit.product</field>
+        <field name="type">search</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <search string="Product">
+                <field name="name" string="Name"/>
+                <field name="product_id" string="Product"/>
+                <field name="material_id" string="Material"/>
+                <field name="type"/>
+                <separator/>
+                <filter string="Initial stock" name="type_stock_start" domain="[('type','=','stock_start')]"/>
+                <filter string="Final stock" name="type_stock_final" domain="[('type','=','stock_final')]"/>
+                <filter string="Purchase" name="type_purchase" domain="[('type','=','purchase')]"/>
+                <filter string="Sale" name="type_sale" domain="[('type','=','sale')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Product" name="group_fsc_product" context="{'group_by':'product_id'}"/>
+                    <filter string="Material (audit line)" name="group_fsc_material" context="{'group_by':'material_id'}"/>
+                    <filter string="Type" name="group_fsc_type" context="{'group_by':'type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

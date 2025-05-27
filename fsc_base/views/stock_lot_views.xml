@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="fsc_stock_lot_form_inh" model="ir.ui.view">
+        <field name="name">fsc.stock.lot.form.inh</field>
+        <field name="model">stock.lot</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+
+            <data>
+                <xpath expr="//group[@name='main_group']" position="after">
+                    <group name="wood_tracking" string="Wood tracking" invisible="material_type != 'wood' or not wood_tracking">
+                        <group>
+                            <field name="material_id"/>
+                            <field name="wood_tracking"/>
+                            <field name="is_fsc" invisible="not wood_tracking"/>
+                            <field name="is_cites" invisible="not wood_tracking"/>
+                            <field name="fsc_efficiency"/>
+                            <field name="fsc_format_value_id"/>
+                        </group>
+                        <group>
+                            <field name="fsc_lot_type"/>
+                            <field name="fsc_percentage"/>
+                            <field name="raw_efficiency"/>
+                            <field name="initial_received_quantity_computed"/>
+                            <field name="fsc_origin_format_value_id" readonly="1"/>
+                            <field name="material_type"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='description']" position="before">
+                    <page name="child_lots" string="Child lots" invisible="not descendant_lot_ids">
+                        <field name="descendant_lot_ids" nolabel="1"/>
+                    </page>
+                </xpath>
+            </data>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+    <!-- VISTAS DE BÚSQUEDA: -->
+    <record id="fsc_base_stock_lot_inh_search" model="ir.ui.view">
+        <field name="name">fsc.base.stock.lot.inh.search</field>
+        <field name="model">stock.lot</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <data>
+                <filter name="creation_date" position="after">
+                    <separator/>
+                    <filter string="Wood tracking" name="wood_tracking" domain="[('wood_tracking','=',True)]"/>
+                    <filter string="Is FSC" name="is_fsc" domain="[('is_fsc','=',True)]"/>
+                    <filter string="Is CITES" name="is_cites" domain="[('is_cites','=',True)]"/>
+                </filter>
+            </data>
+        </field>
+    </record>
+
+
+</odoo>
+

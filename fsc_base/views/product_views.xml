@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="fsc_product_template_form_inh" model="ir.ui.view">
+        <field name="name">fsc.product.template.form.inh</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="FSC" name="fsc" invisible="not wood_tracking">
+                    <group>
+                        <field name="material_id"/>
+                        <field name="material_type"/>
+                        <field name="wood_tracking" invisible="1"/>
+                        <field name="is_cites" invisible="material_type != 'wood' or not wood_tracking"/>
+                        <field name="is_fsc" invisible="material_type != 'wood' or not wood_tracking"/>
+                        <field name="fsc_format_attribute_id" invisible="1"/>
+                        <field name="fsc_format_value_id"
+                               domain="[('attribute_id','=',fsc_format_attribute_id)]"
+                               invisible="not is_fsc"
+                               options="{'no_quick_create':1, 'no_create_edit':1}"/>
+                        <field name="fsc_type" invisible="not is_fsc" required="is_fsc"/>
+                        <field name="fsc_mix_percentage"
+                               invisible="not is_fsc or fsc_type not in ['mix_credit','mix_recycled']"
+                        />
+                        <field name="raw_efficiency_pt" invisible="material_type != 'wood' or is_product_variant or not wood_tracking"/>
+                    </group>
+                    <group name="eutr" string="EUTR">
+                        <field name="intrastat_code_id"  options="{'no_quick_create':1, 'no_create_edit':1}"/>
+                        <field name="eutr_nc_code"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+    <record id="fsc_product_product_form_inh" model="ir.ui.view">
+        <field name="name">fsc.product.product.form.inh</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='fsc']/group" position="inside">
+                <field name="raw_efficiency" invisible="not wood_tracking or not is_product_variant"/>
+            </xpath>
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+</odoo>
+

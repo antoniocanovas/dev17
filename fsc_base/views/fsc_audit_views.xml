@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- ACCION DE VENTANA: -->
+    <record id="action_fsc_audit" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="filter" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="limit">80</field>
+        <field name="name">FSC Auditories</field>
+        <field name="res_model">fsc.audit</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- fsc.audit.product (botón o2m): -->
+    <record id="fsc_audit_products_act_window" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="context">{'search_default_group_fsc_material': 1}</field>
+        <field name="domain">[('fsc_audit_id','=',active_id)]</field>
+        <field name="filter" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="limit">80</field>
+        <field name="name">FSC Audit products</field>
+        <field name="res_model">fsc.audit.product</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,pivot</field>
+    </record>
+
+    <!-- CONFIG MENU: -->
+    <record id="fsc_audit_menu" model="ir.ui.menu">
+        <field name="action" ref="action_fsc_audit"/>
+        <field name="active" eval="True"/>
+        <field name="name">FSC Auditories</field>
+        <field name="parent_id" ref="stock.menu_warehouse_report"/>
+        <field name="sequence">200</field>
+        <field name="web_icon" eval="False"/>
+        <field name="groups_id" eval="[(6, 0, [ref('stock.group_stock_manager')])]"/>
+    </record>
+
+
+    <!-- FORM VIEW: -->
+    <record id="fsc_audit_default_form" model="ir.ui.view">
+        <field name="name">fsc.audit.default.form</field>
+        <field name="model">fsc.audit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    <button name="compute_fsc_audit"
+                            icon="fa-delicious" class="oe_stat_button"
+                            type="object" string="Compute"
+                            invisible="state in ['done','cancel']"
+                    >
+                    </button>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                name="%(fsc_base.fsc_audit_products_act_window)d"
+                                type="action" icon="fa-bars"
+                                invisible="not line_ids"
+                        >
+                            <field string="Moves" name="fsc_audit_product_line_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name" required="1" placeholder="e.g. Audit #..." />
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="date_from" required="1" readonly="state in ['done']"/>
+                            <field name="date_to" required="1" readonly="state in ['done']"/>
+                        </group>
+                        <group>
+                            <field name="auditor_id"/>
+                            <field name="audit_date"/>
+                        </group>
+                    </group>
+                    <field name="line_ids" readonly="1">
+                        <tree>
+                            <field name="material_id"/>
+                            <field name="fsc_audit_product_ids" widget="many2many_tags" optional="hide"/>
+                            <field name="name" optional="hide"/>
+                            <field name="stock_start_vol"/>
+                            <field name="stock_final_vol"/>
+                            <field name="purchase_vol"/>
+                            <field name="sale_vol"/>
+                            <field name="efficiency"/>
+                            <field name="is_hidden"/>
+                        </tree>
+                    </field>
+                    <group string="Notes">
+                        <field name="notes" placeholder="Audit details and notes..." nolabel="1"/>
+                    </group>
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">form</field>
+    </record>
+
+    <!-- list VIEW: -->
+    <record id="fsc_audit_default_list" model="ir.ui.view">
+        <field name="name">fsc.audit.default.list</field>
+        <field name="model">fsc.audit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state"/>
+            </tree>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">tree</field>
+    </record>
+
+
+</odoo>
