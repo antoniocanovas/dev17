@@ -99,7 +99,7 @@
                         </tree>
                     </field>
                     <group string="Notes">
-                        <field name="notes" placeholder="Audit details and notes..." nolabel="1"/>
+                        <field name="notes" placeholder="Audit details and notes..." nolabel="1" colspan="2"/>
                     </group>
 
                 </sheet>
