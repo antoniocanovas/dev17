@@ -20,11 +20,10 @@
                     <filter string="Qualities" name="with_quality" domain="[('fsc_quality_value_id','!=',False)]"/>
                     <separator/>
                 </filter>
-                <!--
-                <xpath expr="//filter[@name='group_by_product_tmpl_id']" position="after">
+                <xpath expr="//group" position="inside">
                     <filter string="Dimension" name="fsc_dimension" context="{'group_by':'fsc_dimension_value_id'}"/>
                     <filter string="Quality" name="fsc_quality" context="{'group_by':'fsc_quality_value_id'}"/>
-                </xpath> -->
+                </xpath>
             </data>
         </field>
     </record>
