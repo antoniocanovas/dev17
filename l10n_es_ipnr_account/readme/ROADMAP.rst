@@ -1,0 +1,3 @@
+* El módulo no está preparado para añadir automáticamente las líneas de aportación
+  SIGAUS a los pedidos procedentes del comercio online.
+* En el caso de facturas de proveedores, si hay distintos pedidos de compra con dicciones de entrega distintas (unas con IPNR y otras que no), el apunte del impuesto será calculado por el total de los pedidos y habrá que modificarlo manualmente. Se recomiendan facturas distintas por direcciones de entrega distinta o al menos por zonas sujetas/no sujetas a IPNR.
