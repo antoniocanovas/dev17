@@ -31,10 +31,10 @@
             <xpath expr="//header" position="inside">
                 <button name="create_plastic_tax_entry" type="object" data-hotkey="shift+r"
                         string="Plastic Tax entry" class="oe_highlight"
-                        invisible="not plastic_tax or plastictax_move_id"/>
+                        invisible="not is_ipnr or plastictax_move_id"/>
             </xpath>
             <xpath expr="//header" position="after">
-                <div class="alert alert-info mb-0" role="alert" invisible="not plastic_tax or plastictax_move_id">
+                <div class="alert alert-info mb-0" role="alert" invisible="not is_ipnr or plastictax_move_id">
                     Esta operación requiere impuesto al plástico, pulse el botón "Crear apunte" para crearlo en modo borrador
                     y revísión posterior para confirmar, o elija uno creado previamente.
                 </div>

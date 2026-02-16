@@ -75,7 +75,10 @@ class IpnrMixin(models.AbstractModel):
             ].filtered(lambda l: l.product_id == ipnr_product)
             lines_to_delete.unlink()
 
-    def _get_ipnr_line_vals(self, lines: list[Any] | None = None, **kwargs: Any):
+    def _get_ipnr_line_vals(self, line: models.Model) -> dict:
+        """
+        Get the values for the IPNR tax line corresponding to a single product line.
+        """
         self.ensure_one()
         ipnr_product = self.env.ref(
             "l10n_es_ipnr_account.aportacion_ipnr_product_template"
@@ -93,49 +96,24 @@ class IpnrMixin(models.AbstractModel):
                 % ipnr_product.display_name
             )
 
-        ipnr_vals = dict()
-        ipnr_vals["product_id"] = ipnr_product.id
-        ipnr_vals[
-            self[
-                self._ipnr_secondary_unit_fields["line_ids"]
-            ]._ipnr_secondary_unit_fields["uom_field"]
-        ] = kg_uom.id
-        date = False
-        ipnr_lines = (
-            lines
-            if lines
-            else self[self._ipnr_secondary_unit_fields["line_ids"]].filtered("is_ipnr")
-        )
-        if self._name == "account.move":
-            # Get a default date to calculate the ipnr amount when the
-            # ipnr line is newly generated
-            date = self.ipnr_default_date(ipnr_lines)
-        else:
-            date = self[self._ipnr_secondary_unit_fields["date_field"]]
+        date = self[self._ipnr_secondary_unit_fields["date_field"]]
         price = self.env["l10n.es.ipnr.amount"].get_ipnr_amount(date)
-        weight = sum(
-            line[
-                self[
-                    self._ipnr_secondary_unit_fields["line_ids"]
-                ]._ipnr_secondary_unit_fields["uom_field"]
-            ]._compute_quantity(
-                line[line._ipnr_secondary_unit_fields["qty_field"]],
-                line.product_id.uom_id,
-            )
-            * line.product_id.plastic_weight_non_recyclable
-            for line in ipnr_lines
-        )
-        ipnr_vals.update(
-            {
-                self[
-                    self._ipnr_secondary_unit_fields["line_ids"]
-                ]._ipnr_secondary_unit_fields["qty_field"]: weight,
-                "price_unit": price,
-                "sequence": 10000,
-            }
-        )
+        
+        weight = line.product_uom_id._compute_quantity(
+            line.quantity, line.product_id.uom_id
+        ) * line.product_id.plastic_weight_non_recyclable
+
+        ipnr_vals = {
+            "product_id": ipnr_product.id,
+            "product_uom_id": kg_uom.id,
+            "quantity": weight,
+            "price_unit": price,
+            "sequence": 10000,
+        }
+        
         if self._name == "account.move":
             ipnr_vals["move_id"] = self.id
+
         return ipnr_vals
 
     def automatic_ipnr_exception(self):
