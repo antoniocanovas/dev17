@@ -1,7 +1,7 @@
 # Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import api, fields, models
 
 
 class AccountMoveLine(models.Model):
@@ -14,6 +14,39 @@ class AccountMoveLine(models.Model):
         "qty_field": "quantity",
         "uom_field": "product_uom_id",
     }
+
+    is_ipnr = fields.Boolean(
+        compute="_compute_is_ipnr",
+        store=True,
+        readonly=False,
+    )
+
+    @api.depends(
+        "product_id",
+        "product_id.ipnr_subject",
+        "move_id.company_id.ipnr_enable",
+        "move_id.ipnr_tax_zone",
+        "move_id.fiscal_position_id",
+        "move_id.fiscal_position_id.ipnr_subject",
+    )
+    def _compute_is_ipnr(self):
+        for line in self:
+            if line.display_type not in ('line_section', 'line_note'):
+                move = line.move_id
+                company_enabled = move.company_id.ipnr_enable
+                partner_in_zone = move.ipnr_tax_zone
+                fiscal_pos_ok = (
+                        move.partner_shipping_id.ipnr_dua_tax_zone or
+                        not move.fiscal_position_id or move.fiscal_position_id.ipnr_subject
+                )
+                product_ok = (
+                        line.product_id and line.product_id.ipnr_subject in ("yes", "category") and
+                        line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
+                )
+                line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok
+            else:
+                line.is_ipnr = False
+
 
     def unlink(self):
         ipnr_invoices = self.mapped("move_id").filtered(

@@ -58,7 +58,8 @@ class AccountMove(models.Model):
         Override this method to get the invoice lines not related to other
         models (i.e. sale orders)
         """
-        return []
+        # We only want to add IPNR lines for lines that are not coming from a sale order
+        return [("sale_line_ids", "=", False)]
 
     def manage_ipnr_invoice_lines(self):
         self.ensure_one()
@@ -67,32 +68,21 @@ class AccountMove(models.Model):
             [
                 [
                     ("move_id", "=", self.id),
-                    ("is_ipnr", "=", True),
                 ],
                 independent_lines_domain,
             ]
         )
-        self.env["account.move.line"].search(independent_ipnr_lines_domain).unlink()
-        # Invoice lines not related to other documents (i.e. sales)
-        independent_lines_domain = expression.AND(
-            [
-                [
-                    ("move_id", "=", self.id),
-                    ("product_id", "!=", False),
-                    ("is_ipnr", "=", True),
-                ],
-                independent_lines_domain,
-            ]
+        lines_to_process = self.env["account.move.line"].search(
+            independent_ipnr_lines_domain
         )
-        independent_lines = self.env["account.move.line"].search(
-            independent_lines_domain
-        )
-        if independent_lines:
-            self.create_ipnr_line(independent_lines)
+        lines_with_ipnr = lines_to_process.filtered("is_ipnr")
+        if lines_with_ipnr:
+            self.create_ipnr_line(lines_with_ipnr)
 
     def create_ipnr_line(self, lines: object, **kwargs: object):
         values = self._get_ipnr_line_vals(lines, **kwargs)
-        self.env["account.move.line"].create(values)
+        if values.get("quantity", 0) > 0:
+            self.env["account.move.line"].create(values)
 
     def apply_ipnr(self):
         for invoice in self.filtered(
@@ -103,19 +93,9 @@ class AccountMove(models.Model):
 
     def write(self, vals: object) -> Any:
         res = super().write(vals)
-        if any(
-            value in list(vals.keys())
-            for value in [
-                "is_ipnr",
-                "company_id",
-                "fiscal_position_id",
-                "invoice_line_ids",
-                "move_type",
-                "invoice_date",
-            ]
-        ):
-            self.with_context(avoid_recursion=True)._delete_ipnr()
-            self.apply_ipnr()
+        if "invoice_line_ids" in vals:
+            for move in self.filtered(lambda m: m.state == "draft"):
+                move.manage_ipnr_invoice_lines()
         return res
 
     @api.model_create_multi

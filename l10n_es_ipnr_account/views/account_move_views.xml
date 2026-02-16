@@ -10,7 +10,7 @@
                 <field name="ipnr_company" invisible="1" />
                 <field
                     name="is_ipnr"
-                    readonly="state != 'draft'"
+                    readonly="1"
                     invisible="ipnr_company == False or move_type not in ['out_invoice','out_refund','in_invoice','in_refund']"
                 />
             </xpath>
@@ -21,10 +21,10 @@
                 <field name="is_ipnr" invisible="1" />
             </xpath>
             <xpath
-                expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']"
-                position="before"
+                expr="//field[@name='invoice_line_ids']/tree/field[@name='name']"
+                position="after"
             >
-                <field name="is_ipnr" invisible="1" />
+                <field name="is_ipnr" optional="show"/>
             </xpath>
 
             <!-- Apunte de compras/ventas para el impuesto al plástico: -->
