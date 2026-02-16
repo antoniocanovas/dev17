@@ -38,17 +38,12 @@ class SaleOrderLine(models.Model):
             order = line.order_id
             company_enabled = order.company_id.ipnr_enable
             partner_in_zone = order.partner_shipping_id.ipnr_tax_zone
-            fiscal_pos_ok = ( order.partner_shipping_id.ipnr_dua_tax_zone or
+            fiscal_pos_ok = (
                 not order.fiscal_position_id or order.fiscal_position_id.ipnr_subject
             )
             product_ok = (
-                line.product_id and line.product_id.ipnr_subject in ("yes", "category") and
-                line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
+                line.product_id and line.product_id.ipnr_subject in ("yes", "category")
             )
-            print(company_enabled)
-            print(partner_in_zone)
-            print(fiscal_pos_ok)
-            print(product_ok)
             line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok
 
     def _prepare_invoice_line(self, **optional_values: Any) -> dict:

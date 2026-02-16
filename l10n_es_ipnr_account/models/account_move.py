@@ -1,7 +1,7 @@
 import logging
 from typing import Any
 
-from odoo import api, fields, models
+from odoo import SUPERUSER_ID, _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 
@@ -20,37 +20,16 @@ class AccountMove(models.Model):
         ],
     }
 
-    @api.depends(
-        "company_id",
-        "fiscal_position_id",
-        "move_type",
+    is_ipnr = fields.Boolean(
+        string="Is IPNR",
+        compute="_compute_is_ipnr",
+        store=False,
     )
+
+    @api.depends("invoice_line_ids.is_ipnr")
     def _compute_is_ipnr(self):
-        for record in self:
-            is_ipnr = False
-            # PARA LAS COMPRAS:
-            #            if (record.move_type in ['in_invoice', 'in_refund']):
-            # Control de que el destino de la compra va a España o no está definido:
-            # Eliminado 21/01/25 porque las facturas de extranjero no indican  impuesto,
-            # lo haremos en apunte externo:
-            #                if ((record.partner_id.country_id.code != 'ES') and
-            #                        (not record.picking_partner_id.country_id.id or
-            # Se comenta la provincia porque no todos los países tienen (15/01/25):
-            # not record.picking_partner_id.state_id.id or
-            #                        record.ipnr_tax_zone == True)):
-            #                    is_ipnr = True
-
-            # PARA LAS VENTAS:
-            if (record.move_type in ["out_invoice", "out_refund"]) and (
-                not record.picking_partner_id.country_id.id
-                or
-                # Se comenta la provincia porque no todos los países tienen (15/01/25):
-                # not record.picking_partner_id.state_id.id or
-                record.ipnr_tax_zone
-            ):
-                is_ipnr = True
-
-            record.is_ipnr = is_ipnr
+        for rec in self:
+            rec.is_ipnr = any(line.is_ipnr for line in rec.invoice_line_ids)
 
     @api.depends("is_ipnr", "invoice_date", "company_id")
     def _compute_ipnr_is_date(self):
@@ -100,7 +79,7 @@ class AccountMove(models.Model):
                 [
                     ("move_id", "=", self.id),
                     ("product_id", "!=", False),
-                    ("product_id.ipnr_has_amount", "=", True),
+                    ("is_ipnr", "=", True),
                 ],
                 independent_lines_domain,
             ]
@@ -858,7 +837,7 @@ class AccountMove(models.Model):
         # PASO 1: Eliminar TODAS las líneas IPNR existentes primero
         # Esto evita que se acumulen líneas de diferentes flujos
         existing_ipnr_lines = self.invoice_line_ids.filtered(
-            lambda a: a.is_ipnr and a.product_id == ipnr_product
+            lambda l: l.product_id == ipnr_product
         )
         if existing_ipnr_lines:
             _logger.debug(
@@ -869,11 +848,7 @@ class AccountMove(models.Model):
 
         # PASO 2: Buscar TODAS las líneas con productos sujetos a IPNR
         # (tanto de pedidos como manuales)
-        all_lines_with_ipnr = self.invoice_line_ids.filtered(
-            lambda a: a.product_id
-            and a.product_id.ipnr_has_amount
-            and not a.is_ipnr  # Excluir líneas IPNR (ya eliminadas arriba)
-        )
+        all_lines_with_ipnr = self.invoice_line_ids.filtered("is_ipnr")
 
         if not all_lines_with_ipnr:
             # Si no hay líneas con IPNR, no crear nada
@@ -914,7 +889,6 @@ class AccountMove(models.Model):
             "quantity": total_weight,
             "product_uom_id": kg_uom.id,
             "price_unit": price_unit,
-            "is_ipnr": True,
             "sequence": 10000,
         }
 

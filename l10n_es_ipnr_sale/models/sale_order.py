@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.tools import frozendict
 
 
 class SaleOrder(models.Model):
@@ -49,42 +48,25 @@ class SaleOrder(models.Model):
         """Delete and recreate the IPNR line."""
         if self.env.context.get("avoid_recursion"):
             return
-        self.with_context(avoid_recursion=True)._delete_ipnr()
-        for rec in self.filtered(
-            lambda a: a.is_ipnr and a.ipnr_is_date and a.state in ["draft", "sent"]
-        ):
+        # Use a specific context to avoid recursion
+        ctx = {**self.env.context, "avoid_recursion": True}
+        self.with_context(ctx)._delete_ipnr()
+        # Filter orders that should have an IPNR line
+        for rec in self.filtered("is_ipnr"):
             ipnr_vals = rec._get_ipnr_line_vals()
-            self.env["sale.order.line"].create(ipnr_vals)
+            if ipnr_vals.get(rec.order_line._ipnr_secondary_unit_fields["qty_field"], 0) > 0:
+                self.env["sale.order.line"].with_context(ctx).create(ipnr_vals)
 
     def write(self, vals):
         res = super().write(vals)
-        # Check if we need to recompute IPNR
-        ipnr_triggers = ["order_line", "partner_shipping_id", "fiscal_position_id"]
-        if not any(key in vals for key in ipnr_triggers):
-            return res
-
-        for sale in self:
-            if sale.state not in ("draft", "sent"):
-                continue
-
-            if sale.is_ipnr:
-                sale.apply_ipnr()
-            else:
-                # If there are no IPNR lines, ensure the tax line is deleted
-                sale._delete_ipnr()
+        # Check if a recomputation is needed
+        if "order_line" in vals:
+            self.apply_ipnr()
         return res
 
     @api.model_create_multi
     def create(self, vals_list):
         sales = super().create(vals_list)
-        for sale in sales.filtered(
-            lambda a: a.is_ipnr
-            and a.ipnr_is_date
-            and any(
-                line.product_id.ipnr_has_amount
-                for line in a.order_line.filtered("product_id")
-            )
-        ):
-            sale.automatic_ipnr_exception()
+        for sale in sales.filtered("is_ipnr"):
             sale.apply_ipnr()
         return sales

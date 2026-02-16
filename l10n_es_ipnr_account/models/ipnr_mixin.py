@@ -4,7 +4,8 @@
 from datetime import date
 from typing import Any
 
-from odoo import SUPERUSER_ID, fields, models
+from odoo import SUPERUSER_ID, _, fields, models
+from odoo.exceptions import UserError
 
 
 class IpnrMixin(models.AbstractModel):
@@ -68,9 +69,7 @@ class IpnrMixin(models.AbstractModel):
         )
         if not ipnr_product:
             return
-        for rec in self.filtered(
-            lambda a: a.state in self._ipnr_secondary_unit_fields["editable_states"]
-        ):
+        for rec in self:
             lines_to_delete = rec[
                 rec._ipnr_secondary_unit_fields["line_ids"]
             ].filtered(lambda l: l.product_id == ipnr_product)
@@ -78,17 +77,29 @@ class IpnrMixin(models.AbstractModel):
 
     def _get_ipnr_line_vals(self, lines: list[Any] | None = None, **kwargs: Any):
         self.ensure_one()
-        ipnr_vals = dict()
-        ipnr_product_id = self.env.ref(
+        ipnr_product = self.env.ref(
             "l10n_es_ipnr_account.aportacion_ipnr_product_template"
         )
-        ipnr_vals["product_id"] = ipnr_product_id.id
-        kg_uom_id = self.env.ref("uom.product_uom_kgm")
+        kg_uom = self.env.ref("uom.product_uom_kgm")
+
+        # Security check for product configuration
+        if ipnr_product.uom_id != kg_uom or ipnr_product.uom_po_id != kg_uom:
+            raise UserError(
+                _(
+                    "The IPNR contribution product is misconfigured.\n\n"
+                    "Please go to the product '%s' and ensure that "
+                    "both 'Unit of Measure' and 'Purchase Unit of Measure' are set to 'kg'."
+                )
+                % ipnr_product.display_name
+            )
+
+        ipnr_vals = dict()
+        ipnr_vals["product_id"] = ipnr_product.id
         ipnr_vals[
             self[
                 self._ipnr_secondary_unit_fields["line_ids"]
             ]._ipnr_secondary_unit_fields["uom_field"]
-        ] = kg_uom_id.id
+        ] = kg_uom.id
         date = False
         ipnr_lines = (
             lines
@@ -102,22 +113,6 @@ class IpnrMixin(models.AbstractModel):
         else:
             date = self[self._ipnr_secondary_unit_fields["date_field"]]
         price = self.env["l10n.es.ipnr.amount"].get_ipnr_amount(date)
-        # if model isn't account.move we delete the ipnr line
-        invoice_lines = []
-        if self._name != "account.move":
-            ipnr_line_delete = self[
-                self._ipnr_secondary_unit_fields["line_ids"]
-            ].filtered(lambda a: a.product_id == ipnr_product_id)
-            if (
-                ipnr_line_delete
-                and ipnr_line_delete[
-                    ipnr_line_delete._ipnr_secondary_unit_fields["invoice_lines_field"]
-                ]
-            ):
-                invoice_lines = ipnr_line_delete[
-                    ipnr_line_delete._ipnr_secondary_unit_fields["invoice_lines_field"]
-                ].ids
-            ipnr_line_delete.unlink()
         weight = sum(
             line[
                 self[
@@ -139,14 +134,6 @@ class IpnrMixin(models.AbstractModel):
                 "sequence": 10000,
             }
         )
-        if invoice_lines:
-            ipnr_vals.update(
-                {
-                    self[
-                        self._ipnr_secondary_unit_fields["line_ids"]
-                    ]._ipnr_secondary_unit_fields["invoice_lines_field"]: invoice_lines
-                }
-            )
         if self._name == "account.move":
             ipnr_vals["move_id"] = self.id
         return ipnr_vals
