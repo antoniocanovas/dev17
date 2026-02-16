@@ -129,7 +129,6 @@ class IpnrMixin(models.AbstractModel):
                     self._ipnr_secondary_unit_fields["line_ids"]
                 ]._ipnr_secondary_unit_fields["qty_field"]: weight,
                 "price_unit": price,
-                "is_ipnr": True,
                 "sequence": 10000,
             }
         )

@@ -42,12 +42,12 @@ class SaleOrderLine(models.Model):
                 not order.fiscal_position_id or order.fiscal_position_id.ipnr_subject
             )
             product_ok = (
-                line.product_id and line.product_id.ipnr_subject in ("yes", "category")
+                line.product_id and line.product_id.ipnr_subject in ("yes", "category") and
+                line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
             )
             print(company_enabled)
             print(partner_in_zone)
             print(fiscal_pos_ok)
-            print(order.fiscal_position_id.ipnr_subject)
             print(product_ok)
             line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok
 
