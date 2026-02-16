@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_picking_form_sogama" model="ir.ui.view">
+            <field name="name">stock.picking.form.sogama</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Sogama">
+                        <group>
+                            <field name="kg_ferreo"/>
+                            <field name="kg_no_ferreo"/>
+                            <field name="kg_metal"/>
+                            <field name="kg_plastico"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Tree View to Modify it -->
+        <record id="view_picking_tree_sogama" model="ir.ui.view">
+            <field name="name">stock.picking.tree.sogama</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="kg_ferreo" optional="show"/>
+                    <field name="kg_no_ferreo" optional="show"/>
+                    <field name="kg_metal" optional="show"/>
+                    <field name="kg_plastico" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

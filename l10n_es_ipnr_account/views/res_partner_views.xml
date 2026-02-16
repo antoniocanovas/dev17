@@ -13,6 +13,7 @@
             </xpath>
             <xpath expr="//field[@name='industry_id']" position="after">
                 <field name="ipnr_tax_zone"/>
+                <field name="ipnr_dua_tax_zone"/>
             </xpath>
         </field>
         <field name="priority">99</field>
