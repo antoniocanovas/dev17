@@ -61,11 +61,20 @@ class IpnrMixin(models.AbstractModel):
             rec.ipnr_company = rec.company_id.ipnr_enable
 
     def _delete_ipnr(self):
-        self.filtered(
+        """Delete the IPNR product line."""
+        ipnr_product = self.env.ref(
+            "l10n_es_ipnr_account.aportacion_ipnr_product_template",
+            raise_if_not_found=False,
+        )
+        if not ipnr_product:
+            return
+        for rec in self.filtered(
             lambda a: a.state in self._ipnr_secondary_unit_fields["editable_states"]
-        ).mapped(self._ipnr_secondary_unit_fields["line_ids"]).filtered(
-            lambda b: b.is_ipnr
-        ).unlink()
+        ):
+            lines_to_delete = rec[
+                rec._ipnr_secondary_unit_fields["line_ids"]
+            ].filtered(lambda l: l.product_id == ipnr_product)
+            lines_to_delete.unlink()
 
     def _get_ipnr_line_vals(self, lines: list[Any] | None = None, **kwargs: Any):
         self.ensure_one()
@@ -84,9 +93,7 @@ class IpnrMixin(models.AbstractModel):
         ipnr_lines = (
             lines
             if lines
-            else self[self._ipnr_secondary_unit_fields["line_ids"]].filtered(
-                lambda a: a.product_id and a.product_id.ipnr_has_amount
-            )
+            else self[self._ipnr_secondary_unit_fields["line_ids"]].filtered("is_ipnr")
         )
         if self._name == "account.move":
             # Get a default date to calculate the ipnr amount when the

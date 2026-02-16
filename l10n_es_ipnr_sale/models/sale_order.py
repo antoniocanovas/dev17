@@ -46,6 +46,10 @@ class SaleOrder(models.Model):
         return ipnr_vals
 
     def apply_ipnr(self):
+        """Delete and recreate the IPNR line."""
+        if self.env.context.get("avoid_recursion"):
+            return
+        self.with_context(avoid_recursion=True)._delete_ipnr()
         for rec in self.filtered(
             lambda a: a.is_ipnr and a.ipnr_is_date and a.state in ["draft", "sent"]
         ):
@@ -54,32 +58,20 @@ class SaleOrder(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        ipnr_sales = self.filtered(
-            lambda a: a.is_ipnr
-            and a.ipnr_is_date
-            and any(
-                line.product_id.ipnr_has_amount
-                for line in a.order_line.filtered("product_id")
-            )
-        )
-        for sale in ipnr_sales.filtered("id"):
-            if self.env.context.get("avoid_recursion"):
+        # Check if we need to recompute IPNR
+        ipnr_triggers = ["order_line", "partner_shipping_id", "fiscal_position_id"]
+        if not any(key in vals for key in ipnr_triggers):
+            return res
+
+        for sale in self:
+            if sale.state not in ("draft", "sent"):
                 continue
-            sale.automatic_ipnr_exception()
-            sale.with_context(avoid_recursion=True).apply_ipnr()
-            sale.env.context = frozendict(
-                {**sale.env.context, "avoid_recursion": False}
-            )
-        (self - ipnr_sales).filtered(
-            lambda a: (
-                not a.is_ipnr
-                or not any(
-                    line.product_id.ipnr_has_amount
-                    for line in a.order_line.filtered("product_id")
-                )
-            )
-            and a.ipnr_has_line
-        )._delete_ipnr()
+
+            if sale.is_ipnr:
+                sale.apply_ipnr()
+            else:
+                # If there are no IPNR lines, ensure the tax line is deleted
+                sale._delete_ipnr()
         return res
 
     @api.model_create_multi
