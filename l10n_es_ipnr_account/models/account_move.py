@@ -52,57 +52,44 @@ class AccountMove(models.Model):
         self.ensure_one()
         return self.invoice_date or self.create_date.date()
 
-    @api.model
-    def get_independent_invoice_lines_domain(self) -> list[Any]:
-        """
-        Override this method to get the invoice lines not related to other
-        models (i.e. sale orders)
-        """
-        # We only want to add IPNR lines for lines that are not coming from a sale order
-        return [("sale_line_ids", "=", False)]
-
-    def manage_ipnr_invoice_lines(self):
-        self.ensure_one()
-        independent_lines_domain = self.get_independent_invoice_lines_domain()
-        independent_ipnr_lines_domain = expression.AND(
-            [
-                [
-                    ("move_id", "=", self.id),
-                ],
-                independent_lines_domain,
-            ]
-        )
-        lines_to_process = self.env["account.move.line"].search(
-            independent_ipnr_lines_domain
-        )
-        lines_with_ipnr = lines_to_process.filtered("is_ipnr")
-        if lines_with_ipnr:
-            self.create_ipnr_line(lines_with_ipnr)
-
-    def create_ipnr_line(self, lines: object, **kwargs: object):
-        values = self._get_ipnr_line_vals(lines, **kwargs)
-        if values.get("quantity", 0) > 0:
-            self.env["account.move.line"].create(values)
-
     def apply_ipnr(self):
-        for invoice in self.filtered(
-            lambda a: a.state == "draft" and a.is_ipnr and a.ipnr_is_date and a.id
-        ):
-            invoice.automatic_ipnr_exception()
-            invoice.with_context(avoid_recursion=True).manage_ipnr_invoice_lines()
+        """
+        Deletes and recreates the IPNR tax line for the invoice, based on
+        lines currently marked with is_ipnr = True.
+        This method is the single point of truth for recalculation.
+        """
+        if self.env.context.get("avoid_recursion"):
+            return
+        ctx = {**self.env.context, "avoid_recursion": True}
+
+        for move in self:
+            # First, delete any existing IPNR tax line to ensure a clean slate.
+            move.with_context(ctx)._delete_ipnr()
+
+            # If consolidation is active, let the specific method handle it.
+            if move.company_id.ipnr_consolidate_lines:
+                move.with_context(ctx)._update_or_create_consolidated_ipnr_line()
+                continue
+
+            # If not consolidating, calculate and create the IPNR line.
+            if move.is_ipnr:
+                lines_to_process = move.invoice_line_ids.filtered("is_ipnr")
+                if lines_to_process:
+                    ipnr_vals = move._get_ipnr_line_vals(lines_to_process)
+                    if ipnr_vals.get("quantity", 0) > 0:
+                        self.env["account.move.line"].with_context(ctx).create(ipnr_vals)
 
     def write(self, vals: object) -> Any:
         res = super().write(vals)
         if "invoice_line_ids" in vals:
             for move in self.filtered(lambda m: m.state == "draft"):
-                move.manage_ipnr_invoice_lines()
+                move.apply_ipnr()
         return res
 
     @api.model_create_multi
     def create(self, vals_list: object) -> Any:
         moves = super().create(vals_list)
-        for move in moves.filtered(lambda a: a.is_ipnr and a.ipnr_is_date):
-            move.automatic_ipnr_exception()
+        for move in moves.filtered(lambda m: m.state == "draft"):
             move.apply_ipnr()
         return moves
 
