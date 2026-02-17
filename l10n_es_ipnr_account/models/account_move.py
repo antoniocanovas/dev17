@@ -66,7 +66,7 @@ class AccountMove(models.Model):
 
     def write(self, vals: object) -> Any:
         res = super().write(vals)
-        if "invoice_line_ids" in vals:
+        if "invoice_line_ids" in vals or "partner_shipping_id" in vals:
             for move in self.filtered(lambda m: m.state == "draft"):
                 move.apply_ipnr()
         return res

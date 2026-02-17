@@ -45,17 +45,19 @@ class SaleOrder(models.Model):
         return ipnr_vals
 
     def apply_ipnr(self):
-        """Delete and recreate the IPNR line."""
+        """Delete and recreate IPNR lines (one per product line with IPNR)."""
         if self.env.context.get("avoid_recursion"):
             return
-        # Use a specific context to avoid recursion
         ctx = {**self.env.context, "avoid_recursion": True}
         self.with_context(ctx)._delete_ipnr()
-        # Filter orders that should have an IPNR line
-        for rec in self.filtered("is_ipnr"):
-            ipnr_vals = rec._get_ipnr_line_vals()
-            if ipnr_vals.get(rec.order_line._ipnr_secondary_unit_fields["qty_field"], 0) > 0:
-                self.env["sale.order.line"].with_context(ctx).create(ipnr_vals)
+        for rec in self:
+            # Create one IPNR line per product line with is_ipnr=True
+            lines_to_process = rec.order_line.filtered("is_ipnr")
+            for line in lines_to_process:
+                ipnr_vals = rec._get_ipnr_line_vals(line)
+                qty_field = line._ipnr_secondary_unit_fields["qty_field"]
+                if ipnr_vals.get(qty_field, 0) > 0:
+                    self.env["sale.order.line"].with_context(ctx).create(ipnr_vals)
 
     def write(self, vals):
         res = super().write(vals)

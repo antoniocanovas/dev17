@@ -31,21 +31,29 @@ class AccountMoveLine(models.Model):
     )
     def _compute_is_ipnr(self):
         for line in self:
-            if line.display_type not in ('line_section', 'line_note'):
-                move = line.move_id
-                company_enabled = move.company_id.ipnr_enable
-                partner_in_zone = move.ipnr_tax_zone
-                fiscal_pos_ok = (
-                        move.partner_shipping_id.ipnr_dua_tax_zone or
-                        not move.fiscal_position_id or move.fiscal_position_id.ipnr_subject
-                )
-                product_ok = (
-                        line.product_id and line.product_id.ipnr_subject in ("yes", "category") and
-                        line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
-                )
-                line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok
-            else:
+            if line.display_type in ('line_section', 'line_note'):
                 line.is_ipnr = False
+                continue
+
+            move = line.move_id
+            if not move:
+                line.is_ipnr = False
+                continue
+
+            company_enabled = move.company_id.ipnr_enable
+            partner_in_zone = move.ipnr_tax_zone
+            partner_shipping = move.partner_shipping_id
+            fiscal_pos_ok = (
+                (partner_shipping and partner_shipping.ipnr_dua_tax_zone) or
+                not move.fiscal_position_id or
+                move.fiscal_position_id.ipnr_subject
+            )
+            product_ok = (
+                line.product_id and
+                line.product_id.ipnr_subject in ("yes", "category") and
+                line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
+            )
+            line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok
 
 
     def unlink(self):

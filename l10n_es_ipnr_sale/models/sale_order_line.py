@@ -36,14 +36,19 @@ class SaleOrderLine(models.Model):
     def _compute_is_ipnr(self):
         for line in self:
             order = line.order_id
+            if not order:
+                line.is_ipnr = False
+                continue
             company_enabled = order.company_id.ipnr_enable
-            partner_in_zone = order.partner_shipping_id.ipnr_tax_zone
+            partner_shipping = order.partner_shipping_id
+            partner_in_zone = partner_shipping.ipnr_tax_zone if partner_shipping else False
             fiscal_pos_ok = (
-                order.partner_shipping_id.ipnr_dua_tax_zone or
+                (partner_shipping and partner_shipping.ipnr_dua_tax_zone) or
                 not order.fiscal_position_id or order.fiscal_position_id.ipnr_subject
             )
             product_ok = (
-                line.product_id and line.product_id.ipnr_subject in ("yes", "category") and
+                line.product_id and
+                line.product_id.ipnr_subject in ("yes", "category") and
                 line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
             )
             line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok

@@ -11,8 +11,11 @@
                 <field
                     name="is_ipnr"
                     readonly="1"
+                    invisible="1"
+                    />
+                    <!-- CAMBIADO POR GROUPS 02/2026:
                     invisible="ipnr_company == False or move_type not in ['out_invoice','out_refund','in_invoice','in_refund']"
-                />
+                    -->
             </xpath>
             <xpath
                 expr="//field[@name='invoice_line_ids']/form//field[@name='price_unit']"

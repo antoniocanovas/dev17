@@ -11,8 +11,10 @@
                 <field
                     name="is_ipnr"
                     readonly="state != 'draft'"
-                    invisible="ipnr_company  == False"
+                    groups="base.group_no_one"
+                    invisible="1"
                 />
+                    <!-- CAMBIADO POR GROUPS 02/2026: invisible="ipnr_company  == False" -->
             </field>
             <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
                 <field name="is_ipnr" optional="show"/>
