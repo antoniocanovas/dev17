@@ -25,7 +25,7 @@
                 </p>
             </div>
             <div class="o_barcode_generic_bottom_buttons">
-                <button class="btn btn-secondary o_close" t-on-click="() => this.actionService.doAction({type: 'ir.actions.act_window_close'})">
+                <button class="btn btn-secondary o_close" t-on-click="() => this.actionService.doAction('stock_barcode.stock_barcode_action_main_menu')">
                     Close
                 </button>
             </div>

@@ -4,6 +4,16 @@ import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { Component, onWillStart, useState } from "@odoo/owl";
+import { MainMenu } from "@stock_barcode/main_menu";
+import { patch } from "@web/core/utils/patch";
+
+// Patch the MainMenu component to add the unbuild action
+patch(MainMenu.prototype, {
+    async openUnbuild() {
+        await this.actionService.doAction("mrp_autounbuild.stock_barcode_action_unbuild");
+    },
+});
+
 
 class UnbuildBarcodeHandler extends Component {
     static props = {
@@ -69,28 +79,6 @@ class UnbuildBarcodeHandler extends Component {
             return;
         }
         const lot = lotResult[0];
-        const [productId] = lot.product_id;
-        const productInfo = (await this.orm.read("product.product", [productId], ["product_tmpl_id"]))[0];
-        const productTmplId = productInfo.product_tmpl_id[0];
-        const companyId = lot.company_id ? lot.company_id[0] : false;
-
-        const bomResult = await this.orm.searchRead("mrp.bom", [
-            "|",
-                ["product_id", "=", productId],
-            "&",
-                ["product_tmpl_id", "=", productTmplId],
-                ["product_id", "=", false],
-            ["type", "=", "normal"],
-            "|",
-                ["company_id", "=", companyId],
-                ["company_id", "=", false]
-        ], ["id"], { limit: 1 });
-
-        if (!bomResult.length) {
-            this.notification.add(_t("Product has no bill of materials."), { type: "danger" });
-            this._playSound("error");
-            return;
-        }
 
         try {
             await this.orm.call("mrp.unbuild", "action_unbuild_from_barcode", [lot.id]);

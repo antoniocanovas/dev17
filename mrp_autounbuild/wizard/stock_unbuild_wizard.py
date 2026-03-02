@@ -30,6 +30,10 @@ class StockUnbuildWizard(models.TransientModel):
         compute='_compute_bom_id',
         readonly=True,
     )
+    mo_id = fields.Many2one(
+        'mrp.production',
+        string='Manufacturing Order',
+    )
 
     @api.depends('product_id')
     def _compute_bom_id(self):
@@ -52,6 +56,7 @@ class StockUnbuildWizard(models.TransientModel):
     @api.onchange('lot_id')
     def _onchange_lot_id(self):
         if self.lot_id:
+            # Set location from quant
             stock_quant = self.env['stock.quant'].search([
                 ('lot_id', '=', self.lot_id.id),
                 ('quantity', '>', 0),
@@ -59,29 +64,44 @@ class StockUnbuildWizard(models.TransientModel):
             if stock_quant:
                 self.location_id = stock_quant.location_id.id
 
+            # --- Robust MO search ---
+            production = self.env['mrp.production']
+            # 1. Try the most direct link first
+            production = self.env['mrp.production'].search([
+                ('lot_producing_id', '=', self.lot_id.id),
+                ('state', '=', 'done'),
+            ], limit=1)
+
+            # 2. If that fails, search through stock moves as a fallback
+            if not production:
+                move_line = self.env['stock.move.line'].search([
+                    ('lot_id', '=', self.lot_id.id),
+                    ('state', '=', 'done'),
+                    ('production_id', '!=', False),
+                    ('quantity', '>', 0),
+                ], limit=1, order='date desc')
+                if move_line:
+                    production = move_line.production_id
+            
+            self.mo_id = production.id if production else False
+
     def action_confirm(self):
         self.ensure_one()
-        quant = self.env['stock.quant'].search([
-            ('lot_id', '=', self.lot_id.id),
-            ('location_id', '=', self.location_id.id),
-            ('quantity', '>', 0),
-        ], limit=1)
-        if not quant:
+        if not self.mo_id:
             raise UserError(_(
-                'There is no stock available for lot %s in location %s.'
-            ) % (self.lot_id.name, self.location_id.display_name))
+                'Could not find the original Manufacturing Order for Lot %s.'
+            ) % self.lot_id.name)
 
         unbuild_order = self.env['mrp.unbuild'].create({
+            'mo_id': self.mo_id.id,
             'product_id': self.product_id.id,
-            'bom_id': self.bom_id.id,
+            'bom_id': self.bom_id.id if self.bom_id else False,
+            'product_uom_id': self.mo_id.product_uom_id.id,
             'lot_id': self.lot_id.id,
+            'product_qty': 1.0,
             'location_id': self.location_id.id,
             'location_dest_id': self.location_id.id,
         })
-        try:
-            unbuild_order.action_unbuild()
-        except UserError as e:
-            raise UserError(_(
-                'An error occurred during the unbuild process: %s'
-            ) % e.name)
+
+        unbuild_order.action_unbuild()
         return {'type': 'ir.actions.act_window_close'}

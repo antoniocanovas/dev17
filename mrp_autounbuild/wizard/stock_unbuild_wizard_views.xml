@@ -11,6 +11,7 @@
                         <field name="lot_id"/>
                         <field name="location_id"/>
                         <field name="bom_id" invisible="1"/>
+                        <field name="mo_id" readonly="1" force_save="1"/>
                     </group>
                     <footer>
                         <button name="action_confirm" string="Confirm" type="object" class="btn-primary"/>
