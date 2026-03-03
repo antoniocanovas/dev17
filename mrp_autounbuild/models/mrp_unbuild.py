@@ -6,6 +6,27 @@ from odoo.exceptions import UserError
 class MrpUnbuild(models.Model):
     _inherit = 'mrp.unbuild'
 
+    def _prepare_move_line_vals(self, move, origin_move_line, taken_quantity):
+        vals = super()._prepare_move_line_vals(move, origin_move_line, taken_quantity)
+        # If the component had no lot traceability when the MO was produced but
+        # now does, origin_move_line.lot_id will be empty and _action_done()
+        # would fail. Find or create a lot with the same name as the finished
+        # product's lot, but linked to the component product.
+        if not vals.get('lot_id') and move.product_id.tracking != 'none' and self.lot_id:
+            component_lot = self.env['stock.lot'].search([
+                ('name', '=', self.lot_id.name),
+                ('product_id', '=', move.product_id.id),
+                ('company_id', '=', self.company_id.id),
+            ], limit=1)
+            if not component_lot:
+                component_lot = self.env['stock.lot'].create({
+                    'name': self.lot_id.name,
+                    'product_id': move.product_id.id,
+                    'company_id': self.company_id.id,
+                })
+            vals['lot_id'] = component_lot.id
+        return vals
+
     @api.model
     def action_unbuild_from_barcode(self, lot_id):
         lot = self.env['stock.lot'].browse(lot_id)

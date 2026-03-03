@@ -2,7 +2,7 @@
 {
     'name': 'MRP Auto Unbuild from Lot/Serial',
     'summary': 'Unbuild a manufactured product in one step from the product form or the Barcode App.',
-    'version': '17.0.1.0.0',
+    'version': '17.0.1.1.0',
     'author': 'Acanovas',
     'license': 'AGPL-3',
     'category': 'Manufacturing/Manufacturing',
