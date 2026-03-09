@@ -238,6 +238,8 @@ class AccountMove(models.Model):
         res = super().action_post()
         for move in self:
             if move.plastictax_move_id and move.plastictax_move_id.state == "draft":
+                if move.invoice_date:
+                    move.plastictax_move_id.date = move.invoice_date
                 should_auto_validate = False
                 if move.move_type in ("in_invoice", "in_refund"):
                     should_auto_validate = move.company_id.auto_validate_ipnr_purchase

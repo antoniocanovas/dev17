@@ -88,7 +88,7 @@ class ResCompany(models.Model):
     plastic_tax = fields.Monetary("IPNR Tax", compute="_get_today_plastic_tax")
 
     @api.constrains("ipnr_enable", "ipnr_date_from")
-    def _check_pnr_date(self):
+    def _check_ipnr_date(self):
         if self.filtered(lambda a: a.ipnr_enable and not a.ipnr_date_from):
             raise ValidationError(
                 _("'Ipnr Date From' is mandatory for companies with IPNR enabled.")
