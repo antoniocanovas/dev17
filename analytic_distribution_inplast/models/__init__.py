@@ -9,4 +9,5 @@ from . import analytic_distribution
 from . import sale_order_line
 from . import stock_move
 from . import analytic_distribution_line
-from . import analytic_distribution_temp
+from . import analytic_distribution_r8r9
+from . import analytic_distribution_r13

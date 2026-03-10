@@ -94,3 +94,4 @@ class ResCompany(models.Model):
     analytic_sale_department_id = fields.Many2one('account.analytic.account', string='Sales')
     analytic_administration_department_id = fields.Many2one('account.analytic.account', string='Administration')
     analytic_quality_department_id = fields.Many2one('account.analytic.account', string='Quality')
+    analytic_mrp_department_id = fields.Many2one('account.analytic.account', string='Manufacturing')

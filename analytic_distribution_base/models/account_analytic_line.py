@@ -9,3 +9,4 @@ class AccountAnalyticLine(models.Model):
 
     analytic_distribution_template_id = fields.Many2one('analytic.distribution.template', string='Analytic distribution template')
     analytic_distribution_id = fields.Many2one('analytic.distribution', string='Analytic distribution')
+    analytic_distribution_note = fields.Text(string='Distribution note', readonly=True)

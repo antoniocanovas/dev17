@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store

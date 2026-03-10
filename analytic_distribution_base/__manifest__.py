@@ -36,6 +36,7 @@
     "data": [
         'views/analytic_distribution_template_views.xml',
         'views/analytic_distribution_views.xml',
+        'views/account_analytic_line_views.xml',
         'security/ir.model.access.csv',
     ],
     "demo": [],

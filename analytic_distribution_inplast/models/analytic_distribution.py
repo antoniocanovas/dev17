@@ -61,6 +61,7 @@ class AnalyticDistribution(models.Model):
 
         # Calcular por líneas en función de cada plantilla:
         for li in self.line_ids:
+            li.compute_debit_credit()
             if li.template_id.compute_method == "demo":
                 a = 1
                 # raise UserError("ok")
@@ -80,9 +81,11 @@ class AnalyticDistribution(models.Model):
                 self.compute_r6(li)
             elif li.template_id.compute_method == "r7":
                 self.compute_r7(li)
-            # VOY POR AQUÍ:
+            elif li.template_id.compute_method in ["r8", "r9"]:
+                self.compute_r8r9(li)
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
+            # VOY POR AQUÍ:
             elif li.template_id.compute_method in ["r14", "r15"]:
                 self.compute_r14(li)
             elif li.template_id.compute_method == "r22":
@@ -569,7 +572,6 @@ class AnalyticDistribution(models.Model):
                     'analytic_distribution_id': self.id,
                     'analytic_distribution_template_id': li.template_id.id,
                 })
-
 
     # =========================================================================
     # Traemos todos los campos de parámetros en el momento del recálculo y guardamos:
@@ -1414,91 +1416,6 @@ class AnalyticDistribution(models.Model):
     # =========================================================================
 
     """
-    def compute_r13(self, li):
-        datefrom = self.date_from
-        dateto = self.date_to
-        total_kwh = 0  # Total de kWh consumidos por todas las máquinas
-        workcenters = li.template_id.workcenter_ids
-        balance = li.balance  # El coste a distribuir
-
-        # Wororders entre fechas:
-        workorders = self.env["mrp.workorder"].search(
-            [
-                ("workcenter_id", "in", workcenters.ids),
-                ("date_start", ">=", datefrom),
-                ("date_start", "<=", dateto),
-            ]
-        )
-
-        # Inicialización de listas simples
-        mrpproducts = []
-        product_total_kwh = []
-
-        # Cálculo del total de kWh consumidos
-        for wo in workorders:
-            product = wo.product_id
-            duration = wo.duration
-            machine = wo.workcenter_id
-
-            # Identificamos productos únicos y agregamos a la lista si no están
-            if product not in mrpproducts:
-                mrpproducts.append(product)
-                product_total_kwh.append(0)  # Inicializamos su consumo total a 0
-
-            # Calculamos el consumo de kWh
-            kwh_consumed = duration * machine.power_kw
-            total_kwh += kwh_consumed
-
-            # Actualizamos el consumo total por producto
-            product_index = mrpproducts.index(product)
-            product_total_kwh[product_index] += kwh_consumed
-
-        # Verificar si hay consumo total de kWh para evitar la división por cero
-        if total_kwh == 0:
-            raise UserError("No hay consumo de energía registrado.")
-
-        # Crear entradas analíticas para cada producto
-        for i in range(len(mrpproducts)):
-            product = mrpproducts[i]
-            product_kwh = product_total_kwh[i]
-
-            machine_percentage = (product_kwh / total_kwh) * 100
-            machine_cost = (balance * machine_percentage) / 100
-
-            # Buscar la cuenta analítica para el producto base tapón, o crearla:
-            analytic_product = product
-            if product.pnt_product_type == 'packing':
-                analytic_product = product.pnt_parent_id
-
-            analytic_account = self.env['account.analytic.account'].search([
-                ('product_id','=',analytic_product.id)
-            ])
-            if not analytic_account.id:
-                analytic_account = self.env['account.analytic.account'].create({
-                    'product_id': analytic_product.id,
-                    'plan_id': self.env.company.analytic_product_plan_id.id,
-                    'name': analytic_product.name,
-                })
-
-            # Buscar el nombre del campo creado dinámicamente:
-            analytic_field_name = self.env['ir.model.fields'].search([
-                ('model','=','account.analytic.line'),
-                ('ttype','=','many2one'),
-                ('field_description','=',analytic_account.plan_id.name),
-            ]).name
-
-            self.env["account.analytic.line"].create(
-                {
-                    "name": f"Consumo {product.name}",
-                    "amount": machine_cost,
-                    "product_id": product.id,
-                    "date": fields.Date.today(),
-                    "analytic_distribution_id": self.id,
-                    analytic_field_name: analytic_account.id,
-                }
-            )
-
-        return True
 
     def compute_r14(self):
         datefrom = self.date_from
