@@ -47,7 +47,7 @@ class StockLotBoxesWizard(models.TransientModel):
                 continue
 
             line = record.pnt_barcode_input
-            lots_to_process = line.split("MO")
+            lots_to_process = line.split(record.lot_id.parent_id.name)
             lots_to_process = [lot.strip() for lot in lots_to_process if lot.strip()]
             box_template_id = record.lot_id.product_id.mrp_bom_template_id.box_template_id
             subproduct = None
@@ -94,7 +94,7 @@ class StockLotBoxesWizard(models.TransientModel):
 
             try:
                 for lot in lots_to_process:
-                    lot_name = "MO" + lot
+                    lot_name = record.lot_id.parent_id.name + lot
                     exist = self.env["stock.lot"].search([("name", "=", lot_name)])
                     if not exist:
                         new_lot = self.env["stock.lot"].create(
@@ -117,50 +117,51 @@ class StockLotBoxesWizard(models.TransientModel):
                 ]
 
     def _process_lot_removal(self):
-        if not self.pnt_barcode_input:
-            raise UserError(_("Please enter a lot name to remove."))
+        for record in self:
+            if not self.pnt_barcode_input:
+                raise UserError(_("Please enter a lot name to remove."))
 
-        lot_names = self.pnt_barcode_input.split("MO")
-        lot_names = [lot_name.strip() for lot_name in lot_names if lot_name.strip()]
+            lot_names = self.pnt_barcode_input.split(record.lot_id.parent_id.name)
+            lot_names = [lot_name.strip() for lot_name in lot_names if lot_name.strip()]
 
-        if not lot_names:
-            raise UserError(_("Please enter at least one valid lot name."))
+            if not lot_names:
+                raise UserError(_("Please enter at least one valid lot name."))
 
-        not_found_lots = []
+            not_found_lots = []
 
-        for lot_name in lot_names:
-            lot_name_full = "MO" + lot_name
-            lot_to_remove = self.env["stock.lot"].search(
-                [("name", "=", lot_name_full), ("parent_id", "=", self.lot_id.id)]
-            )
-            if not lot_to_remove:
-                not_found_lots.append(lot_name_full)
+            for lot_name in lot_names:
+                lot_name_full = record.lot_id.parent_id.name + lot_name
+                lot_to_remove = self.env["stock.lot"].search(
+                    [("name", "=", lot_name_full), ("parent_id", "=", self.lot_id.id)]
+                )
+                if not lot_to_remove:
+                    not_found_lots.append(lot_name_full)
 
-        if not_found_lots:
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "title": _("Lots Not Found"),
-                    "message": _(
-                        "The following lots do not exist and no lots were removed: %s"
-                    )
-                    % ", ".join(not_found_lots),
-                    "sticky": False,
-                    "type": "danger",
-                },
-            }
+            if not_found_lots:
+                return {
+                    "type": "ir.actions.client",
+                    "tag": "display_notification",
+                    "params": {
+                        "title": _("Lots Not Found"),
+                        "message": _(
+                            "The following lots do not exist and no lots were removed: %s"
+                        )
+                        % ", ".join(not_found_lots),
+                        "sticky": False,
+                        "type": "danger",
+                    },
+                }
 
-        for lot_name in lot_names:
-            lot_name_full = "MO" + lot_name
-            lot_to_remove = self.env["stock.lot"].search(
-                [("name", "=", lot_name_full), ("parent_id", "=", self.lot_id.id)]
-            )
-            lot_to_remove.unlink()
+            for lot_name in lot_names:
+                lot_name_full = record.lot_id.parent_id.name + lot_name
+                lot_to_remove = self.env["stock.lot"].search(
+                    [("name", "=", lot_name_full), ("parent_id", "=", self.lot_id.id)]
+                )
+                lot_to_remove.unlink()
 
-        if self.lot_id:
-            lots = self.env["stock.lot"].search([("parent_id", "=", self.lot_id.id)])
-            self.pnt_processed_barcodes = [(6, 0, lots.ids)]
+            if self.lot_id:
+                lots = self.env["stock.lot"].search([("parent_id", "=", self.lot_id.id)])
+                self.pnt_processed_barcodes = [(6, 0, lots.ids)]
 
     def trigger_remove_lot(self):
         self.show_confirmation = True

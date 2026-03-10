@@ -83,11 +83,10 @@ class AnalyticDistribution(models.Model):
                 self.compute_r7(li)
             elif li.template_id.compute_method in ["r8", "r9"]:
                 self.compute_r8r9(li)
+            elif li.template_id.compute_method in ["r10", "r11", "r14", "r15"]:
+                self.compute_r10r11(li)
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
-            # VOY POR AQUÍ:
-            elif li.template_id.compute_method in ["r14", "r15"]:
-                self.compute_r14(li)
             elif li.template_id.compute_method == "r22":
                 self.compute_r22(li)
 
@@ -641,6 +640,14 @@ class AnalyticDistribution(models.Model):
         string='Boxes per container',
         help="Number of boxes that fit in a container."
     )
+    purchase_estimation = fields.Float(
+        string='Purchase time %',
+        help='Estimated purchase % time'
+    )
+    purchase_estimation_handle = fields.Float(
+        string='Handle purchase %',
+        help='Estimated purchase % time'
+    )
 
     def _update_general_parameters(self):
         parameters = self.env.ref('analytic_distribution_inplast.analytic_distribution_inplast_parameter')
@@ -660,6 +667,8 @@ class AnalyticDistribution(models.Model):
             'raw_bag_reloc_daily': parameters.raw_bag_reloc_daily,
             'pallet_reloc': parameters.pallet_reloc,
             'container_box_qty': parameters.container_box_qty,
+            'purchase_estimation': parameters.purchase_estimation,
+            'purchase_estimation_handle': parameters.purchase_estimation_handle,
         })
 
     @api.model
@@ -1416,67 +1425,6 @@ class AnalyticDistribution(models.Model):
     # =========================================================================
 
     """
-
-    def compute_r14(self):
-        datefrom = self.date_from
-        dateto = self.date_to
-        total_duration = 0  # Total de kWh consumidos por todas las máquinas
-        workcenters = self.workcenter_ids
-        amount = self.amount  # El máximo coste a distribuir
-
-        # Órdenes de manufactura consideradas entre fechas:
-        workorders = self.env["mrp.workorder"].search(
-            [
-                ("workcenter_id", "in", workcenters.ids),
-                ("date_start", ">=", datefrom),
-                ("date_start", "<=", dateto),
-            ]
-        )
-
-        # Inicialización de listas simples
-        mrpproducts = []
-        product_total_duration = []
-
-        # Cálculo del total de kWh consumidos
-        for wo in workorders:
-            product = wo.product_id
-            duration = wo.duration
-            machine = wo.workcenter_id
-
-            # Identificamos productos únicos y agregamos a la lista si no están
-            if product not in mrpproducts:
-                mrpproducts.append(product)
-                product_total_duration.append(0)  # Inicializamos su consumo total a 0
-
-            total_duration += duration
-
-            # Actualizamos el consumo total por producto
-            product_index = mrpproducts.index(product)
-            product_total_duration[product_index] += duration
-
-        # Verificar si hay consumo total de kWh para evitar la división por cero
-        if total_duration == 0:
-            raise UserError("No hay consumo de energía registrado.")
-
-        # Crear entradas analíticas para cada producto
-        for i in range(len(mrpproducts)):
-            product = mrpproducts[i]
-            product_kwh = product_total_duration[i]
-
-            machine_percentage = (product_kwh / total_duration) * 100
-            machine_cost = (amount * machine_percentage) / 100
-
-            self.env["account.analytic.line"].create(
-                {
-                    "name": f"Consumo {product.name}",
-                    "amount": machine_cost,
-                    "product_id": product.id,
-                    "date": fields.Date.today(),
-                    "analytic_distribution_id": self.id,
-                }
-            )
-
-        return True
 
     def compute_r22(self):
         # El chequeo de región es el siguiente: país = España (ES), o posición fiscal "intracomuntaria" (EU) y otros.

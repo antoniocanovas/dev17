@@ -37,4 +37,19 @@
         <field name="base_automation_id" ref="mrp_inplast.ba_bom_product_color_and_raw_update"/>
     </record>
 
+    <record id="action_recalculate_tool_ppm" model="ir.actions.server">
+        <field name="name">=> Recalcular Ciclos y Piezas</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+for product in records:
+    for tool in product.mrp_tool_ids:
+        ppm = 0
+        if tool.pnt_tool_id and tool.pnt_cps:
+            ppm = (tool.pnt_tool_id.pnt_hole_count * 60) / tool.pnt_cps
+        tool.write({'pnt_ppm': ppm})
+        </field>
+    </record>
 </odoo>

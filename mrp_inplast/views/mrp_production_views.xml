@@ -6,7 +6,11 @@
         <field name="arch" type="xml">
             <!-- Inserta la herramienta utilizada en función de la lista de materiales: -->
             <xpath expr="//div[@name='bom_div']" position="after">
-                <field name="mrp_tool_id" domain="[('product_tmpl_id','=',product_tmpl_id)]"/>
+                <field name="mrp_tool_id"
+                       widget="selection"
+                       domain="[('product_tmpl_id','=',mrp_tool_product_tmpl_id)]"
+                />
+                <field name="mrp_tool_product_tmpl_id" invisible="1"/>
             </xpath>
         </field>
     </record>

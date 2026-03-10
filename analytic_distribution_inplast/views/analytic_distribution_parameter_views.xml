@@ -66,6 +66,8 @@
                             <group string="Other">
                                 <field name="pallet_reloc"/>
                                 <field name="container_box_qty"/>
+                                <field name="purchase_estimation"/>
+                                <field name="purchase_estimation_handle"/>
                             </group>
                         </group>
 

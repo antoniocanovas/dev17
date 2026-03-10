@@ -148,6 +148,8 @@
                         <group string="Other">
                             <field name="pallet_reloc" readonly="1"/>
                             <field name="container_box_qty" readonly="1"/>
+                            <field name="purchase_estimation" readonly="1"/>
+                            <field name="purchase_estimation_handle" readonly="1"/>
                         </group>
 
                     </group>

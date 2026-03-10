@@ -1,7 +1,7 @@
 {
     "name": "MRP Inplast",
     "summary": "MRP Inplast",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "category": "MRP",
     "author": "Punt Sistemes",
     "website": "https://www.puntsistemes.es",
@@ -13,6 +13,7 @@
         "product",
         "stock",
         "purchase",
+        "mrp",
         "stock_delivery",
         "mrp_workorder",
         "maintenance",

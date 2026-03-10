@@ -20,7 +20,7 @@
                         name="%(action_window_product_packing_wizard)d"
                         string="Packings"
                         context="{'default_name':id}"
-                        invisible="pnt_product_type != 'final'"
+                        invisible="pnt_product_type not in ['final','semi']"
                 />
             </xpath>
             <xpath expr="//page[@name='reports']" position="before">

@@ -18,6 +18,10 @@ class MrpProduction(models.Model):
         for record in self:
             record['mrp_tool_id'] = record.bom_id.mrp_tool_id.id
     mrp_tool_id = fields.Many2one('mrp.product.tool', string='MRP Tool', store=True, readonly=False, compute='_get_mrp_tool')
+
+    # Campo para utilizar en el dominio de mrp_tool_id:
+    mrp_tool_product_tmpl_id = fields.Many2one(related='bom_id.mrp_tool_product_tmpl_id')
+
     def add_pallet_boxes(self):
         self.ensure_one()
         return {

@@ -19,11 +19,15 @@
                 <field name="pnt_raw_available_ids" invisible="1"/>
                 <field name="pallet_line_id"/>
                 <field name="box_line_id"/>
-                <field name="mrp_tool_id" domain="[('product_tmpl_id','=',product_tmpl_id)]"/>
+                <field name="mrp_tool_id"
+                       widget="selection"
+                       domain="[('product_tmpl_id','=',mrp_tool_product_tmpl_id)]"
+                />
                 <field name="mrp_bom_template_id"
                        required="pnt_product_type in ['packing']"
                        invisible="pnt_product_type not in ['packing']"/>
                 <field name="pnt_product_type" invisible="1"/>
+                <field name="mrp_tool_product_tmpl_id" invisible="1"/>
             </field>
 
             <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="after">

@@ -1,8 +1,7 @@
 # Copyright
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import fields, models, api
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
 
 
 class MrpProductTool(models.Model):
@@ -21,7 +20,8 @@ class MrpProductTool(models.Model):
 
     name = fields.Char("Name", compute="_get_product_tool_name")
 
-    # Datos de empresa de categoría de moldes y accesorios para usar en dominios de equipos:
+    # Datos de empresa de categoría de moldes y accesorios para usar
+    # en dominios de equipos:
     pnt_mrp_tool_categ_id = fields.Many2one(
         "maintenance.equipment.category",
         store=False,
@@ -51,16 +51,29 @@ class MrpProductTool(models.Model):
         "maintenance.equipment", string="Blade", store=True, copy=True
     )
 
-
-    @api.depends('pnt_cps', 'pnt_tool_id', 'pnt_tool_id.pnt_hole_count')
+    @api.depends("pnt_cps", "pnt_tool_id", "pnt_tool_id.pnt_hole_count")
     def _get_pnt_piecesperminute(self):
         for record in self:
             ppm = 0
-            if record.pnt_tool_id.id:
-                ppm = record.pnt_tool_id.pnt_hole_count * 60 * record.pnt_cps
-            record['pnt_ppm'] = ppm
-    pnt_ppm = fields.Float('PPM', store=True, readonly=False, compute='_get_pnt_piecesperminute')
-    pnt_cps = fields.Float('CPS')
+            if record.pnt_tool_id.id and record.pnt_cps:
+                ppm = (record.pnt_tool_id.pnt_hole_count * 60) / record.pnt_cps
+            record["pnt_ppm"] = ppm
+
+    def _set_pnt_piecesperminute(self):
+        for record in self:
+            if record.pnt_ppm and record.pnt_tool_id.id:
+                record.pnt_cps = (
+                    record.pnt_tool_id.pnt_hole_count * 60
+                ) / record.pnt_ppm
+
+    pnt_ppm = fields.Float(
+        "PPM",
+        store=True,
+        readonly=False,
+        compute="_get_pnt_piecesperminute",
+        inverse="_set_pnt_piecesperminute",
+    )
+    pnt_cps = fields.Float("Cycle (s)")
 
     pnt_accesory_ids = fields.Many2many(related="pnt_tool_id.pnt_tool_accesory_ids")
     pnt_blade_ids = fields.Many2many(related="pnt_tool_id.pnt_tool_blade_ids")

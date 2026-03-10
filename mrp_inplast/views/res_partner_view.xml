@@ -8,12 +8,20 @@
                 <field name="sscc_qty"/>
             </xpath>
 
-            <xpath expr="//notebook" position="inside">
-                <page name="bom_templates" string="BOM Templates" groups="mrp.group_mrp_manager">
-                    <field name="mrp_bom_template_ids"/>
-                </page>
+            <xpath expr="//notebook/page/group[@id='wisecap']" position="inside">
+                <group name="bom_templates" string="BOM Templates" groups="mrp.group_mrp_manager">
+                    <field name="mrp_bom_template_ids" colspan="2">
+                        <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="type"/>
+                                <field name="box_template_id"/>
+                            </tree>
+                    </field>
+                </group>
             </xpath>
 
         </field>
+        <field name="priority">99</field>
     </record>
+
 </odoo>

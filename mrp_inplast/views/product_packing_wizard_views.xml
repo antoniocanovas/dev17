@@ -34,6 +34,11 @@
                                 name="create_packing_products"
                                 invisible="not type"
                                 string="Create packing products"/>
+                         <button class="oe_highlight"
+                                type="object"
+                                name="create_pallet_and_box_products"
+                                invisible="type not in ['pallet','pallet_nonmrp']"
+                                string="Create pallet with box products"/>
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
 

@@ -53,7 +53,7 @@ class PalletBoxesWizard(models.TransientModel):
                 continue
 
             line = record.pnt_barcode_input
-            lots_to_process = line.split("MO")
+            lots_to_process = line.split(record.production_id.lot_producing_id.name)
             lots_to_process = [lot.strip() for lot in lots_to_process if lot.strip()]
             box_template_id = (
                 record.production_id.product_id.mrp_bom_template_id.box_template_id
@@ -102,7 +102,7 @@ class PalletBoxesWizard(models.TransientModel):
 
             try:
                 for lot in lots_to_process:
-                    lot_name = "MO" + lot
+                    lot_name = record.production_id.lot_producing_id.name + lot
                     exist = self.env["stock.lot"].search([("name", "=", lot_name)])
                     if not exist:
                         new_lot = self.env["stock.lot"].create(
@@ -126,58 +126,59 @@ class PalletBoxesWizard(models.TransientModel):
 
     def _process_lot_removal(self):
         """Procesa la eliminación de lotes y maneja las notificaciones."""
-        if not self.pnt_barcode_input:
-            raise UserError(_("Please enter a lot name to remove."))
+        for record in self:
+            if not self.pnt_barcode_input:
+                raise UserError(_("Please enter a lot name to remove."))
 
-        # Extrae nombres de lotes de la entrada
-        lot_names = self.pnt_barcode_input.split("MO")
-        lot_names = [lot_name.strip() for lot_name in lot_names if lot_name.strip()]
+            # Extrae nombres de lotes de la entrada
+            lot_names = self.pnt_barcode_input.split(record.production_id.lot_producing_id.name)
+            lot_names = [lot_name.strip() for lot_name in lot_names if lot_name.strip()]
 
-        # Lanza un error si no se encuentran nombres de lotes válidos
-        if not lot_names:
-            raise UserError(_("Please enter at least one valid lot name."))
+            # Lanza un error si no se encuentran nombres de lotes válidos
+            if not lot_names:
+                raise UserError(_("Please enter at least one valid lot name."))
 
-        # Listas para rastrear lotes que no se encuentran
-        not_found_lots = []
+            # Listas para rastrear lotes que no se encuentran
+            not_found_lots = []
 
-        # Comprobar si todos los lotes existen antes de intentar eliminarlos
-        for lot_name in lot_names:
-            lot_name_full = "MO" + lot_name
-            lot_to_remove = self.env["stock.lot"].search(
-                [("name", "=", lot_name_full), ("parent_id", "=", self.pallet_id.id)]
-            )
-            if not lot_to_remove:
-                # Si no se encuentra el lote, agrégalo a la lista de no encontrados
-                not_found_lots.append(lot_name_full)
+            # Comprobar si todos los lotes existen antes de intentar eliminarlos
+            for lot_name in lot_names:
+                lot_name_full = record.production_id.lot_producing_id.name + lot_name
+                lot_to_remove = self.env["stock.lot"].search(
+                    [("name", "=", lot_name_full), ("parent_id", "=", self.pallet_id.id)]
+                )
+                if not lot_to_remove:
+                    # Si no se encuentra el lote, agrégalo a la lista de no encontrados
+                    not_found_lots.append(lot_name_full)
 
-        # Si hay lotes no encontrados, muestra una notificación de error y no elimina nada
-        if not_found_lots:
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "title": _("Lots Not Found"),
-                    "message": _(
-                        "The following lots do not exist and no lots were removed: %s"
-                    )
-                    % ", ".join(not_found_lots),
-                    "sticky": False,
-                    "type": "danger",
-                },
-            }
+            # Si hay lotes no encontrados, muestra una notificación de error y no elimina nada
+            if not_found_lots:
+                return {
+                    "type": "ir.actions.client",
+                    "tag": "display_notification",
+                    "params": {
+                        "title": _("Lots Not Found"),
+                        "message": _(
+                            "The following lots do not exist and no lots were removed: %s"
+                        )
+                        % ", ".join(not_found_lots),
+                        "sticky": False,
+                        "type": "danger",
+                    },
+                }
 
-        # Si todos los lotes existen, proceder con la eliminación
-        for lot_name in lot_names:
-            lot_name_full = "MO" + lot_name
-            lot_to_remove = self.env["stock.lot"].search(
-                [("name", "=", lot_name_full), ("parent_id", "=", self.pallet_id.id)]
-            )
-            lot_to_remove.unlink()
+            # Si todos los lotes existen, proceder con la eliminación
+            for lot_name in lot_names:
+                lot_name_full = record.production_id.lot_producing_id.name + lot_name
+                lot_to_remove = self.env["stock.lot"].search(
+                    [("name", "=", lot_name_full), ("parent_id", "=", self.pallet_id.id)]
+                )
+                lot_to_remove.unlink()
 
-        # Actualiza la lista de códigos de barras procesados después de la eliminación
-        if self.pallet_id:
-            lots = self.env["stock.lot"].search([("parent_id", "=", self.pallet_id.id)])
-            self.pnt_processed_barcodes = [(6, 0, lots.ids)]
+            # Actualiza la lista de códigos de barras procesados después de la eliminación
+            if self.pallet_id:
+                lots = self.env["stock.lot"].search([("parent_id", "=", self.pallet_id.id)])
+                self.pnt_processed_barcodes = [(6, 0, lots.ids)]
 
     def trigger_remove_lot(self):
         """Activa la confirmación de eliminación."""

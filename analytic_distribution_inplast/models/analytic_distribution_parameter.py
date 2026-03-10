@@ -81,3 +81,11 @@ class AnalyticDistributionParameter(models.Model):
         string='Boxes per container',
         help="Number of boxes that fit in a container."
     )
+    purchase_estimation = fields.Float(
+        string='Purchase time %',
+        help='Estimated purchase % time'
+    )
+    purchase_estimation_handle = fields.Float(
+        string='Handle purchase %',
+        help='Estimated purchase % time'
+    )

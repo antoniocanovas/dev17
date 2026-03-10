@@ -10,4 +10,6 @@ from . import sale_order_line
 from . import stock_move
 from . import analytic_distribution_line
 from . import analytic_distribution_r8r9
+from . import analytic_distribution_r10r11r14r15
 from . import analytic_distribution_r13
+from . import account_asset
