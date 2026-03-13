@@ -85,10 +85,18 @@ class AnalyticDistribution(models.Model):
                 self.compute_r8r9(li)
             elif li.template_id.compute_method in ["r10", "r11", "r14", "r15"]:
                 self.compute_r10r11(li)
+            elif li.template_id.compute_method == "r12":
+                self.compute_r12(li)
             elif li.template_id.compute_method == "r13":
                 self.compute_r13(li)
+            elif li.template_id.compute_method == "r18":
+                self.compute_r18(li)
+            elif li.template_id.compute_method == "r18.1":
+                self.compute_r181(li)
             elif li.template_id.compute_method == "r22":
                 self.compute_r22(li)
+            elif li.template_id.compute_method == "r23":
+                self.compute_r23(li)
 
     ###########################################
     # R1: Descarga y ubicación de ASAS.

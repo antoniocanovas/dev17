@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_asset_form_inplast" model="ir.ui.view">
+        <field name="name">account.asset.form.inplast</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='current_values']/span" position="after">
+                <field name="account_asset_code" invisible="1"/>
+                <field name="workcenter_id"
+                       invisible="'21300' not in (account_asset_code or '')"
+                       required="state == 'open' and '21300' in account_asset_code"
+                       options="{'no_create': True, 'no_quick_create': True}"/>
+                <field name="equipment_id"
+                       invisible="'21400' not in (account_asset_code or '')"
+                       required="state == 'open' and '21400' in account_asset_code"
+                       options="{'no_create': True, 'no_quick_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

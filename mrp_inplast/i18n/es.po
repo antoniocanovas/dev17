@@ -1,0 +1,895 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_inplast
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-06 10:21+0000\n"
+"PO-Revision-Date: 2025-11-06 10:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_inplast
+#: model:base.automation,name:mrp_inplast.ba_bom_percent_update
+msgid "=> BA BOM percent update"
+msgstr "=> BA Actualización de porcentaje de LdM"
+
+#. module: mrp_inplast
+#: model:base.automation,name:mrp_inplast.ba_bom_product_color_and_raw_update
+msgid "=> BA BOM product color update"
+msgstr "=> BA Actualización de color de producto de LdM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_accesory_tool_ids
+msgid "A.tools"
+msgstr "H.accesorios"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_form_inherit_origin_info
+msgid "ADD BOXES"
+msgstr "AÑADIR CAJAS"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_tool_accesory_ids
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_accesory_ids
+msgid "Accesories"
+msgstr "Accesorios"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_mrp_accesory_categ_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_company__pnt_mrp_accesory_categ_id
+msgid "Accesories category"
+msgstr "Categoría de accesorios"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_accesory_id
+msgid "Accesory"
+msgstr "Accesorio"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/models/mrp_production.py:0
+#: code:addons/mrp_inplast/models/mrp_workorder.py:0
+#, python-format
+msgid "Add Boxes"
+msgstr "Añadir cajas"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_add_pallet_boxes_wizard
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_boxes_wizard_form
+msgid "Add Lots"
+msgstr "Añadir lotes"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_pallet_boxes_wizard
+msgid "Add boxes to Lot"
+msgstr "Añadir cajas al lote"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_stock_lot_boxes_wizard
+msgid "Add boxes to Stock Lot"
+msgstr "Añadir cajas al lote de stock"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_workcenter__analytic_hr_per_hour
+msgid "Analytic hr per hour"
+msgstr "Coste analítico de RRHH por hora"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_add_pallet_boxes_wizard
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_boxes_wizard_form
+msgid "Are you sure you want to remove the selected lots?"
+msgstr "¿Está seguro de que desea eliminar los lotes seleccionados?"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_picking_form_custom
+msgid "Añadir SSCC"
+msgstr ""
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_blade_tool_ids
+msgid "B.tools"
+msgstr "H.cuchillas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__mrp_bom_template_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_product__mrp_bom_template_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_template__mrp_bom_template_id
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_tree
+msgid "BOM Template"
+msgstr "Plantilla de LdM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_partner__mrp_bom_template_ids
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_users__mrp_bom_template_ids
+#: model:ir.ui.menu,name:mrp_inplast.bom_template
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.res_partner_form_inherit_sscc_number
+msgid "BOM Templates"
+msgstr "Plantillas de LdM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packaging__mrp_bom_template_id
+msgid "BOM template"
+msgstr "Plantilla de LdM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__base_qty
+msgid "Base qty"
+msgstr "Cantidad base"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr "Línea de lista de materiales"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_blade_id
+msgid "Blade"
+msgstr "Cuchilla"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_tool_blade_ids
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_blade_ids
+msgid "Blades"
+msgstr "Cuchillas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_mrp_blade_categ_id
+#: model:ir.model.fields,help:mrp_inplast.field_res_company__pnt_mrp_blade_categ_id
+msgid "Blades accesories category (Maintenance equipments)"
+msgstr "Categoría de accesorios de cuchillas (Equipos de mantenimiento)"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_mrp_blade_categ_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_company__pnt_mrp_blade_categ_id
+msgid "Blades category"
+msgstr "Categoría de cuchillas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__bom_template_id
+msgid "Bom Template"
+msgstr "Plantilla de LdM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template__type__box
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__box
+msgid "Box"
+msgstr "Caja"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__box_line_id
+msgid "Box Line"
+msgstr "Línea de caja"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot__box_product_id
+msgid "Box Product"
+msgstr "Producto de caja"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__box_template_id
+msgid "Box Template"
+msgstr "Plantilla de caja"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__box_count
+msgid "Box count"
+msgstr "Recuento de cajas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__box_qty
+msgid "Box qty"
+msgstr "Cantidad de cajas"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "Box quantity = 0 please set a box quantity."
+msgstr "Cantidad de cajas = 0, por favor establezca una cantidad de cajas."
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template__type__box_nonmrp
+msgid "Box third parties"
+msgstr "Caja terceros"
+
+#. module: mrp_inplast
+#. odoo-javascript
+#: code:addons/mrp_inplast/static/src/components/menuPopup.xml:0
+#: code:addons/mrp_inplast/static/src/components/menuPopup.xml:0
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__pnt_processed_barcodes
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__pnt_processed_barcodes
+#, python-format
+msgid "Boxes"
+msgstr "Cajas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__pnt_barcode_input
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__pnt_barcode_input
+msgid "Boxes read"
+msgstr "Cajas leídas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_stock_lot__related_boxes_ids
+msgid "Boxes related to this lot."
+msgstr "Cajas relacionadas con este lote."
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_form_inherit_origin_info
+msgid "Boxes relation Information"
+msgstr "Información de relación de cajas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_cps
+msgid "CPS"
+msgstr ""
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_tool_accesory_ids
+#: model:ir.model.fields,help:mrp_inplast.field_mrp_product_tool__pnt_accesory_ids
+msgid "Campo de Accesorios para un Molde"
+msgstr ""
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_accesory_tool_ids
+msgid "Campo de Moldes para un Accesorio"
+msgstr ""
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_blade_tool_ids
+msgid "Campo de Moldes para una cuchilla"
+msgstr ""
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_tool_blade_ids
+#: model:ir.model.fields,help:mrp_inplast.field_mrp_product_tool__pnt_blade_ids
+msgid "Campo de cuchillas para un Molde"
+msgstr ""
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_packing_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__box_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pallet_id
+msgid "Component"
+msgstr "Componente"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+msgid "Components"
+msgstr "Componentes"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_packing_wizard_form
+msgid "Create packing products"
+msgstr "Crear productos de empaquetado"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_packing_wizard_form
+msgid "Create pallet with box products"
+msgstr "Crear palet con productos de caja"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__create_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__create_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__create_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__create_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__create_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__create_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__create_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__create_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__create_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__create_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__create_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__create_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__partner_ids
+msgid "Customers"
+msgstr "Clientes"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__display_name
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__display_name
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__display_name
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__display_name
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__display_name
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__display_name
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pnt_raw_type_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom_line__pnt_raw_type_id
+msgid "Distribution type"
+msgstr "Tipo de distribución"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__dye
+msgid "Dye"
+msgstr "Tinte"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_workcenter__power_kw
+msgid "Electric power (kw)"
+msgstr "Potencia eléctrica (kw)"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__final
+msgid "End-product"
+msgstr "Producto final"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "Error processing barcodes: %s"
+msgstr "Error procesando códigos de barras: %s"
+
+#. module: mrp_inplast
+#: model:ir.actions.server,name:mrp_inplast.as_bom_percent_update
+#: model:ir.actions.server,name:mrp_inplast.as_bom_product_color_and_raw_update
+msgid "Execute Code"
+msgstr "Ejecutar código"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_form_inherit_origin_info
+msgid "Generate SSCC"
+msgstr "Generar SSCC"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_form_inherit_origin_info
+msgid "Generate the SSCC code for the product."
+msgstr "Generar el código SSCC para el producto."
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_hole_count
+msgid "Hole Count"
+msgstr "Recuento de agujeros"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__id
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__id
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__id
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+msgid "Identification"
+msgstr "Identificación"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_picking__incompatible_bom_template
+msgid "Incompatible packaging"
+msgstr "Empaquetado incompatible"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_mrp_tool_categ_id
+#: model:ir.model.fields,help:mrp_inplast.field_res_company__pnt_mrp_tool_categ_id
+msgid "Injections or pressure Molds (Maintenance equipments)"
+msgstr "Moldes de inyección o presión (Equipos de mantenimiento)"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+msgid "Internal Code"
+msgstr "Código interno"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot__invisible_fields
+msgid "Invisible Fields"
+msgstr "Campos invisibles"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__write_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__write_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__write_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__write_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__write_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__write_uid
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__write_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__write_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__write_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__write_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__write_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__write_date
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__line_ids
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__lot_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__lot_id
+msgid "Lot"
+msgstr "Lote"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_stock_lot
+msgid "Lot/Serial"
+msgstr "Lote/serie"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__lot_producing_id
+msgid "Lot/Serial Number"
+msgstr "Número de lote/serie"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "Lots Not Found"
+msgstr "Lotes no encontrados"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.mrp_inplast_res_company_inh_form
+msgid "MRP"
+msgstr "MRP"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_production__mrp_tool_id
+msgid "MRP Tool"
+msgstr "Herramienta MRP"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pnt_product_type
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__mrp_type
+msgid "MRP type"
+msgstr "Tipo MRP"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr "Equipo de mantenimiento"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_tool_id
+msgid "Mold"
+msgstr "Molde"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_maintenance_equipment__pnt_mrp_accesory_categ_id
+#: model:ir.model.fields,help:mrp_inplast.field_res_company__pnt_mrp_accesory_categ_id
+msgid "Molds accesories category (Maintenance equipments)"
+msgstr "Categoría de accesorios de moldes (Equipos de mantenimiento)"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_move_line__mrp_bom_template_id
+msgid "Mrp Bom Template"
+msgstr "Plantilla de LdM de MRP"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__name
+#: model:ir.model.fields,field_description:mrp_inplast.field_pnt_sscc_code__name
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__name
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_add_pallet_boxes_wizard
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_boxes_wizard_form
+msgid "No"
+msgstr "No"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/models/mrp_production.py:0
+#: code:addons/mrp_inplast/models/mrp_workorder.py:0
+#, python-format
+msgid "No coincide el número de cajas con los lotes disponibles!"
+msgstr ""
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "No subproduct with type 'box' and correct quantity was found."
+msgstr "No se encontró ningún subproducto con tipo 'caja' y cantidad correcta."
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_partner__sscc_qty
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_users__sscc_qty
+msgid "Numbers of SSCC"
+msgstr "Números de SSCC"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_workcenter_ids
+msgid "Other workcenters"
+msgstr "Otros centros de trabajo"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_ppm
+msgid "PPM"
+msgstr "PPM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__packaging
+msgid "Packaging"
+msgstr "Embalaje"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__packing
+msgid "Packing"
+msgstr "Empaquetado"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__type
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__type
+msgid "Packing type"
+msgstr "Tipo de empaquetado"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.mrp_inplast_product_template_inh_form
+msgid "Packings"
+msgstr "Empaquetados"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__pallet_id
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template__type__pallet
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__pallet
+msgid "Pallet"
+msgstr "Palet"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pallet_line_id
+msgid "Pallet Line"
+msgstr "Línea de palet"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pallet_count
+msgid "Pallet count"
+msgstr "Recuento de palets"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template__type__pallet_nonmrp
+msgid "Pallet third parties"
+msgstr "Palet terceros"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom_line__pnt_raw_percent
+msgid "Percent"
+msgstr "Porcentaje"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "Please enter a lot name to remove."
+msgstr "Por favor, introduzca un nombre de lote para eliminar."
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "Please enter at least one valid lot name."
+msgstr "Por favor, introduzca al menos un nombre de lote válido."
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_mrp_accesory_categ_id
+msgid "Pnt Mrp Accesory Categ"
+msgstr "Categoría de accesorios MRP Pnt"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_mrp_blade_categ_id
+msgid "Pnt Mrp Blade Categ"
+msgstr "Categoría de cuchillas MRP Pnt"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__pnt_mrp_tool_categ_id
+msgid "Pnt Mrp Tool Categ"
+msgstr "Categoría de herramientas MRP Pnt"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+msgid "Printed Code"
+msgstr "Código impreso"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__printed_code
+msgid "Printed code"
+msgstr "Código impreso"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__processed_count
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__processed_count
+msgid "Processed Count"
+msgstr "Recuento procesado"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_product_template
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_product_tool__product_tmpl_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__product_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__name
+msgid "Product"
+msgstr "Producto"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de producto (línea de movimiento de stock)"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_product_packaging
+msgid "Product Packaging"
+msgstr "Embalaje del producto"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_product_packing_wizard
+msgid "Product Packing Wizard"
+msgstr "Asistente de empaquetado de productos"
+
+#. module: mrp_inplast
+#: model:ir.actions.act_window,name:mrp_inplast.action_window_product_bom_template
+#: model:ir.model,name:mrp_inplast.model_product_bom_template
+msgid "Product bom template"
+msgstr "Plantilla de LdM de producto"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_product_bom_template_line
+msgid "Product bom template line"
+msgstr "Línea de plantilla de LdM de producto"
+
+#. module: mrp_inplast
+#: model:ir.actions.act_window,name:mrp_inplast.action_window_product_packing_wizard
+msgid "Product packing wizard"
+msgstr "Asistente de empaquetado de productos"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__production_id
+msgid "Production"
+msgstr "Producción"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_mrp_production
+msgid "Production Order"
+msgstr "Orden de producción"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_packing_wizard_form
+msgid "Products packing wizard"
+msgstr "Asistente de empaquetado de productos"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom_line__bom_product_qty
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom_line__product_qty
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__raw
+msgid "Raw"
+msgstr "Materia prima"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pnt_raw_available_ids
+msgid "Raw types available"
+msgstr "Tipos de materia prima disponibles"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot__related_boxes_ids
+msgid "Related Boxes"
+msgstr "Cajas relacionadas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__remaining_count
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__remaining_count
+msgid "Remaining to Max"
+msgstr "Restante hasta máximo"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_add_pallet_boxes_wizard
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_boxes_wizard_form
+msgid "Remove Selected Lot"
+msgstr "Eliminar lote seleccionado"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_picking_form_custom
+msgid ""
+"Revisa los empaquetados de los productos reservados, son incompatibles con "
+"el cliente."
+msgstr ""
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot__sscc_code_ids
+msgid "SSCC Codes"
+msgstr "Códigos SSCC"
+
+#. module: mrp_inplast
+#: model:ir.model.fields.selection,name:mrp_inplast.selection__product_bom_template_line__mrp_type__semi
+msgid "Semi-finished"
+msgstr "Semifinal"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_pallet_boxes_wizard__show_confirmation
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot_boxes_wizard__show_confirmation
+msgid "Show Confirmation"
+msgstr "Mostrar confirmación"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_packing_wizard__sufix
+msgid "Sufix"
+msgstr "Sufijo"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template__code
+msgid "Sufix code"
+msgstr "Código sufijo"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_bom_template_line__template_id
+msgid "Template"
+msgstr "Plantilla"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.product_bom_template_form
+msgid "Template Name"
+msgstr "Nombre de plantilla"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "The following lots do not exist and no lots were removed: %s"
+msgstr "Los siguientes lotes no existen y no se eliminó ningún lote: %s"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,help:mrp_inplast.field_mrp_bom_line__bom_product_qty
+msgid ""
+"This should be the smallest quantity that this product can be produced in. "
+"If the BOM contains operations, make sure the work center capacity is "
+"accurate."
+msgstr "Esta debe ser la cantidad más pequeña en la que se puede producir este producto. Si la LdM contiene operaciones, asegúrese de que la capacidad del centro de trabajo sea precisa."
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_picking_form_custom
+msgid "This will generate a new SSCC code if it is not already set."
+msgstr "Esto generará un nuevo código SSCC si aún no está establecido."
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_form_inherit_origin_info
+msgid "This will generate a new SSCC code."
+msgstr "Esto generará un nuevo código SSCC."
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_tool_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__mrp_tool_id
+msgid "Tool"
+msgstr "Herramienta"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_product__mrp_tool_ids
+#: model:ir.model.fields,field_description:mrp_inplast.field_product_template__mrp_tool_ids
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.mrp_inplast_product_template_inh_form
+msgid "Tools"
+msgstr "Herramientas"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_maintenance_equipment__pnt_mrp_tool_categ_id
+#: model:ir.model.fields,field_description:mrp_inplast.field_res_company__pnt_mrp_tool_categ_id
+msgid "Tools category"
+msgstr "Categoría de herramientas"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pnt_raw_uom_id
+msgid "UOM"
+msgstr "UdM"
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_mrp_bom__pnt_raw_qty
+msgid "UOM Qty"
+msgstr "Cantidad UdM"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_mrp_workcenter
+msgid "Work Center"
+msgstr "Centro de trabajo"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_mrp_workorder
+msgid "Work Order"
+msgstr "Orden de trabajo"
+
+#. module: mrp_inplast
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_add_pallet_boxes_wizard
+#: model_terms:ir.ui.view,arch_db:mrp_inplast.view_stock_lot_boxes_wizard_form
+msgid "Yes"
+msgstr "Sí"
+
+#. module: mrp_inplast
+#. odoo-python
+#: code:addons/mrp_inplast/wizard/StockLotBoxesWizard.py:0
+#: code:addons/mrp_inplast/wizard/pallet_boxes_wizard.py:0
+#, python-format
+msgid "You have exceeded the allowed box quantity. No new lots were created."
+msgstr "Ha excedido la cantidad de cajas permitida. No se crearon nuevos lotes."
+
+#. module: mrp_inplast
+#: model:ir.model.fields,field_description:mrp_inplast.field_stock_lot__mrp_production_id
+msgid "mrp production"
+msgstr "Producción MRP"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_mrp_product_tool
+msgid "mrp.product.tool"
+msgstr "mrp.product.tool"
+
+#. module: mrp_inplast
+#: model:ir.model,name:mrp_inplast.model_pnt_sscc_code
+msgid "pnt.sscc.code"
+msgstr "pnt.sscc.code"
