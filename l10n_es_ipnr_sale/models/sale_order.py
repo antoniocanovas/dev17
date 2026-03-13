@@ -45,19 +45,56 @@ class SaleOrder(models.Model):
         return ipnr_vals
 
     def apply_ipnr(self):
-        """Delete and recreate IPNR lines (one per product line with IPNR)."""
+        """Delete and recreate IPNR lines (one per product line with IPNR).
+        For confirmed orders, update existing lines in place to avoid unlink errors."""
         if self.env.context.get("avoid_recursion"):
             return
         ctx = {**self.env.context, "avoid_recursion": True}
-        self.with_context(ctx)._delete_ipnr()
-        for rec in self:
-            # Create one IPNR line per product line with is_ipnr=True
+
+        confirmed = self.filtered(lambda o: o.state in ("sale", "done"))
+        editable = self - confirmed
+
+        # Editable orders: delete and recreate as usual
+        if editable:
+            editable.with_context(ctx)._delete_ipnr()
+            for rec in editable:
+                lines_to_process = rec.order_line.filtered("is_ipnr")
+                for line in lines_to_process:
+                    ipnr_vals = rec._get_ipnr_line_vals(line)
+                    qty_field = line._ipnr_secondary_unit_fields["qty_field"]
+                    if ipnr_vals.get(qty_field, 0) > 0:
+                        self.env["sale.order.line"].with_context(ctx).create(ipnr_vals)
+
+        # Confirmed orders: update in place, zero out excess, create if needed
+        for rec in confirmed:
+            ipnr_product = self.env.ref(
+                "l10n_es_ipnr_account.aportacion_ipnr_product_template",
+                raise_if_not_found=False,
+            )
+            if not ipnr_product:
+                continue
+            existing_ipnr_lines = rec.order_line.filtered(
+                lambda l: l.product_id == ipnr_product
+            )
             lines_to_process = rec.order_line.filtered("is_ipnr")
+            qty_field = "product_uom_qty"
+            new_vals_list = []
             for line in lines_to_process:
                 ipnr_vals = rec._get_ipnr_line_vals(line)
-                qty_field = line._ipnr_secondary_unit_fields["qty_field"]
                 if ipnr_vals.get(qty_field, 0) > 0:
-                    self.env["sale.order.line"].with_context(ctx).create(ipnr_vals)
+                    new_vals_list.append(ipnr_vals)
+            # Update or zero-out existing IPNR lines
+            for i, existing_line in enumerate(existing_ipnr_lines):
+                if i < len(new_vals_list):
+                    existing_line.with_context(ctx).write({
+                        qty_field: new_vals_list[i][qty_field],
+                        "price_unit": new_vals_list[i]["price_unit"],
+                    })
+                else:
+                    existing_line.with_context(ctx).write({qty_field: 0})
+            # Create any additional IPNR lines not covered by existing ones
+            for i in range(len(existing_ipnr_lines), len(new_vals_list)):
+                self.env["sale.order.line"].with_context(ctx).create(new_vals_list[i])
 
     def write(self, vals):
         res = super().write(vals)
