@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- TREE VIEW -->
+    <record id="mrp_maintenance_issue_tree" model="ir.ui.view">
+        <field name="name">mrp.maintenance.issue.tree</field>
+        <field name="model">mrp.maintenance.issue</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" multi_edit="1">
+                <field name="machine_plan_id" column_invisible="1"/>
+                <field name="workshop_department_id" column_invisible="1"/>
+                <field name="maintenance_department_id" column_invisible="1"/>
+                <field name="date"/>
+                <field name="name" optional="show"/>
+                <field name="machine_id"
+                       domain="[('plan_id', '=', machine_plan_id)]"
+                       options="{'no_create': True}"/>
+                <field name="department_id"
+                       domain="[('id', 'in', [workshop_department_id, maintenance_department_id])]"
+                       options="{'no_create': True}"/>
+                <field name="time" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="mrp_maintenance_issue_search" model="ir.ui.view">
+        <field name="name">mrp.maintenance.issue.search</field>
+        <field name="model">mrp.maintenance.issue</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="machine_id"/>
+                <field name="department_id"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_department" string="Department"
+                            context="{'group_by': 'department_id'}"/>
+                    <filter name="group_by_machine" string="Machine"
+                            context="{'group_by': 'machine_id'}"/>
+                    <filter name="group_by_date" string="Date"
+                            context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="mrp_maintenance_issue_action" model="ir.actions.act_window">
+        <field name="name">Maintenance Issues</field>
+        <field name="res_model">mrp.maintenance.issue</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="mrp_maintenance_issue_tree"/>
+        <field name="search_view_id" ref="mrp_maintenance_issue_search"/>
+    </record>
+
+    <!-- MENU under Manufacturing > Operations -->
+    <menuitem
+        id="mrp_maintenance_issue_menu"
+        name="Maintenance Issues"
+        parent="mrp.menu_mrp_manufacturing"
+        action="mrp_maintenance_issue_action"
+        sequence="50"
+        groups="mrp.group_mrp_user"/>
+
+</odoo>
