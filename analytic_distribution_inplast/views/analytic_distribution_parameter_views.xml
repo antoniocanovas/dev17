@@ -63,11 +63,23 @@
                                 <field name="raw_bag_unload" widget="float_time"/>
                             </group>
 
+                            <group string="Mamangement">
+                                <field name="purchase_estimation"/>
+                                <field name="purchase_estimation_handle"/>
+                                <field name="sale_palet_estimation"/>
+                                <field name="sale_estimation"/>
+                                <field name="sale_mrp_estimation"/>
+                            </group>
+                        </group>
+
+                        <group>
                             <group string="Other">
                                 <field name="pallet_reloc"/>
                                 <field name="container_box_qty"/>
-                                <field name="purchase_estimation"/>
-                                <field name="purchase_estimation_handle"/>
+                                <field name="mrp_maintenance_time"/>
+                            </group>
+
+                            <group>
                             </group>
                         </group>
 

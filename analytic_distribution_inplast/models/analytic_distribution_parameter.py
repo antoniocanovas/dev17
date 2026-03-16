@@ -89,3 +89,19 @@ class AnalyticDistributionParameter(models.Model):
         string='Handle purchase %',
         help='Estimated purchase % time'
     )
+    mrp_maintenance_time = fields.Float(
+        string='MRP issues %h',
+        help='% de horas de mantenimiento que se consideran sobre el periodo de producción efectivo. Por ejemplo si se considera un 20% de mantenimiento y paradas durante el tiempo productivo, aquí indicaremos 20'
+    )
+    sale_palet_estimation = fields.Float(
+        string='Sale palets %',
+        help='Estimated sale palets % time'
+    )
+    sale_estimation = fields.Float(
+        string='Sales time %',
+        help='Estimated sales % time'
+    )
+    sale_mrp_estimation = fields.Float(
+        string='Sale MRP time %',
+        help='Estimated sale MRP % time'
+    )

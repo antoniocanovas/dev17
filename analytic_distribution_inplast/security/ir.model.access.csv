@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_analytic_distribution_parameter, Analytic distribution parameter admin,model_analytic_distribution_parameter,analytic.group_analytic_accounting,1,1,1,1
+access_mrp_maintenance_issue_user,Mrp maintenance issue user,model_mrp_maintenance_issue,mrp.group_mrp_user,1,1,1,1
+access_mrp_production_legacy_user,Mrp production legacy user,model_mrp_production_legacy,mrp.group_mrp_user,1,1,1,1

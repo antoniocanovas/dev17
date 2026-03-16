@@ -23,15 +23,16 @@ class AnalyticDistributionTemple(models.Model):
             ("r13", "R13.- Electricidad"),
             ("r14", "R14.- Calidad 1"),
             ("r15", "R15.- Calidad 2"),
-            ("r16", "R16.- Gastos taller y mantenimiento (PDTE)"),
+            ("r16", "R16.- Servicios de TALLER"),
+            ("r16.1", "R16.1.- Servicios de MANTENIMIENTO"),
             ("r17", "R17.- Gastos taller y mantenimiento 2 (PDTE)"),
             ("r18", "R18.- Gastos planificación MRP"),
             ("r18.1", "R18.- Gastos planificación ASAS"),
-            ("r19", "R19.- Gastos planificación 2 (PDTE)"),
-            ("r20", "R20.- Gastos planificación 3 (PDTE)"),
-            ("r21", "R21.- Gastos planificación 4 (PDTE)"),
-            ("r22", "R22.- Comercial"),
-            ("r23", "R23.- Generales"),
+            ("r19", "R19.- Gestión pedidos clientes por palets del albarán"),
+            ("r20", "R20.- Gastos gestión pedidos de venta"),
+            ("r21", "R21.- Planificación y registro producción"),
+            ("r22", "R22.- Comercial por zona geográfica"),
+            ("r23", "R23.- Generales por tipo de producto"),
         ]
     )
 
