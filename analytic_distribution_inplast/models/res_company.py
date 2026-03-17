@@ -10,6 +10,7 @@ class ResCompany(models.Model):
     analytic_product_plan_id = fields.Many2one('account.analytic.plan', string='Product plan')
     analytic_fixed_variable_plan_id = fields.Many2one('account.analytic.plan', string='Fixed/variable plan')
     analytic_machine_plan_id = fields.Many2one('account.analytic.plan', string='Machines plan')
+    analytic_equipment_plan_id = fields.Many2one('account.analytic.plan', string='Equipment plan')
     analytic_department_plan_id = fields.Many2one('account.analytic.plan', string='Department plan')
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
