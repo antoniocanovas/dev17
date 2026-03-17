@@ -28,8 +28,9 @@ class AnalyticDistribution(models.Model):
 
                 product_field_id = self.env.company.product_field_id.name
                 fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
-                machine_field_id = self.env.company.machine_field_id.name
                 department_field_id = self.env.company.department_field_id.name
+                machine_field_id = self.env.company.machine_field_id.name
+                warehouse_dept = self.env.company.analytic_warehouse_department_id
 
                 new_aal = self.env['account.analytic.line'].create({
                     'product_id': product.id,
@@ -37,7 +38,6 @@ class AnalyticDistribution(models.Model):
                     'amount': - rec.container_load * li.picking_hour_cost * total_containers,
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
-                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
                     'analytic_distribution_id': self.id,
                     'analytic_distribution_template_id': li.template_id.id,
                 })
@@ -71,13 +71,13 @@ class AnalyticDistribution(models.Model):
                 product_field_id = self.env.company.product_field_id.name
                 fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
                 department_field_id = self.env.company.department_field_id.name
+                warehouse_dept = self.env.company.analytic_warehouse_department_id
                 new_aal = self.env['account.analytic.line'].create({
                     'product_id': product.id,
                     'name': li.template_id.name + " - " + rec.name + " " + picking_names,
                     'amount': -1 * abs(picking_cost),
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
-                    department_field_id: self.env.company.analytic_warehouse_department_id.id,
                     'analytic_distribution_id': self.id,
                     'analytic_distribution_template_id': li.template_id.id,
                 })

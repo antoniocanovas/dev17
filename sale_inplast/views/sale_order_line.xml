@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View -->
+    <record id="sale_order_line_view_form_pnt" model="ir.ui.view">
+        <field name="name">sale.order.line.view.form.inherit.module</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"/>
+        <field name="arch" type="xml">
+            <!-- Add fields to an existing group -->
+            <xpath expr="//tree" position="inside">
+                <field name="total_pallets" optional="hide" sum="Total Pallets"/>
+                <field name="total_boxes" optional="hide" sum="Total Boxes"/>
+                <field name="total_cap" optional="hide" sum="Total Cap/handle"/>
+                <field name="total_bump" optional="hide" sum="Total bump"/>
+                <field name="customer_arrival_date" optional="hide"/>
+                <field name="effective_date" optional="hide"/>
+                <field name="active" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Reorder Sale Order Lines Tree View for Operations -->
+    <record id="view_order_line_tree_operations" model="ir.ui.view">
+        <field name="name">sale.order.line.tree.operations</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Sales Order Lines" create="false">
+                    <field name="order_id" string="Nº Pedido"/>
+                    <field name="order_partner_id" string="Cliente"/>
+                    <field name="product_id" string="Referencia"/>
+                    <field name="product_uom_qty" string="Cantidad"/>
+                    <field name="qty_undelivered" string="Pendiente servir" optional="hide"/>
+                    <field name="pnt_base_qty" string="Cantidad Tapones"/>
+                    <field name="customer_arrival_date" string="Fecha Entrega"/>
+                    <field name="effective_date" string="Fecha Carga"/>
+                    <field name="qty_delivered" string="Servido"/>
+                    <field name="name" optional="hide"/>
+                    <field name="salesman_id" optional="hide"/>
+                    <field name="qty_invoiced" optional="hide"/>
+                    <field name="qty_to_invoice" optional="hide"/>
+                    <field name="product_uom" string="UdM" groups="uom.group_uom" optional="hide"/>
+                    <field name="price_subtotal" sum="Total" widget="monetary" optional="hide"/>
+                    <field name="currency_id" column_invisible="True"/>
+                    <field name="qty_undelivered" string="Pendiente servir" optional="hide"/>
+                    <field name="active" optional="hide"/>
+                    <field name="total_pallets" optional="hide" sum="Total Pallets"/>
+                    <field name="total_boxes" optional="hide" sum="Total Boxes"/>
+                    <field name="total_cap" optional="hide" sum="Total Cap/handle"/>
+                    <field name="total_bump" optional="hide" sum="Total bump"/>
+                    <field name="customer_arrival_date" optional="hide"/>
+                    <field name="effective_date" optional="hide"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Archive Lines Wizard View -->
+    <record id="sale_order_line_archive_wizard_tree" model="ir.ui.view">
+        <field name="name">Manage Order Lines Archive Status</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <tree string="Manage Order Lines Archive Status" editable="bottom" create="false" delete="false">
+                <field name="active" widget="boolean_toggle"/>
+                <field name="product_id" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="product_uom_qty" readonly="1"/>
+                <field name="price_unit" readonly="1"/>
+                <field name="price_subtotal" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Add Archive Filters to Sale Order Line Search View -->
+    <record id="view_sales_order_line_filter_inherit" model="ir.ui.view">
+        <field name="name">sale.order.line.select.inherit</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sales_order_lines']" position="after">
+                <separator/>
+                <filter string="Activas"
+                        name="active_lines"
+                        domain="[('active', '=', True)]"
+                        help="Show only active order lines"/>
+                <filter string="Archivadas"
+                        name="archived_lines"
+                        domain="[('active', '=', False)]"
+                        help="Show only archived order lines"/>
+                <separator/>
+                <filter string="Pendientes de Servir"
+                        name="underdelivered"
+                        domain="[('qty_undelivered', '>', '0')]"
+                        help="Enseña las líneas pendientes de servir con cantidad pendiente mayor que 0"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

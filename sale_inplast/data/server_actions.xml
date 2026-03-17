@@ -19,4 +19,25 @@
         <field name="base_automation_id" ref="sale_inplast.ba_update_packing_prices_from_base_product"/>
     </record>
 
+    <record id="action_pricelist_recalculation" model="ir.actions.server">
+        <field name="name">=> Recalcular precios</field>
+        <field name="model_id" ref="product.model_product_pricelist"/>
+        <field name="binding_model_id" ref="product.model_product_pricelist"/>
+        <field name="state">code</field>
+        <field name="code">
+for pricelist in records:
+    pricelist.products_pricelist_recalculation()
+        </field>
+    </record>
+    <record id="action_pricelist_price_recalculation" model="ir.actions.server">
+        <field name="name">=> Actualizar precios recalculados</field>
+        <field name="model_id" ref="product.model_product_pricelist"/>
+        <field name="binding_model_id" ref="product.model_product_pricelist"/>
+        <field name="state">code</field>
+        <field name="code">
+for pricelist in records:
+    pricelist.pricelist_update_confirm()
+        </field>
+    </record>
+
 </odoo>

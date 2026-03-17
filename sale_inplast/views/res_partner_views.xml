@@ -20,6 +20,10 @@
                     <field name="pnt_next_update" string="Pricelist update"/>
                 </xpath>
 
+                <xpath expr="//field[@name='property_account_position_id']" position="after">
+                    <field name="default_incoterm_id"/>
+                </xpath>
+
             </data>
         </field>
         <field name="priority">99</field>

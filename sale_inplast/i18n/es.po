@@ -1,0 +1,911 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_inplast
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 07:19+0000\n"
+"PO-Revision-Date: 2026-01-22 07:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move_line__pnt_base_1k_price
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__pnt_base_1k_price
+msgid "1K"
+msgstr ""
+
+#. module: sale_inplast
+#: model:base.automation,name:sale_inplast.ba_update_packing_prices_from_base_product
+msgid "=> Actualiza precios de PACKING al cambiar el de producto base"
+msgstr "=> Update PACKING prices when changing the base product price"
+
+#. module: sale_inplast
+#: model:ir.actions.server,name:sale_inplast.action_pricelist_price_recalculation
+msgid "=> Actualizar precios recalculados"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.actions.server,name:sale_inplast.action_pricelist_recalculation
+msgid "=> Recalcular precios"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_sales_order_line_filter_inherit
+msgid "Activas"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_product_state
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__active
+#: model:ir.model.fields.selection,name:sale_inplast.selection__account_move__pnt_pricelist_state__active
+#: model:ir.model.fields.selection,name:sale_inplast.selection__product_pricelist__pnt_state__active
+#: model:ir.model.fields.selection,name:sale_inplast.selection__sale_order__pnt_pricelist_state__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de Actividad de Excepción"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_state
+msgid "Activity State"
+msgstr "Estado de la actividad"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actvidad"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_sales_order_line_filter_inherit
+msgid "Archivadas"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_custom_inplast
+msgid "Archivar Lineas"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de archivos adjuntos"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__pnt_base_sale_unit
+msgid "Base"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move_line__pnt_base_qty
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__pnt_base_qty
+msgid "Base qty"
+msgstr "Cantidad base"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__total_boxes
+msgid "Boxes"
+msgstr "Cajas"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__active
+msgid ""
+"By unchecking the active field, you may archive this order line without "
+"deleting it. Archived lines will not appear in printed reports."
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Cantidad"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Cantidad Tapones"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__qty_undelivered
+msgid "Cantidad pendiente de servir"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Client Code"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Cliente"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_product_dye_display
+msgid "Color"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Custom bill of materials"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__customer_arrival_date
+msgid "Customer committed date"
+msgstr "Fecha comprometida por el cliente"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__customer_arrival_date
+msgid "Customer date"
+msgstr "Fecha del cliente"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__customer_packaging_ids
+msgid "Customer packaging"
+msgstr "Embalaje para clientes"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__effective_date
+msgid "Date when the order line was delivered"
+msgstr "Fecha en que se entregó la línea del pedido"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__effective_date
+msgid "Effective date"
+msgstr "Fecha de entrada en vigor"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_custom_inplast
+msgid ""
+"El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.\n"
+"                    La edición o confirmación del pedido están bloqueados."
+msgstr ""
+"The grace period for rate renewal has passed, please update or notify the responsible party.\n"
+"                    Editing or confirming the order is currently blocked."
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_invoice_inh_form
+msgid ""
+"El periodo de gracia de renovación de la tarifa ha pasado, actualiza o avisa al responsable.\n"
+"                    La edición o confirmación están bloqueados."
+msgstr ""
+"The grace period for rate renewal has passed, please update or notify the responsible party.\n"
+"                    Editing or confirmation is locked."
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_sales_order_line_filter_inherit
+msgid ""
+"Enseña las líneas pendientes de servir con cantidad pendiente mayor que 0"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields.selection,name:sale_inplast.selection__product_pricelist__pnt_pricelist_type__bom
+msgid "Escandallo general"
+msgstr "General Ledger"
+
+#. module: sale_inplast
+#: model:ir.model.fields.selection,name:sale_inplast.selection__product_pricelist__pnt_pricelist_type__custom
+msgid "Escandallo personalizado"
+msgstr "Custom Bill of Materials"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_res_partner__property_product_pricelist
+#: model:ir.model.fields,help:sale_inplast.field_res_users__property_product_pricelist
+msgid "Esta lista de precios es específica para este partner."
+msgstr ""
+"Se utilizará esta lista de precios con este contacto en lugar de la lista de"
+" precios por defecto"
+
+#. module: sale_inplast
+#: model:ir.model.fields.selection,name:sale_inplast.selection__product_pricelist__pnt_pricelist_type__standard
+msgid "Estándar"
+msgstr "Standard"
+
+#. module: sale_inplast
+#: model:ir.actions.server,name:sale_inplast.as_update_packing_prices_from_base_product
+msgid "Execute Code"
+msgstr "Ejecutar Código"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_res_company__pnt_exwork_delivery_mode_id
+msgid "Exwork Delivery Mode"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_category__pnt_mrp_fault_percent
+msgid "Fault (%)"
+msgstr "Fallo (%)"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Fecha Carga"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Fecha Entrega"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de Font Awesome p. ej. fa-tasks"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Frequency"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "General Ledger"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__has_message
+msgid "Has Message"
+msgstr "Tiene un mensaje"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcada, hay nuevos mensajes que requieren su atención."
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__message_has_error
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen error de envío."
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist_item__pnt_product_state
+msgid ""
+"If unchecked, it will allow you to hide the product without removing it."
+msgstr "Si no está marcado, te permitirá ocultar el producto sin eliminarlo."
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_category__pnt_i1
+msgid "Inc. 1 (%)"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_category__pnt_i2
+msgid "Inc. 2 (per/1000)"
+msgstr "Inc. 2 (per thousand)"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_category__pnt_i3
+msgid "Inc. 3 (€)"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_category__pnt_i0
+msgid "Inc. ethylene (per/1000)"
+msgstr "Inc. ethylene (por mil)"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_account_incoterms
+msgid "Incoterms"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_account_incoterms__is_exwork
+msgid "Indicates if this incoterm is an Exwork type"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_incoterms__is_exwork
+msgid "Is Exwork"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_invoice_inh_form
+msgid ""
+"La factura requiere actualización de precios. Se ejecutará automáticamente "
+"al confirmar."
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_custom_inplast
+msgid ""
+"La oferta requiere actualización de precios. Se ejecutará automáticamente al realizar la próxima\n"
+"                    factura."
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Last Update"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_bank_statement_line__pnt_last_price_update
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move__pnt_last_price_update
+#: model:ir.model.fields,field_description:sale_inplast.field_account_payment__pnt_last_price_update
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order__pnt_last_price_update
+msgid "Last price update"
+msgstr "Última actualización de precio"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_last_update
+msgid "Last update"
+msgstr "Última actualización"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Lock Date"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields.selection,name:sale_inplast.selection__account_move__pnt_pricelist_state__locked
+#: model:ir.model.fields.selection,name:sale_inplast.selection__product_pricelist__pnt_state__locked
+#: model:ir.model.fields.selection,name:sale_inplast.selection__sale_order__pnt_pricelist_state__locked
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Locked"
+msgstr "Bloqueado"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.partner_sale_inplast_inh_search
+msgid "Locked pricelist"
+msgstr "Lista de precios bloqueada"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_lock_date
+msgid "Locking date"
+msgstr "Fecha de bloqueo"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_custom_inplast
+msgid "MRP Products"
+msgstr "Productos MRP"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move_line__pnt_product_type
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_product_type
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__pnt_product_type
+msgid "MRP type"
+msgstr "Tipo MRP"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_parent_id
+msgid "Main product"
+msgstr "Producto principal"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_line_archive_wizard_tree
+msgid "Manage Order Lines Archive Status"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_product_raw_display
+msgid "Material"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de envío de mensaje"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_pricelist_frec
+msgid "Months frequency"
+msgstr "Frecuencia de meses"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de mi actividad"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_new_price
+msgid "New price"
+msgstr "Nuevo precio"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Siguiente evento en el calendario de actividades."
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite de la siguiente actividad"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la siguiente actividad"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_res_partner__pnt_next_update
+#: model:ir.model.fields,field_description:sale_inplast.field_res_users__pnt_next_update
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Next Update"
+msgstr "Próxima Actualización"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_next_update
+msgid "Next update"
+msgstr "Próxima actualización"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Nº Pedido"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__total_pallets
+msgid "Pallets"
+msgstr "Paletts"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Pendiente servir"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_sales_order_line_filter_inherit
+msgid "Pendientes de Servir"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_pending_update
+msgid "Pending update"
+msgstr "Actualización pendiente"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_product_ids
+msgid "Pnt Product"
+msgstr "Producto PNT"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_product_pricelist
+#: model:ir.model.fields,field_description:sale_inplast.field_res_partner__property_product_pricelist
+#: model:ir.model.fields,field_description:sale_inplast.field_res_users__property_product_pricelist
+msgid "Pricelist"
+msgstr "Lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_product_pricelist_item
+msgid "Pricelist Rule"
+msgstr "Regla de la lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_res_partner__pnt_pricelist_state
+#: model:ir.model.fields,field_description:sale_inplast.field_res_users__pnt_pricelist_state
+msgid "Pricelist State"
+msgstr "Lista de precios por Estado"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_product_category_inh_form
+msgid "Pricelist data"
+msgstr "Datos de la lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_res_company__pnt_pricelist_day_lock
+msgid "Pricelist days lock"
+msgstr "Bloqueo de días de lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_pricelist_type
+msgid "Pricelist mode"
+msgstr "Modo de lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move_line__pnt_product_ids
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__pnt_product_ids
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_option__pnt_product_ids
+msgid "Pricelist products"
+msgstr "Lista de precios de productos"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_bank_statement_line__pnt_pricelist_state
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move__pnt_pricelist_state
+#: model:ir.model.fields,field_description:sale_inplast.field_account_payment__pnt_pricelist_state
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order__pnt_pricelist_state
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_res_partner_form
+#: model_terms:ir.ui.view,arch_db:sale_inplast.partner_sale_inplast_inh_search
+msgid "Pricelist state"
+msgstr "Lista de precios actualizada"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_res_partner_form
+msgid "Pricelist update"
+msgstr "Actualización de lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_res_company__pnt_update_month_day
+msgid "Pricelist update day"
+msgstr "Día de actualización de la lista de precios"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_product_categ_ids
+msgid "Product categories"
+msgstr "Categorías de productos"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_category__pnt_mrp_fault_percent
+msgid "Production percent deficiency"
+msgstr "Porcentaje de deficiencia de producción"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_inh_view
+msgid "Products"
+msgstr "Productos"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__rating_ids
+msgid "Ratings"
+msgstr "Valoraciones"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_inh_view
+msgid "Recalculate"
+msgstr "Recalcular"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__old_default_code
+msgid "Ref antigua"
+msgstr "Old Ref"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Referencia"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_invoice_inh_form
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_custom_inplast
+msgid "Revisa la tarifa de este cliente, ha pasado la fecha de actualización."
+msgstr "Check the rate of this client, the update date has passed."
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de envío del SMS"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_sale_order_option
+msgid "Sale Options"
+msgstr "Opciones de venta"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_inplast
+#: model:ir.model,name:sale_inplast.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de orden de venta"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Sales Order Lines"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_inh_view
+msgid "Sales Price"
+msgstr "Precio de Venta"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Servido"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_sales_order_line_filter_inherit
+msgid "Show only active order lines"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_sales_order_line_filter_inherit
+msgid "Show only archived order lines"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Standard"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__pnt_state
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "State"
+msgstr "Estado"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Vencida: la fecha límite ya ha pasado\n"
+"Hoy: la fecha límite es hoy\n"
+"Planificada: actividades futuras."
+
+#. module: sale_inplast
+#. odoo-python
+#: code:addons/sale_inplast/models/product_pricelist.py:0
+#, python-format
+msgid ""
+"The following products were not updated because their plastic weight is 0: "
+"%s"
+msgstr ""
+"Los siguientes productos no se han actualizado porque su peso de plástico es "
+"0: %s"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "To update"
+msgstr "Actualizar"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.partner_sale_inplast_inh_search
+msgid "To update pricelist"
+msgstr "Para actualizar la lista de precios"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Total"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_line_view_form_pnt
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Total Boxes"
+msgstr "Total de Cajas"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_line_view_form_pnt
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Total Cap/handle"
+msgstr "Total Cap/manija"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_line_view_form_pnt
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Total Pallets"
+msgstr "Total de Paletas"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__total_cap
+msgid "Total Units"
+msgstr "Unidades Totales"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order__total_boxes
+msgid "Total boxes"
+msgstr "Total de cajas"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__total_boxes
+msgid "Total boxes in the order line"
+msgstr "Total de cajas en la línea de pedido"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_line_view_form_pnt
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "Total bump"
+msgstr "Total bultos"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__total_bump
+msgid "Total bump in the order line"
+msgstr "Total bultos en la línea de pedido"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__total_cap
+msgid "Total caps or hands in the order line"
+msgstr "Total de tapas o manos en la línea de pedido"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order__total_pallets
+msgid "Total pallets"
+msgstr "Total de pallets"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__total_pallets
+msgid "Total pallets in the order line"
+msgstr "Total de pallets en la línea de pedido"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist_item__pnt_tracking_date
+msgid "Tracking date"
+msgstr "Fecha de seguimiento"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_sale_order_line__is_underdelivered
+msgid "True when delivered quantity is less than ordered quantity"
+msgstr ""
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción en el registro."
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.view_order_line_tree_operations
+msgid "UdM"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__qty_undelivered
+msgid "Undelivered Quantity"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__is_underdelivered
+msgid "Under-delivered"
+msgstr ""
+
+#. module: sale_inplast
+#: model:ir.model.fields.selection,name:sale_inplast.selection__account_move__pnt_pricelist_state__update
+#: model:ir.model.fields.selection,name:sale_inplast.selection__product_pricelist__pnt_state__update
+#: model:ir.model.fields.selection,name:sale_inplast.selection__sale_order__pnt_pricelist_state__update
+msgid "Update"
+msgstr "Actualización"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_account_bank_statement_line__pnt_update_prices
+#: model:ir.model.fields,field_description:sale_inplast.field_account_move__pnt_update_prices
+#: model:ir.model.fields,field_description:sale_inplast.field_account_payment__pnt_update_prices
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order__pnt_update_prices
+#: model_terms:ir.ui.view,arch_db:sale_inplast.inplast_pricelist_inh_view
+#: model_terms:ir.ui.view,arch_db:sale_inplast.sale_order_custom_inplast
+msgid "Update prices"
+msgstr "Actualizar precios"
+
+#. module: sale_inplast
+#: model_terms:ir.ui.view,arch_db:sale_inplast.product_pricelist_inplast_inh_search
+msgid "Updated"
+msgstr "Actualizado"
+
+#. module: sale_inplast
+#. odoo-python
+#: code:addons/sale_inplast/models/product_pricelist.py:0
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: sale_inplast
+#: model:ir.model.fields,help:sale_inplast.field_product_pricelist__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_sale_order_line__total_bump
+msgid "bump"
+msgstr "Bultos"
+
+#. module: sale_inplast
+#: model:ir.model.fields,field_description:sale_inplast.field_product_pricelist__activity_team_user_ids
+msgid "test field"
+msgstr "campo de prueba"

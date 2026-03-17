@@ -97,6 +97,12 @@ class AnalyticDistribution(models.Model):
                 self.compute_r18(li)
             elif li.template_id.compute_method == "r18.1":
                 self.compute_r181(li)
+            elif li.template_id.compute_method == "r19":
+                self.compute_r19(li)
+            elif li.template_id.compute_method == "r20":
+                self.compute_r20(li)
+            elif li.template_id.compute_method == "r21":
+                self.compute_r21(li)
             elif li.template_id.compute_method == "r22":
                 self.compute_r22(li)
             elif li.template_id.compute_method == "r23":

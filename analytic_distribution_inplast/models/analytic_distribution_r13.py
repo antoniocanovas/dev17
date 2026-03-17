@@ -157,6 +157,8 @@ class AnalyticDistribution(models.Model):
             # Nombre del campo dinámico del plan analítico en account.analytic.line,
             # obtenido desde la configuración de compañía (mismo patrón que R1-R8).
             product_field_id = self.env.company.product_field_id.name
+            department_field_id = self.env.company.department_field_id.name
+            mrp_dept = self.env.company.analytic_mrp_department_id
 
             self.env["account.analytic.line"].create(
                 {

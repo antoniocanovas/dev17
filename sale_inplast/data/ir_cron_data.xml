@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="ir_cron_recompute_active_pricelist_state" model="ir.cron">
+        <field name="name">Sale Inplast: Recompute active pricelist state</field>
+        <field name="model_id" ref="product.model_product_pricelist" />
+        <field name="state">code</field>
+        <field name="code">model._cron_recompute_active_pricelist_state()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall">2026-01-01 01:00:00</field>
+        <field name="active" eval="True" />
+    </record>
+</odoo>

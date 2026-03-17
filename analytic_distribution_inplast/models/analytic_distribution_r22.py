@@ -203,7 +203,6 @@ class AnalyticDistribution(models.Model):
                         'amount': -abs(cost),
                         product_field_id: analytic_account.id,
                         fixed_variable_field_id: variable_account.id,
-                        department_field_id: sale_dept.id if sale_dept else False,
                         'analytic_distribution_id': rec.id,
                         'analytic_distribution_template_id': li.template_id.id,
                         'analytic_distribution_note': note,

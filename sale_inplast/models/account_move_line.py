@@ -1,11 +1,29 @@
-from odoo import _, api, fields, models
-
 import logging
+
+from odoo import api, fields, models
+
 _logger = logging.getLogger(__name__)
 
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
+
+    @api.depends("product_id", "product_uom_id", "quantity")
+    def _compute_price_unit(self) -> None:
+        discount_field = "discount"
+        if self._fields.get("discount1"):
+            discount_field = "discount1"
+        discount_map = {
+            line.id: line[discount_field]
+            for line in self
+            if line[discount_field]
+        }
+        super()._compute_price_unit()
+        for line in self:
+            if line.id in discount_map and line.move_id.state == "draft":
+                line.with_context(check_move_validity=False)[
+                    discount_field
+                ] = discount_map[line.id]
 
     pnt_product_ids = fields.Many2many('product.product', store=False, string='Pricelist products',
                                    related='move_id.pricelist_id.pnt_product_ids')

@@ -105,7 +105,6 @@ class AnalyticDistribution(models.Model):
             product_field_id = self.env.company.product_field_id.name
             fixed_variable_field_id = self.env.company.fixed_variable_field_id.name
             department_field_id = self.env.company.department_field_id.name
-            # Gestión de compras → departamento de administración
             admin_dept = self.env.company.analytic_administration_department_id
             variable_account = self.env.company.analytic_variable_account_id
 
@@ -140,7 +139,6 @@ class AnalyticDistribution(models.Model):
                     'amount': -abs(cost),
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: variable_account.id,
-                    department_field_id: admin_dept.id if admin_dept else False,
                     'analytic_distribution_id': rec.id,
                     'analytic_distribution_template_id': li.template_id.id,
                     'analytic_distribution_note': note,

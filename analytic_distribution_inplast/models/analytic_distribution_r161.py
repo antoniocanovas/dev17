@@ -175,7 +175,6 @@ class AnalyticDistribution(models.Model):
             'amount': -abs(cost),
             ctx['product_field_id']: analytic_account.id,
             ctx['fixed_variable_field_id']: ctx['variable_account'].id if ctx['variable_account'] else False,
-            ctx['department_field_id']: ctx['maintenance_dept'].id if ctx['maintenance_dept'] else False,
             'analytic_distribution_id': rec.id,
             'analytic_distribution_template_id': li.template_id.id,
             'analytic_distribution_note': note,

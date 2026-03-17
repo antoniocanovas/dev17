@@ -51,7 +51,7 @@
                         <field name="pnt_last_update" readonly="1"/>
                         <field name="pnt_next_update" required="1"/>
                         <field name="pnt_lock_date" readonly="1"/>
-                        <field name="pnt_ethylene_price"/>
+<!--                        <field name="pnt_ethylene_price"/>-->
                     </group>
                 </xpath>
 
@@ -66,13 +66,18 @@
                 <xpath expr="//field[@name='item_ids']/tree/field[@name='fixed_price']" position="attributes">
                     <attribute name="readonly">pnt_product_type == 'packing'</attribute>
                 </xpath>
+                <!-- Añadir Material y Color en las líneas de precio -->
+                <xpath expr="//field[@name='item_ids']/tree/field[@name='product_tmpl_id']" position="after">
+                    <field name="pnt_product_raw_display" optional="show"/>
+                    <field name="pnt_product_dye_display" optional="show"/>
+                </xpath>
 
                 <xpath expr="//page[@name='pricelist_config']" position="inside">
                     <group>
                         <field name="pnt_product_categ_ids">
                             <tree>
                                 <field name="name"/>
-                                <field name="pnt_raw_material"/>
+<!--                                <field name="pnt_raw_material"/>-->
                                 <!-- Quitado migración
                                 <field name="pnt_plastic_weight" optional="hide"/>
                                 -->
@@ -94,14 +99,18 @@
                                 <field name="name" readonly="1"/>
                                 <field name="default_code" optional="hide" readonly="1"/>
                                 <field name="barcode" optional="hide" readonly="1"/>
-                                <field name="product_template_variant_value_ids" widget="many2many_tags" groups="product.group_product_variant" readonly="1"/>
-                                <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
+                                <field name="product_template_variant_value_ids" widget="many2many_tags"
+                                       groups="product.group_product_variant" readonly="1"/>
+                                <field name="company_id" groups="base.group_multi_company" optional="hide"
+                                       readonly="1"/>
                                 <field name="lst_price" optional="hide" string="Sales Price"/>
                                 <field name="standard_price" optional="hide"/>
                                 <field name="categ_id" optional="show"/>
-                                <field name="product_tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_edit_color': 1}" optional="hide"/>
+                                <field name="product_tag_ids" widget="many2many_tags"
+                                       options="{'color_field': 'color', 'no_edit_color': 1}" optional="hide"/>
                                 <field name="type" optional="hide" readonly="1"/>
-                                <field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="uom.group_uom" optional="show" readonly="1"/>
+                                <field name="uom_id" options="{'no_open': True, 'no_create': True}"
+                                       groups="uom.group_uom" optional="show" readonly="1"/>
                                 <field name="product_tmpl_id" column_invisible="1" readonly="1"/>
                                 <field name="active" column_invisible="1"/>
                             </tree>
@@ -138,6 +147,19 @@
                 <field name="discount_policy" position="after">
                     <field name="pnt_state"/>
                 </field>
+                <xpath expr="//field[@name='currency_id']" position="replace">
+                    <field name="pnt_last_update" optional="show"/>
+                    <field name="pnt_lock_date" optional="show"/>
+                    <field name="pnt_next_update" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='discount_policy']" position="replace">
+                    <field name="mig_codigocliente" optional="show"/>
+                    <field name="pnt_pricelist_type" optional="show"/>
+                    <field name="pnt_pricelist_frec" optional="show"/>
+                </xpath>
+                <xpath expr="//tree[1]" position="attributes">
+                    <attribute name="multi_edit">true</attribute>
+                </xpath>
             </data>
         </field>
         <field name="priority">99</field>
@@ -154,11 +176,29 @@
                 <filter string="Updated" name="state_active" domain="[('pnt_state','=', 'active')]"/>
                 <filter string="To update" name="to_update" domain="[('pnt_state', '=', 'to_renew')]"/>
                 <filter string="Locked" name="locked" domain="[('pnt_state', '=', 'locked')]"/>
+                <separator/>
+                <filter string="Standard" name="type_standard" domain="[('pnt_pricelist_type','=', 'standard')]"/>
+                <filter string="General Ledger" name="type_bom" domain="[('pnt_pricelist_type', '=', 'bom')]"/>
+                <filter string="Custom bill of materials" name="type_custom" domain="[('pnt_pricelist_type', '=', 'custom')]"/>
                 <group name="group_by" string="Group By">
                     <filter name="state" string="State" context="{'group_by': 'pnt_state'}"/>
                     <filter name="type" string="Type" context="{'group_by': 'pnt_pricelist_type'}"/>
+                    <filter name="frequency" string="Frequency" context="{'group_by': 'pnt_pricelist_frec'}"/>
+                    <filter name="last_update" string="Last Update" context="{'group_by': 'pnt_last_update'}"/>
+                    <filter name="lock_date" string="Lock Date" context="{'group_by': 'pnt_lock_date'}"/>
+                    <filter name="next_update" string="Next Update" context="{'group_by': 'pnt_next_update'}"/>
+                    <filter name="client_code" string="Client Code" context="{'group_by': 'mig_codigocliente'}"/>
                 </group>
             </filter>
+            <search position="inside">
+                <field name="name"/>
+                <field name="pnt_pricelist_type"/>
+                <field name="pnt_pricelist_frec"/>
+                <field name="mig_codigocliente"/>
+                <field name="pnt_last_update"/>
+                <field name="pnt_lock_date"/>
+                <field name="pnt_next_update"/>
+            </search>
         </field>
     </record>
 

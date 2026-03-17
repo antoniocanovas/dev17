@@ -14,7 +14,11 @@
             <xpath expr="//header" position="after">
                 <button name="pnt_action_update_prices" type="object" data-hotkey="shift+u"
                         string="Update prices" class="oe_highlight"
-                        invisible="pnt_update_prices or pnt_pricelist_state != 'locked'"/>
+                        invisible=" not pnt_update_prices or pnt_pricelist_state == 'locked'"/>
+            </xpath>
+            <xpath expr="//field[@name='note']" position="before">
+                <field name="total_pallets"/>
+                <field name="total_boxes"/>
             </xpath>
 
             <!-- Entrega y facturación como sólo lectura (tarifa es de dir de entrega y ha de estar en campo partner_id): -->
@@ -32,6 +36,10 @@
                 <button name="update_order_lines_with_related_box_pallet_products" type="object" data-hotkey="shift+m"
                         string="MRP Products" class="oe_highlight"
                         invisible="state in ['sale','done','cancel'] or pnt_pricelist_state == 'locked'"/>
+                <button name="action_archive_selected_lines" type="object" data-hotkey="shift+a"
+                        string="Archivar Lineas" class="btn-secondary"
+                        invisible="state in ['done','cancel'] or not order_line"
+                        groups="sales_team.group_sale_manager,account.group_account_user"/>
             </xpath>
 
             <!-- Mensajes de aviso y bloqueo por estado de la tarifa:  -->
@@ -44,7 +52,7 @@
                     La edición o confirmación del pedido están bloqueados.
                 </div>
                 <div class="alert alert-danger mb-0" role="alert"
-                     invisible="pnt_update_prices or pnt_pricelist_state != 'locked'">
+                     invisible="not pnt_update_prices or pnt_pricelist_state != 'locked'">
                     La oferta requiere actualización de precios. Se ejecutará automáticamente al realizar la próxima
                     factura.
                 </div>
@@ -84,8 +92,10 @@
                 <field name="customer_arrival_date" optional="show"/>
                 <field name="pnt_base_qty" optional="hide"/>
                 <field name="pnt_product_type" invisible="1"/>
+                <field name="customer_packaging_ids" invisible="1"/>
                 <field name="pnt_base_1k_price" optional="show"
                        invisible="pnt_product_type not in ['final','packing']"/>
+                <field name="active" optional="hide"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
@@ -137,6 +147,9 @@
                    position="attributes">
                 <attribute name="options">{"no_open":true,"no_create":true}</attribute>
             </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_packaging_id']" position="attributes">
+                 <attribute name="domain">[('id','in', customer_packaging_ids)]</attribute>
+             </xpath>
 
         </field>
         <field name="priority">99</field>
