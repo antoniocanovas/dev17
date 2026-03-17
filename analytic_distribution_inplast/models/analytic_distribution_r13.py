@@ -174,3 +174,142 @@ class AnalyticDistribution(models.Model):
             )
 
         return True
+
+    # =========================================================================
+    # R13 LEGACY: misma lógica pero usando mrp.production.legacy
+    # =========================================================================
+    #
+    # mrp.production.legacy expone:
+    #   name         → product.template (packing fabricado)
+    #   parent_id    → product.template base (related: name.pnt_parent_id)
+    #   product_qty  → unidades fabricadas
+    #   date         → fecha (Date)
+    #   machine_id   → account.analytic.account (máquina/workcenter)
+    #   time         → horas empleadas (Float) — ya en horas, no en minutos
+    #
+    # kWh = time (h) × power_kw (kW) → resultado directo en kWh
+    #
+    # Enlace account.analytic.account → mrp.workcenter:
+    #   account.analytic.account.workcenter_id → mrp.workcenter
+    #   (unique constraint garantiza relación 1:1)
+    # =========================================================================
+
+    def compute_r13_legacy(self, li):
+        """Versión legacy de compute_r13: usa mrp.production.legacy en lugar de
+        mrp.workorder para distribuir el coste de electricidad entre los
+        productos fabricados, proporcionalmente al consumo eléctrico real
+        (horas × potencia kW) de cada máquina.
+
+        Parámetros:
+            li  (analytic.distribution.line): línea con el template R13_LEGACY
+                que contiene el balance a distribuir y los workcenters (workcenter_ids).
+        """
+        date_from = self.date_from
+        date_to = self.date_to
+        date_from_d = date_from.date() if hasattr(date_from, 'date') else date_from
+        date_to_d = date_to.date() if hasattr(date_to, 'date') else date_to
+
+        workcenters = li.template_id.workcenter_ids
+        balance = li.balance
+
+        # Obtener las cuentas analíticas correspondientes a los workcenters del template
+        analytic_accts = self.env['account.analytic.account'].search([
+            ('workcenter_id', 'in', workcenters.ids),
+        ])
+
+        # Registros legacy del periodo para las máquinas del template
+        legacy_records = self.env['mrp.production.legacy'].search([
+            ('machine_id', 'in', analytic_accts.ids),
+            ('date', '>=', date_from_d),
+            ('date', '<=', date_to_d),
+        ])
+
+        # Listas paralelas para acumular kWh por producto base fabricado.
+        # base_products[i] ↔ product_total_kwh[i] ↔ product_machine_details[i]
+        base_products = []
+        product_total_kwh = []
+        product_machine_details = []
+        total_kwh = 0.0
+
+        for lr in legacy_records:
+            workcenter = lr.machine_id.workcenter_id
+            if not workcenter:
+                continue
+
+            # time está en horas → kWh = horas × kW
+            kwh_consumed = lr.time * workcenter.power_kw
+            total_kwh += kwh_consumed
+
+            # Producto base: parent_id si existe, si no el packing mismo
+            base_tmpl = lr.parent_id or lr.name
+            if not base_tmpl:
+                continue
+
+            if base_tmpl not in base_products:
+                base_products.append(base_tmpl)
+                product_total_kwh.append(0.0)
+                product_machine_details.append([])
+
+            idx = base_products.index(base_tmpl)
+            product_total_kwh[idx] += kwh_consumed
+            product_machine_details[idx].append({
+                'machine': workcenter.name,
+                'power_kw': workcenter.power_kw,
+                'duration_h': lr.time,
+                'kwh': kwh_consumed,
+                'packing': lr.name.name,
+            })
+
+        if total_kwh == 0:
+            raise UserError("No hay consumo de energía registrado en producción legacy para el periodo.")
+
+        product_field_id = self.env.company.product_field_id.name
+
+        for i in range(len(base_products)):
+            base_tmpl = base_products[i]
+            product_kwh = product_total_kwh[i]
+
+            machine_percentage = (product_kwh / total_kwh) * 100
+            machine_cost = (balance * machine_percentage) / 100
+
+            # Desglose por máquina agrupado para la nota
+            details = product_machine_details[i]
+            machine_summary = {}
+            for d in details:
+                key = d['machine']
+                if key not in machine_summary:
+                    machine_summary[key] = {'power_kw': d['power_kw'], 'duration_h': 0.0, 'kwh': 0.0}
+                machine_summary[key]['duration_h'] += d['duration_h']
+                machine_summary[key]['kwh'] += d['kwh']
+
+            machine_lines = "\n".join(
+                f"  · {name}: {v['power_kw']:.2f} kW × {v['duration_h']:.2f} h = {v['kwh']:.2f} kWh"
+                for name, v in machine_summary.items()
+            )
+            note = (
+                f"Informe: R13_LEGACY — Electricidad (Legacy)\n"
+                f"Producto base: {base_tmpl.name}\n"
+                f"Coste total electricidad (balance): {balance:.2f}\n"
+                f"─── Desglose por máquina ───\n"
+                f"{machine_lines}\n"
+                f"─── Totales ───\n"
+                f"Consumo producto (kWh): {product_kwh:.2f} / {total_kwh:.2f} total\n"
+                f"Porcentaje: {machine_percentage:.2f}%\n"
+                f"Coste asignado = {balance:.2f} × {machine_percentage:.2f}% = {machine_cost:.2f}"
+            )
+
+            analytic_account = self.check_or_create_analytic_account(base_tmpl)
+            product_pp = base_tmpl.product_variant_ids[:1]
+
+            self.env["account.analytic.line"].create({
+                "name": f"Consumo electricidad {base_tmpl.name}",
+                "amount": machine_cost,
+                "product_id": product_pp.id if product_pp else False,
+                "date": fields.Date.today(),
+                "analytic_distribution_id": self.id,
+                "analytic_distribution_template_id": li.template_id.id,
+                product_field_id: analytic_account.id,
+                "analytic_distribution_note": note,
+            })
+
+        return True
