@@ -68,9 +68,11 @@ class AccountMove(models.Model):
 
     def write(self, vals: object) -> Any:
         res = super().write(vals)
-        if "invoice_line_ids" in vals or "partner_shipping_id" in vals:
+        trigger_fields = {"invoice_line_ids", "partner_shipping_id", "partner_id", "fiscal_position_id"}
+        if trigger_fields & set(vals.keys()):
             for move in self.filtered(lambda m: m.state == "draft"):
                 move.apply_ipnr()
+                move._apply_ipnr_purchase()
         return res
 
     @api.model_create_multi
@@ -78,7 +80,29 @@ class AccountMove(models.Model):
         moves = super().create(vals_list)
         for move in moves.filtered(lambda m: m.state == "draft"):
             move.apply_ipnr()
+            move._apply_ipnr_purchase()
         return moves
+
+    def _apply_ipnr_purchase(self):
+        """Gestiona automáticamente el asiento de IPNR para facturas y abonos
+        de compra. Crea el asiento si hay líneas sujetas a IPNR o lo elimina
+        (en borrador) si ya no las hay."""
+        self.ensure_one()
+        if self.move_type not in ("in_invoice", "in_refund"):
+            return
+        if self.env.context.get("avoid_recursion"):
+            return
+
+        has_ipnr_lines = any(line.is_ipnr for line in self.invoice_line_ids)
+
+        if has_ipnr_lines and not self.plastictax_move_id:
+            self.with_context(avoid_recursion=True).create_plastic_tax_entry()
+        elif not has_ipnr_lines and self.plastictax_move_id:
+            entry = self.plastictax_move_id
+            if entry.state == "posted":
+                entry.button_draft()
+            entry.button_cancel()
+            self.plastictax_move_id = False
 
     # DESARROLLO ANTONIO CÁNOVAS PARA CREAR APUNTES
     @api.depends("partner_id", "partner_shipping_id")

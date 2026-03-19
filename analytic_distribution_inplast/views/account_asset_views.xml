@@ -7,14 +7,6 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='current_values']/span" position="after">
                 <field name="account_asset_code" invisible="1"/>
-                <field name="workcenter_id"
-                       invisible="'21300' not in (account_asset_code or '')"
-                       required="state == 'open' and '21300' in account_asset_code"
-                       options="{'no_create': True, 'no_quick_create': True}"/>
-                <field name="equipment_id"
-                       invisible="'21400' not in (account_asset_code or '')"
-                       required="state == 'open' and '21400' in account_asset_code"
-                       options="{'no_create': True, 'no_quick_create': True}"/>
             </xpath>
         </field>
     </record>

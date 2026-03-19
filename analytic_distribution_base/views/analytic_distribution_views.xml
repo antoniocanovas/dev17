@@ -82,10 +82,30 @@
                                 <tree editable="bottom">
                                     <field name="template_id" string="Name" required="1"/>
                                     <field name="income_debit" widget="monetary" readonly="1" optional="hide"/>
+                                    <button name="action_view_income_debit" type="object"
+                                            icon="fa-search" title="Ver movimientos income debit"
+                                            optional="hide"
+                                            invisible="income_debit == 0"/>
                                     <field name="income_credit" widget="monetary" readonly="1" optional="hide"/>
+                                    <button name="action_view_income_credit" type="object"
+                                            icon="fa-search" title="Ver movimientos income credit"
+                                            optional="hide"
+                                            invisible="income_credit == 0"/>
                                     <field name="expense_debit" widget="monetary" readonly="1" optional="hide"/>
+                                    <button name="action_view_expense_debit" type="object"
+                                            icon="fa-search" title="Ver movimientos expense debit"
+                                            optional="hide"
+                                            invisible="expense_debit == 0"/>
                                     <field name="expense_credit" widget="monetary" readonly="1" optional="hide"/>
+                                    <button name="action_view_expense_credit" type="object"
+                                            icon="fa-search" title="Ver movimientos expense credit"
+                                            optional="hide"
+                                            invisible="expense_credit == 0"/>
                                     <field name="balance" widget="monetary" optional="show"/>
+                                    <button name="action_view_balance" type="object"
+                                            icon="fa-search" title="Ver todos los movimientos"
+                                            optional="show"
+                                            invisible="balance == 0"/>
                                     <field name="currency_id" column_invisible="1"/>
                                 </tree>
                             </field>

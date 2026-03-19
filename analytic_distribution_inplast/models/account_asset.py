@@ -7,11 +7,9 @@ class AccountAsset(models.Model):
     _inherit = 'account.asset'
 
     account_asset_code = fields.Char(related='account_asset_id.code', string='Asset Account Code')
-    workcenter_id = fields.Many2one(
-        'mrp.workcenter', string='Workcenter',
-        help='Máquina utilizada para las distribuciones analíticas Inplast, sobre producto.'
-    )
-    equipment_id = fields.Many2one(
-        'maintenance.equipment', string='Equipment',
-        help='Molde o utensilio utilizado para las distribuciones analíticas Inplast, sobre producto.'
+    machine_id = fields.Many2one(
+        'account.analytic.account',
+        string='Cuenta analítica (máquina/molde)',
+        help='Para activos de maquinaria: cuenta del plan de máquinas (workcenter_id).\n'
+             'Para activos de utillaje: cuenta del plan de equipos (equipment_id).'
     )

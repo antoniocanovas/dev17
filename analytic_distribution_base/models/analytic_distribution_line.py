@@ -26,6 +26,82 @@ class AnalyticDistributionLine(models.Model):
     currency_id = fields.Many2one('res.currency', default=lambda self:self.env.company.currency_id)
 
 
+    def _action_view_move_lines(self, name, line_ids):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': name,
+            'res_model': 'account.move.line',
+            'view_mode': 'tree,form',
+            'domain': [('id', 'in', line_ids)],
+            'target': 'current',
+        }
+
+    def action_view_income_debit(self):
+        self.ensure_one()
+        ids = self.env['account.move.line'].search([
+            ('account_id', 'in', self.template_id.income_account_ids.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('parent_state', '=', 'posted'),
+            ('analytic_account_ids', 'in', self.template_id.income_analytic_ids.ids),
+            ('debit', '>', 0),
+        ]).ids
+        return self._action_view_move_lines(f'{self.name} — Income Debit', ids)
+
+    def action_view_income_credit(self):
+        self.ensure_one()
+        ids = self.env['account.move.line'].search([
+            ('account_id', 'in', self.template_id.income_account_ids.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('parent_state', '=', 'posted'),
+            ('analytic_account_ids', 'in', self.template_id.income_analytic_ids.ids),
+            ('credit', '>', 0),
+        ]).ids
+        return self._action_view_move_lines(f'{self.name} — Income Credit', ids)
+
+    def action_view_expense_debit(self):
+        self.ensure_one()
+        ids = self.env['account.move.line'].search([
+            ('account_id', 'in', self.template_id.expense_account_ids.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('parent_state', '=', 'posted'),
+            ('analytic_account_ids', 'in', self.template_id.expense_analytic_ids.ids),
+            ('debit', '>', 0),
+        ]).ids
+        return self._action_view_move_lines(f'{self.name} — Expense Debit', ids)
+
+    def action_view_expense_credit(self):
+        self.ensure_one()
+        ids = self.env['account.move.line'].search([
+            ('account_id', 'in', self.template_id.expense_account_ids.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('parent_state', '=', 'posted'),
+            ('analytic_account_ids', 'in', self.template_id.expense_analytic_ids.ids),
+            ('credit', '>', 0),
+        ]).ids
+        return self._action_view_move_lines(f'{self.name} — Expense Credit', ids)
+
+    def action_view_balance(self):
+        self.ensure_one()
+        income_ids = self.env['account.move.line'].search([
+            ('account_id', 'in', self.template_id.income_account_ids.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('parent_state', '=', 'posted'),
+            ('analytic_account_ids', 'in', self.template_id.income_analytic_ids.ids),
+        ]).ids
+        expense_ids = self.env['account.move.line'].search([
+            ('account_id', 'in', self.template_id.expense_account_ids.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('parent_state', '=', 'posted'),
+            ('analytic_account_ids', 'in', self.template_id.expense_analytic_ids.ids),
+        ]).ids
+        return self._action_view_move_lines(f'{self.name} — Balance', list(set(income_ids + expense_ids)))
+
     def compute_debit_credit(self):
         for record in self:
             datefrom = record.date_from

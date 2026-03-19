@@ -11,7 +11,9 @@
 #     - Utillajes   (model_id.account_asset_id.code = '24000000')
 #
 # ─── MAQUINARIA ───────────────────────────────────────────────────────────────
-#   Cada activo de maquinaria tiene asignado un mrp.workcenter (workcenter_id).
+#   Cada activo de maquinaria tiene asignada una cuenta analítica (machine_id)
+#   del plan de máquinas (analytic_machine_plan_id), que a su vez tiene
+#   workcenter_id cumplimentado.
 #   Se buscan las mrp.workorder ejecutadas (state='done') en el periodo para
 #   ese workcenter.
 #
@@ -24,7 +26,9 @@
 #   (alternative_workcenter_ids). El coste se reparte equitativamente.
 #
 # ─── UTILLAJES (MOLDES) ───────────────────────────────────────────────────────
-#   Cada activo de utillaje tiene asignado un maintenance.equipment (equipment_id).
+#   Cada activo de utillaje tiene asignada una cuenta analítica (machine_id)
+#   del plan de equipos (analytic_equipment_plan_id), que a su vez tiene
+#   equipment_id cumplimentado.
 #   Se buscan las mrp.production finalizadas en el periodo donde
 #   mrp_tool_id.pnt_tool_id == equipment_id.
 #   Si alguna MO de un packing no tiene mrp_tool_id, se avisa por log.
@@ -35,12 +39,14 @@
 #   Se buscan los product.template que tienen el utillaje asignado en
 #   mrp_tool_ids.pnt_tool_id. El coste se reparte equitativamente.
 #
-# Validaciones / avisos por log:
+# Validaciones (UserError):
+#   - Activo de maquinaria sin machine_id o con machine_id sin workcenter_id.
+#   - Activo de utillaje sin machine_id o con machine_id sin equipment_id.
+# Avisos por log:
 #   - Workorder sin workcenter_id.
 #   - MO de packing sin mrp_tool_id configurado.
-#   - Activo de maquinaria sin workcenter_id.
-#   - Activo de utillaje sin equipment_id.
 from odoo import models
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -162,10 +168,17 @@ class AnalyticDistribution(models.Model):
         if not amort_amount:
             return
 
-        workcenter = asset.workcenter_id
+        machine = asset.machine_id
+        if not machine:
+            raise UserError(
+                f"[{method}] El activo '{asset.name}' no tiene cuenta analítica asignada (machine_id)."
+            )
+        workcenter = machine.workcenter_id
         if not workcenter:
-            _logger.warning("[%s] Activo '%s' sin workcenter_id configurado, ignorado.", method, asset.name)
-            return
+            raise UserError(
+                f"[{method}] La cuenta analítica '{machine.name}' asociada al activo '{asset.name}' "
+                f"no tiene workcenter_id asignado."
+            )
 
         # 1. Buscar workorders finalizados para este workcenter en el periodo
         workorders = self.env['mrp.workorder'].search([
@@ -235,7 +248,7 @@ class AnalyticDistribution(models.Model):
         en las operaciones de BoM para este workcenter o sus alternativas.
         El coste se reparte equitativamente entre todos los productos encontrados."""
         method = ctx['method']
-        workcenter = asset.workcenter_id
+        workcenter = asset.machine_id.workcenter_id
         all_wcs = workcenter | workcenter.alternative_workcenter_ids
         _logger.warning("[%s]   FALLBACK: buscando BoM operations para %d workcenter(s).",
                         method, len(all_wcs))
@@ -286,10 +299,17 @@ class AnalyticDistribution(models.Model):
         if not amort_amount:
             return
 
-        equipment = asset.equipment_id
+        machine = asset.machine_id
+        if not machine:
+            raise UserError(
+                f"[{method}] El activo '{asset.name}' no tiene cuenta analítica asignada (machine_id)."
+            )
+        equipment = machine.equipment_id
         if not equipment:
-            _logger.warning("[%s] Activo '%s' sin equipment_id configurado, ignorado.", method, asset.name)
-            return
+            raise UserError(
+                f"[{method}] La cuenta analítica '{machine.name}' asociada al activo '{asset.name}' "
+                f"no tiene equipment_id asignado."
+            )
 
         # 1. Buscar configuraciones de herramienta que apunten a este equipo
         tool_configs = self.env['mrp.product.tool'].search([
@@ -486,25 +506,21 @@ class AnalyticDistribution(models.Model):
         if not amort_amount:
             return
 
-        workcenter = asset.workcenter_id
-        if not workcenter:
-            _logger.warning("[%s] Activo '%s' sin workcenter_id configurado, ignorado.", method, asset.name)
-            return
-
-        # Cuenta analítica que representa este workcenter
-        analytic_acct = self.env['account.analytic.account'].search([
-            ('workcenter_id', '=', workcenter.id),
-        ], limit=1)
-        if not analytic_acct:
-            _logger.warning(
-                "[%s] Workcenter '%s' sin cuenta analítica (account.analytic.account.workcenter_id), ignorado.",
-                method, workcenter.name,
+        machine = asset.machine_id
+        if not machine:
+            raise UserError(
+                f"[{method}] El activo '{asset.name}' no tiene cuenta analítica asignada (machine_id)."
             )
-            return
+        workcenter = machine.workcenter_id
+        if not workcenter:
+            raise UserError(
+                f"[{method}] La cuenta analítica '{machine.name}' asociada al activo '{asset.name}' "
+                f"no tiene workcenter_id asignado."
+            )
 
         # Registros legacy de esta máquina en el periodo
         legacy_records = self.env['mrp.production.legacy'].search([
-            ('machine_id', '=', analytic_acct.id),
+            ('machine_id', '=', machine.id),
             ('date', '>=', ctx['date_from_d']),
             ('date', '<=', ctx['date_to_d']),
         ])
@@ -538,7 +554,7 @@ class AnalyticDistribution(models.Model):
             note = (
                 f"Informe: {method} — Maquinaria (Legacy)\n"
                 f"Activo: {asset.name}\n"
-                f"Máquina (workcenter): {workcenter.name} | Cuenta analítica: {analytic_acct.name}\n"
+                f"Máquina (workcenter): {workcenter.name} | Cuenta analítica: {machine.name}\n"
                 f"Producto base: {base_tmpl.name}\n"
                 f"─── Cálculo ───\n"
                 f"  Amortización activo en periodo: {amort_amount:.2f}\n"
@@ -560,10 +576,17 @@ class AnalyticDistribution(models.Model):
         if not amort_amount:
             return
 
-        equipment = asset.equipment_id
+        machine = asset.machine_id
+        if not machine:
+            raise UserError(
+                f"[{method}] El activo '{asset.name}' no tiene cuenta analítica asignada (machine_id)."
+            )
+        equipment = machine.equipment_id
         if not equipment:
-            _logger.warning("[%s] Activo '%s' sin equipment_id configurado, ignorado.", method, asset.name)
-            return
+            raise UserError(
+                f"[{method}] La cuenta analítica '{machine.name}' asociada al activo '{asset.name}' "
+                f"no tiene equipment_id asignado."
+            )
 
         # Productos packing que usan este utillaje
         tool_configs = self.env['mrp.product.tool'].search([
