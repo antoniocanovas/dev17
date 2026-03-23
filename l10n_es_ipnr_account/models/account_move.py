@@ -56,10 +56,10 @@ class AccountMove(models.Model):
         if self.env.context.get("avoid_recursion"):
             return
         ctx = {**self.env.context, "avoid_recursion": True}
-        for move in self:
+        # Las facturas de compra no generan líneas IPNR automáticamente;
+        # se supone que vienen del pedido de compra o se crean manualmente.
+        for move in self.filtered(lambda m: m.move_type not in ("in_invoice", "in_refund")):
             move.with_context(ctx)._delete_ipnr()
-            if move.move_type in ("in_invoice", "in_refund"):
-                continue
             lines_to_process = move.invoice_line_ids.filtered("is_ipnr")
             for line in lines_to_process:
                 ipnr_vals = move._get_ipnr_line_vals(line)
@@ -68,11 +68,19 @@ class AccountMove(models.Model):
 
     def write(self, vals: object) -> Any:
         res = super().write(vals)
-        trigger_fields = {"invoice_line_ids", "partner_shipping_id", "partner_id", "fiscal_position_id"}
-        if trigger_fields & set(vals.keys()):
+        if "invoice_line_ids" in vals or "partner_shipping_id" in vals:
             for move in self.filtered(lambda m: m.state == "draft"):
                 move.apply_ipnr()
-                move._apply_ipnr_purchase()
+        if not self.env.context.get("avoid_recursion") and (
+            "invoice_line_ids" in vals or "partner_id" in vals
+        ):
+            for move in self.filtered(
+                lambda m: m.state == "draft"
+                and m.move_type in ("in_invoice", "in_refund")
+                and m.plastictax_move_id
+                and m.plastictax_move_id.state == "draft"
+            ):
+                move._update_purchase_plastictax_entry()
         return res
 
     @api.model_create_multi
@@ -80,29 +88,7 @@ class AccountMove(models.Model):
         moves = super().create(vals_list)
         for move in moves.filtered(lambda m: m.state == "draft"):
             move.apply_ipnr()
-            move._apply_ipnr_purchase()
         return moves
-
-    def _apply_ipnr_purchase(self):
-        """Gestiona automáticamente el asiento de IPNR para facturas y abonos
-        de compra. Crea el asiento si hay líneas sujetas a IPNR o lo elimina
-        (en borrador) si ya no las hay."""
-        self.ensure_one()
-        if self.move_type not in ("in_invoice", "in_refund"):
-            return
-        if self.env.context.get("avoid_recursion"):
-            return
-
-        has_ipnr_lines = any(line.is_ipnr for line in self.invoice_line_ids)
-
-        if has_ipnr_lines and not self.plastictax_move_id:
-            self.with_context(avoid_recursion=True).create_plastic_tax_entry()
-        elif not has_ipnr_lines and self.plastictax_move_id:
-            entry = self.plastictax_move_id
-            if entry.state == "posted":
-                entry.button_draft()
-            entry.button_cancel()
-            self.plastictax_move_id = False
 
     # DESARROLLO ANTONIO CÁNOVAS PARA CREAR APUNTES
     @api.depends("partner_id", "partner_shipping_id")
@@ -150,7 +136,17 @@ class AccountMove(models.Model):
                     record.invoice_line_ids.purchase_order_id.dest_address_id.ipnr_tax_zone
                 )
 
-    @api.depends("state", "plastictax_move_id", "write_date", "invoice_line_ids.is_ipnr")
+    @api.depends(
+        "state",
+        "plastictax_move_id",
+        "write_date",
+        "move_type",
+        "invoice_line_ids.is_ipnr",
+        "company_id.ipnr_enable",
+        "fiscal_position_id",
+        "fiscal_position_id.ipnr_subject",
+        "partner_shipping_id.ipnr_dua_tax_zone",
+    )
     def _get_plastic_tax_required(self):
         for record in self:
             show_button = False
@@ -160,11 +156,25 @@ class AccountMove(models.Model):
                 "out_invoice",
                 "out_refund",
             ]:
-                for li in record.invoice_line_ids.filtered("is_ipnr"):
-                    if li.quantity == 0:
-                        continue
-                    show_button = True
-                    break
+                has_ipnr_lines = any(
+                    li.is_ipnr and li.quantity != 0
+                    for li in record.invoice_line_ids
+                )
+                if has_ipnr_lines:
+                    if record.move_type in ("out_invoice", "out_refund"):
+                        # Facturas de venta: zona ya filtrada en is_ipnr de línea;
+                        # aquí solo se comprueban company_enabled y posición fiscal
+                        company_enabled = record.company_id.ipnr_enable
+                        partner_shipping = record.partner_shipping_id
+                        fiscal_pos_ok = (
+                            (partner_shipping and partner_shipping.ipnr_dua_tax_zone) or
+                            not record.fiscal_position_id or
+                            record.fiscal_position_id.ipnr_subject
+                        )
+                        show_button = bool(company_enabled and fiscal_pos_ok)
+                    else:
+                        # Facturas de compra: visible si la compañía tiene IPNR habilitado
+                        show_button = record.company_id.ipnr_enable
             record.plastic_tax = show_button
 
     plastic_tax = fields.Boolean(
@@ -192,41 +202,40 @@ class AccountMove(models.Model):
         })
         self.plastictax_move_id = tax_entry
 
+        move_type = self.move_type
+        tax_zone = self.ipnr_tax_zone
         line_vals_list = []
-        for line in self.invoice_line_ids.filtered("is_ipnr"):
-            if line.quantity == 0:
-                continue
 
-            debit_account, credit_account = None, None
-            move_type = self.move_type
-            tax_zone = self.ipnr_tax_zone
-            product_type = line.product_id.tax_plastic_type
+        if move_type in ("in_invoice", "in_refund"):
+            line_vals_list = self._get_purchase_tax_entry_lines(move_type, tax_zone, acq_account)
+        else:
+            for line in self.invoice_line_ids.filtered("is_ipnr"):
+                if line.quantity == 0:
+                    continue
+                debit_account, credit_account = None, None
+                product_type = line.product_id.tax_plastic_type
 
-            if move_type == "out_invoice" and tax_zone:
-                if product_type == "manufacturer":
-                    debit_account, credit_account = line.account_id, mfg_account
-                elif product_type == "acquirer":
-                    debit_account, credit_account = line.account_id, acq_account
-            elif move_type == "out_invoice" and not tax_zone:
-                if product_type == "acquirer":
-                    debit_account, credit_account = acq_account, line.account_id
-            elif move_type == "out_refund" and tax_zone:
-                if product_type == "manufacturer":
-                    debit_account, credit_account = mfg_account, line.account_id
-                elif product_type == "acquirer":
-                    debit_account, credit_account = acq_account, line.account_id
-            elif move_type == "out_refund" and not tax_zone:
-                if product_type == "acquirer":
-                    debit_account, credit_account = line.account_id, acq_account
-            elif move_type == "in_invoice" and tax_zone:
-                debit_account, credit_account = line.account_id, acq_account
-            elif move_type == "in_refund" and tax_zone:
-                debit_account, credit_account = acq_account, line.account_id
+                if move_type == "out_invoice" and tax_zone:
+                    if product_type == "manufacturer":
+                        debit_account, credit_account = line.account_id, mfg_account
+                    elif product_type == "acquirer":
+                        debit_account, credit_account = line.account_id, acq_account
+                elif move_type == "out_invoice" and not tax_zone:
+                    if product_type == "acquirer":
+                        debit_account, credit_account = acq_account, line.account_id
+                elif move_type == "out_refund" and tax_zone:
+                    if product_type == "manufacturer":
+                        debit_account, credit_account = mfg_account, line.account_id
+                    elif product_type == "acquirer":
+                        debit_account, credit_account = acq_account, line.account_id
+                elif move_type == "out_refund" and not tax_zone:
+                    if product_type == "acquirer":
+                        debit_account, credit_account = line.account_id, acq_account
 
-            if debit_account and credit_account:
-                line_vals_list.extend(
-                    self._get_tax_entry_line_vals(line, debit_account, credit_account)
-                )
+                if debit_account and credit_account:
+                    line_vals_list.extend(
+                        self._get_tax_entry_line_vals(line, debit_account, credit_account)
+                    )
 
         if line_vals_list:
             tax_entry.write({"line_ids": line_vals_list})
@@ -253,6 +262,103 @@ class AccountMove(models.Model):
                 "partner_id": self.partner_id.id,
             }),
         ]
+
+    def _get_purchase_tax_entry_lines(self, move_type, tax_zone, acq_account):
+        """
+        Para facturas de compra: si hay líneas del producto de contribución IPNR
+        (Aportación IPNR) en la factura se usan directamente (importe = qty × precio);
+        si no existen, se calcula desde las líneas con is_ipnr=True (qty × peso × tarifa).
+        """
+        ipnr_product = self.env.ref(
+            "l10n_es_ipnr_account.aportacion_ipnr_product_template",
+            raise_if_not_found=False,
+        )
+        contribution_lines = (
+            self.invoice_line_ids.filtered(
+                lambda l: l.product_id == ipnr_product and l.quantity != 0
+            )
+            if ipnr_product
+            else self.env["account.move.line"]
+        )
+
+        line_vals_list = []
+        if contribution_lines:
+            for line in contribution_lines:
+                if move_type == "in_invoice":
+                    debit_account, credit_account = line.account_id, acq_account
+                else:
+                    debit_account, credit_account = acq_account, line.account_id
+                line_vals_list.extend(
+                    self._get_tax_entry_contribution_line_vals(line, debit_account, credit_account)
+                )
+        else:
+            for line in self.invoice_line_ids.filtered("is_ipnr"):
+                if line.quantity == 0:
+                    continue
+                if move_type == "in_invoice" and tax_zone:
+                    debit_account, credit_account = line.account_id, acq_account
+                elif move_type == "in_refund" and tax_zone:
+                    debit_account, credit_account = acq_account, line.account_id
+                else:
+                    continue
+                line_vals_list.extend(
+                    self._get_tax_entry_line_vals(line, debit_account, credit_account)
+                )
+        return line_vals_list
+
+    def _get_tax_entry_contribution_line_vals(self, line, debit_account, credit_account):
+        """Vals para apunte basado en líneas de contribución IPNR: importe directo qty × precio."""
+        amount = abs(line.quantity * line.price_unit)
+        return [
+            (0, 0, {
+                "product_id": line.product_id.id,
+                "name": line.product_id.name,
+                "debit": amount,
+                "credit": 0,
+                "account_id": debit_account.id,
+                "analytic_distribution": line.analytic_distribution,
+                "partner_id": self.partner_id.id,
+                "quantity": line.quantity,
+            }),
+            (0, 0, {
+                "name": self.name or "/",
+                "debit": 0,
+                "credit": amount,
+                "account_id": credit_account.id,
+                "partner_id": self.partner_id.id,
+            }),
+        ]
+
+    def _update_purchase_plastictax_entry(self):
+        """
+        Actualiza el apunte plastictax de una factura de compra en borrador tras un cambio
+        de proveedor o de líneas: actualiza partner e importes, o deja el apunte a 0
+        si el cambio hace que ya no aplique IPNR.
+        """
+        self.ensure_one()
+        tax_entry = self.plastictax_move_id
+        if not tax_entry or tax_entry.state != "draft":
+            return
+
+        acq_account = self.env.company.plastic_acquirer_account_id
+        if not acq_account:
+            return
+
+        ctx = {**self.env.context, "avoid_recursion": True}
+
+        # Actualizar cabecera con el nuevo proveedor
+        tax_entry.with_context(ctx).write({
+            "partner_id": self.partner_id.id,
+            "ref": f"Plastic tax: {self.partner_id.name}",
+        })
+
+        # Eliminar líneas actuales y recrear con los nuevos importes (o dejar vacío si es 0)
+        tax_entry.line_ids.with_context(ctx).unlink()
+        line_vals_list = self._get_purchase_tax_entry_lines(
+            self.move_type, self.ipnr_tax_zone, acq_account
+        )
+        if line_vals_list:
+            tax_entry.with_context(ctx).write({"line_ids": line_vals_list})
 
     @api.constrains("state", "plastictax_move_id")
     def _check_plastic_tax_required(self):

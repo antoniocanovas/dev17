@@ -24,48 +24,22 @@ class AccountMoveLine(models.Model):
     @api.depends(
         "product_id",
         "product_id.ipnr_subject",
-        "move_id.move_type",
-        "move_id.company_id.ipnr_enable",
+        "product_id.tax_plastic_type",
+        "move_id.partner_id",
         "move_id.ipnr_tax_zone",
-        "move_id.partner_id.country_id",
-        "move_id.fiscal_position_id",
-        "move_id.fiscal_position_id.ipnr_subject",
     )
     def _compute_is_ipnr(self):
         for line in self:
             if line.display_type in ('line_section', 'line_note'):
                 line.is_ipnr = False
                 continue
-
-            move = line.move_id
-            if not move:
-                line.is_ipnr = False
-                continue
-
-            company_enabled = move.company_id.ipnr_enable
-            partner_in_zone = move.ipnr_tax_zone
             product_ok = (
                 line.product_id and
                 line.product_id.ipnr_subject in ("yes", "category") and
                 line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
             )
-
-            if move.move_type in ("in_invoice", "in_refund"):
-                # Compras: el proveedor debe ser de fuera de España
-                supplier_outside_spain = (
-                    move.partner_id.country_id and
-                    move.partner_id.country_id.code != "ES"
-                )
-                line.is_ipnr = company_enabled and partner_in_zone and supplier_outside_spain and product_ok
-            else:
-                # Ventas: lógica original basada en posición fiscal
-                partner_shipping = move.partner_shipping_id
-                fiscal_pos_ok = (
-                    (partner_shipping and partner_shipping.ipnr_dua_tax_zone) or
-                    not move.fiscal_position_id or
-                    move.fiscal_position_id.ipnr_subject
-                )
-                line.is_ipnr = company_enabled and partner_in_zone and fiscal_pos_ok and product_ok
+            partner_in_zone = line.move_id.ipnr_tax_zone
+            line.is_ipnr = bool(product_ok and partner_in_zone)
 
 
     def unlink(self):

@@ -23,30 +23,17 @@ class AnalyticDistributionTemplate(models.Model):
 
     currency_id    = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
 
-    income_account_ids = fields.Many2many(
-        'account.account', string='Income accounts',
-        relation='income_account_rel',
-        column1='distribution_id',
-        column2='account_id',
+    enable_income = fields.Boolean(string='Enable income', default=False)
+    income_domain = fields.Char(
+        string='Income domain',
+        default='[]',
+        help='Dominio sobre account.move.line para seleccionar las líneas de ingreso. '
+             'El filtro de fechas y estado (posted) se aplica automáticamente.',
     )
-
-    expense_account_ids = fields.Many2many(
-        'account.account', string='Expense accounts',
-        relation='expense_account_rel',
-        column1='distribution_id',
-        column2='account_id',
-    )
-
-    income_analytic_ids = fields.Many2many(
-        'account.analytic.account', string='Analytics income',
-        relation='income_analytic_account_rel',
-        column1='distribution_id',
-        column2='analytic_account_id',
-    )
-
-    expense_analytic_ids = fields.Many2many(
-        'account.analytic.account', string='Analytics expense',
-        relation='expense_analytic_account_rel',
-        column1='distribution_id',
-        column2='analytic_account_id',
+    enable_expense = fields.Boolean(string='Enable expense', default=False)
+    expense_domain = fields.Char(
+        string='Expense domain',
+        default='[]',
+        help='Dominio sobre account.move.line para seleccionar las líneas de gasto. '
+             'El filtro de fechas y estado (posted) se aplica automáticamente.',
     )
