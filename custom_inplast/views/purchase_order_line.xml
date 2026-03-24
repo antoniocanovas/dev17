@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2023 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="purchase_order_tree_status" model="ir.ui.view">
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase_order_line_menu.purchase_order_line_tree" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='qty_received']"
+                position="before"
+            >
+                <field name="receipt_status" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_line_search_receipt_status" model="ir.ui.view">
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase_order_line_menu.purchase_order_line_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="receipt_status" />
+                <filter
+                    string="Pendiente"
+                    name="filter_receipt_pending"
+                    domain="[('receipt_status', '=', 'pending')]"
+                />
+                <filter
+                    string="Parcial"
+                    name="filter_receipt_partial"
+                    domain="[('receipt_status', '=', 'partial')]"
+                />
+                <filter
+                    string="Completo"
+                    name="filter_receipt_full"
+                    domain="[('receipt_status', '=', 'full')]"
+                />
+                <group expand="0" string="Agrupar por">
+                    <filter
+                        string="Estado de recepción"
+                        name="group_by_receipt_status"
+                        context="{'group_by': 'receipt_status'}"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

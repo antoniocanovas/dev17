@@ -8,21 +8,19 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     # PARA TERRITORIO ESPAÑOL:
-    @api.depends('country_id','state_id')
+    @api.depends('country_id', 'state_id')
     def _get_ipnr_tax_zone(self):
         for record in self:
-            taxzone = False
-            if (record.country_id.code == 'ES'):
-                taxzone = True
-            record['ipnr_tax_zone'] = taxzone
+            record.ipnr_tax_zone = record.country_id.code == 'ES'
     ipnr_tax_zone = fields.Boolean('IPNR tax zone', store=True, compute='_get_ipnr_tax_zone')
 
-    # PARA TERRITORIO ESPAÑOL, régimen DUA:
-    @api.depends('country_id','state_id')
+    # PARA TERRITORIO ESPAÑOL, régimen DUA (Canarias/Ceuta-Melilla):
+    @api.depends('country_id', 'state_id')
     def _get_ipnr_dua_tax_zone(self):
         for record in self:
-            taxzone = False
-            if (record.country_id.code == 'ES') and (record.state_id.id) and (record.state_id.code in ['GC','TF']):
-                taxzone = True
-            record['ipnr_dua_tax_zone'] = taxzone
+            record.ipnr_dua_tax_zone = (
+                record.country_id.code == 'ES'
+                and bool(record.state_id)
+                and record.state_id.code in ['GC', 'TF']
+            )
     ipnr_dua_tax_zone = fields.Boolean('IPNR DUA tax zone', store=True, compute='_get_ipnr_dua_tax_zone')

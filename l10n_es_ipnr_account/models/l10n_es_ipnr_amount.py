@@ -23,30 +23,20 @@ class L10nEsIpnrAmount(models.Model):
                 raise ValidationError(
                     _("The ending date must not be prior to the starting date.")
                 )
-            domain = [
-                ("id", "!=", rec.id),
-                "|",
-                "|",
-                "|",
-                "|",
-                "&",
-                ("date_from", "<=", date_from),
-                "|",
-                ("date_to", ">=", date_from),
-                ("date_to", "=", False),
-                "&",
-                ("date_from", "<=", date_to),
-                ("date_to", ">=", date_to),
-                "&",
-                ("date_from", "<=", date_from),
-                ("date_to", ">=", date_to),
-                "&",
-                ("date_from", ">=", date_from),
-                ("date_to", "<=", date_to),
-                "&",
-                ("date_from", ">=", date_from),
-                ("date_from", "<=", date_to),
-            ]
+            # Dos rangos [A_from, A_to] y [B_from, B_to] se solapan si:
+            # A_from <= B_to (o B es abierto) Y B_from <= A_to (o A es abierto)
+            if date_to:
+                domain = [
+                    ("id", "!=", rec.id),
+                    ("date_from", "<=", date_to),
+                    "|", ("date_to", ">=", date_from), ("date_to", "=", False),
+                ]
+            else:
+                # Rango abierto: se solapa con cualquier registro que acabe después de date_from
+                domain = [
+                    ("id", "!=", rec.id),
+                    "|", ("date_to", ">=", date_from), ("date_to", "=", False),
+                ]
 
             if self.search_count(domain) > 0:
                 raise ValidationError(_("You can not have overlapping date ranges."))

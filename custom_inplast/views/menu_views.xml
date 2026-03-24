@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- VISTA TREE PERSONALIZADA PARA STOCK QUANT CON FECHA IN_DATE -->
+    <record id="stock_quant_tree_view_custom" model="ir.ui.view">
+        <field name="name">stock.quant.tree.custom</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Quants" create="false" edit="false">
+                <field name="product_id"/>
+                <field name="location_id"/>
+                <field name="lot_id"/>
+                <field name="lot_fabrication_date" string="Fecha Fabricación"/>
+                <field name="in_date"/>
+                <field name="quantity"/>
+                <field name="available_quantity"/>
+                <field name="package_id" groups="stock.group_tracking_lot"/>
+                <field name="owner_id" groups="stock.group_tracking_owner"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- WINDOW ACTIONS: -->
+    <record id="action_mig_inventario" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Inventario</field>
+        <field name="res_model">mig.inventario</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_materialesarticulo" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Materiales Artículo</field>
+        <field name="res_model">mig.materialesarticulo</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_articuloidioma" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Artículo Idioma</field>
+        <field name="res_model">mig.articuloidioma</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_componentes" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Componentes</field>
+        <field name="res_model">mig.componentes</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="action_mig_embalaje" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG embalaje</field>
+        <field name="res_model">mig.embalaje</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_lineastarifa" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Líneas tarifa</field>
+        <field name="res_model">mig.lineastarifa</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_mig_crearpacking" model="ir.actions.act_window">
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">action</field>
+        <field name="domain" eval="False"/>
+        <field name="filter" eval="False"/>
+        <field name="limit">80</field>
+        <field name="name">MIG Crear packing (oct24)</field>
+        <field name="res_model">mig.crearpacking</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="target">current</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="usage" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- ACCIÓN TEMPORAL PARA STOCK QUANT CON VISTA PERSONALIZADA -->
+    <record id="action_stock_quant_temp" model="ir.actions.act_window">
+        <field name="name">SQ - Stock Quant</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_quant_tree_view_custom"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- MENUS: -->
+
+    <record id="inplast_stock_menu" model="ir.ui.menu">
+        <field name="active" eval="True"/>
+        <field name="name">Inplast</field>
+        <field name="parent_id" ref="stock.menu_stock_config_settings"/>
+        <field name="sequence">100</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_inventario_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_inventario"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Inventario</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">100</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_material_articulo_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_materialesarticulo"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Material Artículos</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">110</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_articulo_idioma_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_articuloidioma"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Artículo idioma</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">120</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+    <record id="mig_componentes_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_componentes"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Componentes</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">130</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+    <record id="mig_embalaje_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_embalaje"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG EMBALAJE</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">140</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_lineastarifa_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_lineastarifa"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Líneas tarifa</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">150</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+    <record id="mig_crearpacking_menu" model="ir.ui.menu">
+        <field name="action" ref="action_mig_crearpacking"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG Crear packing (oct24)</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">160</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+        <!-- MENÚ TEMPORAL SQ EN AJUSTES -->
+    <record id="mig_sq_temp_menu" model="ir.ui.menu">
+        <field name="action" ref="action_stock_quant_temp"/>
+        <field name="active" eval="True"/>
+        <field name="name">MIG SQ (Stock Quant)</field>
+        <field name="parent_id" ref="custom_inplast.inplast_stock_menu"/>
+        <field name="sequence">170</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+
+
+
+
+</odoo>

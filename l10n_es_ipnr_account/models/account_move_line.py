@@ -30,16 +30,17 @@ class AccountMoveLine(models.Model):
     )
     def _compute_is_ipnr(self):
         for line in self:
+            line.is_ipnr = False
             if line.display_type in ('line_section', 'line_note'):
-                line.is_ipnr = False
                 continue
-            product_ok = (
-                line.product_id and
-                line.product_id.ipnr_subject in ("yes", "category") and
-                line.product_id.tax_plastic_type in ("manufacturer", "acquirer")
-            )
-            partner_in_zone = line.move_id.ipnr_tax_zone
-            line.is_ipnr = bool(product_ok and partner_in_zone)
+            product = line.product_id
+            if not (
+                product
+                and product.ipnr_subject in ("yes", "category")
+                and product.tax_plastic_type in ("manufacturer", "acquirer")
+            ):
+                continue
+            line.is_ipnr = line.move_id.ipnr_tax_zone
 
 
     def unlink(self):

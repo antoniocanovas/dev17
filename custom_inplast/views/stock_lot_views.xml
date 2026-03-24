@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+
+        <!-- Heredar y modificar la vista de formulario de stock.lot -->
+        <record id="mig_inplast_stock_lot_form_inh" model="ir.ui.view">
+            <field name="name">mig.inplast.stock.lot.form.inh</field>
+            <field name="model">stock.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <!-- Añadir información de origen después del grupo principal -->
+                <xpath expr="//group[@name='main_group']" position="after">
+                    <group name="migration_group" string="mig_fechafabricacion">
+                        <field name="mig_fechafabricacion"/>
+                        <field name="mig_fechafinfabricacion"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

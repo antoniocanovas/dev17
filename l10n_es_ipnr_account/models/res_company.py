@@ -1,8 +1,6 @@
 # Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -69,8 +67,7 @@ class ResCompany(models.Model):
     )
 
     def _get_today_plastic_tax(self):
-        price = 0
-        today = datetime.today()
+        today = fields.Date.today()
         line = self.env["l10n.es.ipnr.amount"].search(
             [
                 ("price", ">", 0),
@@ -81,9 +78,7 @@ class ResCompany(models.Model):
             ],
             limit=1,
         )
-        if line.id:
-            price = line.price
-        self.plastic_tax = price
+        self.plastic_tax = line.price if line else 0
 
     plastic_tax = fields.Monetary("IPNR Tax", compute="_get_today_plastic_tax")
 

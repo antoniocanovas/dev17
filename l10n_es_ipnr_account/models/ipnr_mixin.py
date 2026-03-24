@@ -42,12 +42,11 @@ class IpnrMixin(models.AbstractModel):
 
     def _compute_ipnr_is_date(self):
         for rec in self:
-            try:
-                date = rec[rec._ipnr_secondary_unit_fields["date_field"]].date()
-            except AttributeError:
-                date = rec[rec._ipnr_secondary_unit_fields["date_field"]]
+            date_value = rec[rec._ipnr_secondary_unit_fields["date_field"]]
+            if hasattr(date_value, 'date'):
+                date_value = date_value.date()
             rec.ipnr_is_date = (
-                rec.is_ipnr and date and date >= rec.company_id.ipnr_date_from
+                rec.is_ipnr and date_value and date_value >= rec.company_id.ipnr_date_from
             )
 
     def _compute_ipnr_has_line(self):
@@ -75,20 +74,26 @@ class IpnrMixin(models.AbstractModel):
             ].filtered(lambda l: l.product_id == ipnr_product)
             lines_to_delete.unlink()
 
+    def _calculate_line_weight(self, line, line_fields):
+        """Calcula el peso de plástico no reciclable para una línea."""
+        uom = line[line_fields["uom_field"]]
+        qty = line[line_fields["qty_field"]]
+        if uom and qty and line.product_id:
+            return (
+                uom._compute_quantity(qty, line.product_id.uom_id)
+                * line.product_id.plastic_weight_non_recyclable
+            )
+        return 0.0
+
     def _get_ipnr_line_vals(self, line=False, **kwargs) -> dict:
         """
-        Get the values for the IPNR tax line.
-        If line is provided, calculate weight for that single line.
-        If line is False, calculate total weight from all IPNR-applicable lines.
-        Extra kwargs are passed through for subclass extensions.
+        Valores para la línea de contribución IPNR.
+        Si se pasa line, calcula el peso de esa línea; si no, suma todas las líneas IPNR.
         """
         self.ensure_one()
-        ipnr_product = self.env.ref(
-            "l10n_es_ipnr_account.aportacion_ipnr_product_template"
-        )
+        ipnr_product = self.env.ref("l10n_es_ipnr_account.aportacion_ipnr_product_template")
         kg_uom = self.env.ref("uom.product_uom_kgm")
 
-        # Security check for product configuration
         if ipnr_product.uom_id != kg_uom or ipnr_product.uom_po_id != kg_uom:
             raise UserError(
                 _(
@@ -99,51 +104,25 @@ class IpnrMixin(models.AbstractModel):
                 % ipnr_product.display_name
             )
 
-        # Get line model and its field configuration
         all_lines = self[self._ipnr_secondary_unit_fields["line_ids"]]
-
-        # Get date - use ipnr_default_date if available and date field is False
         ipnr_date = self[self._ipnr_secondary_unit_fields["date_field"]]
         if not ipnr_date and hasattr(self, 'ipnr_default_date'):
             ipnr_date = self.ipnr_default_date(all_lines)
-        if not ipnr_date:
-            ipnr_date = date.today()
+        ipnr_date = ipnr_date or date.today()
         price = self.env["l10n.es.ipnr.amount"].get_ipnr_amount(ipnr_date)
-        # Get field names from the line model (use first line or model default)
-        if all_lines:
-            line_fields = all_lines[0]._ipnr_secondary_unit_fields
-        elif line:
-            line_fields = line._ipnr_secondary_unit_fields
-        else:
-            # Fallback to account.move.line fields
-            line_fields = {"uom_field": "product_uom_id", "qty_field": "quantity"}
 
-        # Calculate weight
+        line_fields = (
+            all_lines[0]._ipnr_secondary_unit_fields if all_lines else
+            line._ipnr_secondary_unit_fields if line else
+            {"uom_field": "product_uom_id", "qty_field": "quantity"}
+        )
+
         if line:
-            # Single line provided
-            uom = line[line_fields["uom_field"]]
-            qty = line[line_fields["qty_field"]]
-            if uom and qty and line.product_id:
-                weight = uom._compute_quantity(
-                    qty, line.product_id.uom_id
-                ) * line.product_id.plastic_weight_non_recyclable
-            else:
-                weight = 0.0
+            weight = self._calculate_line_weight(line, line_fields)
         else:
-            # No line provided - calculate total from all IPNR lines
-            ipnr_lines = all_lines.filtered(
-                lambda l: l.product_id and l.product_id.ipnr_has_amount
-            )
-            weight = 0.0
-            for ln in ipnr_lines:
-                uom = ln[line_fields["uom_field"]]
-                qty = ln[line_fields["qty_field"]]
-                if uom and qty:
-                    weight += uom._compute_quantity(
-                        qty, ln.product_id.uom_id
-                    ) * ln.product_id.plastic_weight_non_recyclable
+            ipnr_lines = all_lines.filtered(lambda l: l.product_id and l.product_id.ipnr_has_amount)
+            weight = sum(self._calculate_line_weight(ln, line_fields) for ln in ipnr_lines)
 
-        # Build vals with correct field names for the line model
         ipnr_vals = {
             "product_id": ipnr_product.id,
             line_fields["uom_field"]: kg_uom.id,
@@ -151,10 +130,14 @@ class IpnrMixin(models.AbstractModel):
             "price_unit": price,
             "sequence": 10000,
         }
-
         if self._name == "account.move":
             ipnr_vals["move_id"] = self.id
-
+            taxes = ipnr_product.taxes_id.filtered(
+                lambda t: t.company_id == self.company_id
+            )
+            if self.fiscal_position_id:
+                taxes = self.fiscal_position_id.map_tax(taxes)
+            ipnr_vals["tax_ids"] = [fields.Command.set(taxes.ids)]
         return ipnr_vals
 
     def create_ipnr_line(self, lines, **kwargs):

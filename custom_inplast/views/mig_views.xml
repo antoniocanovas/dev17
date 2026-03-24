@@ -1,0 +1,218 @@
+<odoo>
+    <data>
+
+        <record id="migration_hr_employee_inh_form" model="ir.ui.view">
+            <field name="name">migration.hr.employee.inh.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page string="_migración" name="migration">
+                        <group name="first" position="after">
+                            <group>
+                                <field name="mig_cuenta_bancaria"/>
+                                <field name="mig_fecha_alta"/>
+                                <field name="mig_tarjeta"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+            <field name="priority">99</field>
+            <field name="type">form</field>
+        </record>
+
+        <record id="inplast_pricelist_mig_inh_view" model="ir.ui.view">
+            <field name="name">inplast.pricelist.mig.inh.view</field>
+            <field name="model">product.pricelist</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="mig_codigocliente"/>
+                </xpath>
+            </field>
+            <field name="priority">99</field>
+        </record>
+
+        <record id="mig_inventario_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Inventario">
+                    <field name="name"/>
+                    <field name="qty"/>
+                    <field name="ubicacion" optional="hide" groups="base.group_no_one"/>
+                    <field name="ubicacion_old" optional="hide" groups="base.group_no_one"/>
+                    <field name="lote" optional="show"/>
+                    <field name="palet" optional="show"/>
+                    <field name="sscc1" optional="show"/>
+                    <field name="sscc2" optional="show"/>
+                    <field name="boxsn" optional="show"/>
+                    <field name="product_id"/>
+                    <field name="lot_id"/>
+                    <field name="location_id" optional="hide" groups="base.group_no_one"/>
+                    <field name="sml_id" optional="hide"/>
+                    <field name="mig_fechafabricacion" optional="show"/>
+                    <field name="active" optional="hide"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.inventario</field>
+            <field name="name">Default tree view for MIG Inventario</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+        <record id="mig_materialesarticulo_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Components">
+                    <field name="name"/>
+                    <field name="componente"/>
+                    <field name="cantidad"/>
+                    <field name="tipo"/>
+                    <field name="bom_line_id"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.materialesarticulo</field>
+            <field name="name">Default tree view for MIG Materiales artículo</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+        <record id="mig_articuloidioma_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Artículo idioma">
+                    <field name="name"/>
+                    <field name="codarticulo"/>
+                    <field name="descripcion"/>
+                    <field name="idioma"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.articuloidioma</field>
+            <field name="name">Default tree view for MIG Artículo Idioma</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+        <record id="mig_componentes_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Componentes">
+                    <field name="name"/>
+                    <field name="componente"/>
+                    <field name="cantidad"/>
+                    <field name="bom_line_id"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.componentes</field>
+            <field name="name">Default tree view for MIG Componentes</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+
+        <record id="mig_embalaje_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG embalaje">
+                    <field name="name"/>
+                    <field name="producto"/>
+                    <field name="cantidad"/>
+                    <field name="cajapalet"/>
+                    <field name="escaja"/>
+                    <field name="bom_line_id"/>
+                    <field name="cajapaletnull"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.embalaje</field>
+            <field name="name">Default tree view for MIG Embalaje</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+
+        <record id="mig_lineastarifa_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Líneas tarifa">
+                    <field name="name"/>
+                    <field name="clientecod"/>
+                    <field name="cliente"/>
+                    <field name="articulo"/>
+                    <field name="fechavalideztarifa"/>
+                    <field name="preciooferta"/>
+                    <field name="partner_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="lineatarifa_id"/>
+                    <field name="codigopalet" optional="hide"/>
+                    <field name="familia" optional="hide"/>
+                    <field name="subfamilia" optional="hide"/>
+                    <field name="fechalimitepedido" optional="hide"/>
+                    <field name="fechaactualizacion" optional="hide"/>
+                    <field name="eneuros" optional="hide"/>
+                    <field name="codigodivisa" optional="hide"/>
+                    <field name="precioetileno" optional="hide"/>
+                    <field name="comentario" optional="hide"/>
+                    <field name="articulocodcliente" optional="hide"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.lineastarifa</field>
+            <field name="name">Default tree view for MIG Líneas Tarifa</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+        <record id="mig_crearpacking_default_tree" model="ir.ui.view">
+            <field name="active" eval="True"/>
+            <field name="arch" type="xml">
+                <tree string="MIG Crear Packing">
+                    <field name="name"/>
+                    <field name="mrp_type"/>
+                    <field name="sufix"/>
+                    <field name="box_base_qty"/>
+                    <field name="pallet_base_qty"/>
+                    <field name="box_qty"/>
+                    <field name="newpacking_id"/>
+                </tree>
+            </field>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="inherit_id" eval="False"/>
+            <field name="key" eval="False"/>
+            <field name="mode">primary</field>
+            <field name="model">mig.crearpacking</field>
+            <field name="name">Default tree view for MIG Crear Packing</field>
+            <field name="priority">16</field>
+            <field name="type">tree</field>
+        </record>
+
+    </data>
+
+</odoo>

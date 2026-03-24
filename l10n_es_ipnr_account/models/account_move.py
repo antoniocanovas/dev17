@@ -136,6 +136,16 @@ class AccountMove(models.Model):
                     record.invoice_line_ids.purchase_order_id.dest_address_id.ipnr_tax_zone
                 )
 
+    def _check_outbound_fiscal_position(self):
+        """Comprueba si la posición fiscal de la factura de venta permite IPNR."""
+        self.ensure_one()
+        partner_shipping = self.partner_shipping_id
+        return (
+            (partner_shipping and partner_shipping.ipnr_dua_tax_zone)
+            or not self.fiscal_position_id
+            or self.fiscal_position_id.ipnr_subject
+        )
+
     @api.depends(
         "state",
         "plastictax_move_id",
@@ -149,33 +159,25 @@ class AccountMove(models.Model):
     )
     def _get_plastic_tax_required(self):
         for record in self:
-            show_button = False
-            if record.state != "cancel" and record.move_type in [
-                "in_invoice",
-                "in_refund",
-                "out_invoice",
-                "out_refund",
-            ]:
-                has_ipnr_lines = any(
-                    li.is_ipnr and li.quantity != 0
-                    for li in record.invoice_line_ids
+            if record.state == "cancel" or record.move_type not in (
+                "in_invoice", "in_refund", "out_invoice", "out_refund"
+            ):
+                record.plastic_tax = False
+                continue
+            has_ipnr_lines = any(
+                li.is_ipnr and li.quantity != 0 for li in record.invoice_line_ids
+            )
+            if not has_ipnr_lines:
+                record.plastic_tax = False
+                continue
+            if record.move_type in ("out_invoice", "out_refund"):
+                # Zona ya filtrada en is_ipnr de línea; aquí: company_enabled y posición fiscal
+                record.plastic_tax = bool(
+                    record.company_id.ipnr_enable and record._check_outbound_fiscal_position()
                 )
-                if has_ipnr_lines:
-                    if record.move_type in ("out_invoice", "out_refund"):
-                        # Facturas de venta: zona ya filtrada en is_ipnr de línea;
-                        # aquí solo se comprueban company_enabled y posición fiscal
-                        company_enabled = record.company_id.ipnr_enable
-                        partner_shipping = record.partner_shipping_id
-                        fiscal_pos_ok = (
-                            (partner_shipping and partner_shipping.ipnr_dua_tax_zone) or
-                            not record.fiscal_position_id or
-                            record.fiscal_position_id.ipnr_subject
-                        )
-                        show_button = bool(company_enabled and fiscal_pos_ok)
-                    else:
-                        # Facturas de compra: visible si la compañía tiene IPNR habilitado
-                        show_button = record.company_id.ipnr_enable
-            record.plastic_tax = show_button
+            else:
+                # Facturas de compra: visible si la compañía tiene IPNR habilitado
+                record.plastic_tax = record.company_id.ipnr_enable
 
     plastic_tax = fields.Boolean(
         "Plastic tax", store=False, compute="_get_plastic_tax_required"
@@ -391,36 +393,27 @@ class AccountMove(models.Model):
                         )
         return res
 
-    def button_draft(self):
+    def _set_plastictax_to_draft(self, context_msg):
+        """Pasa a borrador el apunte plastictax asociado si está confirmado."""
         for move in self:
-            if move.plastictax_move_id and move.plastictax_move_id.state == "posted":
-                try:
-                    move.plastictax_move_id.button_draft()
-                    _logger.info(
-                        f"Apunte IPNR {move.plastictax_move_id.name} pasado a borrador "
-                        f"para factura {move.name}"
-                    )
-                except Exception as e:
-                    raise UserError(
-                        _("No se pudo pasar a borrador el apunte IPNR %s: %s")
-                        % (move.plastictax_move_id.name, str(e))
-                    )
+            if not (move.plastictax_move_id and move.plastictax_move_id.state == "posted"):
+                continue
+            try:
+                move.plastictax_move_id.button_draft()
+                _logger.info(
+                    f"Apunte IPNR {move.plastictax_move_id.name} pasado a borrador "
+                    f"{context_msg} factura {move.name}"
+                )
+            except Exception as e:
+                raise UserError(
+                    _("No se pudo pasar a borrador el apunte IPNR %s: %s")
+                    % (move.plastictax_move_id.name, str(e))
+                )
+
+    def button_draft(self):
+        self._set_plastictax_to_draft("para")
         return super().button_draft()
 
     def button_cancel(self):
-        for move in self:
-            if move.plastictax_move_id and move.plastictax_move_id.state == "posted":
-                try:
-                    move.plastictax_move_id.button_draft()
-                    _logger.info(
-                        f"Apunte IPNR {move.plastictax_move_id.name} pasado a borrador "
-                        f"al cancelar factura {move.name}"
-                    )
-                except Exception as e:
-                    raise UserError(
-                        _(
-                            "No se pudo pasar a borrador el apunte IPNR %s al cancelar: %s"
-                        )
-                        % (move.plastictax_move_id.name, str(e))
-                    )
+        self._set_plastictax_to_draft("al cancelar")
         return super().button_cancel()

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # Copyright
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+import logging
 from odoo import fields, models, api
 from odoo.exceptions import UserError
 from datetime import datetime, timedelta
 
+_logger = logging.getLogger(__name__)
 
 class AnalyticDistribution(models.Model):
     _inherit = 'analytic.distribution'
@@ -53,9 +55,33 @@ class AnalyticDistribution(models.Model):
             raise UserError('Assign product plan before computing (Settings => Company)')
 
         # Borrar las línes de otros cálculos anteriores:
-        self.env["account.analytic.line"].search(
+        lines_to_delete = self.env["account.analytic.line"].search(
             [("analytic_distribution_id", "=", self.id)]
-        ).unlink()
+        )
+        if lines_to_delete:
+            _logger.info("Intentando borrar %d líneas analíticas para la distribución '%s'.", len(lines_to_delete), self.name)
+            try:
+                lines_to_delete.unlink()
+                _logger.info("Borradas con éxito %d líneas analíticas.", len(lines_to_delete))
+            except Exception as e:
+                _logger.error("El borrado masivo de líneas analíticas falló. Error: %s. Intentando una por una para encontrar la culpable.", e)
+                for line in lines_to_delete:
+                    try:
+                        line.unlink()
+                    except Exception as single_e:
+                        product_info = "Sin producto asociado"
+                        if line.product_id:
+                            product_info = f"Producto: {line.product_id.display_name} (ID: {line.product_id.id})"
+                        
+                        _logger.error(
+                            "CRÍTICO: Fallo al borrar la línea analítica ID %d. %s. Verifique si hay bloqueos sobre este producto. Error: %s",
+                            line.id,
+                            product_info,
+                            single_e
+                        )
+                # Re-lanzar el error original para asegurar que la transacción se revierta y el usuario sea notificado.
+                raise e
+
         # Actualizar los parámetros generales analíticos de 'Analytic parameters' para este mes:
         self._update_general_parameters()
 
@@ -984,4 +1010,3 @@ class AnalyticDistribution(models.Model):
     def _compute_move_container_hour(self):
         for record in self:
             record.move_container_hour = record.move_container_qty * record.container_load
-

@@ -54,8 +54,13 @@ class AnalyticDistribution(models.Model):
                     picking_names += picking.name + " "
                 picking_names += "]"
 
+                # El campo 'product_id' en account.analytic.line espera un ID de 'product.product' (variante),
+                # pero la lógica agrupa por 'product.template' (producto base).
+                # Usamos la primera variante encontrada en las líneas de movimiento para satisfacer la restricción.
+                product_variant_id = lines[0].product_id.id if lines else False
+
                 new_aal = self.env['account.analytic.line'].create({
-                    'product_id': product.id,
+                    'product_id': product_variant_id,
                     'name': li.template_id.name + " - " + rec.name + " " + picking_names,
                     'amount': -1 * abs(picking_cost),
                     product_field_id: analytic_account.id,

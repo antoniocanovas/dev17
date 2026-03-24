@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mig_materialesarticulo_admin,MIG Admin,model_mig_materialesarticulo,stock.group_stock_manager,1,1,1,1
+access_mig_componentes_admin,MIG Admin,model_mig_componentes,stock.group_stock_manager,1,1,1,1
+access_mig_articuloidioma_admin,MIG Admin,model_mig_articuloidioma,stock.group_stock_manager,1,1,1,1
+access_mig_embalaje,MIG Admin,model_mig_embalaje,stock.group_stock_manager,1,1,1,1
+access_mig_lineastarifa,MIG lineatarifa Admin,model_mig_lineastarifa,stock.group_stock_manager,1,1,1,1
+access_mig_crearpacking,MIG crear packing Admin,model_mig_crearpacking,stock.group_stock_manager,1,1,1,1
+access_mig_inventario,MIG Inventario Admin,model_mig_inventario,stock.group_stock_manager,1,1,1,1
