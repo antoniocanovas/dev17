@@ -1,0 +1,43 @@
+<odoo>
+    <!-- Copyright 2023 Manuel Regidor <manuel.regidor@sygel.es>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+    <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="inside">
+            <t t-if="o.ipnr_has_line and line.move_id.company_id.ipnr_enable and line.move_id.company_id.ipnr_show_in_reports and line.product_id and line.product_id.ipnr_has_amount">
+                <br/>
+                <span style="font-size: 10px; color: #888888;">
+                    Aportación IPNR (RD 1055/2022):
+                    <span t-field="line.ipnr_amount"
+                          t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                    Peso:
+                    <t t-set="weight" t-value="line.product_id.plastic_weight_non_recyclable * line.quantity"/>
+                    <span t-esc="'%.3f' % weight"/>
+                    kg
+                </span>
+            </t>
+        </xpath>
+    </template>
+
+    <record id="view_account_invoice_report_search_inherit" model="ir.ui.view">
+        <field name="name">account.invoice.report.search.inherit</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.view_account_invoice_report_search"/>
+        <field name="arch" type="xml">
+            <!-- Añadir filtro como independiente, antes de los filtros de fecha -->
+            <separator/>
+            <filter name="filter_invoice_date" position="before">
+                <filter string="Filtrar IPNR"
+                        name="without_ipnr"
+                        context="{'filter_exclude_ipnr_product': True}"
+                        help="Productos que no contienen IPNR en nombre o código"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="account.action_account_invoice_report_all" model="ir.actions.act_window">
+        <field name="context" eval="{'search_default_current':1, 'search_default_customer': 1, 'group_by':['invoice_date:month'], 'group_by_no_leaf':1, 'search_default_without_ipnr': 1}"/>
+    </record>
+
+
+</odoo>
