@@ -12,7 +12,9 @@
         'mrp_autounbuild',
         'mrp_inplast',
     ],
-    'data': [],
+    'data': [
+        'views/res_company_views.xml',
+    ],
     'installable': True,
     'application': False,
 }

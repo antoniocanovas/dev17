@@ -61,10 +61,17 @@ class AccountMove(models.Model):
         for move in self.filtered(lambda m: m.move_type not in ("in_invoice", "in_refund")):
             move.with_context(ctx)._delete_ipnr()
             lines_to_process = move.invoice_line_ids.filtered("is_ipnr")
-            for line in lines_to_process:
-                ipnr_vals = move._get_ipnr_line_vals(line)
+            if not lines_to_process:
+                continue
+            if move.company_id.ipnr_consolidate_lines:
+                ipnr_vals = move._get_ipnr_line_vals()
                 if ipnr_vals.get("quantity", 0) > 0:
                     self.env["account.move.line"].with_context(ctx).create(ipnr_vals)
+            else:
+                for line in lines_to_process:
+                    ipnr_vals = move._get_ipnr_line_vals(line)
+                    if ipnr_vals.get("quantity", 0) > 0:
+                        self.env["account.move.line"].with_context(ctx).create(ipnr_vals)
 
     def write(self, vals: object) -> Any:
         res = super().write(vals)

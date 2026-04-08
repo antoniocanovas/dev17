@@ -109,24 +109,63 @@ class MrpUnbuild(models.Model):
         self.env['stock.move.line'].create(move_line_vals)
 
         # --- 3.3 Producción de los componentes desde related_boxes_ids ---
+        unbuild_mode = self.company_id.auto_unbuild_mode or 'lot'
+
         for product, lots in products_to_produce.items():
             quantity = len(lots)
             component_move = self._generate_move(product, quantity, production_location, self.location_dest_id)
             all_moves |= component_move
-            
-            for lot in lots:
+
+            if unbuild_mode == 'lot':
+                # Buscar lote existente; crear sólo si no existe
+                new_lot = self.env['stock.lot'].search([
+                    ('name', '=', self.lot_id.name),
+                    ('product_id', '=', product.id),
+                    ('company_id', '=', self.company_id.id),
+                ], limit=1)
+                if not new_lot:
+                    new_lot = self.env['stock.lot'].create({
+                        'name': self.lot_id.name,
+                        'product_id': product.id,
+                        'company_id': self.company_id.id,
+                    })
                 self.env['stock.move.line'].create({
                     'move_id': component_move.id,
                     'product_id': product.id,
-                    'lot_id': lot.id,
-                    'qty_done': 1.0,
+                    'lot_id': new_lot.id,
+                    'qty_done': quantity,
                     'product_uom_id': product.uom_id.id,
                     'location_id': production_location.id,
                     'location_dest_id': self.location_dest_id.id,
                 })
+            else:
+                # serial_number: una línea por cada número de serie existente en related_boxes_ids
+                for lot in lots:
+                    self.env['stock.move.line'].create({
+                        'move_id': component_move.id,
+                        'product_id': product.id,
+                        'lot_id': lot.id,
+                        'qty_done': 1.0,
+                        'product_uom_id': product.uom_id.id,
+                        'location_id': production_location.id,
+                        'location_dest_id': self.location_dest_id.id,
+                    })
 
         # --- 4. Validar y finalizar ---
+        all_moves._action_confirm()
         all_moves._action_done()
+
+        # Establecer trazabilidad: vincular las líneas consumidas con las producidas.
+        # Sin este vínculo el informe de trazabilidad estándar de Odoo no puede
+        # navegar de la operación de consumo a los componentes resultantes.
+        produce_moves = all_moves - consume_move
+        produced_move_line_ids = produce_moves.mapped('move_line_ids').filtered(
+            lambda ml: ml.quantity > 0
+        )
+        consume_move.mapped('move_line_ids').write({
+            'produce_line_ids': [(6, 0, produced_move_line_ids.ids)],
+        })
+
         self.write({'state': 'done'})
 
         _logger.info("Autounbuild Inplast: Deconstrucción de palet '%s' completada.", self.display_name)
