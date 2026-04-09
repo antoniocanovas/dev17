@@ -22,6 +22,7 @@ from . import analytic_distribution_r12
 from . import analytic_distribution_r13
 from . import analytic_distribution_r16
 from . import analytic_distribution_r161
+from . import analytic_distribution_r17
 from . import analytic_distribution_r19
 from . import analytic_distribution_r20
 from . import analytic_distribution_r21

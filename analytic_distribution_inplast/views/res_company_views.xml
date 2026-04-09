@@ -21,6 +21,7 @@
                             <field name="product_field_id"/>
                             <field name="fixed_variable_field_id"/>
                             <field name="machine_field_id"/>
+                            <field name="equipment_field_id"/>
                             <field name="department_field_id"/>
                         </group>
                     </group>
@@ -33,9 +34,10 @@
                             <field name="analytic_administration_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
                             <field name="analytic_workshop_department_id" domain="[('plan_id','=',analytic_department_plan_id)]"/>
                         </group>
-                        <group string="Accounts">
+                        <group string="Other parameters">
                             <field name="analytic_fixed_account_id" domain="[('plan_id','=',analytic_fixed_variable_plan_id)]"/>
                             <field name="analytic_variable_account_id" domain="[('plan_id','=',analytic_fixed_variable_plan_id)]"/>
+                            <field name="mrp_workcenter_tag_ids" widget="many2many_tags"/>
                         </group>
                     </group>
                 </page>

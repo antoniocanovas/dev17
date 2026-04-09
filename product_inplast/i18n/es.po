@@ -1,0 +1,609 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_inplast
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-28 11:22+0000\n"
+"PO-Revision-Date: 2025-10-28 12:26+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__product_base_dye
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__product_base_dye
+msgid " Main product dye"
+msgstr " Colorante principal del producto"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__additive
+msgid "Additive"
+msgstr "Aditivo"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_inplast_product_template_inh_form
+msgid "Auto code"
+msgstr "Código automático"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_bom_line_ids
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_bom_line_ids
+msgid "BOM lines"
+msgstr "Líneas de lista de materiales"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Bom lines"
+msgstr "Líneas de lista de materiales"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__box
+msgid "Box"
+msgstr "Caja"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_res_company__pnt_box_bag_id
+msgid "Box Bag"
+msgstr "Bolsa de caja"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_box_qty
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_box_qty
+msgid "Box quantity"
+msgstr "Cantidad de cajas"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__pnt_coa__type__buxton
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_label_type__buxton
+msgid "Buxton"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.actions.act_window,name:product_inplast.action_coa_type
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_product_coa
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_product_coa
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_tree
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "COA"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__coa_body
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_content_form
+msgid "COA Body"
+msgstr "Cuerpo del COA"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_content_form
+msgid "COA Content"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_pnt_coa_content
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+msgid "COA Content per Language"
+msgstr "Contenido de COA por idioma"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__content_ids
+msgid "COA Contents"
+msgstr "Contenidos del COA"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+msgid "COA Name"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__coa_id
+msgid "COA Reference"
+msgstr "Referencia del COA"
+
+#. module: product_inplast
+#: model:ir.ui.menu,name:product_inplast.coa_type
+msgid "COA Type"
+msgstr "Tipo de COA"
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_pnt_coa
+msgid "COA fields"
+msgstr "Campos de COA"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__cap_distribution
+msgid "Cap Distribution"
+msgstr "Tapones comprados"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__cap_mrp
+msgid "Cap MRP"
+msgstr "Tapones fabricados"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_category__pnt_code
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__name
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_code
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_code
+msgid "Code"
+msgstr "Código"
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__print_components
+msgid "Components"
+msgstr "Componentes"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__components_body
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_content_form
+msgid "Components Body"
+msgstr "Cuerpo de componentes"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__print_components
+msgid "Components print"
+msgstr ""
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+msgid "Content by Language"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__create_uid
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__create_uid
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__create_date
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__create_date
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Customer code"
+msgstr "Código de cliente"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_customer_code_print
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_customer_code_print
+msgid "Customer code on label"
+msgstr "Código de cliente en la etiqueta"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_customer_code_ids
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_customer_code_ids
+msgid "Customer codes"
+msgstr "Códigos de cliente"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__display_name
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__display_name
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_label_type__double
+msgid "Double"
+msgstr "Doble"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__dye
+msgid "Dye"
+msgstr "Colorante"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__final
+msgid "End-product"
+msgstr "Producto final"
+
+#. module: product_inplast
+#: model:ir.model.fields,help:product_inplast.field_product_product__pnt_customer_code_ids
+#: model:ir.model.fields,help:product_inplast.field_product_template__pnt_customer_code_ids
+msgid ""
+"Estos codigos son los que se imprimen en los informes de los productos, si "
+"se quiere modificar el codigo para buscar en la linea de ventas accede a la "
+"ventana de ventas del producto y configurelo ahí."
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__gtin
+msgid "GTIN"
+msgstr ""
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+msgid "General Information"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__handle
+msgid "Handle"
+msgstr "Asa"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__id
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__id
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__id
+msgid "ID"
+msgstr ""
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_content_form
+msgid "Images"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__default_code
+msgid "Internal Reference"
+msgstr "Referencia interna"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Label"
+msgstr "Etiqueta"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_label_type
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_label_type
+msgid "Label type"
+msgstr "Tipo de etiqueta"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__language_code
+msgid "Language Code"
+msgstr "Código de idioma"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__write_uid
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__write_uid
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__write_date
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__write_date
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_product_type
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_product_type
+msgid "MRP type"
+msgstr "Tipo de MRP"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_parent_id
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_parent_id
+msgid "Main product"
+msgstr "Producto principal"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__product_base_raw
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__product_base_raw
+msgid "Main product raw"
+msgstr "Materia prima principal del producto"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__material_number
+msgid "Material Number"
+msgstr "Número de material"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__print_multicolor
+msgid "Multicolor"
+msgstr "Multicolor"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__multicolor_body
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_content_form
+msgid "Multicolor Body"
+msgstr "Cuerpo multicolor"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__print_multicolor
+msgid "Multicolor print"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__pnt_coa__type__nmp
+msgid "NMP"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_label_type__nestle
+msgid "Nestle"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_net_weight
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_net_weight
+msgid "Net Weight"
+msgstr "Peso neto"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__number_of_labels
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__number_of_labels
+msgid "Number of labels"
+msgstr "Número de etiquetas"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__other
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__other
+msgid "Other"
+msgstr "Otro"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__packaging
+msgid "Packaging"
+msgstr "Embalajes" distintos de cajas y palets"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__packing
+msgid "Packing"
+msgstr "Producto final empaquetado"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_packing_ids
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_packing_ids
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Packing products"
+msgstr "Productos de embalaje"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__pallet
+msgid "Pallet"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_parent_qty
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_parent_qty
+msgid "Parent qty"
+msgstr "Cantidad principal"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Peso Bruto"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_pricelist_item_ids
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_pricelist_item_ids
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Pricelist items"
+msgstr "Elementos de lista de precios"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+msgid "Print Options"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_product_template
+#: model:ir.model.fields,field_description:product_inplast.field_product_customer_code__product_tmpl_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_product_customer_code
+msgid "Product Customer Code"
+msgstr "Código de cliente del producto"
+
+#. module: product_inplast
+#: model:ir.model,name:product_inplast.model_product_product
+msgid "Product Variant"
+msgstr "Variante de producto"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_product_dye
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_product_dye
+msgid "Product dye"
+msgstr "Colorante del producto"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_product__pnt_product_raw
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_product_raw
+msgid "Product raw"
+msgstr "Materia prima del producto"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__print_quality_meassure
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__print_quality_meassure
+msgid "Quality meassures"
+msgstr "Medidas de calidad"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__raw
+msgid "Raw"
+msgstr "Materia prima"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__raw_bag
+msgid "Raw Bags"
+msgstr "Bolsas de materia prima"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__raw_cardboard
+msgid "Raw Cardboard"
+msgstr "Cartón de materia prima"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__raw_cistern
+msgid "Raw Cistern"
+msgstr "Cisterna de materia prima"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__raw_color
+msgid "Raw Color"
+msgstr "Color de materia prima"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__raw_pallet
+msgid "Raw Pallet"
+msgstr "Pallet de materia prima"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_category__type__raw_sack
+msgid "Raw Sack"
+msgstr "Saco de materia prima"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_type_form
+msgid "Reference Numbers"
+msgstr ""
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Relations"
+msgstr "Relaciones"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Reports"
+msgstr "Reportes"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_label_type__sb
+msgid "San Bernardo"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__language_selection
+msgid "Select Language"
+msgstr "Seleccionar idioma"
+
+#. module: product_inplast
+#: model:ir.model.fields,help:product_inplast.field_product_category__type
+msgid "Select the type of parameter."
+msgstr "Seleccione el tipo de parámetro."
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__semi
+msgid "Semi-finished"
+msgstr "Semiterminado"
+
+#. module: product_inplast
+#: model:ir.model.fields,help:product_inplast.field_pnt_coa__print_quality_meassure
+#: model:ir.model.fields,help:product_inplast.field_pnt_coa_content__print_quality_meassure
+msgid "Show quality measures attachment in COA reports"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,help:product_inplast.field_pnt_coa__print_components
+#: model:ir.model.fields,help:product_inplast.field_pnt_coa_content__print_components
+msgid "Show the Components Body image field in COA contents"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,help:product_inplast.field_pnt_coa__print_multicolor
+#: model:ir.model.fields,help:product_inplast.field_pnt_coa_content__print_multicolor
+msgid "Show the Multicolor Body image field in COA contents"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__specification_number
+msgid "Specifitacion Number"
+msgstr "Número de especificación"
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_label_type__standard
+msgid "Standard"
+msgstr "Estándar"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__table_batch_certificate
+#: model_terms:ir.ui.view,arch_db:product_inplast.coa_content_form
+msgid "Table Batch Certificate"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__product_template__pnt_product_type__tool
+msgid "Tool"
+msgstr "Herramienta"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__type
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa_content__type
+#: model:ir.model.fields,field_description:product_inplast.field_product_category__type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_pnt_coa__vendor_site_number
+msgid "Vendor Site Number"
+msgstr "Número de sitio del proveedor"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Warehouse label"
+msgstr "Etiqueta de almacén"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Wisecap"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__pnt_coa__type__asas
+msgid "asa"
+msgstr ""
+
+#. module: product_inplast
+#: model:ir.model.fields.selection,name:product_inplast.selection__pnt_coa__type__normal
+msgid "estandar"
+msgstr ""
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "number of labels"
+msgstr "número de etiquetas"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Production labels"
+msgstr "Etiquetas de producción"
+
+#. module: product_inplast
+#: model_terms:ir.ui.view,arch_db:product_inplast.product_template_inplast_inh_form
+msgid "Production note"
+msgstr "Nota de producción"
+
+#. module: product_inplast
+#: model:ir.model.fields,field_description:product_inplast.field_product_template__pnt_production_label_note
+msgid "Production label note"
+msgstr "Nota de etiqueta de producción"

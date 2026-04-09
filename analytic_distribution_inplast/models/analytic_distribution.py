@@ -125,6 +125,10 @@ class AnalyticDistribution(models.Model):
                 self.compute_r16(li)
             elif li.template_id.compute_method == "r16_legacy":
                 self.compute_r16_legacy(li)
+            elif li.template_id.compute_method == "r17":
+                self.compute_r17(li)
+            elif li.template_id.compute_method == "r17_legacy":
+                self.compute_r17_legacy(li)
             elif li.template_id.compute_method == "r16.1":
                 self.compute_r161(li)
             elif li.template_id.compute_method == "r16.1_legacy":

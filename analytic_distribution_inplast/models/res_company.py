@@ -28,6 +28,10 @@ class ResCompany(models.Model):
         'ir.model.fields', string='Machines field',
         store=True, compute='_get_machine_field'
     )
+    equipment_field_id = fields.Many2one(
+        'ir.model.fields', string='Equipment field',
+        store=True, compute='_get_equipment_field'
+    )
     department_field_id = fields.Many2one(
         'ir.model.fields', string='Department field',
         store=True, compute='_get_department_field'
@@ -73,6 +77,19 @@ class ResCompany(models.Model):
             ])
         self.machine_field_id = aal_field
 
+    @api.depends('analytic_equipment_plan_id')
+    def _get_equipment_field(self):
+        standard_plan_id = self.env.ref('analytic.analytic_plan_projects')
+        if self.analytic_equipment_plan_id == standard_plan_id:
+            aal_field = self.env.ref('analytic.field_account_analytic_line__account_id')
+        else:
+            aal_field = self.env['ir.model.fields'].search([
+                ('model', '=', 'account.analytic.line'),
+                ('ttype', '=', 'many2one'),
+                ('field_description', '=', self.analytic_equipment_plan_id.name),
+            ])
+        self.equipment_field_id = aal_field
+
     @api.depends('analytic_department_plan_id')
     def _get_department_field(self):
         standard_plan_id = self.env.ref('analytic.analytic_plan_projects')
@@ -89,6 +106,10 @@ class ResCompany(models.Model):
 
     analytic_fixed_account_id = fields.Many2one('account.analytic.account', string='Fixed expense')
     analytic_variable_account_id = fields.Many2one('account.analytic.account', string='Variable expense')
+    mrp_workcenter_tag_ids = fields.Many2many(
+        'mrp.workcenter.tag', string='Machine groups',
+        help='Grupos de máquinas utilizados en las distribuciones analíticas'
+    )
 
     analytic_warehouse_department_id = fields.Many2one('account.analytic.account', string='Warehouse')
     analytic_maintenance_department_id = fields.Many2one('account.analytic.account', string='Maintenance')

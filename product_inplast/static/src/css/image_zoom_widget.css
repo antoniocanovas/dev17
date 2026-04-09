@@ -1,0 +1,33 @@
+/* Estilos para imágenes con zoom en FORM VIEW solamente */
+.o_form_view .clickable-image img,
+.o_form_view .o_field_image img {
+    cursor: pointer !important;
+}
+
+/* Botón de editar siempre visible por encima en form view */
+.o_form_view .o_field_image .o_select_file_button,
+.o_form_view .clickable-image .o_select_file_button {
+    position: relative;
+    z-index: 10 !important;
+}
+
+/* Asegurar que el contenedor del botón también tenga z-index */
+.o_form_view .o_field_image span[style*="display:contents"],
+.o_form_view .clickable-image span[style*="display:contents"] {
+    position: relative;
+    z-index: 10 !important;
+}
+
+/* Tree view: comportamiento normal, sin efectos especiales */
+.coa_content_tree_view .o_field_image img {
+    cursor: default;
+}
+
+/* Modal de zoom */
+.image-zoom-modal {
+    backdrop-filter: blur(3px);
+}
+
+.image-zoom-modal .modal-body {
+    background-color: #000;
+}
