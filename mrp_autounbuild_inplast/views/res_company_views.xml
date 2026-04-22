@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_autounbuild_res_company_inh_form" model="ir.ui.view">
+        <field name="name">mrp.autounbuild.res.company.inh.form</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="mrp_inplast.mrp_inplast_res_company_inh_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pnt_mrp_tool_categ_id']/.." position="after">
+                <group>
+                    <field name="auto_unbuild_mode"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
