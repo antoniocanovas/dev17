@@ -292,6 +292,7 @@ class AnalyticDistribution(models.Model):
                         'product_id': comp.id,
                         'name': f"{li.template_id.name} - {rec.name} | {comp.name} → {pf.name}",
                         'amount': -abs(coste_analitico),
+                        'date': rec.date_to,
                         product_field_id: analytic_account.id,
                         fixed_variable_field_id: variable_account.id,
                         'analytic_distribution_id': rec.id,

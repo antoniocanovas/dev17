@@ -3,7 +3,6 @@
 
 
 from odoo import fields, models, api
-from datetime import datetime
 from odoo.exceptions import UserError
 
 class AnalyticDistribution(models.Model):
@@ -13,8 +12,8 @@ class AnalyticDistribution(models.Model):
 
 
     name = fields.Char('Name', required=True)
-    date_from = fields.Datetime('From date', copy=False)
-    date_to = fields.Datetime('To date', copy=False, default=lambda self: datetime.today())
+    date_from = fields.Date('From date', copy=False)
+    date_to = fields.Date('To date', copy=False, default=fields.Date.today)
     analytic_line_ids = fields.One2many('account.analytic.line', 'analytic_distribution_id', string='Analytic lines')
     comment = fields.Html('Comments', store=True, copy=False)
     line_ids = fields.One2many('analytic.distribution.line','distribution_id', string='Lines')

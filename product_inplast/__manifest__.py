@@ -1,7 +1,7 @@
 {
     "name": "Product Inplast",
     "summary": "Products Inplast",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.2.5",
     "category": "Product, Picking",
     "author": "Punt Sistemes",
     "website": "https://www.puntsistemes.es",
@@ -12,6 +12,7 @@
     "depends": [
         "product",
         "stock",
+        "stock_barcode",
         "account",
         "mrp",
         "report_qweb_pdf_watermark",
@@ -22,10 +23,19 @@
     "data": [
         "security/ir.model.access.csv",
         "views/res_company_views.xml",
+        "views/stock_picking_views.xml",
         "views/product_template_views.xml",
         "views/product_category_views.xml",
         "views/menu_views.xml",
         "data/stock_package_type.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "product_inplast/static/src/js/image_zoom_widget.js",
+            "product_inplast/static/src/css/image_zoom_widget.css",
+            "product_inplast/static/src/js/barcode_pallet2pack.js",
+            "product_inplast/static/src/xml/barcode_pallet2pack.xml",
+        ],
+    },
     "installable": True,
 }

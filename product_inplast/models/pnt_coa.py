@@ -1,5 +1,4 @@
-from odoo import fields, models, api
-from odoo.exceptions import UserError, ValidationError
+from odoo import fields, models
 
 TYPE = [
     ("normal", "estandar"),
@@ -15,13 +14,20 @@ class PntCoa(models.Model):
 
     name = fields.Char(string="Name")
     type = fields.Selection(selection=TYPE, default="normal")
-    print_multicolor = fields.Boolean("Multicolor print")
-    print_quality_meassure = fields.Boolean("Quality meassures")
-    print_components = fields.Boolean("Components print")
+    print_multicolor = fields.Boolean(
+        "Multicolor", help="Show the Multicolor Body image field in COA contents"
+    )
+    print_quality_meassure = fields.Boolean(
+        "Quality meassures", help="Show quality measures attachment in COA reports"
+    )
+    print_components = fields.Boolean(
+        "Components", help="Show the Components Body image field in COA contents"
+    )
 
     material_number = fields.Char("Material Number")
     specification_number = fields.Char("Specifitacion Number")
     vendor_site_number = fields.Char("Vendor Site Number")
+    denomination = fields.Char("Denomination")
 
     language_selection = fields.Selection(
         selection="_get_available_languages",
@@ -31,60 +37,17 @@ class PntCoa(models.Model):
 
     content_ids = fields.One2many("pnt.coa.content", "coa_id", string="COA Contents")
 
-    selected_coa_body = fields.Html(
-        string="Selected COA Body", compute="_compute_selected_coa_body", store=True
-    )
-    selected_multicolor_body = fields.Html(
-        string="Selected Multicolor Body",
-        compute="_compute_selected_multicolor_body",
-        store=True,
-    )
-    selected_components_body = fields.Html(
-        string="Selected Components Body",
-        compute="_compute_selected_components_body",
-        store=True,
-    )
-
     def _get_available_languages(self):
-        """Obtiene los idiomas configurados en Odoo y los devuelve como opciones para selección."""
+        """Obtiene los idiomas configurados en Odoo y los devuelve como
+        opciones para selección."""
         languages = self.env["res.lang"].search([("active", "=", True)])
         return [(lang.code, lang.name) for lang in languages]
 
-    @api.depends("language_selection", "content_ids")
-    def _compute_selected_coa_body(self):
-        """Calcula qué cuerpo de COA mostrar en función del idioma seleccionado."""
-        for record in self:
-            content = record.content_ids.filtered(
-                lambda c: c.language_code == record.language_selection
-            )
-            record.selected_coa_body = content.coa_body if content else ""
-
-    @api.depends("language_selection", "print_multicolor", "content_ids")
-    def _compute_selected_multicolor_body(self):
-        """Calcula qué tabla multicolor mostrar en función del idioma seleccionado."""
-        for record in self:
-            content = record.content_ids.filtered(
-                lambda c: c.language_code == record.language_selection
-            )
-            record.selected_multicolor_body = (
-                content.multicolor_body if content and record.print_multicolor else ""
-            )
-
-    @api.depends("language_selection", "print_components", "content_ids")
-    def _compute_selected_components_body(self):
-        """Calcula qué tabla de componentes mostrar en función del idioma seleccionado."""
-        for record in self:
-            content = record.content_ids.filtered(
-                lambda c: c.language_code == record.language_selection
-            )
-            record.selected_components_body = (
-                content.components_body if content and record.print_components else ""
-            )
-
-    def create(self, vals):
-        """Crea automáticamente registros de contenido COA para cada idioma configurado."""
+    def create(self, vals: dict) -> models.Model:
+        """Crea automáticamente registros de contenido COA para cada
+        idioma configurado."""
         # Crea el registro principal de COA
-        coa_record = super(PntCoa, self).create(vals)
+        coa_record = super().create(vals)
 
         # Obtiene todos los idiomas activos en Odoo
         active_languages = self.env["res.lang"].search([("active", "=", True)])
@@ -95,34 +58,38 @@ class PntCoa(models.Model):
                 {
                     "coa_id": coa_record.id,
                     "language_code": lang.code,
-                    "coa_body": "",  # Puedes personalizar el contenido predeterminado
-                    "multicolor_body": "",
-                    "components_body": "",
+                    "coa_body": False,
+                    "multicolor_body": False,
+                    "components_body": False,
+                    "table_batch_certificate": False,
                 }
             )
 
         return coa_record
 
-    def get_coa_body_for_partner_lang(self, partner_lang):
+    def get_coa_body_for_partner_lang(self, partner_lang: str) -> str:
         """Obtiene el contenido COA body adecuado basado en el idioma del partner."""
         self.ensure_one()
         content = self.content_ids.filtered(lambda c: c.language_code == partner_lang)
         return content.coa_body if content else ""
 
-    def get_components_body_for_partner_lang(self, partner_lang):
-        """Obtiene el contenido Components body adecuado basado en el idioma del partner."""
+    def get_components_body_for_partner_lang(self, partner_lang: str) -> str:
+        """Obtiene el contenido Components body adecuado basado
+        en el idioma del partner."""
         self.ensure_one()
         content = self.content_ids.filtered(lambda c: c.language_code == partner_lang)
         return content.components_body if content else ""
 
-    def get_multicolor_body_for_partner_lang(self, partner_lang):
-        """Obtiene el contenido Multicolor body adecuado basado en el idioma del partner."""
+    def get_multicolor_body_for_partner_lang(self, partner_lang: str) -> str:
+        """Obtiene el contenido Multicolor body adecuado basado
+        en el idioma del partner."""
         self.ensure_one()
         content = self.content_ids.filtered(lambda c: c.language_code == partner_lang)
         return content.multicolor_body if content else ""
 
-    def write(self, vals):
-        res = super(PntCoa, self).write(vals)
-        if "language_selection" in vals:
-            self._compute_selected_components_body()
-        return res
+    def get_table_batch_certificate_for_partner_lang(self, partner_lang: str) -> str:
+        """Obtiene el contenido de tabla batch certificate adecuado
+        basado en el idioma del partner."""
+        self.ensure_one()
+        content = self.content_ids.filtered(lambda c: c.language_code == partner_lang)
+        return content.table_batch_certificate if content else ""

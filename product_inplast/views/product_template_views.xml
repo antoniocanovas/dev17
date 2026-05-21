@@ -26,9 +26,14 @@
                             <field name="pnt_net_weight"
                                    invisible="pnt_product_type not in ['packing']"
                             />
+                            <field name="weight" invisible="pnt_product_type not in ['packing']"
+                                   string="Peso Bruto"
+                            />
                             <field name="pnt_box_qty"
                                    invisible="pnt_product_type not in ['packing']"
                             />
+                            <field name="pnt_product_two_sscc"
+                                   invisible="pnt_product_type not in ['packing']"/>
 
                             <field name="pnt_code"/>
                         </group>
@@ -53,22 +58,27 @@
                             <group name="coa" string="COA">
                                 <field string="COA" name="pnt_product_coa"/>
                             </group>
-                            <group name="label" string="Warehouse label" >
+                            <group name="label" string="Warehouse label">
                                 <field string="Label" name="pnt_label_type"/>
                                 <field string="number of labels" name="number_of_labels"/>
                                 <!-- <field string="Customer code" name="pnt_customer_code_print"/> -->
-                                <field string="Customer code" name="pnt_customer_code_ids" invisible="pnt_product_type not in ['final']">
-                                        <tree editable="bottom">
-                                            <field name="partner_id"/>
-                                            <field name="name"/>
-                                            <field name="gtin"/>
-                                            <field name="product_tmpl_id" column_invisible="1"/>
-                                        </tree>
+                                <field string="Customer code" name="pnt_customer_code_ids"
+                                       invisible="pnt_product_type not in ['final']">
+                                    <tree editable="bottom">
+                                        <field name="partner_id"/>
+                                        <field name="name"/>
+                                        <field name="gtin"/>
+                                        <field name="product_tmpl_id" column_invisible="1"/>
+                                    </tree>
                                 </field>
 
                                 <!--       invisible="pnt_customer_code_print == False"/>
                                 <field string="COA Handle" name="pnt_product_handle_coa"/>
                                 <field string="Components" name="pnt_product_coa_components"/>-->
+                            </group>
+                            <group name="production_label" string="Production labels">
+                                <field name="pnt_production_label_note"
+                                       string="Production note"/>
                             </group>
                         </page>
                         <page name="relations" string="Relations">
@@ -105,23 +115,22 @@
         </field>
     </record>
     <record id="product_inplast_product_template_inh_form" model="ir.ui.view">
-    <field name="name">product.template.product.default.code.inh.form</field>
-    <field name="model">product.template</field>
-    <field name="type">form</field>
-    <field name="inherit_id" ref="product_inplast.product_template_inplast_inh_form"/>
-    <field name="arch" type="xml">
-        <xpath expr="//header" position="inside">
-            <button class="oe_highlight" type="object"
-                    name="get_inplast_default_code"
-                    string="Auto code"
-                    context="{'default_name': id}"
-                    invisible="pnt_product_type != 'final'"
-            />
-        </xpath>
-    </field>
-    <field name="priority">999</field>
+        <field name="name">product.template.product.default.code.inh.form</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product_inplast.product_template_inplast_inh_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button class="oe_highlight" type="object"
+                        name="get_inplast_default_code"
+                        string="Auto code"
+                        context="{'default_name': id}"
+                        invisible="pnt_product_type not in ['final', 'semi']"
+                />
+            </xpath>
+        </field>
+        <field name="priority">999</field>
     </record>
-
 
 
     <!-- Vista KANBAN -->

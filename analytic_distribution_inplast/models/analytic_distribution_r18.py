@@ -137,6 +137,7 @@ class AnalyticDistribution(models.Model):
                         f"{li.template_id.name} - {rec.name} | {product.name}"
                     ),
                     'amount': -abs(cost),
+                    'date': rec.date_to,
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: variable_account.id,
                     'analytic_distribution_id': rec.id,

@@ -112,16 +112,28 @@ class MrpUnbuild(models.Model):
         unbuild_mode = self.company_id.auto_unbuild_mode or 'lot'
 
         if use_bom_fallback:
-            # Sin related_boxes_ids: usar el producto caja y cantidad definidos en la BOM
-            box_line = bom.box_line_id
-            if not box_line:
+            # Sin related_boxes_ids: buscar el producto packing tipo caja a través
+            # del box_template_id del bom_template del palet y el pnt_parent_id del
+            # producto principal.
+            bom_tmpl = self.product_id.mrp_bom_template_id
+            box_bom_template = bom_tmpl.box_template_id if bom_tmpl else False
+            main_product_tmpl = self.product_id.product_tmpl_id.pnt_parent_id
+
+            box_product = self.env['product.product']
+            if box_bom_template and main_product_tmpl:
+                box_product_tmpl = self.env['product.template'].search([
+                    ('mrp_bom_template_id', '=', box_bom_template.id),
+                    ('pnt_parent_id', '=', main_product_tmpl.id),
+                ], limit=1)
+                box_product = box_product_tmpl.product_variant_id
+
+            if not box_product:
                 raise UserError(_(
-                    "The lot '%s' has no related boxes and the Bill of Materials "
-                    "does not have a box component to use as fallback.",
+                    "The lot '%s' has no related boxes and no box packing product "
+                    "could be found via the BOM template of the main product.",
                     self.lot_id.name
                 ))
-            box_product = box_line.product_id
-            box_quantity = bom.box_count
+            box_quantity = self.product_id.pnt_box_qty
             component_move = self._generate_move(box_product, box_quantity, production_location, self.location_dest_id)
             all_moves |= component_move
 

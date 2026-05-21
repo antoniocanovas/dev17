@@ -13,8 +13,8 @@ class AnalyticDistributionLine(models.Model):
     template_id = fields.Many2one('analytic.distribution.template', string='Template')
     name = fields.Char(related='template_id.name')
     distribution_id = fields.Many2one('analytic.distribution', string='Distribution')
-    date_from = fields.Datetime(related='distribution_id.date_from')
-    date_to = fields.Datetime(related='distribution_id.date_to')
+    date_from = fields.Date(related='distribution_id.date_from')
+    date_to = fields.Date(related='distribution_id.date_to')
 
     income_debit = fields.Monetary('Income debit')
     income_credit = fields.Monetary('Income credit')

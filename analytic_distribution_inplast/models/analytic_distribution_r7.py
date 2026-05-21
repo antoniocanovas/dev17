@@ -54,6 +54,7 @@ class AnalyticDistribution(models.Model):
                     'product_id': product.id,
                     'name': li.template_id.name + " - " + rec.name,
                     'amount': -1 * abs(li.balance * storages / total_storages),
+                    'date': self.date_to,
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: self.env.company.analytic_variable_account_id.id,
                     'analytic_distribution_id': self.id,

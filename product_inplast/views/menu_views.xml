@@ -13,44 +13,101 @@
               name="COA Type" action="action_coa_type"/>
 
 
+    <!-- Vista form para editar contenido COA por idioma -->
+    <record id="coa_content_form" model="ir.ui.view">
+        <field name="active" eval="True"/>
+        <field name="arch" type="xml">
+            <form string="COA Content">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="language_code"/>
+                            <field name="type" readonly="1"/>
+                            <field name="print_multicolor" invisible="1"/>
+                            <field name="print_quality_meassure" invisible="1"/>
+                            <field name="print_components" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Images">
+                            <group>
+                                <group string="COA Body">
+                                    <field name="coa_body" widget="image" nolabel="1" class="clickable-image"
+                                           options="{'size': [128, 128]}"/>
+                                </group>
+                                <group string="Multicolor Body" invisible="not print_multicolor">
+                                    <field name="multicolor_body" widget="image" nolabel="1" class="clickable-image"
+                                           options="{'size': [128, 128]}"/>
+                                </group>
+                                <group string="Components Body" invisible="not print_components">
+                                    <field name="components_body" widget="image" nolabel="1" class="clickable-image"
+                                           options="{'size': [128, 128]}"/>
+                                </group>
+                                <group string="Table Batch Certificate" invisible="type != 'buxton'">
+                                    <field name="table_batch_certificate" widget="image" nolabel="1"
+                                           class="clickable-image" options="{'size': [128, 128]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="model">pnt.coa.content</field>
+        <field name="name">COA Content Form</field>
+        <field name="type">form</field>
+    </record>
+
     <record id="coa_type_form" model="ir.ui.view">
         <field name="active" eval="True"/>
         <field name="arch" type="xml">
             <form>
                 <sheet string="COA">
-                    <h2>
-                        <field name="name"/>
-                    </h2>
-                    <group name="basic_params" col="4">
-                        <!-- Asegúrate de incluir los campos aquí -->
-                        <field name="type"/>
-                        <field name="print_multicolor"/> <!-- Campo que falta -->
-                        <field name="print_quality_meassure"/>
-                        <field name="print_components"/> <!-- Campo que falta -->
-                        <field name="material_number"/>
-                        <field name="specification_number"/>
-                        <field name="vendor_site_number"/>
-
-
-
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="COA Name"/>
+                        </h1>
+                    </div>
+                    <group name="basic_params">
+                        <group string="General Information">
+                            <field name="type"/>
+                        </group>
 
                     </group>
+                    <group name="print_params">
+                            <group string="Print Options">
+                                <field name="print_multicolor"/>
+                                <field name="print_quality_meassure"/>
+                                <field name="print_components"/>
+                            </group>
+                            <group string="Reference Numbers" invisible="type != 'buxton'">
+                                <field name="material_number"/>
+                                <field name="specification_number"/>
+                                <field name="vendor_site_number"/>
+                                <field name="denomination"/>
+                            </group>
+                        </group>
 
                     <notebook>
                         <page string="COA Content per Language">
-
                             <field name="content_ids" nolabel="1">
-                                <tree editable="bottom">
-
+                                <tree string="Content by Language" class="coa_content_tree_view">
+                                    <field name="type" column_invisible="1"/>
                                     <field name="language_code"/>
-                                    <field name="coa_body" widget="image"/>
-                                    <field name="multicolor_body" widget="image"
-                                    />
-                                    <field name="components_body" widget="image"
-                                    />
+                                    <field name="coa_body" widget="image" options="{'size': [64, 64]}" optional="show"
+                                           class="clickable-image"/>
+                                    <field name="multicolor_body" widget="image" options="{'size': [64, 64]}"
+                                           optional="show" class="clickable-image"
+                                           column_invisible="not parent.print_multicolor"/>
+                                    <field name="components_body" widget="image" options="{'size': [64, 64]}"
+                                           optional="show" class="clickable-image"
+                                           column_invisible="not parent.print_components"/>
+                                    <field name="table_batch_certificate" widget="image" options="{'size': [64, 64]}"
+                                           optional="show" class="clickable-image"
+                                           column_invisible="parent.type != 'buxton'"/>
                                 </tree>
                             </field>
-
                         </page>
                     </notebook>
                 </sheet>

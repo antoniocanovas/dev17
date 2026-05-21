@@ -9,6 +9,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='website']" position="after">
                 <field name="pnt_box_bag_id"/>
+                <field name="sscc_sequence_id"/>
+                <field name="pallet_packaging_ids" widget="many2many_tags"/>
             </xpath>
         </field>
     </record>

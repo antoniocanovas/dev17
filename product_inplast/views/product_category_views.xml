@@ -10,6 +10,7 @@
 
                     <field name="pnt_code" required="1"/>
                     <field name="type" required="1"/>
+                    <field name="pnt_tolerance"/>
                 </field>
             </data>
         </field>

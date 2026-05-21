@@ -134,6 +134,7 @@ class AnalyticDistribution(models.Model):
                     'product_id': base_product.id if base_product else False,
                     'name': f"{li.template_id.name} - {rec.name} | {base_tmpl.name}",
                     'amount': -abs(cost),
+                    'date': rec.date_to,
                     product_field_id: analytic_account.id,
                     fixed_variable_field_id: variable_account.id if variable_account else False,
                     'analytic_distribution_id': rec.id,

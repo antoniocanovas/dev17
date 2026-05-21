@@ -10,4 +10,31 @@
             </field>
         </field>
     </record>
+
+    <record id="view_account_analytic_line_search_inherit_distribution" model="ir.ui.view">
+        <field name="name">account.analytic.line.search.inherit.distribution</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_filter"/>
+        <field name="arch" type="xml">
+            <!-- Search fields -->
+            <field name="name" position="after">
+                <field name="analytic_distribution_id" string="Analytic distribution"/>
+                <field name="analytic_distribution_template_id" string="Analytic distribution template"/>
+            </field>
+            <!-- Filter -->
+            <filter name="month" position="before">
+                <filter name="has_analytic_distribution"
+                        string="Analytic distribution"
+                        domain="[('analytic_distribution_id', '!=', False)]"/>
+                <separator/>
+            </filter>
+            <!-- Group by -->
+            <filter name="group_date" position="after">
+                <filter string="Analytic distribution" name="groupby_analytic_distribution"
+                        context="{'group_by': 'analytic_distribution_id'}"/>
+                <filter string="Analytic distribution template" name="groupby_analytic_distribution_template"
+                        context="{'group_by': 'analytic_distribution_template_id'}"/>
+            </filter>
+        </field>
+    </record>
 </odoo>

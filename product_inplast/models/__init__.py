@@ -1,4 +1,6 @@
 from . import res_company
+from . import stock_picking
+from . import stock_quant_package
 from . import pnt_coa
 from . import product_template
 from . import product_category
