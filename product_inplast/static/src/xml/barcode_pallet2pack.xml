@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="stock_barcode.MainComponent" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_validate_page')]" position="before">
+            <button t-if="env.model.resModel === 'stock.picking'"
+                    t-on-click="pallet2pack"
+                    class="o_pallet2pack btn btn-secondary">
+                <i class="fa fa-cubes me-1"/> Pallet2Pack
+            </button>
+        </xpath>
+    </t>
+
+</templates>
